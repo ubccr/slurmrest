@@ -34,8 +34,8 @@ import (
 func main() {
 	cfg := slurmrest.NewConfiguration()
 	cfg.HTTPClient = &http.Client{Timeout: time.Second * 3600}
-    cfg.Scheme = "http"
-    cfg.Host = "localhost"
+	cfg.Scheme = "http"
+	cfg.Host = "localhost"
 
 	client := slurmrest.NewAPIClient(cfg)
 
