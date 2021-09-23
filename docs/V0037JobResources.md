@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 **Nodes** | Pointer to **string** | list of assigned job nodes | [optional] 
 **AllocatedCpus** | Pointer to **int32** | number of assigned job cpus | [optional] 
 **AllocatedHosts** | Pointer to **int32** | number of assigned job hosts | [optional] 
-**AllocatedNodes** | Pointer to [**[]V0037NodeAllocation**](V0037NodeAllocation.md) | node allocations | [optional] 
+**AllocatedNodes** | Pointer to [**map[string]V0037NodeAllocation**](V0037NodeAllocation.md) | node allocations | [optional] 
 
 ## Methods
 
@@ -105,20 +105,20 @@ HasAllocatedHosts returns a boolean if a field has been set.
 
 ### GetAllocatedNodes
 
-`func (o *V0037JobResources) GetAllocatedNodes() []V0037NodeAllocation`
+`func (o *V0037JobResources) GetAllocatedNodes() map[string]V0037NodeAllocation`
 
 GetAllocatedNodes returns the AllocatedNodes field if non-nil, zero value otherwise.
 
 ### GetAllocatedNodesOk
 
-`func (o *V0037JobResources) GetAllocatedNodesOk() (*[]V0037NodeAllocation, bool)`
+`func (o *V0037JobResources) GetAllocatedNodesOk() (*map[string]V0037NodeAllocation, bool)`
 
 GetAllocatedNodesOk returns a tuple with the AllocatedNodes field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetAllocatedNodes
 
-`func (o *V0037JobResources) SetAllocatedNodes(v []V0037NodeAllocation)`
+`func (o *V0037JobResources) SetAllocatedNodes(v map[string]V0037NodeAllocation)`
 
 SetAllocatedNodes sets AllocatedNodes field to given value.
 

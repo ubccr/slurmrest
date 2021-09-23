@@ -24,7 +24,7 @@ type V0037JobResources struct {
 	// number of assigned job hosts
 	AllocatedHosts *int32 `json:"allocated_hosts,omitempty"`
 	// node allocations
-	AllocatedNodes *[]V0037NodeAllocation `json:"allocated_nodes,omitempty"`
+	AllocatedNodes *map[string]V0037NodeAllocation `json:"allocated_nodes,omitempty"`
 }
 
 // NewV0037JobResources instantiates a new V0037JobResources object
@@ -141,9 +141,9 @@ func (o *V0037JobResources) SetAllocatedHosts(v int32) {
 }
 
 // GetAllocatedNodes returns the AllocatedNodes field value if set, zero value otherwise.
-func (o *V0037JobResources) GetAllocatedNodes() []V0037NodeAllocation {
+func (o *V0037JobResources) GetAllocatedNodes() map[string]V0037NodeAllocation {
 	if o == nil || o.AllocatedNodes == nil {
-		var ret []V0037NodeAllocation
+		var ret map[string]V0037NodeAllocation
 		return ret
 	}
 	return *o.AllocatedNodes
@@ -151,7 +151,7 @@ func (o *V0037JobResources) GetAllocatedNodes() []V0037NodeAllocation {
 
 // GetAllocatedNodesOk returns a tuple with the AllocatedNodes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *V0037JobResources) GetAllocatedNodesOk() (*[]V0037NodeAllocation, bool) {
+func (o *V0037JobResources) GetAllocatedNodesOk() (*map[string]V0037NodeAllocation, bool) {
 	if o == nil || o.AllocatedNodes == nil {
 		return nil, false
 	}
@@ -167,8 +167,8 @@ func (o *V0037JobResources) HasAllocatedNodes() bool {
 	return false
 }
 
-// SetAllocatedNodes gets a reference to the given []V0037NodeAllocation and assigns it to the AllocatedNodes field.
-func (o *V0037JobResources) SetAllocatedNodes(v []V0037NodeAllocation) {
+// SetAllocatedNodes gets a reference to the given map[string]V0037NodeAllocation and assigns it to the AllocatedNodes field.
+func (o *V0037JobResources) SetAllocatedNodes(v map[string]V0037NodeAllocation) {
 	o.AllocatedNodes = &v
 }
 
