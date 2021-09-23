@@ -20,7 +20,7 @@ type V0036NodeAllocation struct {
 	// amount of assigned job memory
 	Memory *int32 `json:"memory,omitempty"`
 	// amount of assigned job CPUs
-	Cpus *map[string]interface{} `json:"cpus,omitempty"`
+	Cpus *int32 `json:"cpus,omitempty"`
 	// assignment status of each socket by socket id
 	Sockets *map[string]interface{} `json:"sockets,omitempty"`
 	// assignment status of each core by core id
@@ -77,9 +77,9 @@ func (o *V0036NodeAllocation) SetMemory(v int32) {
 }
 
 // GetCpus returns the Cpus field value if set, zero value otherwise.
-func (o *V0036NodeAllocation) GetCpus() map[string]interface{} {
+func (o *V0036NodeAllocation) GetCpus() int32 {
 	if o == nil || o.Cpus == nil {
-		var ret map[string]interface{}
+		var ret int32
 		return ret
 	}
 	return *o.Cpus
@@ -87,7 +87,7 @@ func (o *V0036NodeAllocation) GetCpus() map[string]interface{} {
 
 // GetCpusOk returns a tuple with the Cpus field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *V0036NodeAllocation) GetCpusOk() (*map[string]interface{}, bool) {
+func (o *V0036NodeAllocation) GetCpusOk() (*int32, bool) {
 	if o == nil || o.Cpus == nil {
 		return nil, false
 	}
@@ -103,8 +103,8 @@ func (o *V0036NodeAllocation) HasCpus() bool {
 	return false
 }
 
-// SetCpus gets a reference to the given map[string]interface{} and assigns it to the Cpus field.
-func (o *V0036NodeAllocation) SetCpus(v map[string]interface{}) {
+// SetCpus gets a reference to the given int32 and assigns it to the Cpus field.
+func (o *V0036NodeAllocation) SetCpus(v int32) {
 	o.Cpus = &v
 }
 

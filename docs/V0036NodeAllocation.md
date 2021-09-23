@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Memory** | Pointer to **int32** | amount of assigned job memory | [optional] 
-**Cpus** | Pointer to **map[string]interface{}** | amount of assigned job CPUs | [optional] 
+**Cpus** | Pointer to **int32** | amount of assigned job CPUs | [optional] 
 **Sockets** | Pointer to **map[string]interface{}** | assignment status of each socket by socket id | [optional] 
 **Cores** | Pointer to **map[string]interface{}** | assignment status of each core by core id | [optional] 
 
@@ -55,20 +55,20 @@ HasMemory returns a boolean if a field has been set.
 
 ### GetCpus
 
-`func (o *V0036NodeAllocation) GetCpus() map[string]interface{}`
+`func (o *V0036NodeAllocation) GetCpus() int32`
 
 GetCpus returns the Cpus field if non-nil, zero value otherwise.
 
 ### GetCpusOk
 
-`func (o *V0036NodeAllocation) GetCpusOk() (*map[string]interface{}, bool)`
+`func (o *V0036NodeAllocation) GetCpusOk() (*int32, bool)`
 
 GetCpusOk returns a tuple with the Cpus field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetCpus
 
-`func (o *V0036NodeAllocation) SetCpus(v map[string]interface{})`
+`func (o *V0036NodeAllocation) SetCpus(v int32)`
 
 SetCpus sets Cpus field to given value.
 

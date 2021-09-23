@@ -26,8 +26,6 @@ docs/V0036Ping.md
 docs/V0036Pings.md
 docs/V0036Signal.md
 git_push.sh
-go.mod
-go.sum
 model_v0_0_36_diag.go
 model_v0_0_36_diag_statistics.go
 model_v0_0_36_error.go

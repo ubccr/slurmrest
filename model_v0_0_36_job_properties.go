@@ -154,7 +154,7 @@ type V0036JobProperties struct {
 	// Step time limit.
 	TimeLimit *int32 `json:"time_limit,omitempty"`
 	// Minimum run time in minutes.
-	TimeMinimum *int32 `json:"time_minimum,omitempty"`
+	TimeMinimum *int64 `json:"time_minimum,omitempty"`
 	// Do not begin execution until all nodes are ready for use.
 	WaitAllNodes *bool `json:"wait_all_nodes,omitempty"`
 	// Specify wckey to be used with job.
@@ -2352,9 +2352,9 @@ func (o *V0036JobProperties) SetTimeLimit(v int32) {
 }
 
 // GetTimeMinimum returns the TimeMinimum field value if set, zero value otherwise.
-func (o *V0036JobProperties) GetTimeMinimum() int32 {
+func (o *V0036JobProperties) GetTimeMinimum() int64 {
 	if o == nil || o.TimeMinimum == nil {
-		var ret int32
+		var ret int64
 		return ret
 	}
 	return *o.TimeMinimum
@@ -2362,7 +2362,7 @@ func (o *V0036JobProperties) GetTimeMinimum() int32 {
 
 // GetTimeMinimumOk returns a tuple with the TimeMinimum field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *V0036JobProperties) GetTimeMinimumOk() (*int32, bool) {
+func (o *V0036JobProperties) GetTimeMinimumOk() (*int64, bool) {
 	if o == nil || o.TimeMinimum == nil {
 		return nil, false
 	}
@@ -2378,8 +2378,8 @@ func (o *V0036JobProperties) HasTimeMinimum() bool {
 	return false
 }
 
-// SetTimeMinimum gets a reference to the given int32 and assigns it to the TimeMinimum field.
-func (o *V0036JobProperties) SetTimeMinimum(v int32) {
+// SetTimeMinimum gets a reference to the given int64 and assigns it to the TimeMinimum field.
+func (o *V0036JobProperties) SetTimeMinimum(v int64) {
 	o.TimeMinimum = &v
 }
 

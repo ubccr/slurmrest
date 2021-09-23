@@ -72,7 +72,7 @@ Name | Type | Description | Notes
 **ThreadSpecification** | Pointer to **int32** | Count of specialized threads per node reserved by the job for system operations and not used by the application. | [optional] 
 **ThreadsPerCore** | Pointer to **int32** | Restrict node selection to nodes with at least the specified number of threads per core. | [optional] 
 **TimeLimit** | Pointer to **int32** | Step time limit. | [optional] 
-**TimeMinimum** | Pointer to **int32** | Minimum run time in minutes. | [optional] 
+**TimeMinimum** | Pointer to **int64** | Minimum run time in minutes. | [optional] 
 **WaitAllNodes** | Pointer to **bool** | Do not begin execution until all nodes are ready for use. | [optional] 
 **Wckey** | Pointer to **string** | Specify wckey to be used with job. | [optional] 
 
@@ -1792,20 +1792,20 @@ HasTimeLimit returns a boolean if a field has been set.
 
 ### GetTimeMinimum
 
-`func (o *V0036JobProperties) GetTimeMinimum() int32`
+`func (o *V0036JobProperties) GetTimeMinimum() int64`
 
 GetTimeMinimum returns the TimeMinimum field if non-nil, zero value otherwise.
 
 ### GetTimeMinimumOk
 
-`func (o *V0036JobProperties) GetTimeMinimumOk() (*int32, bool)`
+`func (o *V0036JobProperties) GetTimeMinimumOk() (*int64, bool)`
 
 GetTimeMinimumOk returns a tuple with the TimeMinimum field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetTimeMinimum
 
-`func (o *V0036JobProperties) SetTimeMinimum(v int32)`
+`func (o *V0036JobProperties) SetTimeMinimum(v int64)`
 
 SetTimeMinimum sets TimeMinimum field to given value.
 

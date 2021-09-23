@@ -7,11 +7,11 @@ Name | Type | Description | Notes
 **Account** | Pointer to **string** | Charge resources used by this job to specified account | [optional] 
 **AccrueTime** | Pointer to **int64** | time job is eligible for running | [optional] 
 **AdminComment** | Pointer to **string** | administrator&#39;s arbitrary comment | [optional] 
-**ArrayJobId** | Pointer to **string** | job_id of a job array or 0 if N/A | [optional] 
-**ArrayTaskId** | Pointer to **string** | task_id of a job array | [optional] 
-**ArrayMaxTasks** | Pointer to **string** | Maximum number of running array tasks | [optional] 
+**ArrayJobId** | Pointer to **int32** | job_id of a job array or 0 if N/A | [optional] 
+**ArrayTaskId** | Pointer to **int32** | task_id of a job array | [optional] 
+**ArrayMaxTasks** | Pointer to **int32** | Maximum number of running array tasks | [optional] 
 **ArrayTaskString** | Pointer to **string** | string expression of task IDs in this record | [optional] 
-**AssociationId** | Pointer to **string** | association id for job | [optional] 
+**AssociationId** | Pointer to **int32** | association id for job | [optional] 
 **BatchFeatures** | Pointer to **string** | features required for batch script&#39;s node | [optional] 
 **BatchFlag** | Pointer to **bool** | if batch: queued job with script | [optional] 
 **BatchHost** | Pointer to **string** | name of host running batch script | [optional] 
@@ -26,16 +26,16 @@ Name | Type | Description | Notes
 **CoreSpec** | Pointer to **string** | specialized core count | [optional] 
 **ThreadSpec** | Pointer to **string** | specialized thread count | [optional] 
 **CoresPerSocket** | Pointer to **string** | cores per socket required by job | [optional] 
-**BillableTres** | Pointer to **string** | billable TRES | [optional] 
+**BillableTres** | Pointer to **float32** | billable TRES | [optional] 
 **CpusPerTask** | Pointer to **string** | number of processors required for each task | [optional] 
 **CpuFrequencyMinimum** | Pointer to **string** | Minimum cpu frequency | [optional] 
 **CpuFrequencyMaximum** | Pointer to **string** | Maximum cpu frequency | [optional] 
 **CpuFrequencyGovernor** | Pointer to **string** | cpu frequency governor | [optional] 
 **CpusPerTres** | Pointer to **string** | semicolon delimited list of TRES&#x3D;# values | [optional] 
-**Deadline** | Pointer to **string** | job start deadline  | [optional] 
-**DelayBoot** | Pointer to **string** | command to be executed | [optional] 
+**Deadline** | Pointer to **int32** | job start deadline  | [optional] 
+**DelayBoot** | Pointer to **int32** | command to be executed | [optional] 
 **Dependency** | Pointer to **string** | synchronize job execution with other jobs | [optional] 
-**DerivedExitCode** | Pointer to **string** | highest exit code of all job steps | [optional] 
+**DerivedExitCode** | Pointer to **int32** | highest exit code of all job steps | [optional] 
 **EligibleTime** | Pointer to **int64** | time job is eligible for running | [optional] 
 **EndTime** | Pointer to **int64** | time of termination, actual or expected | [optional] 
 **ExcludedNodes** | Pointer to **string** | comma separated list of excluded nodes | [optional] 
@@ -45,48 +45,48 @@ Name | Type | Description | Notes
 **FederationSiblingsActive** | Pointer to **string** | string of active sibling names | [optional] 
 **FederationSiblingsViable** | Pointer to **string** | string of viable sibling names | [optional] 
 **GresDetail** | Pointer to **[]string** | Job flags | [optional] 
-**GroupId** | Pointer to **string** | group job submitted as | [optional] 
-**JobId** | Pointer to **string** | job ID | [optional] 
+**GroupId** | Pointer to **int32** | group job submitted as | [optional] 
+**JobId** | Pointer to **int32** | job ID | [optional] 
 **JobResources** | Pointer to [**V0036JobResources**](V0036JobResources.md) |  | [optional] 
 **JobState** | Pointer to **string** | state of the job | [optional] 
-**LastSchedEvaluation** | Pointer to **string** | last time job was evaluated for scheduling | [optional] 
+**LastSchedEvaluation** | Pointer to **int32** | last time job was evaluated for scheduling | [optional] 
 **Licenses** | Pointer to **string** | licenses required by the job | [optional] 
-**MaxCpus** | Pointer to **string** | maximum number of cpus usable by job | [optional] 
-**MaxNodes** | Pointer to **string** | maximum number of nodes usable by job | [optional] 
+**MaxCpus** | Pointer to **int32** | maximum number of cpus usable by job | [optional] 
+**MaxNodes** | Pointer to **int32** | maximum number of nodes usable by job | [optional] 
 **McsLabel** | Pointer to **string** | mcs_label if mcs plugin in use | [optional] 
 **MemoryPerTres** | Pointer to **string** | semicolon delimited list of TRES&#x3D;# values | [optional] 
 **Name** | Pointer to **string** | name of the job | [optional] 
 **Nodes** | Pointer to **string** | list of nodes allocated to job | [optional] 
-**Nice** | Pointer to **string** | requested priority change | [optional] 
-**TasksPerCore** | Pointer to **string** | number of tasks to invoke on each core | [optional] 
-**TasksPerSocket** | Pointer to **string** | number of tasks to invoke on each socket | [optional] 
-**TasksPerBoard** | Pointer to **string** | number of tasks to invoke on each board | [optional] 
-**Cpus** | Pointer to **string** | minimum number of cpus required by job | [optional] 
-**NodeCount** | Pointer to **string** | minimum number of nodes required by job | [optional] 
-**Tasks** | Pointer to **string** | requested task count | [optional] 
-**HetJobId** | Pointer to **string** | job ID of hetjob leader | [optional] 
+**Nice** | Pointer to **int32** | requested priority change | [optional] 
+**TasksPerCore** | Pointer to **int32** | number of tasks to invoke on each core | [optional] 
+**TasksPerSocket** | Pointer to **int32** | number of tasks to invoke on each socket | [optional] 
+**TasksPerBoard** | Pointer to **int32** | number of tasks to invoke on each board | [optional] 
+**Cpus** | Pointer to **int32** | minimum number of cpus required by job | [optional] 
+**NodeCount** | Pointer to **int32** | minimum number of nodes required by job | [optional] 
+**Tasks** | Pointer to **int32** | requested task count | [optional] 
+**HetJobId** | Pointer to **int32** | job ID of hetjob leader | [optional] 
 **HetJobIdSet** | Pointer to **string** | job IDs for all components | [optional] 
-**HetJobOffset** | Pointer to **string** | HetJob component offset from leader | [optional] 
+**HetJobOffset** | Pointer to **int32** | HetJob component offset from leader | [optional] 
 **Partition** | Pointer to **string** | name of assigned partition | [optional] 
-**MemoryPerNode** | Pointer to **string** | minimum real memory per node | [optional] 
-**MemoryPerCpu** | Pointer to **string** | minimum real memory per cpu | [optional] 
-**MinimumCpusPerNode** | Pointer to **string** | minimum # CPUs per node | [optional] 
-**MinimumTmpDiskPerNode** | Pointer to **string** | minimum tmp disk per node | [optional] 
+**MemoryPerNode** | Pointer to **int32** | minimum real memory per node | [optional] 
+**MemoryPerCpu** | Pointer to **int32** | minimum real memory per cpu | [optional] 
+**MinimumCpusPerNode** | Pointer to **int32** | minimum # CPUs per node | [optional] 
+**MinimumTmpDiskPerNode** | Pointer to **int32** | minimum tmp disk per node | [optional] 
 **PreemptTime** | Pointer to **int64** | preemption signal time | [optional] 
 **PreSusTime** | Pointer to **int64** | time job ran prior to last suspend | [optional] 
-**Priority** | Pointer to **string** | relative priority of the job | [optional] 
+**Priority** | Pointer to **int32** | relative priority of the job | [optional] 
 **Profile** | Pointer to **[]string** | Job profiling requested | [optional] 
 **Qos** | Pointer to **string** | Quality of Service | [optional] 
 **Reboot** | Pointer to **bool** | node reboot requested before start | [optional] 
 **RequiredNodes** | Pointer to **string** | comma separated list of required nodes | [optional] 
 **Requeue** | Pointer to **bool** | enable or disable job requeue option | [optional] 
 **ResizeTime** | Pointer to **int64** | time of latest size change | [optional] 
-**RestartCnt** | Pointer to **string** | count of job restarts | [optional] 
+**RestartCnt** | Pointer to **int32** | count of job restarts | [optional] 
 **ResvName** | Pointer to **string** | reservation name | [optional] 
 **Shared** | Pointer to **string** | type and if job can share nodes with other jobs | [optional] 
 **ShowFlags** | Pointer to **[]string** | details requested | [optional] 
-**SocketsPerBoard** | Pointer to **string** | sockets per board required by job | [optional] 
-**SocketsPerNode** | Pointer to **string** | sockets per node required by job | [optional] 
+**SocketsPerBoard** | Pointer to **int32** | sockets per board required by job | [optional] 
+**SocketsPerNode** | Pointer to **int32** | sockets per node required by job | [optional] 
 **StartTime** | Pointer to **int64** | time execution begins, actual or expected | [optional] 
 **StateDescription** | Pointer to **string** | optional details for state_reason | [optional] 
 **StateReason** | Pointer to **string** | reason job still pending or failed | [optional] 
@@ -96,9 +96,9 @@ Name | Type | Description | Notes
 **SubmitTime** | Pointer to **int64** | time of job submission | [optional] 
 **SuspendTime** | Pointer to **int64** | time job last suspended or resumed | [optional] 
 **SystemComment** | Pointer to **string** | slurmctld&#39;s arbitrary comment | [optional] 
-**TimeLimit** | Pointer to **string** | maximum run time in minutes | [optional] 
-**TimeMinimum** | Pointer to **string** | minimum run time in minutes | [optional] 
-**ThreadsPerCore** | Pointer to **string** | threads per core required by job | [optional] 
+**TimeLimit** | Pointer to **int64** | maximum run time in minutes | [optional] 
+**TimeMinimum** | Pointer to **int64** | minimum run time in minutes | [optional] 
+**ThreadsPerCore** | Pointer to **int32** | threads per core required by job | [optional] 
 **TresBind** | Pointer to **string** | Task to TRES binding directives | [optional] 
 **TresFreq** | Pointer to **string** | TRES frequency directives | [optional] 
 **TresPerJob** | Pointer to **string** | semicolon delimited list of TRES&#x3D;# values | [optional] 
@@ -107,7 +107,7 @@ Name | Type | Description | Notes
 **TresPerTask** | Pointer to **string** | semicolon delimited list of TRES&#x3D;# values | [optional] 
 **TresReqStr** | Pointer to **string** | tres reqeusted in the job | [optional] 
 **TresAllocStr** | Pointer to **string** | tres used in the job | [optional] 
-**UserId** | Pointer to **string** | user id the job runs as | [optional] 
+**UserId** | Pointer to **int64** | user id the job runs as | [optional] 
 **UserName** | Pointer to **string** | user the job runs as | [optional] 
 **Wckey** | Pointer to **string** | wckey for job | [optional] 
 **CurrentWorkingDirectory** | Pointer to **string** | pathname of working directory | [optional] 
@@ -208,20 +208,20 @@ HasAdminComment returns a boolean if a field has been set.
 
 ### GetArrayJobId
 
-`func (o *V0036JobResponseProperties) GetArrayJobId() string`
+`func (o *V0036JobResponseProperties) GetArrayJobId() int32`
 
 GetArrayJobId returns the ArrayJobId field if non-nil, zero value otherwise.
 
 ### GetArrayJobIdOk
 
-`func (o *V0036JobResponseProperties) GetArrayJobIdOk() (*string, bool)`
+`func (o *V0036JobResponseProperties) GetArrayJobIdOk() (*int32, bool)`
 
 GetArrayJobIdOk returns a tuple with the ArrayJobId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetArrayJobId
 
-`func (o *V0036JobResponseProperties) SetArrayJobId(v string)`
+`func (o *V0036JobResponseProperties) SetArrayJobId(v int32)`
 
 SetArrayJobId sets ArrayJobId field to given value.
 
@@ -233,20 +233,20 @@ HasArrayJobId returns a boolean if a field has been set.
 
 ### GetArrayTaskId
 
-`func (o *V0036JobResponseProperties) GetArrayTaskId() string`
+`func (o *V0036JobResponseProperties) GetArrayTaskId() int32`
 
 GetArrayTaskId returns the ArrayTaskId field if non-nil, zero value otherwise.
 
 ### GetArrayTaskIdOk
 
-`func (o *V0036JobResponseProperties) GetArrayTaskIdOk() (*string, bool)`
+`func (o *V0036JobResponseProperties) GetArrayTaskIdOk() (*int32, bool)`
 
 GetArrayTaskIdOk returns a tuple with the ArrayTaskId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetArrayTaskId
 
-`func (o *V0036JobResponseProperties) SetArrayTaskId(v string)`
+`func (o *V0036JobResponseProperties) SetArrayTaskId(v int32)`
 
 SetArrayTaskId sets ArrayTaskId field to given value.
 
@@ -258,20 +258,20 @@ HasArrayTaskId returns a boolean if a field has been set.
 
 ### GetArrayMaxTasks
 
-`func (o *V0036JobResponseProperties) GetArrayMaxTasks() string`
+`func (o *V0036JobResponseProperties) GetArrayMaxTasks() int32`
 
 GetArrayMaxTasks returns the ArrayMaxTasks field if non-nil, zero value otherwise.
 
 ### GetArrayMaxTasksOk
 
-`func (o *V0036JobResponseProperties) GetArrayMaxTasksOk() (*string, bool)`
+`func (o *V0036JobResponseProperties) GetArrayMaxTasksOk() (*int32, bool)`
 
 GetArrayMaxTasksOk returns a tuple with the ArrayMaxTasks field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetArrayMaxTasks
 
-`func (o *V0036JobResponseProperties) SetArrayMaxTasks(v string)`
+`func (o *V0036JobResponseProperties) SetArrayMaxTasks(v int32)`
 
 SetArrayMaxTasks sets ArrayMaxTasks field to given value.
 
@@ -308,20 +308,20 @@ HasArrayTaskString returns a boolean if a field has been set.
 
 ### GetAssociationId
 
-`func (o *V0036JobResponseProperties) GetAssociationId() string`
+`func (o *V0036JobResponseProperties) GetAssociationId() int32`
 
 GetAssociationId returns the AssociationId field if non-nil, zero value otherwise.
 
 ### GetAssociationIdOk
 
-`func (o *V0036JobResponseProperties) GetAssociationIdOk() (*string, bool)`
+`func (o *V0036JobResponseProperties) GetAssociationIdOk() (*int32, bool)`
 
 GetAssociationIdOk returns a tuple with the AssociationId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetAssociationId
 
-`func (o *V0036JobResponseProperties) SetAssociationId(v string)`
+`func (o *V0036JobResponseProperties) SetAssociationId(v int32)`
 
 SetAssociationId sets AssociationId field to given value.
 
@@ -683,20 +683,20 @@ HasCoresPerSocket returns a boolean if a field has been set.
 
 ### GetBillableTres
 
-`func (o *V0036JobResponseProperties) GetBillableTres() string`
+`func (o *V0036JobResponseProperties) GetBillableTres() float32`
 
 GetBillableTres returns the BillableTres field if non-nil, zero value otherwise.
 
 ### GetBillableTresOk
 
-`func (o *V0036JobResponseProperties) GetBillableTresOk() (*string, bool)`
+`func (o *V0036JobResponseProperties) GetBillableTresOk() (*float32, bool)`
 
 GetBillableTresOk returns a tuple with the BillableTres field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetBillableTres
 
-`func (o *V0036JobResponseProperties) SetBillableTres(v string)`
+`func (o *V0036JobResponseProperties) SetBillableTres(v float32)`
 
 SetBillableTres sets BillableTres field to given value.
 
@@ -833,20 +833,20 @@ HasCpusPerTres returns a boolean if a field has been set.
 
 ### GetDeadline
 
-`func (o *V0036JobResponseProperties) GetDeadline() string`
+`func (o *V0036JobResponseProperties) GetDeadline() int32`
 
 GetDeadline returns the Deadline field if non-nil, zero value otherwise.
 
 ### GetDeadlineOk
 
-`func (o *V0036JobResponseProperties) GetDeadlineOk() (*string, bool)`
+`func (o *V0036JobResponseProperties) GetDeadlineOk() (*int32, bool)`
 
 GetDeadlineOk returns a tuple with the Deadline field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetDeadline
 
-`func (o *V0036JobResponseProperties) SetDeadline(v string)`
+`func (o *V0036JobResponseProperties) SetDeadline(v int32)`
 
 SetDeadline sets Deadline field to given value.
 
@@ -858,20 +858,20 @@ HasDeadline returns a boolean if a field has been set.
 
 ### GetDelayBoot
 
-`func (o *V0036JobResponseProperties) GetDelayBoot() string`
+`func (o *V0036JobResponseProperties) GetDelayBoot() int32`
 
 GetDelayBoot returns the DelayBoot field if non-nil, zero value otherwise.
 
 ### GetDelayBootOk
 
-`func (o *V0036JobResponseProperties) GetDelayBootOk() (*string, bool)`
+`func (o *V0036JobResponseProperties) GetDelayBootOk() (*int32, bool)`
 
 GetDelayBootOk returns a tuple with the DelayBoot field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetDelayBoot
 
-`func (o *V0036JobResponseProperties) SetDelayBoot(v string)`
+`func (o *V0036JobResponseProperties) SetDelayBoot(v int32)`
 
 SetDelayBoot sets DelayBoot field to given value.
 
@@ -908,20 +908,20 @@ HasDependency returns a boolean if a field has been set.
 
 ### GetDerivedExitCode
 
-`func (o *V0036JobResponseProperties) GetDerivedExitCode() string`
+`func (o *V0036JobResponseProperties) GetDerivedExitCode() int32`
 
 GetDerivedExitCode returns the DerivedExitCode field if non-nil, zero value otherwise.
 
 ### GetDerivedExitCodeOk
 
-`func (o *V0036JobResponseProperties) GetDerivedExitCodeOk() (*string, bool)`
+`func (o *V0036JobResponseProperties) GetDerivedExitCodeOk() (*int32, bool)`
 
 GetDerivedExitCodeOk returns a tuple with the DerivedExitCode field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetDerivedExitCode
 
-`func (o *V0036JobResponseProperties) SetDerivedExitCode(v string)`
+`func (o *V0036JobResponseProperties) SetDerivedExitCode(v int32)`
 
 SetDerivedExitCode sets DerivedExitCode field to given value.
 
@@ -1158,20 +1158,20 @@ HasGresDetail returns a boolean if a field has been set.
 
 ### GetGroupId
 
-`func (o *V0036JobResponseProperties) GetGroupId() string`
+`func (o *V0036JobResponseProperties) GetGroupId() int32`
 
 GetGroupId returns the GroupId field if non-nil, zero value otherwise.
 
 ### GetGroupIdOk
 
-`func (o *V0036JobResponseProperties) GetGroupIdOk() (*string, bool)`
+`func (o *V0036JobResponseProperties) GetGroupIdOk() (*int32, bool)`
 
 GetGroupIdOk returns a tuple with the GroupId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetGroupId
 
-`func (o *V0036JobResponseProperties) SetGroupId(v string)`
+`func (o *V0036JobResponseProperties) SetGroupId(v int32)`
 
 SetGroupId sets GroupId field to given value.
 
@@ -1183,20 +1183,20 @@ HasGroupId returns a boolean if a field has been set.
 
 ### GetJobId
 
-`func (o *V0036JobResponseProperties) GetJobId() string`
+`func (o *V0036JobResponseProperties) GetJobId() int32`
 
 GetJobId returns the JobId field if non-nil, zero value otherwise.
 
 ### GetJobIdOk
 
-`func (o *V0036JobResponseProperties) GetJobIdOk() (*string, bool)`
+`func (o *V0036JobResponseProperties) GetJobIdOk() (*int32, bool)`
 
 GetJobIdOk returns a tuple with the JobId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetJobId
 
-`func (o *V0036JobResponseProperties) SetJobId(v string)`
+`func (o *V0036JobResponseProperties) SetJobId(v int32)`
 
 SetJobId sets JobId field to given value.
 
@@ -1258,20 +1258,20 @@ HasJobState returns a boolean if a field has been set.
 
 ### GetLastSchedEvaluation
 
-`func (o *V0036JobResponseProperties) GetLastSchedEvaluation() string`
+`func (o *V0036JobResponseProperties) GetLastSchedEvaluation() int32`
 
 GetLastSchedEvaluation returns the LastSchedEvaluation field if non-nil, zero value otherwise.
 
 ### GetLastSchedEvaluationOk
 
-`func (o *V0036JobResponseProperties) GetLastSchedEvaluationOk() (*string, bool)`
+`func (o *V0036JobResponseProperties) GetLastSchedEvaluationOk() (*int32, bool)`
 
 GetLastSchedEvaluationOk returns a tuple with the LastSchedEvaluation field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetLastSchedEvaluation
 
-`func (o *V0036JobResponseProperties) SetLastSchedEvaluation(v string)`
+`func (o *V0036JobResponseProperties) SetLastSchedEvaluation(v int32)`
 
 SetLastSchedEvaluation sets LastSchedEvaluation field to given value.
 
@@ -1308,20 +1308,20 @@ HasLicenses returns a boolean if a field has been set.
 
 ### GetMaxCpus
 
-`func (o *V0036JobResponseProperties) GetMaxCpus() string`
+`func (o *V0036JobResponseProperties) GetMaxCpus() int32`
 
 GetMaxCpus returns the MaxCpus field if non-nil, zero value otherwise.
 
 ### GetMaxCpusOk
 
-`func (o *V0036JobResponseProperties) GetMaxCpusOk() (*string, bool)`
+`func (o *V0036JobResponseProperties) GetMaxCpusOk() (*int32, bool)`
 
 GetMaxCpusOk returns a tuple with the MaxCpus field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetMaxCpus
 
-`func (o *V0036JobResponseProperties) SetMaxCpus(v string)`
+`func (o *V0036JobResponseProperties) SetMaxCpus(v int32)`
 
 SetMaxCpus sets MaxCpus field to given value.
 
@@ -1333,20 +1333,20 @@ HasMaxCpus returns a boolean if a field has been set.
 
 ### GetMaxNodes
 
-`func (o *V0036JobResponseProperties) GetMaxNodes() string`
+`func (o *V0036JobResponseProperties) GetMaxNodes() int32`
 
 GetMaxNodes returns the MaxNodes field if non-nil, zero value otherwise.
 
 ### GetMaxNodesOk
 
-`func (o *V0036JobResponseProperties) GetMaxNodesOk() (*string, bool)`
+`func (o *V0036JobResponseProperties) GetMaxNodesOk() (*int32, bool)`
 
 GetMaxNodesOk returns a tuple with the MaxNodes field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetMaxNodes
 
-`func (o *V0036JobResponseProperties) SetMaxNodes(v string)`
+`func (o *V0036JobResponseProperties) SetMaxNodes(v int32)`
 
 SetMaxNodes sets MaxNodes field to given value.
 
@@ -1458,20 +1458,20 @@ HasNodes returns a boolean if a field has been set.
 
 ### GetNice
 
-`func (o *V0036JobResponseProperties) GetNice() string`
+`func (o *V0036JobResponseProperties) GetNice() int32`
 
 GetNice returns the Nice field if non-nil, zero value otherwise.
 
 ### GetNiceOk
 
-`func (o *V0036JobResponseProperties) GetNiceOk() (*string, bool)`
+`func (o *V0036JobResponseProperties) GetNiceOk() (*int32, bool)`
 
 GetNiceOk returns a tuple with the Nice field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetNice
 
-`func (o *V0036JobResponseProperties) SetNice(v string)`
+`func (o *V0036JobResponseProperties) SetNice(v int32)`
 
 SetNice sets Nice field to given value.
 
@@ -1483,20 +1483,20 @@ HasNice returns a boolean if a field has been set.
 
 ### GetTasksPerCore
 
-`func (o *V0036JobResponseProperties) GetTasksPerCore() string`
+`func (o *V0036JobResponseProperties) GetTasksPerCore() int32`
 
 GetTasksPerCore returns the TasksPerCore field if non-nil, zero value otherwise.
 
 ### GetTasksPerCoreOk
 
-`func (o *V0036JobResponseProperties) GetTasksPerCoreOk() (*string, bool)`
+`func (o *V0036JobResponseProperties) GetTasksPerCoreOk() (*int32, bool)`
 
 GetTasksPerCoreOk returns a tuple with the TasksPerCore field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetTasksPerCore
 
-`func (o *V0036JobResponseProperties) SetTasksPerCore(v string)`
+`func (o *V0036JobResponseProperties) SetTasksPerCore(v int32)`
 
 SetTasksPerCore sets TasksPerCore field to given value.
 
@@ -1508,20 +1508,20 @@ HasTasksPerCore returns a boolean if a field has been set.
 
 ### GetTasksPerSocket
 
-`func (o *V0036JobResponseProperties) GetTasksPerSocket() string`
+`func (o *V0036JobResponseProperties) GetTasksPerSocket() int32`
 
 GetTasksPerSocket returns the TasksPerSocket field if non-nil, zero value otherwise.
 
 ### GetTasksPerSocketOk
 
-`func (o *V0036JobResponseProperties) GetTasksPerSocketOk() (*string, bool)`
+`func (o *V0036JobResponseProperties) GetTasksPerSocketOk() (*int32, bool)`
 
 GetTasksPerSocketOk returns a tuple with the TasksPerSocket field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetTasksPerSocket
 
-`func (o *V0036JobResponseProperties) SetTasksPerSocket(v string)`
+`func (o *V0036JobResponseProperties) SetTasksPerSocket(v int32)`
 
 SetTasksPerSocket sets TasksPerSocket field to given value.
 
@@ -1533,20 +1533,20 @@ HasTasksPerSocket returns a boolean if a field has been set.
 
 ### GetTasksPerBoard
 
-`func (o *V0036JobResponseProperties) GetTasksPerBoard() string`
+`func (o *V0036JobResponseProperties) GetTasksPerBoard() int32`
 
 GetTasksPerBoard returns the TasksPerBoard field if non-nil, zero value otherwise.
 
 ### GetTasksPerBoardOk
 
-`func (o *V0036JobResponseProperties) GetTasksPerBoardOk() (*string, bool)`
+`func (o *V0036JobResponseProperties) GetTasksPerBoardOk() (*int32, bool)`
 
 GetTasksPerBoardOk returns a tuple with the TasksPerBoard field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetTasksPerBoard
 
-`func (o *V0036JobResponseProperties) SetTasksPerBoard(v string)`
+`func (o *V0036JobResponseProperties) SetTasksPerBoard(v int32)`
 
 SetTasksPerBoard sets TasksPerBoard field to given value.
 
@@ -1558,20 +1558,20 @@ HasTasksPerBoard returns a boolean if a field has been set.
 
 ### GetCpus
 
-`func (o *V0036JobResponseProperties) GetCpus() string`
+`func (o *V0036JobResponseProperties) GetCpus() int32`
 
 GetCpus returns the Cpus field if non-nil, zero value otherwise.
 
 ### GetCpusOk
 
-`func (o *V0036JobResponseProperties) GetCpusOk() (*string, bool)`
+`func (o *V0036JobResponseProperties) GetCpusOk() (*int32, bool)`
 
 GetCpusOk returns a tuple with the Cpus field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetCpus
 
-`func (o *V0036JobResponseProperties) SetCpus(v string)`
+`func (o *V0036JobResponseProperties) SetCpus(v int32)`
 
 SetCpus sets Cpus field to given value.
 
@@ -1583,20 +1583,20 @@ HasCpus returns a boolean if a field has been set.
 
 ### GetNodeCount
 
-`func (o *V0036JobResponseProperties) GetNodeCount() string`
+`func (o *V0036JobResponseProperties) GetNodeCount() int32`
 
 GetNodeCount returns the NodeCount field if non-nil, zero value otherwise.
 
 ### GetNodeCountOk
 
-`func (o *V0036JobResponseProperties) GetNodeCountOk() (*string, bool)`
+`func (o *V0036JobResponseProperties) GetNodeCountOk() (*int32, bool)`
 
 GetNodeCountOk returns a tuple with the NodeCount field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetNodeCount
 
-`func (o *V0036JobResponseProperties) SetNodeCount(v string)`
+`func (o *V0036JobResponseProperties) SetNodeCount(v int32)`
 
 SetNodeCount sets NodeCount field to given value.
 
@@ -1608,20 +1608,20 @@ HasNodeCount returns a boolean if a field has been set.
 
 ### GetTasks
 
-`func (o *V0036JobResponseProperties) GetTasks() string`
+`func (o *V0036JobResponseProperties) GetTasks() int32`
 
 GetTasks returns the Tasks field if non-nil, zero value otherwise.
 
 ### GetTasksOk
 
-`func (o *V0036JobResponseProperties) GetTasksOk() (*string, bool)`
+`func (o *V0036JobResponseProperties) GetTasksOk() (*int32, bool)`
 
 GetTasksOk returns a tuple with the Tasks field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetTasks
 
-`func (o *V0036JobResponseProperties) SetTasks(v string)`
+`func (o *V0036JobResponseProperties) SetTasks(v int32)`
 
 SetTasks sets Tasks field to given value.
 
@@ -1633,20 +1633,20 @@ HasTasks returns a boolean if a field has been set.
 
 ### GetHetJobId
 
-`func (o *V0036JobResponseProperties) GetHetJobId() string`
+`func (o *V0036JobResponseProperties) GetHetJobId() int32`
 
 GetHetJobId returns the HetJobId field if non-nil, zero value otherwise.
 
 ### GetHetJobIdOk
 
-`func (o *V0036JobResponseProperties) GetHetJobIdOk() (*string, bool)`
+`func (o *V0036JobResponseProperties) GetHetJobIdOk() (*int32, bool)`
 
 GetHetJobIdOk returns a tuple with the HetJobId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetHetJobId
 
-`func (o *V0036JobResponseProperties) SetHetJobId(v string)`
+`func (o *V0036JobResponseProperties) SetHetJobId(v int32)`
 
 SetHetJobId sets HetJobId field to given value.
 
@@ -1683,20 +1683,20 @@ HasHetJobIdSet returns a boolean if a field has been set.
 
 ### GetHetJobOffset
 
-`func (o *V0036JobResponseProperties) GetHetJobOffset() string`
+`func (o *V0036JobResponseProperties) GetHetJobOffset() int32`
 
 GetHetJobOffset returns the HetJobOffset field if non-nil, zero value otherwise.
 
 ### GetHetJobOffsetOk
 
-`func (o *V0036JobResponseProperties) GetHetJobOffsetOk() (*string, bool)`
+`func (o *V0036JobResponseProperties) GetHetJobOffsetOk() (*int32, bool)`
 
 GetHetJobOffsetOk returns a tuple with the HetJobOffset field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetHetJobOffset
 
-`func (o *V0036JobResponseProperties) SetHetJobOffset(v string)`
+`func (o *V0036JobResponseProperties) SetHetJobOffset(v int32)`
 
 SetHetJobOffset sets HetJobOffset field to given value.
 
@@ -1733,20 +1733,20 @@ HasPartition returns a boolean if a field has been set.
 
 ### GetMemoryPerNode
 
-`func (o *V0036JobResponseProperties) GetMemoryPerNode() string`
+`func (o *V0036JobResponseProperties) GetMemoryPerNode() int32`
 
 GetMemoryPerNode returns the MemoryPerNode field if non-nil, zero value otherwise.
 
 ### GetMemoryPerNodeOk
 
-`func (o *V0036JobResponseProperties) GetMemoryPerNodeOk() (*string, bool)`
+`func (o *V0036JobResponseProperties) GetMemoryPerNodeOk() (*int32, bool)`
 
 GetMemoryPerNodeOk returns a tuple with the MemoryPerNode field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetMemoryPerNode
 
-`func (o *V0036JobResponseProperties) SetMemoryPerNode(v string)`
+`func (o *V0036JobResponseProperties) SetMemoryPerNode(v int32)`
 
 SetMemoryPerNode sets MemoryPerNode field to given value.
 
@@ -1758,20 +1758,20 @@ HasMemoryPerNode returns a boolean if a field has been set.
 
 ### GetMemoryPerCpu
 
-`func (o *V0036JobResponseProperties) GetMemoryPerCpu() string`
+`func (o *V0036JobResponseProperties) GetMemoryPerCpu() int32`
 
 GetMemoryPerCpu returns the MemoryPerCpu field if non-nil, zero value otherwise.
 
 ### GetMemoryPerCpuOk
 
-`func (o *V0036JobResponseProperties) GetMemoryPerCpuOk() (*string, bool)`
+`func (o *V0036JobResponseProperties) GetMemoryPerCpuOk() (*int32, bool)`
 
 GetMemoryPerCpuOk returns a tuple with the MemoryPerCpu field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetMemoryPerCpu
 
-`func (o *V0036JobResponseProperties) SetMemoryPerCpu(v string)`
+`func (o *V0036JobResponseProperties) SetMemoryPerCpu(v int32)`
 
 SetMemoryPerCpu sets MemoryPerCpu field to given value.
 
@@ -1783,20 +1783,20 @@ HasMemoryPerCpu returns a boolean if a field has been set.
 
 ### GetMinimumCpusPerNode
 
-`func (o *V0036JobResponseProperties) GetMinimumCpusPerNode() string`
+`func (o *V0036JobResponseProperties) GetMinimumCpusPerNode() int32`
 
 GetMinimumCpusPerNode returns the MinimumCpusPerNode field if non-nil, zero value otherwise.
 
 ### GetMinimumCpusPerNodeOk
 
-`func (o *V0036JobResponseProperties) GetMinimumCpusPerNodeOk() (*string, bool)`
+`func (o *V0036JobResponseProperties) GetMinimumCpusPerNodeOk() (*int32, bool)`
 
 GetMinimumCpusPerNodeOk returns a tuple with the MinimumCpusPerNode field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetMinimumCpusPerNode
 
-`func (o *V0036JobResponseProperties) SetMinimumCpusPerNode(v string)`
+`func (o *V0036JobResponseProperties) SetMinimumCpusPerNode(v int32)`
 
 SetMinimumCpusPerNode sets MinimumCpusPerNode field to given value.
 
@@ -1808,20 +1808,20 @@ HasMinimumCpusPerNode returns a boolean if a field has been set.
 
 ### GetMinimumTmpDiskPerNode
 
-`func (o *V0036JobResponseProperties) GetMinimumTmpDiskPerNode() string`
+`func (o *V0036JobResponseProperties) GetMinimumTmpDiskPerNode() int32`
 
 GetMinimumTmpDiskPerNode returns the MinimumTmpDiskPerNode field if non-nil, zero value otherwise.
 
 ### GetMinimumTmpDiskPerNodeOk
 
-`func (o *V0036JobResponseProperties) GetMinimumTmpDiskPerNodeOk() (*string, bool)`
+`func (o *V0036JobResponseProperties) GetMinimumTmpDiskPerNodeOk() (*int32, bool)`
 
 GetMinimumTmpDiskPerNodeOk returns a tuple with the MinimumTmpDiskPerNode field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetMinimumTmpDiskPerNode
 
-`func (o *V0036JobResponseProperties) SetMinimumTmpDiskPerNode(v string)`
+`func (o *V0036JobResponseProperties) SetMinimumTmpDiskPerNode(v int32)`
 
 SetMinimumTmpDiskPerNode sets MinimumTmpDiskPerNode field to given value.
 
@@ -1883,20 +1883,20 @@ HasPreSusTime returns a boolean if a field has been set.
 
 ### GetPriority
 
-`func (o *V0036JobResponseProperties) GetPriority() string`
+`func (o *V0036JobResponseProperties) GetPriority() int32`
 
 GetPriority returns the Priority field if non-nil, zero value otherwise.
 
 ### GetPriorityOk
 
-`func (o *V0036JobResponseProperties) GetPriorityOk() (*string, bool)`
+`func (o *V0036JobResponseProperties) GetPriorityOk() (*int32, bool)`
 
 GetPriorityOk returns a tuple with the Priority field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetPriority
 
-`func (o *V0036JobResponseProperties) SetPriority(v string)`
+`func (o *V0036JobResponseProperties) SetPriority(v int32)`
 
 SetPriority sets Priority field to given value.
 
@@ -2058,20 +2058,20 @@ HasResizeTime returns a boolean if a field has been set.
 
 ### GetRestartCnt
 
-`func (o *V0036JobResponseProperties) GetRestartCnt() string`
+`func (o *V0036JobResponseProperties) GetRestartCnt() int32`
 
 GetRestartCnt returns the RestartCnt field if non-nil, zero value otherwise.
 
 ### GetRestartCntOk
 
-`func (o *V0036JobResponseProperties) GetRestartCntOk() (*string, bool)`
+`func (o *V0036JobResponseProperties) GetRestartCntOk() (*int32, bool)`
 
 GetRestartCntOk returns a tuple with the RestartCnt field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetRestartCnt
 
-`func (o *V0036JobResponseProperties) SetRestartCnt(v string)`
+`func (o *V0036JobResponseProperties) SetRestartCnt(v int32)`
 
 SetRestartCnt sets RestartCnt field to given value.
 
@@ -2158,20 +2158,20 @@ HasShowFlags returns a boolean if a field has been set.
 
 ### GetSocketsPerBoard
 
-`func (o *V0036JobResponseProperties) GetSocketsPerBoard() string`
+`func (o *V0036JobResponseProperties) GetSocketsPerBoard() int32`
 
 GetSocketsPerBoard returns the SocketsPerBoard field if non-nil, zero value otherwise.
 
 ### GetSocketsPerBoardOk
 
-`func (o *V0036JobResponseProperties) GetSocketsPerBoardOk() (*string, bool)`
+`func (o *V0036JobResponseProperties) GetSocketsPerBoardOk() (*int32, bool)`
 
 GetSocketsPerBoardOk returns a tuple with the SocketsPerBoard field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetSocketsPerBoard
 
-`func (o *V0036JobResponseProperties) SetSocketsPerBoard(v string)`
+`func (o *V0036JobResponseProperties) SetSocketsPerBoard(v int32)`
 
 SetSocketsPerBoard sets SocketsPerBoard field to given value.
 
@@ -2183,20 +2183,20 @@ HasSocketsPerBoard returns a boolean if a field has been set.
 
 ### GetSocketsPerNode
 
-`func (o *V0036JobResponseProperties) GetSocketsPerNode() string`
+`func (o *V0036JobResponseProperties) GetSocketsPerNode() int32`
 
 GetSocketsPerNode returns the SocketsPerNode field if non-nil, zero value otherwise.
 
 ### GetSocketsPerNodeOk
 
-`func (o *V0036JobResponseProperties) GetSocketsPerNodeOk() (*string, bool)`
+`func (o *V0036JobResponseProperties) GetSocketsPerNodeOk() (*int32, bool)`
 
 GetSocketsPerNodeOk returns a tuple with the SocketsPerNode field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetSocketsPerNode
 
-`func (o *V0036JobResponseProperties) SetSocketsPerNode(v string)`
+`func (o *V0036JobResponseProperties) SetSocketsPerNode(v int32)`
 
 SetSocketsPerNode sets SocketsPerNode field to given value.
 
@@ -2433,20 +2433,20 @@ HasSystemComment returns a boolean if a field has been set.
 
 ### GetTimeLimit
 
-`func (o *V0036JobResponseProperties) GetTimeLimit() string`
+`func (o *V0036JobResponseProperties) GetTimeLimit() int64`
 
 GetTimeLimit returns the TimeLimit field if non-nil, zero value otherwise.
 
 ### GetTimeLimitOk
 
-`func (o *V0036JobResponseProperties) GetTimeLimitOk() (*string, bool)`
+`func (o *V0036JobResponseProperties) GetTimeLimitOk() (*int64, bool)`
 
 GetTimeLimitOk returns a tuple with the TimeLimit field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetTimeLimit
 
-`func (o *V0036JobResponseProperties) SetTimeLimit(v string)`
+`func (o *V0036JobResponseProperties) SetTimeLimit(v int64)`
 
 SetTimeLimit sets TimeLimit field to given value.
 
@@ -2458,20 +2458,20 @@ HasTimeLimit returns a boolean if a field has been set.
 
 ### GetTimeMinimum
 
-`func (o *V0036JobResponseProperties) GetTimeMinimum() string`
+`func (o *V0036JobResponseProperties) GetTimeMinimum() int64`
 
 GetTimeMinimum returns the TimeMinimum field if non-nil, zero value otherwise.
 
 ### GetTimeMinimumOk
 
-`func (o *V0036JobResponseProperties) GetTimeMinimumOk() (*string, bool)`
+`func (o *V0036JobResponseProperties) GetTimeMinimumOk() (*int64, bool)`
 
 GetTimeMinimumOk returns a tuple with the TimeMinimum field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetTimeMinimum
 
-`func (o *V0036JobResponseProperties) SetTimeMinimum(v string)`
+`func (o *V0036JobResponseProperties) SetTimeMinimum(v int64)`
 
 SetTimeMinimum sets TimeMinimum field to given value.
 
@@ -2483,20 +2483,20 @@ HasTimeMinimum returns a boolean if a field has been set.
 
 ### GetThreadsPerCore
 
-`func (o *V0036JobResponseProperties) GetThreadsPerCore() string`
+`func (o *V0036JobResponseProperties) GetThreadsPerCore() int32`
 
 GetThreadsPerCore returns the ThreadsPerCore field if non-nil, zero value otherwise.
 
 ### GetThreadsPerCoreOk
 
-`func (o *V0036JobResponseProperties) GetThreadsPerCoreOk() (*string, bool)`
+`func (o *V0036JobResponseProperties) GetThreadsPerCoreOk() (*int32, bool)`
 
 GetThreadsPerCoreOk returns a tuple with the ThreadsPerCore field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetThreadsPerCore
 
-`func (o *V0036JobResponseProperties) SetThreadsPerCore(v string)`
+`func (o *V0036JobResponseProperties) SetThreadsPerCore(v int32)`
 
 SetThreadsPerCore sets ThreadsPerCore field to given value.
 
@@ -2708,20 +2708,20 @@ HasTresAllocStr returns a boolean if a field has been set.
 
 ### GetUserId
 
-`func (o *V0036JobResponseProperties) GetUserId() string`
+`func (o *V0036JobResponseProperties) GetUserId() int64`
 
 GetUserId returns the UserId field if non-nil, zero value otherwise.
 
 ### GetUserIdOk
 
-`func (o *V0036JobResponseProperties) GetUserIdOk() (*string, bool)`
+`func (o *V0036JobResponseProperties) GetUserIdOk() (*int64, bool)`
 
 GetUserIdOk returns a tuple with the UserId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetUserId
 
-`func (o *V0036JobResponseProperties) SetUserId(v string)`
+`func (o *V0036JobResponseProperties) SetUserId(v int64)`
 
 SetUserId sets UserId field to given value.
 

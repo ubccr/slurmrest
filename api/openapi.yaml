@@ -719,33 +719,33 @@ components:
       example:
         jobs:
         - cluster: cluster
-          time_minimum: time_minimum
+          time_minimum: 3
           memory_per_tres: memory_per_tres
           qos: qos
-          resize_time: 2
-          eligible_time: 6
+          resize_time: 0
+          eligible_time: 2
           cpus_per_tres: cpus_per_tres
-          tasks: tasks
+          tasks: 6
           system_comment: system_comment
           federation_siblings_active: federation_siblings_active
-          tasks_per_core: tasks_per_core
+          tasks_per_core: 6
           accrue_time: 0
           dependency: dependency
           profile:
           - profile
           - profile
-          priority: priority
+          priority: 7
           tres_per_job: tres_per_job
-          derived_exit_code: derived_exit_code
+          derived_exit_code: 3
           core_spec: core_spec
           mcs_label: mcs_label
           required_nodes: required_nodes
           tres_bind: tres_bind
-          user_id: user_id
-          exit_code: 5
+          user_id: 5
+          exit_code: 7
           federation_origin: federation_origin
           shared: shared
-          tasks_per_board: tasks_per_board
+          tasks_per_board: 9
           user_name: user_name
           flags:
           - flags
@@ -756,34 +756,34 @@ components:
           job_state: job_state
           current_working_directory: current_working_directory
           standard_error: standard_error
-          array_job_id: array_job_id
+          array_job_id: 6
           cluster_features: cluster_features
           partition: partition
-          threads_per_core: threads_per_core
+          threads_per_core: 7
           tres_alloc_str: tres_alloc_str
-          memory_per_cpu: memory_per_cpu
+          memory_per_cpu: 6
           cpu_frequency_minimum: cpu_frequency_minimum
-          node_count: node_count
-          deadline: deadline
-          memory_per_node: memory_per_node
+          node_count: 3
+          deadline: 7
+          memory_per_node: 6
           state_reason: state_reason
-          het_job_offset: het_job_offset
-          end_time: 1
-          sockets_per_board: sockets_per_board
-          nice: nice
-          last_sched_evaluation: last_sched_evaluation
+          het_job_offset: 2
+          end_time: 4
+          sockets_per_board: 6
+          nice: 9
+          last_sched_evaluation: 4
           tres_per_node: tres_per_node
           burst_buffer: burst_buffer
           licenses: licenses
           excluded_nodes: excluded_nodes
-          array_max_tasks: array_max_tasks
-          het_job_id: het_job_id
-          sockets_per_node: sockets_per_node
-          time_limit: time_limit
-          minimum_cpus_per_node: minimum_cpus_per_node
-          tasks_per_socket: tasks_per_socket
+          array_max_tasks: 5
+          het_job_id: 1
+          sockets_per_node: 0
+          time_limit: 3
+          minimum_cpus_per_node: 5
+          tasks_per_socket: 8
           batch_host: batch_host
-          max_cpus: max_cpus
+          max_cpus: 5
           cpu_frequency_maximum: cpu_frequency_maximum
           features: features
           het_job_id_set: het_job_id_set
@@ -791,34 +791,31 @@ components:
           show_flags:
           - show_flags
           - show_flags
-          array_task_id: array_task_id
-          minimum_tmp_disk_per_node: minimum_tmp_disk_per_node
+          array_task_id: 1
+          minimum_tmp_disk_per_node: 6
           tres_req_str: tres_req_str
           burst_buffer_state: burst_buffer_state
           tres_per_socket: tres_per_socket
           array_task_string: array_task_string
-          submit_time: 7
+          submit_time: 8
           wckey: wckey
-          max_nodes: max_nodes
+          max_nodes: 9
           batch_flag: true
           start_time: 4
           name: name
-          preempt_time: 9
+          preempt_time: 3
           contiguous: true
           job_resources:
             nodes: nodes
             allocated_nodes:
-            - memory: 7
-              cores: '{}'
-              cpus: '{}'
-              sockets: '{}'
-            - memory: 7
-              cores: '{}'
-              cpus: '{}'
-              sockets: '{}'
-            allocated_cpus: 5
-            allocated_hosts: 2
-          billable_tres: billable_tres
+              key:
+                memory: 7
+                cores: '{}'
+                cpus: 1
+                sockets: '{}'
+            allocated_cpus: 1
+            allocated_hosts: 6
+          billable_tres: 2.3021358869347655
           federation_siblings_viable: federation_siblings_viable
           cpus_per_task: cpus_per_task
           batch_features: batch_features
@@ -827,52 +824,52 @@ components:
           gres_detail:
           - gres_detail
           - gres_detail
-          restart_cnt: restart_cnt
+          restart_cnt: 7
           resv_name: resv_name
-          delay_boot: delay_boot
+          delay_boot: 9
           reboot: true
-          cpus: cpus
+          cpus: 6
           standard_output: standard_output
           pre_sus_time: 3
-          suspend_time: 1
-          association_id: association_id
+          suspend_time: 7
+          association_id: 5
           command: command
           tres_freq: tres_freq
           requeue: true
           tres_per_task: tres_per_task
           nodes: nodes
-          group_id: group_id
-          job_id: job_id
+          group_id: 1
+          job_id: 1
           comment: comment
           account: account
         - cluster: cluster
-          time_minimum: time_minimum
+          time_minimum: 3
           memory_per_tres: memory_per_tres
           qos: qos
-          resize_time: 2
-          eligible_time: 6
+          resize_time: 0
+          eligible_time: 2
           cpus_per_tres: cpus_per_tres
-          tasks: tasks
+          tasks: 6
           system_comment: system_comment
           federation_siblings_active: federation_siblings_active
-          tasks_per_core: tasks_per_core
+          tasks_per_core: 6
           accrue_time: 0
           dependency: dependency
           profile:
           - profile
           - profile
-          priority: priority
+          priority: 7
           tres_per_job: tres_per_job
-          derived_exit_code: derived_exit_code
+          derived_exit_code: 3
           core_spec: core_spec
           mcs_label: mcs_label
           required_nodes: required_nodes
           tres_bind: tres_bind
-          user_id: user_id
-          exit_code: 5
+          user_id: 5
+          exit_code: 7
           federation_origin: federation_origin
           shared: shared
-          tasks_per_board: tasks_per_board
+          tasks_per_board: 9
           user_name: user_name
           flags:
           - flags
@@ -883,34 +880,34 @@ components:
           job_state: job_state
           current_working_directory: current_working_directory
           standard_error: standard_error
-          array_job_id: array_job_id
+          array_job_id: 6
           cluster_features: cluster_features
           partition: partition
-          threads_per_core: threads_per_core
+          threads_per_core: 7
           tres_alloc_str: tres_alloc_str
-          memory_per_cpu: memory_per_cpu
+          memory_per_cpu: 6
           cpu_frequency_minimum: cpu_frequency_minimum
-          node_count: node_count
-          deadline: deadline
-          memory_per_node: memory_per_node
+          node_count: 3
+          deadline: 7
+          memory_per_node: 6
           state_reason: state_reason
-          het_job_offset: het_job_offset
-          end_time: 1
-          sockets_per_board: sockets_per_board
-          nice: nice
-          last_sched_evaluation: last_sched_evaluation
+          het_job_offset: 2
+          end_time: 4
+          sockets_per_board: 6
+          nice: 9
+          last_sched_evaluation: 4
           tres_per_node: tres_per_node
           burst_buffer: burst_buffer
           licenses: licenses
           excluded_nodes: excluded_nodes
-          array_max_tasks: array_max_tasks
-          het_job_id: het_job_id
-          sockets_per_node: sockets_per_node
-          time_limit: time_limit
-          minimum_cpus_per_node: minimum_cpus_per_node
-          tasks_per_socket: tasks_per_socket
+          array_max_tasks: 5
+          het_job_id: 1
+          sockets_per_node: 0
+          time_limit: 3
+          minimum_cpus_per_node: 5
+          tasks_per_socket: 8
           batch_host: batch_host
-          max_cpus: max_cpus
+          max_cpus: 5
           cpu_frequency_maximum: cpu_frequency_maximum
           features: features
           het_job_id_set: het_job_id_set
@@ -918,34 +915,31 @@ components:
           show_flags:
           - show_flags
           - show_flags
-          array_task_id: array_task_id
-          minimum_tmp_disk_per_node: minimum_tmp_disk_per_node
+          array_task_id: 1
+          minimum_tmp_disk_per_node: 6
           tres_req_str: tres_req_str
           burst_buffer_state: burst_buffer_state
           tres_per_socket: tres_per_socket
           array_task_string: array_task_string
-          submit_time: 7
+          submit_time: 8
           wckey: wckey
-          max_nodes: max_nodes
+          max_nodes: 9
           batch_flag: true
           start_time: 4
           name: name
-          preempt_time: 9
+          preempt_time: 3
           contiguous: true
           job_resources:
             nodes: nodes
             allocated_nodes:
-            - memory: 7
-              cores: '{}'
-              cpus: '{}'
-              sockets: '{}'
-            - memory: 7
-              cores: '{}'
-              cpus: '{}'
-              sockets: '{}'
-            allocated_cpus: 5
-            allocated_hosts: 2
-          billable_tres: billable_tres
+              key:
+                memory: 7
+                cores: '{}'
+                cpus: 1
+                sockets: '{}'
+            allocated_cpus: 1
+            allocated_hosts: 6
+          billable_tres: 2.3021358869347655
           federation_siblings_viable: federation_siblings_viable
           cpus_per_task: cpus_per_task
           batch_features: batch_features
@@ -954,22 +948,22 @@ components:
           gres_detail:
           - gres_detail
           - gres_detail
-          restart_cnt: restart_cnt
+          restart_cnt: 7
           resv_name: resv_name
-          delay_boot: delay_boot
+          delay_boot: 9
           reboot: true
-          cpus: cpus
+          cpus: 6
           standard_output: standard_output
           pre_sus_time: 3
-          suspend_time: 1
-          association_id: association_id
+          suspend_time: 7
+          association_id: 5
           command: command
           tres_freq: tres_freq
           requeue: true
           tres_per_task: tres_per_task
           nodes: nodes
-          group_id: group_id
-          job_id: job_id
+          group_id: 1
+          job_id: 1
           comment: comment
           account: account
         errors:
@@ -992,33 +986,33 @@ components:
     v0.0.36_job_response_properties:
       example:
         cluster: cluster
-        time_minimum: time_minimum
+        time_minimum: 3
         memory_per_tres: memory_per_tres
         qos: qos
-        resize_time: 2
-        eligible_time: 6
+        resize_time: 0
+        eligible_time: 2
         cpus_per_tres: cpus_per_tres
-        tasks: tasks
+        tasks: 6
         system_comment: system_comment
         federation_siblings_active: federation_siblings_active
-        tasks_per_core: tasks_per_core
+        tasks_per_core: 6
         accrue_time: 0
         dependency: dependency
         profile:
         - profile
         - profile
-        priority: priority
+        priority: 7
         tres_per_job: tres_per_job
-        derived_exit_code: derived_exit_code
+        derived_exit_code: 3
         core_spec: core_spec
         mcs_label: mcs_label
         required_nodes: required_nodes
         tres_bind: tres_bind
-        user_id: user_id
-        exit_code: 5
+        user_id: 5
+        exit_code: 7
         federation_origin: federation_origin
         shared: shared
-        tasks_per_board: tasks_per_board
+        tasks_per_board: 9
         user_name: user_name
         flags:
         - flags
@@ -1029,34 +1023,34 @@ components:
         job_state: job_state
         current_working_directory: current_working_directory
         standard_error: standard_error
-        array_job_id: array_job_id
+        array_job_id: 6
         cluster_features: cluster_features
         partition: partition
-        threads_per_core: threads_per_core
+        threads_per_core: 7
         tres_alloc_str: tres_alloc_str
-        memory_per_cpu: memory_per_cpu
+        memory_per_cpu: 6
         cpu_frequency_minimum: cpu_frequency_minimum
-        node_count: node_count
-        deadline: deadline
-        memory_per_node: memory_per_node
+        node_count: 3
+        deadline: 7
+        memory_per_node: 6
         state_reason: state_reason
-        het_job_offset: het_job_offset
-        end_time: 1
-        sockets_per_board: sockets_per_board
-        nice: nice
-        last_sched_evaluation: last_sched_evaluation
+        het_job_offset: 2
+        end_time: 4
+        sockets_per_board: 6
+        nice: 9
+        last_sched_evaluation: 4
         tres_per_node: tres_per_node
         burst_buffer: burst_buffer
         licenses: licenses
         excluded_nodes: excluded_nodes
-        array_max_tasks: array_max_tasks
-        het_job_id: het_job_id
-        sockets_per_node: sockets_per_node
-        time_limit: time_limit
-        minimum_cpus_per_node: minimum_cpus_per_node
-        tasks_per_socket: tasks_per_socket
+        array_max_tasks: 5
+        het_job_id: 1
+        sockets_per_node: 0
+        time_limit: 3
+        minimum_cpus_per_node: 5
+        tasks_per_socket: 8
         batch_host: batch_host
-        max_cpus: max_cpus
+        max_cpus: 5
         cpu_frequency_maximum: cpu_frequency_maximum
         features: features
         het_job_id_set: het_job_id_set
@@ -1064,34 +1058,31 @@ components:
         show_flags:
         - show_flags
         - show_flags
-        array_task_id: array_task_id
-        minimum_tmp_disk_per_node: minimum_tmp_disk_per_node
+        array_task_id: 1
+        minimum_tmp_disk_per_node: 6
         tres_req_str: tres_req_str
         burst_buffer_state: burst_buffer_state
         tres_per_socket: tres_per_socket
         array_task_string: array_task_string
-        submit_time: 7
+        submit_time: 8
         wckey: wckey
-        max_nodes: max_nodes
+        max_nodes: 9
         batch_flag: true
         start_time: 4
         name: name
-        preempt_time: 9
+        preempt_time: 3
         contiguous: true
         job_resources:
           nodes: nodes
           allocated_nodes:
-          - memory: 7
-            cores: '{}'
-            cpus: '{}'
-            sockets: '{}'
-          - memory: 7
-            cores: '{}'
-            cpus: '{}'
-            sockets: '{}'
-          allocated_cpus: 5
-          allocated_hosts: 2
-        billable_tres: billable_tres
+            key:
+              memory: 7
+              cores: '{}'
+              cpus: 1
+              sockets: '{}'
+          allocated_cpus: 1
+          allocated_hosts: 6
+        billable_tres: 2.3021358869347655
         federation_siblings_viable: federation_siblings_viable
         cpus_per_task: cpus_per_task
         batch_features: batch_features
@@ -1100,22 +1091,22 @@ components:
         gres_detail:
         - gres_detail
         - gres_detail
-        restart_cnt: restart_cnt
+        restart_cnt: 7
         resv_name: resv_name
-        delay_boot: delay_boot
+        delay_boot: 9
         reboot: true
-        cpus: cpus
+        cpus: 6
         standard_output: standard_output
         pre_sus_time: 3
-        suspend_time: 1
-        association_id: association_id
+        suspend_time: 7
+        association_id: 5
         command: command
         tres_freq: tres_freq
         requeue: true
         tres_per_task: tres_per_task
         nodes: nodes
-        group_id: group_id
-        job_id: job_id
+        group_id: 1
+        job_id: 1
         comment: comment
         account: account
       properties:
@@ -1131,19 +1122,19 @@ components:
           type: string
         array_job_id:
           description: job_id of a job array or 0 if N/A
-          type: string
+          type: integer
         array_task_id:
           description: task_id of a job array
-          type: string
+          type: integer
         array_max_tasks:
           description: Maximum number of running array tasks
-          type: string
+          type: integer
         array_task_string:
           description: string expression of task IDs in this record
           type: string
         association_id:
           description: association id for job
-          type: string
+          type: integer
         batch_features:
           description: features required for batch script's node
           type: string
@@ -1190,7 +1181,7 @@ components:
           type: string
         billable_tres:
           description: billable TRES
-          type: string
+          type: number
         cpus_per_task:
           description: number of processors required for each task
           type: string
@@ -1208,16 +1199,16 @@ components:
           type: string
         deadline:
           description: 'job start deadline '
-          type: string
+          type: integer
         delay_boot:
           description: command to be executed
-          type: string
+          type: integer
         dependency:
           description: synchronize job execution with other jobs
           type: string
         derived_exit_code:
           description: highest exit code of all job steps
-          type: string
+          type: integer
         eligible_time:
           description: time job is eligible for running
           format: int64
@@ -1251,10 +1242,10 @@ components:
           type: array
         group_id:
           description: group job submitted as
-          type: string
+          type: integer
         job_id:
           description: job ID
-          type: string
+          type: integer
         job_resources:
           $ref: '#/components/schemas/v0.0.36_job_resources'
         job_state:
@@ -1262,16 +1253,16 @@ components:
           type: string
         last_sched_evaluation:
           description: last time job was evaluated for scheduling
-          type: string
+          type: integer
         licenses:
           description: licenses required by the job
           type: string
         max_cpus:
           description: maximum number of cpus usable by job
-          type: string
+          type: integer
         max_nodes:
           description: maximum number of nodes usable by job
-          type: string
+          type: integer
         mcs_label:
           description: mcs_label if mcs plugin in use
           type: string
@@ -1286,49 +1277,49 @@ components:
           type: string
         nice:
           description: requested priority change
-          type: string
+          type: integer
         tasks_per_core:
           description: number of tasks to invoke on each core
-          type: string
+          type: integer
         tasks_per_socket:
           description: number of tasks to invoke on each socket
-          type: string
+          type: integer
         tasks_per_board:
           description: number of tasks to invoke on each board
-          type: string
+          type: integer
         cpus:
           description: minimum number of cpus required by job
-          type: string
+          type: integer
         node_count:
           description: minimum number of nodes required by job
-          type: string
+          type: integer
         tasks:
           description: requested task count
-          type: string
+          type: integer
         het_job_id:
           description: job ID of hetjob leader
-          type: string
+          type: integer
         het_job_id_set:
           description: job IDs for all components
           type: string
         het_job_offset:
           description: HetJob component offset from leader
-          type: string
+          type: integer
         partition:
           description: name of assigned partition
           type: string
         memory_per_node:
           description: minimum real memory per node
-          type: string
+          type: integer
         memory_per_cpu:
           description: minimum real memory per cpu
-          type: string
+          type: integer
         minimum_cpus_per_node:
           description: 'minimum # CPUs per node'
-          type: string
+          type: integer
         minimum_tmp_disk_per_node:
           description: minimum tmp disk per node
-          type: string
+          type: integer
         preempt_time:
           description: preemption signal time
           format: int64
@@ -1339,7 +1330,7 @@ components:
           type: integer
         priority:
           description: relative priority of the job
-          type: string
+          type: integer
         profile:
           description: Job profiling requested
           items:
@@ -1363,7 +1354,7 @@ components:
           type: integer
         restart_cnt:
           description: count of job restarts
-          type: string
+          type: integer
         resv_name:
           description: reservation name
           type: string
@@ -1377,10 +1368,10 @@ components:
           type: array
         sockets_per_board:
           description: sockets per board required by job
-          type: string
+          type: integer
         sockets_per_node:
           description: sockets per node required by job
-          type: string
+          type: integer
         start_time:
           description: time execution begins, actual or expected
           format: int64
@@ -1413,13 +1404,15 @@ components:
           type: string
         time_limit:
           description: maximum run time in minutes
-          type: string
+          format: int64
+          type: integer
         time_minimum:
           description: minimum run time in minutes
-          type: string
+          format: int64
+          type: integer
         threads_per_core:
           description: threads per core required by job
-          type: string
+          type: integer
         tres_bind:
           description: Task to TRES binding directives
           type: string
@@ -1446,7 +1439,8 @@ components:
           type: string
         user_id:
           description: user id the job runs as
-          type: string
+          format: int64
+          type: integer
         user_name:
           description: user the job runs as
           type: string
@@ -1461,16 +1455,13 @@ components:
       example:
         nodes: nodes
         allocated_nodes:
-        - memory: 7
-          cores: '{}'
-          cpus: '{}'
-          sockets: '{}'
-        - memory: 7
-          cores: '{}'
-          cpus: '{}'
-          sockets: '{}'
-        allocated_cpus: 5
-        allocated_hosts: 2
+          key:
+            memory: 7
+            cores: '{}'
+            cpus: 1
+            sockets: '{}'
+        allocated_cpus: 1
+        allocated_hosts: 6
       properties:
         nodes:
           description: list of assigned job nodes
@@ -1482,16 +1473,16 @@ components:
           description: number of assigned job hosts
           type: integer
         allocated_nodes:
-          description: node allocations
-          items:
+          additionalProperties:
             $ref: '#/components/schemas/v0.0.36_node_allocation'
-          type: array
+          description: node allocations
+          type: object
       type: object
     v0.0.36_node_allocation:
       example:
         memory: 7
         cores: '{}'
-        cpus: '{}'
+        cpus: 1
         sockets: '{}'
       properties:
         memory:
@@ -1499,7 +1490,7 @@ components:
           type: integer
         cpus:
           description: amount of assigned job CPUs
-          type: object
+          type: integer
         sockets:
           description: assignment status of each socket by socket id
           type: object
@@ -1768,6 +1759,7 @@ components:
           type: integer
         time_minimum:
           description: Minimum run time in minutes.
+          format: int64
           type: integer
         wait_all_nodes:
           description: Do not begin execution until all nodes are ready for use.

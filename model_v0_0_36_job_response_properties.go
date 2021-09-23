@@ -24,15 +24,15 @@ type V0036JobResponseProperties struct {
 	// administrator's arbitrary comment
 	AdminComment *string `json:"admin_comment,omitempty"`
 	// job_id of a job array or 0 if N/A
-	ArrayJobId *string `json:"array_job_id,omitempty"`
+	ArrayJobId *int32 `json:"array_job_id,omitempty"`
 	// task_id of a job array
-	ArrayTaskId *string `json:"array_task_id,omitempty"`
+	ArrayTaskId *int32 `json:"array_task_id,omitempty"`
 	// Maximum number of running array tasks
-	ArrayMaxTasks *string `json:"array_max_tasks,omitempty"`
+	ArrayMaxTasks *int32 `json:"array_max_tasks,omitempty"`
 	// string expression of task IDs in this record
 	ArrayTaskString *string `json:"array_task_string,omitempty"`
 	// association id for job
-	AssociationId *string `json:"association_id,omitempty"`
+	AssociationId *int32 `json:"association_id,omitempty"`
 	// features required for batch script's node
 	BatchFeatures *string `json:"batch_features,omitempty"`
 	// if batch: queued job with script
@@ -62,7 +62,7 @@ type V0036JobResponseProperties struct {
 	// cores per socket required by job
 	CoresPerSocket *string `json:"cores_per_socket,omitempty"`
 	// billable TRES
-	BillableTres *string `json:"billable_tres,omitempty"`
+	BillableTres *float32 `json:"billable_tres,omitempty"`
 	// number of processors required for each task
 	CpusPerTask *string `json:"cpus_per_task,omitempty"`
 	// Minimum cpu frequency
@@ -74,13 +74,13 @@ type V0036JobResponseProperties struct {
 	// semicolon delimited list of TRES=# values
 	CpusPerTres *string `json:"cpus_per_tres,omitempty"`
 	// job start deadline 
-	Deadline *string `json:"deadline,omitempty"`
+	Deadline *int32 `json:"deadline,omitempty"`
 	// command to be executed
-	DelayBoot *string `json:"delay_boot,omitempty"`
+	DelayBoot *int32 `json:"delay_boot,omitempty"`
 	// synchronize job execution with other jobs
 	Dependency *string `json:"dependency,omitempty"`
 	// highest exit code of all job steps
-	DerivedExitCode *string `json:"derived_exit_code,omitempty"`
+	DerivedExitCode *int32 `json:"derived_exit_code,omitempty"`
 	// time job is eligible for running
 	EligibleTime *int64 `json:"eligible_time,omitempty"`
 	// time of termination, actual or expected
@@ -100,20 +100,20 @@ type V0036JobResponseProperties struct {
 	// Job flags
 	GresDetail *[]string `json:"gres_detail,omitempty"`
 	// group job submitted as
-	GroupId *string `json:"group_id,omitempty"`
+	GroupId *int32 `json:"group_id,omitempty"`
 	// job ID
-	JobId *string `json:"job_id,omitempty"`
+	JobId *int32 `json:"job_id,omitempty"`
 	JobResources *V0036JobResources `json:"job_resources,omitempty"`
 	// state of the job
 	JobState *string `json:"job_state,omitempty"`
 	// last time job was evaluated for scheduling
-	LastSchedEvaluation *string `json:"last_sched_evaluation,omitempty"`
+	LastSchedEvaluation *int32 `json:"last_sched_evaluation,omitempty"`
 	// licenses required by the job
 	Licenses *string `json:"licenses,omitempty"`
 	// maximum number of cpus usable by job
-	MaxCpus *string `json:"max_cpus,omitempty"`
+	MaxCpus *int32 `json:"max_cpus,omitempty"`
 	// maximum number of nodes usable by job
-	MaxNodes *string `json:"max_nodes,omitempty"`
+	MaxNodes *int32 `json:"max_nodes,omitempty"`
 	// mcs_label if mcs plugin in use
 	McsLabel *string `json:"mcs_label,omitempty"`
 	// semicolon delimited list of TRES=# values
@@ -123,41 +123,41 @@ type V0036JobResponseProperties struct {
 	// list of nodes allocated to job
 	Nodes *string `json:"nodes,omitempty"`
 	// requested priority change
-	Nice *string `json:"nice,omitempty"`
+	Nice *int32 `json:"nice,omitempty"`
 	// number of tasks to invoke on each core
-	TasksPerCore *string `json:"tasks_per_core,omitempty"`
+	TasksPerCore *int32 `json:"tasks_per_core,omitempty"`
 	// number of tasks to invoke on each socket
-	TasksPerSocket *string `json:"tasks_per_socket,omitempty"`
+	TasksPerSocket *int32 `json:"tasks_per_socket,omitempty"`
 	// number of tasks to invoke on each board
-	TasksPerBoard *string `json:"tasks_per_board,omitempty"`
+	TasksPerBoard *int32 `json:"tasks_per_board,omitempty"`
 	// minimum number of cpus required by job
-	Cpus *string `json:"cpus,omitempty"`
+	Cpus *int32 `json:"cpus,omitempty"`
 	// minimum number of nodes required by job
-	NodeCount *string `json:"node_count,omitempty"`
+	NodeCount *int32 `json:"node_count,omitempty"`
 	// requested task count
-	Tasks *string `json:"tasks,omitempty"`
+	Tasks *int32 `json:"tasks,omitempty"`
 	// job ID of hetjob leader
-	HetJobId *string `json:"het_job_id,omitempty"`
+	HetJobId *int32 `json:"het_job_id,omitempty"`
 	// job IDs for all components
 	HetJobIdSet *string `json:"het_job_id_set,omitempty"`
 	// HetJob component offset from leader
-	HetJobOffset *string `json:"het_job_offset,omitempty"`
+	HetJobOffset *int32 `json:"het_job_offset,omitempty"`
 	// name of assigned partition
 	Partition *string `json:"partition,omitempty"`
 	// minimum real memory per node
-	MemoryPerNode *string `json:"memory_per_node,omitempty"`
+	MemoryPerNode *int32 `json:"memory_per_node,omitempty"`
 	// minimum real memory per cpu
-	MemoryPerCpu *string `json:"memory_per_cpu,omitempty"`
+	MemoryPerCpu *int32 `json:"memory_per_cpu,omitempty"`
 	// minimum # CPUs per node
-	MinimumCpusPerNode *string `json:"minimum_cpus_per_node,omitempty"`
+	MinimumCpusPerNode *int32 `json:"minimum_cpus_per_node,omitempty"`
 	// minimum tmp disk per node
-	MinimumTmpDiskPerNode *string `json:"minimum_tmp_disk_per_node,omitempty"`
+	MinimumTmpDiskPerNode *int32 `json:"minimum_tmp_disk_per_node,omitempty"`
 	// preemption signal time
 	PreemptTime *int64 `json:"preempt_time,omitempty"`
 	// time job ran prior to last suspend
 	PreSusTime *int64 `json:"pre_sus_time,omitempty"`
 	// relative priority of the job
-	Priority *string `json:"priority,omitempty"`
+	Priority *int32 `json:"priority,omitempty"`
 	// Job profiling requested
 	Profile *[]string `json:"profile,omitempty"`
 	// Quality of Service
@@ -171,7 +171,7 @@ type V0036JobResponseProperties struct {
 	// time of latest size change
 	ResizeTime *int64 `json:"resize_time,omitempty"`
 	// count of job restarts
-	RestartCnt *string `json:"restart_cnt,omitempty"`
+	RestartCnt *int32 `json:"restart_cnt,omitempty"`
 	// reservation name
 	ResvName *string `json:"resv_name,omitempty"`
 	// type and if job can share nodes with other jobs
@@ -179,9 +179,9 @@ type V0036JobResponseProperties struct {
 	// details requested
 	ShowFlags *[]string `json:"show_flags,omitempty"`
 	// sockets per board required by job
-	SocketsPerBoard *string `json:"sockets_per_board,omitempty"`
+	SocketsPerBoard *int32 `json:"sockets_per_board,omitempty"`
 	// sockets per node required by job
-	SocketsPerNode *string `json:"sockets_per_node,omitempty"`
+	SocketsPerNode *int32 `json:"sockets_per_node,omitempty"`
 	// time execution begins, actual or expected
 	StartTime *int64 `json:"start_time,omitempty"`
 	// optional details for state_reason
@@ -201,11 +201,11 @@ type V0036JobResponseProperties struct {
 	// slurmctld's arbitrary comment
 	SystemComment *string `json:"system_comment,omitempty"`
 	// maximum run time in minutes
-	TimeLimit *string `json:"time_limit,omitempty"`
+	TimeLimit *int64 `json:"time_limit,omitempty"`
 	// minimum run time in minutes
-	TimeMinimum *string `json:"time_minimum,omitempty"`
+	TimeMinimum *int64 `json:"time_minimum,omitempty"`
 	// threads per core required by job
-	ThreadsPerCore *string `json:"threads_per_core,omitempty"`
+	ThreadsPerCore *int32 `json:"threads_per_core,omitempty"`
 	// Task to TRES binding directives
 	TresBind *string `json:"tres_bind,omitempty"`
 	// TRES frequency directives
@@ -223,7 +223,7 @@ type V0036JobResponseProperties struct {
 	// tres used in the job
 	TresAllocStr *string `json:"tres_alloc_str,omitempty"`
 	// user id the job runs as
-	UserId *string `json:"user_id,omitempty"`
+	UserId *int64 `json:"user_id,omitempty"`
 	// user the job runs as
 	UserName *string `json:"user_name,omitempty"`
 	// wckey for job
@@ -346,9 +346,9 @@ func (o *V0036JobResponseProperties) SetAdminComment(v string) {
 }
 
 // GetArrayJobId returns the ArrayJobId field value if set, zero value otherwise.
-func (o *V0036JobResponseProperties) GetArrayJobId() string {
+func (o *V0036JobResponseProperties) GetArrayJobId() int32 {
 	if o == nil || o.ArrayJobId == nil {
-		var ret string
+		var ret int32
 		return ret
 	}
 	return *o.ArrayJobId
@@ -356,7 +356,7 @@ func (o *V0036JobResponseProperties) GetArrayJobId() string {
 
 // GetArrayJobIdOk returns a tuple with the ArrayJobId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *V0036JobResponseProperties) GetArrayJobIdOk() (*string, bool) {
+func (o *V0036JobResponseProperties) GetArrayJobIdOk() (*int32, bool) {
 	if o == nil || o.ArrayJobId == nil {
 		return nil, false
 	}
@@ -372,15 +372,15 @@ func (o *V0036JobResponseProperties) HasArrayJobId() bool {
 	return false
 }
 
-// SetArrayJobId gets a reference to the given string and assigns it to the ArrayJobId field.
-func (o *V0036JobResponseProperties) SetArrayJobId(v string) {
+// SetArrayJobId gets a reference to the given int32 and assigns it to the ArrayJobId field.
+func (o *V0036JobResponseProperties) SetArrayJobId(v int32) {
 	o.ArrayJobId = &v
 }
 
 // GetArrayTaskId returns the ArrayTaskId field value if set, zero value otherwise.
-func (o *V0036JobResponseProperties) GetArrayTaskId() string {
+func (o *V0036JobResponseProperties) GetArrayTaskId() int32 {
 	if o == nil || o.ArrayTaskId == nil {
-		var ret string
+		var ret int32
 		return ret
 	}
 	return *o.ArrayTaskId
@@ -388,7 +388,7 @@ func (o *V0036JobResponseProperties) GetArrayTaskId() string {
 
 // GetArrayTaskIdOk returns a tuple with the ArrayTaskId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *V0036JobResponseProperties) GetArrayTaskIdOk() (*string, bool) {
+func (o *V0036JobResponseProperties) GetArrayTaskIdOk() (*int32, bool) {
 	if o == nil || o.ArrayTaskId == nil {
 		return nil, false
 	}
@@ -404,15 +404,15 @@ func (o *V0036JobResponseProperties) HasArrayTaskId() bool {
 	return false
 }
 
-// SetArrayTaskId gets a reference to the given string and assigns it to the ArrayTaskId field.
-func (o *V0036JobResponseProperties) SetArrayTaskId(v string) {
+// SetArrayTaskId gets a reference to the given int32 and assigns it to the ArrayTaskId field.
+func (o *V0036JobResponseProperties) SetArrayTaskId(v int32) {
 	o.ArrayTaskId = &v
 }
 
 // GetArrayMaxTasks returns the ArrayMaxTasks field value if set, zero value otherwise.
-func (o *V0036JobResponseProperties) GetArrayMaxTasks() string {
+func (o *V0036JobResponseProperties) GetArrayMaxTasks() int32 {
 	if o == nil || o.ArrayMaxTasks == nil {
-		var ret string
+		var ret int32
 		return ret
 	}
 	return *o.ArrayMaxTasks
@@ -420,7 +420,7 @@ func (o *V0036JobResponseProperties) GetArrayMaxTasks() string {
 
 // GetArrayMaxTasksOk returns a tuple with the ArrayMaxTasks field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *V0036JobResponseProperties) GetArrayMaxTasksOk() (*string, bool) {
+func (o *V0036JobResponseProperties) GetArrayMaxTasksOk() (*int32, bool) {
 	if o == nil || o.ArrayMaxTasks == nil {
 		return nil, false
 	}
@@ -436,8 +436,8 @@ func (o *V0036JobResponseProperties) HasArrayMaxTasks() bool {
 	return false
 }
 
-// SetArrayMaxTasks gets a reference to the given string and assigns it to the ArrayMaxTasks field.
-func (o *V0036JobResponseProperties) SetArrayMaxTasks(v string) {
+// SetArrayMaxTasks gets a reference to the given int32 and assigns it to the ArrayMaxTasks field.
+func (o *V0036JobResponseProperties) SetArrayMaxTasks(v int32) {
 	o.ArrayMaxTasks = &v
 }
 
@@ -474,9 +474,9 @@ func (o *V0036JobResponseProperties) SetArrayTaskString(v string) {
 }
 
 // GetAssociationId returns the AssociationId field value if set, zero value otherwise.
-func (o *V0036JobResponseProperties) GetAssociationId() string {
+func (o *V0036JobResponseProperties) GetAssociationId() int32 {
 	if o == nil || o.AssociationId == nil {
-		var ret string
+		var ret int32
 		return ret
 	}
 	return *o.AssociationId
@@ -484,7 +484,7 @@ func (o *V0036JobResponseProperties) GetAssociationId() string {
 
 // GetAssociationIdOk returns a tuple with the AssociationId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *V0036JobResponseProperties) GetAssociationIdOk() (*string, bool) {
+func (o *V0036JobResponseProperties) GetAssociationIdOk() (*int32, bool) {
 	if o == nil || o.AssociationId == nil {
 		return nil, false
 	}
@@ -500,8 +500,8 @@ func (o *V0036JobResponseProperties) HasAssociationId() bool {
 	return false
 }
 
-// SetAssociationId gets a reference to the given string and assigns it to the AssociationId field.
-func (o *V0036JobResponseProperties) SetAssociationId(v string) {
+// SetAssociationId gets a reference to the given int32 and assigns it to the AssociationId field.
+func (o *V0036JobResponseProperties) SetAssociationId(v int32) {
 	o.AssociationId = &v
 }
 
@@ -954,9 +954,9 @@ func (o *V0036JobResponseProperties) SetCoresPerSocket(v string) {
 }
 
 // GetBillableTres returns the BillableTres field value if set, zero value otherwise.
-func (o *V0036JobResponseProperties) GetBillableTres() string {
+func (o *V0036JobResponseProperties) GetBillableTres() float32 {
 	if o == nil || o.BillableTres == nil {
-		var ret string
+		var ret float32
 		return ret
 	}
 	return *o.BillableTres
@@ -964,7 +964,7 @@ func (o *V0036JobResponseProperties) GetBillableTres() string {
 
 // GetBillableTresOk returns a tuple with the BillableTres field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *V0036JobResponseProperties) GetBillableTresOk() (*string, bool) {
+func (o *V0036JobResponseProperties) GetBillableTresOk() (*float32, bool) {
 	if o == nil || o.BillableTres == nil {
 		return nil, false
 	}
@@ -980,8 +980,8 @@ func (o *V0036JobResponseProperties) HasBillableTres() bool {
 	return false
 }
 
-// SetBillableTres gets a reference to the given string and assigns it to the BillableTres field.
-func (o *V0036JobResponseProperties) SetBillableTres(v string) {
+// SetBillableTres gets a reference to the given float32 and assigns it to the BillableTres field.
+func (o *V0036JobResponseProperties) SetBillableTres(v float32) {
 	o.BillableTres = &v
 }
 
@@ -1146,9 +1146,9 @@ func (o *V0036JobResponseProperties) SetCpusPerTres(v string) {
 }
 
 // GetDeadline returns the Deadline field value if set, zero value otherwise.
-func (o *V0036JobResponseProperties) GetDeadline() string {
+func (o *V0036JobResponseProperties) GetDeadline() int32 {
 	if o == nil || o.Deadline == nil {
-		var ret string
+		var ret int32
 		return ret
 	}
 	return *o.Deadline
@@ -1156,7 +1156,7 @@ func (o *V0036JobResponseProperties) GetDeadline() string {
 
 // GetDeadlineOk returns a tuple with the Deadline field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *V0036JobResponseProperties) GetDeadlineOk() (*string, bool) {
+func (o *V0036JobResponseProperties) GetDeadlineOk() (*int32, bool) {
 	if o == nil || o.Deadline == nil {
 		return nil, false
 	}
@@ -1172,15 +1172,15 @@ func (o *V0036JobResponseProperties) HasDeadline() bool {
 	return false
 }
 
-// SetDeadline gets a reference to the given string and assigns it to the Deadline field.
-func (o *V0036JobResponseProperties) SetDeadline(v string) {
+// SetDeadline gets a reference to the given int32 and assigns it to the Deadline field.
+func (o *V0036JobResponseProperties) SetDeadline(v int32) {
 	o.Deadline = &v
 }
 
 // GetDelayBoot returns the DelayBoot field value if set, zero value otherwise.
-func (o *V0036JobResponseProperties) GetDelayBoot() string {
+func (o *V0036JobResponseProperties) GetDelayBoot() int32 {
 	if o == nil || o.DelayBoot == nil {
-		var ret string
+		var ret int32
 		return ret
 	}
 	return *o.DelayBoot
@@ -1188,7 +1188,7 @@ func (o *V0036JobResponseProperties) GetDelayBoot() string {
 
 // GetDelayBootOk returns a tuple with the DelayBoot field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *V0036JobResponseProperties) GetDelayBootOk() (*string, bool) {
+func (o *V0036JobResponseProperties) GetDelayBootOk() (*int32, bool) {
 	if o == nil || o.DelayBoot == nil {
 		return nil, false
 	}
@@ -1204,8 +1204,8 @@ func (o *V0036JobResponseProperties) HasDelayBoot() bool {
 	return false
 }
 
-// SetDelayBoot gets a reference to the given string and assigns it to the DelayBoot field.
-func (o *V0036JobResponseProperties) SetDelayBoot(v string) {
+// SetDelayBoot gets a reference to the given int32 and assigns it to the DelayBoot field.
+func (o *V0036JobResponseProperties) SetDelayBoot(v int32) {
 	o.DelayBoot = &v
 }
 
@@ -1242,9 +1242,9 @@ func (o *V0036JobResponseProperties) SetDependency(v string) {
 }
 
 // GetDerivedExitCode returns the DerivedExitCode field value if set, zero value otherwise.
-func (o *V0036JobResponseProperties) GetDerivedExitCode() string {
+func (o *V0036JobResponseProperties) GetDerivedExitCode() int32 {
 	if o == nil || o.DerivedExitCode == nil {
-		var ret string
+		var ret int32
 		return ret
 	}
 	return *o.DerivedExitCode
@@ -1252,7 +1252,7 @@ func (o *V0036JobResponseProperties) GetDerivedExitCode() string {
 
 // GetDerivedExitCodeOk returns a tuple with the DerivedExitCode field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *V0036JobResponseProperties) GetDerivedExitCodeOk() (*string, bool) {
+func (o *V0036JobResponseProperties) GetDerivedExitCodeOk() (*int32, bool) {
 	if o == nil || o.DerivedExitCode == nil {
 		return nil, false
 	}
@@ -1268,8 +1268,8 @@ func (o *V0036JobResponseProperties) HasDerivedExitCode() bool {
 	return false
 }
 
-// SetDerivedExitCode gets a reference to the given string and assigns it to the DerivedExitCode field.
-func (o *V0036JobResponseProperties) SetDerivedExitCode(v string) {
+// SetDerivedExitCode gets a reference to the given int32 and assigns it to the DerivedExitCode field.
+func (o *V0036JobResponseProperties) SetDerivedExitCode(v int32) {
 	o.DerivedExitCode = &v
 }
 
@@ -1562,9 +1562,9 @@ func (o *V0036JobResponseProperties) SetGresDetail(v []string) {
 }
 
 // GetGroupId returns the GroupId field value if set, zero value otherwise.
-func (o *V0036JobResponseProperties) GetGroupId() string {
+func (o *V0036JobResponseProperties) GetGroupId() int32 {
 	if o == nil || o.GroupId == nil {
-		var ret string
+		var ret int32
 		return ret
 	}
 	return *o.GroupId
@@ -1572,7 +1572,7 @@ func (o *V0036JobResponseProperties) GetGroupId() string {
 
 // GetGroupIdOk returns a tuple with the GroupId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *V0036JobResponseProperties) GetGroupIdOk() (*string, bool) {
+func (o *V0036JobResponseProperties) GetGroupIdOk() (*int32, bool) {
 	if o == nil || o.GroupId == nil {
 		return nil, false
 	}
@@ -1588,15 +1588,15 @@ func (o *V0036JobResponseProperties) HasGroupId() bool {
 	return false
 }
 
-// SetGroupId gets a reference to the given string and assigns it to the GroupId field.
-func (o *V0036JobResponseProperties) SetGroupId(v string) {
+// SetGroupId gets a reference to the given int32 and assigns it to the GroupId field.
+func (o *V0036JobResponseProperties) SetGroupId(v int32) {
 	o.GroupId = &v
 }
 
 // GetJobId returns the JobId field value if set, zero value otherwise.
-func (o *V0036JobResponseProperties) GetJobId() string {
+func (o *V0036JobResponseProperties) GetJobId() int32 {
 	if o == nil || o.JobId == nil {
-		var ret string
+		var ret int32
 		return ret
 	}
 	return *o.JobId
@@ -1604,7 +1604,7 @@ func (o *V0036JobResponseProperties) GetJobId() string {
 
 // GetJobIdOk returns a tuple with the JobId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *V0036JobResponseProperties) GetJobIdOk() (*string, bool) {
+func (o *V0036JobResponseProperties) GetJobIdOk() (*int32, bool) {
 	if o == nil || o.JobId == nil {
 		return nil, false
 	}
@@ -1620,8 +1620,8 @@ func (o *V0036JobResponseProperties) HasJobId() bool {
 	return false
 }
 
-// SetJobId gets a reference to the given string and assigns it to the JobId field.
-func (o *V0036JobResponseProperties) SetJobId(v string) {
+// SetJobId gets a reference to the given int32 and assigns it to the JobId field.
+func (o *V0036JobResponseProperties) SetJobId(v int32) {
 	o.JobId = &v
 }
 
@@ -1690,9 +1690,9 @@ func (o *V0036JobResponseProperties) SetJobState(v string) {
 }
 
 // GetLastSchedEvaluation returns the LastSchedEvaluation field value if set, zero value otherwise.
-func (o *V0036JobResponseProperties) GetLastSchedEvaluation() string {
+func (o *V0036JobResponseProperties) GetLastSchedEvaluation() int32 {
 	if o == nil || o.LastSchedEvaluation == nil {
-		var ret string
+		var ret int32
 		return ret
 	}
 	return *o.LastSchedEvaluation
@@ -1700,7 +1700,7 @@ func (o *V0036JobResponseProperties) GetLastSchedEvaluation() string {
 
 // GetLastSchedEvaluationOk returns a tuple with the LastSchedEvaluation field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *V0036JobResponseProperties) GetLastSchedEvaluationOk() (*string, bool) {
+func (o *V0036JobResponseProperties) GetLastSchedEvaluationOk() (*int32, bool) {
 	if o == nil || o.LastSchedEvaluation == nil {
 		return nil, false
 	}
@@ -1716,8 +1716,8 @@ func (o *V0036JobResponseProperties) HasLastSchedEvaluation() bool {
 	return false
 }
 
-// SetLastSchedEvaluation gets a reference to the given string and assigns it to the LastSchedEvaluation field.
-func (o *V0036JobResponseProperties) SetLastSchedEvaluation(v string) {
+// SetLastSchedEvaluation gets a reference to the given int32 and assigns it to the LastSchedEvaluation field.
+func (o *V0036JobResponseProperties) SetLastSchedEvaluation(v int32) {
 	o.LastSchedEvaluation = &v
 }
 
@@ -1754,9 +1754,9 @@ func (o *V0036JobResponseProperties) SetLicenses(v string) {
 }
 
 // GetMaxCpus returns the MaxCpus field value if set, zero value otherwise.
-func (o *V0036JobResponseProperties) GetMaxCpus() string {
+func (o *V0036JobResponseProperties) GetMaxCpus() int32 {
 	if o == nil || o.MaxCpus == nil {
-		var ret string
+		var ret int32
 		return ret
 	}
 	return *o.MaxCpus
@@ -1764,7 +1764,7 @@ func (o *V0036JobResponseProperties) GetMaxCpus() string {
 
 // GetMaxCpusOk returns a tuple with the MaxCpus field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *V0036JobResponseProperties) GetMaxCpusOk() (*string, bool) {
+func (o *V0036JobResponseProperties) GetMaxCpusOk() (*int32, bool) {
 	if o == nil || o.MaxCpus == nil {
 		return nil, false
 	}
@@ -1780,15 +1780,15 @@ func (o *V0036JobResponseProperties) HasMaxCpus() bool {
 	return false
 }
 
-// SetMaxCpus gets a reference to the given string and assigns it to the MaxCpus field.
-func (o *V0036JobResponseProperties) SetMaxCpus(v string) {
+// SetMaxCpus gets a reference to the given int32 and assigns it to the MaxCpus field.
+func (o *V0036JobResponseProperties) SetMaxCpus(v int32) {
 	o.MaxCpus = &v
 }
 
 // GetMaxNodes returns the MaxNodes field value if set, zero value otherwise.
-func (o *V0036JobResponseProperties) GetMaxNodes() string {
+func (o *V0036JobResponseProperties) GetMaxNodes() int32 {
 	if o == nil || o.MaxNodes == nil {
-		var ret string
+		var ret int32
 		return ret
 	}
 	return *o.MaxNodes
@@ -1796,7 +1796,7 @@ func (o *V0036JobResponseProperties) GetMaxNodes() string {
 
 // GetMaxNodesOk returns a tuple with the MaxNodes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *V0036JobResponseProperties) GetMaxNodesOk() (*string, bool) {
+func (o *V0036JobResponseProperties) GetMaxNodesOk() (*int32, bool) {
 	if o == nil || o.MaxNodes == nil {
 		return nil, false
 	}
@@ -1812,8 +1812,8 @@ func (o *V0036JobResponseProperties) HasMaxNodes() bool {
 	return false
 }
 
-// SetMaxNodes gets a reference to the given string and assigns it to the MaxNodes field.
-func (o *V0036JobResponseProperties) SetMaxNodes(v string) {
+// SetMaxNodes gets a reference to the given int32 and assigns it to the MaxNodes field.
+func (o *V0036JobResponseProperties) SetMaxNodes(v int32) {
 	o.MaxNodes = &v
 }
 
@@ -1946,9 +1946,9 @@ func (o *V0036JobResponseProperties) SetNodes(v string) {
 }
 
 // GetNice returns the Nice field value if set, zero value otherwise.
-func (o *V0036JobResponseProperties) GetNice() string {
+func (o *V0036JobResponseProperties) GetNice() int32 {
 	if o == nil || o.Nice == nil {
-		var ret string
+		var ret int32
 		return ret
 	}
 	return *o.Nice
@@ -1956,7 +1956,7 @@ func (o *V0036JobResponseProperties) GetNice() string {
 
 // GetNiceOk returns a tuple with the Nice field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *V0036JobResponseProperties) GetNiceOk() (*string, bool) {
+func (o *V0036JobResponseProperties) GetNiceOk() (*int32, bool) {
 	if o == nil || o.Nice == nil {
 		return nil, false
 	}
@@ -1972,15 +1972,15 @@ func (o *V0036JobResponseProperties) HasNice() bool {
 	return false
 }
 
-// SetNice gets a reference to the given string and assigns it to the Nice field.
-func (o *V0036JobResponseProperties) SetNice(v string) {
+// SetNice gets a reference to the given int32 and assigns it to the Nice field.
+func (o *V0036JobResponseProperties) SetNice(v int32) {
 	o.Nice = &v
 }
 
 // GetTasksPerCore returns the TasksPerCore field value if set, zero value otherwise.
-func (o *V0036JobResponseProperties) GetTasksPerCore() string {
+func (o *V0036JobResponseProperties) GetTasksPerCore() int32 {
 	if o == nil || o.TasksPerCore == nil {
-		var ret string
+		var ret int32
 		return ret
 	}
 	return *o.TasksPerCore
@@ -1988,7 +1988,7 @@ func (o *V0036JobResponseProperties) GetTasksPerCore() string {
 
 // GetTasksPerCoreOk returns a tuple with the TasksPerCore field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *V0036JobResponseProperties) GetTasksPerCoreOk() (*string, bool) {
+func (o *V0036JobResponseProperties) GetTasksPerCoreOk() (*int32, bool) {
 	if o == nil || o.TasksPerCore == nil {
 		return nil, false
 	}
@@ -2004,15 +2004,15 @@ func (o *V0036JobResponseProperties) HasTasksPerCore() bool {
 	return false
 }
 
-// SetTasksPerCore gets a reference to the given string and assigns it to the TasksPerCore field.
-func (o *V0036JobResponseProperties) SetTasksPerCore(v string) {
+// SetTasksPerCore gets a reference to the given int32 and assigns it to the TasksPerCore field.
+func (o *V0036JobResponseProperties) SetTasksPerCore(v int32) {
 	o.TasksPerCore = &v
 }
 
 // GetTasksPerSocket returns the TasksPerSocket field value if set, zero value otherwise.
-func (o *V0036JobResponseProperties) GetTasksPerSocket() string {
+func (o *V0036JobResponseProperties) GetTasksPerSocket() int32 {
 	if o == nil || o.TasksPerSocket == nil {
-		var ret string
+		var ret int32
 		return ret
 	}
 	return *o.TasksPerSocket
@@ -2020,7 +2020,7 @@ func (o *V0036JobResponseProperties) GetTasksPerSocket() string {
 
 // GetTasksPerSocketOk returns a tuple with the TasksPerSocket field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *V0036JobResponseProperties) GetTasksPerSocketOk() (*string, bool) {
+func (o *V0036JobResponseProperties) GetTasksPerSocketOk() (*int32, bool) {
 	if o == nil || o.TasksPerSocket == nil {
 		return nil, false
 	}
@@ -2036,15 +2036,15 @@ func (o *V0036JobResponseProperties) HasTasksPerSocket() bool {
 	return false
 }
 
-// SetTasksPerSocket gets a reference to the given string and assigns it to the TasksPerSocket field.
-func (o *V0036JobResponseProperties) SetTasksPerSocket(v string) {
+// SetTasksPerSocket gets a reference to the given int32 and assigns it to the TasksPerSocket field.
+func (o *V0036JobResponseProperties) SetTasksPerSocket(v int32) {
 	o.TasksPerSocket = &v
 }
 
 // GetTasksPerBoard returns the TasksPerBoard field value if set, zero value otherwise.
-func (o *V0036JobResponseProperties) GetTasksPerBoard() string {
+func (o *V0036JobResponseProperties) GetTasksPerBoard() int32 {
 	if o == nil || o.TasksPerBoard == nil {
-		var ret string
+		var ret int32
 		return ret
 	}
 	return *o.TasksPerBoard
@@ -2052,7 +2052,7 @@ func (o *V0036JobResponseProperties) GetTasksPerBoard() string {
 
 // GetTasksPerBoardOk returns a tuple with the TasksPerBoard field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *V0036JobResponseProperties) GetTasksPerBoardOk() (*string, bool) {
+func (o *V0036JobResponseProperties) GetTasksPerBoardOk() (*int32, bool) {
 	if o == nil || o.TasksPerBoard == nil {
 		return nil, false
 	}
@@ -2068,15 +2068,15 @@ func (o *V0036JobResponseProperties) HasTasksPerBoard() bool {
 	return false
 }
 
-// SetTasksPerBoard gets a reference to the given string and assigns it to the TasksPerBoard field.
-func (o *V0036JobResponseProperties) SetTasksPerBoard(v string) {
+// SetTasksPerBoard gets a reference to the given int32 and assigns it to the TasksPerBoard field.
+func (o *V0036JobResponseProperties) SetTasksPerBoard(v int32) {
 	o.TasksPerBoard = &v
 }
 
 // GetCpus returns the Cpus field value if set, zero value otherwise.
-func (o *V0036JobResponseProperties) GetCpus() string {
+func (o *V0036JobResponseProperties) GetCpus() int32 {
 	if o == nil || o.Cpus == nil {
-		var ret string
+		var ret int32
 		return ret
 	}
 	return *o.Cpus
@@ -2084,7 +2084,7 @@ func (o *V0036JobResponseProperties) GetCpus() string {
 
 // GetCpusOk returns a tuple with the Cpus field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *V0036JobResponseProperties) GetCpusOk() (*string, bool) {
+func (o *V0036JobResponseProperties) GetCpusOk() (*int32, bool) {
 	if o == nil || o.Cpus == nil {
 		return nil, false
 	}
@@ -2100,15 +2100,15 @@ func (o *V0036JobResponseProperties) HasCpus() bool {
 	return false
 }
 
-// SetCpus gets a reference to the given string and assigns it to the Cpus field.
-func (o *V0036JobResponseProperties) SetCpus(v string) {
+// SetCpus gets a reference to the given int32 and assigns it to the Cpus field.
+func (o *V0036JobResponseProperties) SetCpus(v int32) {
 	o.Cpus = &v
 }
 
 // GetNodeCount returns the NodeCount field value if set, zero value otherwise.
-func (o *V0036JobResponseProperties) GetNodeCount() string {
+func (o *V0036JobResponseProperties) GetNodeCount() int32 {
 	if o == nil || o.NodeCount == nil {
-		var ret string
+		var ret int32
 		return ret
 	}
 	return *o.NodeCount
@@ -2116,7 +2116,7 @@ func (o *V0036JobResponseProperties) GetNodeCount() string {
 
 // GetNodeCountOk returns a tuple with the NodeCount field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *V0036JobResponseProperties) GetNodeCountOk() (*string, bool) {
+func (o *V0036JobResponseProperties) GetNodeCountOk() (*int32, bool) {
 	if o == nil || o.NodeCount == nil {
 		return nil, false
 	}
@@ -2132,15 +2132,15 @@ func (o *V0036JobResponseProperties) HasNodeCount() bool {
 	return false
 }
 
-// SetNodeCount gets a reference to the given string and assigns it to the NodeCount field.
-func (o *V0036JobResponseProperties) SetNodeCount(v string) {
+// SetNodeCount gets a reference to the given int32 and assigns it to the NodeCount field.
+func (o *V0036JobResponseProperties) SetNodeCount(v int32) {
 	o.NodeCount = &v
 }
 
 // GetTasks returns the Tasks field value if set, zero value otherwise.
-func (o *V0036JobResponseProperties) GetTasks() string {
+func (o *V0036JobResponseProperties) GetTasks() int32 {
 	if o == nil || o.Tasks == nil {
-		var ret string
+		var ret int32
 		return ret
 	}
 	return *o.Tasks
@@ -2148,7 +2148,7 @@ func (o *V0036JobResponseProperties) GetTasks() string {
 
 // GetTasksOk returns a tuple with the Tasks field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *V0036JobResponseProperties) GetTasksOk() (*string, bool) {
+func (o *V0036JobResponseProperties) GetTasksOk() (*int32, bool) {
 	if o == nil || o.Tasks == nil {
 		return nil, false
 	}
@@ -2164,15 +2164,15 @@ func (o *V0036JobResponseProperties) HasTasks() bool {
 	return false
 }
 
-// SetTasks gets a reference to the given string and assigns it to the Tasks field.
-func (o *V0036JobResponseProperties) SetTasks(v string) {
+// SetTasks gets a reference to the given int32 and assigns it to the Tasks field.
+func (o *V0036JobResponseProperties) SetTasks(v int32) {
 	o.Tasks = &v
 }
 
 // GetHetJobId returns the HetJobId field value if set, zero value otherwise.
-func (o *V0036JobResponseProperties) GetHetJobId() string {
+func (o *V0036JobResponseProperties) GetHetJobId() int32 {
 	if o == nil || o.HetJobId == nil {
-		var ret string
+		var ret int32
 		return ret
 	}
 	return *o.HetJobId
@@ -2180,7 +2180,7 @@ func (o *V0036JobResponseProperties) GetHetJobId() string {
 
 // GetHetJobIdOk returns a tuple with the HetJobId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *V0036JobResponseProperties) GetHetJobIdOk() (*string, bool) {
+func (o *V0036JobResponseProperties) GetHetJobIdOk() (*int32, bool) {
 	if o == nil || o.HetJobId == nil {
 		return nil, false
 	}
@@ -2196,8 +2196,8 @@ func (o *V0036JobResponseProperties) HasHetJobId() bool {
 	return false
 }
 
-// SetHetJobId gets a reference to the given string and assigns it to the HetJobId field.
-func (o *V0036JobResponseProperties) SetHetJobId(v string) {
+// SetHetJobId gets a reference to the given int32 and assigns it to the HetJobId field.
+func (o *V0036JobResponseProperties) SetHetJobId(v int32) {
 	o.HetJobId = &v
 }
 
@@ -2234,9 +2234,9 @@ func (o *V0036JobResponseProperties) SetHetJobIdSet(v string) {
 }
 
 // GetHetJobOffset returns the HetJobOffset field value if set, zero value otherwise.
-func (o *V0036JobResponseProperties) GetHetJobOffset() string {
+func (o *V0036JobResponseProperties) GetHetJobOffset() int32 {
 	if o == nil || o.HetJobOffset == nil {
-		var ret string
+		var ret int32
 		return ret
 	}
 	return *o.HetJobOffset
@@ -2244,7 +2244,7 @@ func (o *V0036JobResponseProperties) GetHetJobOffset() string {
 
 // GetHetJobOffsetOk returns a tuple with the HetJobOffset field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *V0036JobResponseProperties) GetHetJobOffsetOk() (*string, bool) {
+func (o *V0036JobResponseProperties) GetHetJobOffsetOk() (*int32, bool) {
 	if o == nil || o.HetJobOffset == nil {
 		return nil, false
 	}
@@ -2260,8 +2260,8 @@ func (o *V0036JobResponseProperties) HasHetJobOffset() bool {
 	return false
 }
 
-// SetHetJobOffset gets a reference to the given string and assigns it to the HetJobOffset field.
-func (o *V0036JobResponseProperties) SetHetJobOffset(v string) {
+// SetHetJobOffset gets a reference to the given int32 and assigns it to the HetJobOffset field.
+func (o *V0036JobResponseProperties) SetHetJobOffset(v int32) {
 	o.HetJobOffset = &v
 }
 
@@ -2298,9 +2298,9 @@ func (o *V0036JobResponseProperties) SetPartition(v string) {
 }
 
 // GetMemoryPerNode returns the MemoryPerNode field value if set, zero value otherwise.
-func (o *V0036JobResponseProperties) GetMemoryPerNode() string {
+func (o *V0036JobResponseProperties) GetMemoryPerNode() int32 {
 	if o == nil || o.MemoryPerNode == nil {
-		var ret string
+		var ret int32
 		return ret
 	}
 	return *o.MemoryPerNode
@@ -2308,7 +2308,7 @@ func (o *V0036JobResponseProperties) GetMemoryPerNode() string {
 
 // GetMemoryPerNodeOk returns a tuple with the MemoryPerNode field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *V0036JobResponseProperties) GetMemoryPerNodeOk() (*string, bool) {
+func (o *V0036JobResponseProperties) GetMemoryPerNodeOk() (*int32, bool) {
 	if o == nil || o.MemoryPerNode == nil {
 		return nil, false
 	}
@@ -2324,15 +2324,15 @@ func (o *V0036JobResponseProperties) HasMemoryPerNode() bool {
 	return false
 }
 
-// SetMemoryPerNode gets a reference to the given string and assigns it to the MemoryPerNode field.
-func (o *V0036JobResponseProperties) SetMemoryPerNode(v string) {
+// SetMemoryPerNode gets a reference to the given int32 and assigns it to the MemoryPerNode field.
+func (o *V0036JobResponseProperties) SetMemoryPerNode(v int32) {
 	o.MemoryPerNode = &v
 }
 
 // GetMemoryPerCpu returns the MemoryPerCpu field value if set, zero value otherwise.
-func (o *V0036JobResponseProperties) GetMemoryPerCpu() string {
+func (o *V0036JobResponseProperties) GetMemoryPerCpu() int32 {
 	if o == nil || o.MemoryPerCpu == nil {
-		var ret string
+		var ret int32
 		return ret
 	}
 	return *o.MemoryPerCpu
@@ -2340,7 +2340,7 @@ func (o *V0036JobResponseProperties) GetMemoryPerCpu() string {
 
 // GetMemoryPerCpuOk returns a tuple with the MemoryPerCpu field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *V0036JobResponseProperties) GetMemoryPerCpuOk() (*string, bool) {
+func (o *V0036JobResponseProperties) GetMemoryPerCpuOk() (*int32, bool) {
 	if o == nil || o.MemoryPerCpu == nil {
 		return nil, false
 	}
@@ -2356,15 +2356,15 @@ func (o *V0036JobResponseProperties) HasMemoryPerCpu() bool {
 	return false
 }
 
-// SetMemoryPerCpu gets a reference to the given string and assigns it to the MemoryPerCpu field.
-func (o *V0036JobResponseProperties) SetMemoryPerCpu(v string) {
+// SetMemoryPerCpu gets a reference to the given int32 and assigns it to the MemoryPerCpu field.
+func (o *V0036JobResponseProperties) SetMemoryPerCpu(v int32) {
 	o.MemoryPerCpu = &v
 }
 
 // GetMinimumCpusPerNode returns the MinimumCpusPerNode field value if set, zero value otherwise.
-func (o *V0036JobResponseProperties) GetMinimumCpusPerNode() string {
+func (o *V0036JobResponseProperties) GetMinimumCpusPerNode() int32 {
 	if o == nil || o.MinimumCpusPerNode == nil {
-		var ret string
+		var ret int32
 		return ret
 	}
 	return *o.MinimumCpusPerNode
@@ -2372,7 +2372,7 @@ func (o *V0036JobResponseProperties) GetMinimumCpusPerNode() string {
 
 // GetMinimumCpusPerNodeOk returns a tuple with the MinimumCpusPerNode field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *V0036JobResponseProperties) GetMinimumCpusPerNodeOk() (*string, bool) {
+func (o *V0036JobResponseProperties) GetMinimumCpusPerNodeOk() (*int32, bool) {
 	if o == nil || o.MinimumCpusPerNode == nil {
 		return nil, false
 	}
@@ -2388,15 +2388,15 @@ func (o *V0036JobResponseProperties) HasMinimumCpusPerNode() bool {
 	return false
 }
 
-// SetMinimumCpusPerNode gets a reference to the given string and assigns it to the MinimumCpusPerNode field.
-func (o *V0036JobResponseProperties) SetMinimumCpusPerNode(v string) {
+// SetMinimumCpusPerNode gets a reference to the given int32 and assigns it to the MinimumCpusPerNode field.
+func (o *V0036JobResponseProperties) SetMinimumCpusPerNode(v int32) {
 	o.MinimumCpusPerNode = &v
 }
 
 // GetMinimumTmpDiskPerNode returns the MinimumTmpDiskPerNode field value if set, zero value otherwise.
-func (o *V0036JobResponseProperties) GetMinimumTmpDiskPerNode() string {
+func (o *V0036JobResponseProperties) GetMinimumTmpDiskPerNode() int32 {
 	if o == nil || o.MinimumTmpDiskPerNode == nil {
-		var ret string
+		var ret int32
 		return ret
 	}
 	return *o.MinimumTmpDiskPerNode
@@ -2404,7 +2404,7 @@ func (o *V0036JobResponseProperties) GetMinimumTmpDiskPerNode() string {
 
 // GetMinimumTmpDiskPerNodeOk returns a tuple with the MinimumTmpDiskPerNode field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *V0036JobResponseProperties) GetMinimumTmpDiskPerNodeOk() (*string, bool) {
+func (o *V0036JobResponseProperties) GetMinimumTmpDiskPerNodeOk() (*int32, bool) {
 	if o == nil || o.MinimumTmpDiskPerNode == nil {
 		return nil, false
 	}
@@ -2420,8 +2420,8 @@ func (o *V0036JobResponseProperties) HasMinimumTmpDiskPerNode() bool {
 	return false
 }
 
-// SetMinimumTmpDiskPerNode gets a reference to the given string and assigns it to the MinimumTmpDiskPerNode field.
-func (o *V0036JobResponseProperties) SetMinimumTmpDiskPerNode(v string) {
+// SetMinimumTmpDiskPerNode gets a reference to the given int32 and assigns it to the MinimumTmpDiskPerNode field.
+func (o *V0036JobResponseProperties) SetMinimumTmpDiskPerNode(v int32) {
 	o.MinimumTmpDiskPerNode = &v
 }
 
@@ -2490,9 +2490,9 @@ func (o *V0036JobResponseProperties) SetPreSusTime(v int64) {
 }
 
 // GetPriority returns the Priority field value if set, zero value otherwise.
-func (o *V0036JobResponseProperties) GetPriority() string {
+func (o *V0036JobResponseProperties) GetPriority() int32 {
 	if o == nil || o.Priority == nil {
-		var ret string
+		var ret int32
 		return ret
 	}
 	return *o.Priority
@@ -2500,7 +2500,7 @@ func (o *V0036JobResponseProperties) GetPriority() string {
 
 // GetPriorityOk returns a tuple with the Priority field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *V0036JobResponseProperties) GetPriorityOk() (*string, bool) {
+func (o *V0036JobResponseProperties) GetPriorityOk() (*int32, bool) {
 	if o == nil || o.Priority == nil {
 		return nil, false
 	}
@@ -2516,8 +2516,8 @@ func (o *V0036JobResponseProperties) HasPriority() bool {
 	return false
 }
 
-// SetPriority gets a reference to the given string and assigns it to the Priority field.
-func (o *V0036JobResponseProperties) SetPriority(v string) {
+// SetPriority gets a reference to the given int32 and assigns it to the Priority field.
+func (o *V0036JobResponseProperties) SetPriority(v int32) {
 	o.Priority = &v
 }
 
@@ -2714,9 +2714,9 @@ func (o *V0036JobResponseProperties) SetResizeTime(v int64) {
 }
 
 // GetRestartCnt returns the RestartCnt field value if set, zero value otherwise.
-func (o *V0036JobResponseProperties) GetRestartCnt() string {
+func (o *V0036JobResponseProperties) GetRestartCnt() int32 {
 	if o == nil || o.RestartCnt == nil {
-		var ret string
+		var ret int32
 		return ret
 	}
 	return *o.RestartCnt
@@ -2724,7 +2724,7 @@ func (o *V0036JobResponseProperties) GetRestartCnt() string {
 
 // GetRestartCntOk returns a tuple with the RestartCnt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *V0036JobResponseProperties) GetRestartCntOk() (*string, bool) {
+func (o *V0036JobResponseProperties) GetRestartCntOk() (*int32, bool) {
 	if o == nil || o.RestartCnt == nil {
 		return nil, false
 	}
@@ -2740,8 +2740,8 @@ func (o *V0036JobResponseProperties) HasRestartCnt() bool {
 	return false
 }
 
-// SetRestartCnt gets a reference to the given string and assigns it to the RestartCnt field.
-func (o *V0036JobResponseProperties) SetRestartCnt(v string) {
+// SetRestartCnt gets a reference to the given int32 and assigns it to the RestartCnt field.
+func (o *V0036JobResponseProperties) SetRestartCnt(v int32) {
 	o.RestartCnt = &v
 }
 
@@ -2842,9 +2842,9 @@ func (o *V0036JobResponseProperties) SetShowFlags(v []string) {
 }
 
 // GetSocketsPerBoard returns the SocketsPerBoard field value if set, zero value otherwise.
-func (o *V0036JobResponseProperties) GetSocketsPerBoard() string {
+func (o *V0036JobResponseProperties) GetSocketsPerBoard() int32 {
 	if o == nil || o.SocketsPerBoard == nil {
-		var ret string
+		var ret int32
 		return ret
 	}
 	return *o.SocketsPerBoard
@@ -2852,7 +2852,7 @@ func (o *V0036JobResponseProperties) GetSocketsPerBoard() string {
 
 // GetSocketsPerBoardOk returns a tuple with the SocketsPerBoard field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *V0036JobResponseProperties) GetSocketsPerBoardOk() (*string, bool) {
+func (o *V0036JobResponseProperties) GetSocketsPerBoardOk() (*int32, bool) {
 	if o == nil || o.SocketsPerBoard == nil {
 		return nil, false
 	}
@@ -2868,15 +2868,15 @@ func (o *V0036JobResponseProperties) HasSocketsPerBoard() bool {
 	return false
 }
 
-// SetSocketsPerBoard gets a reference to the given string and assigns it to the SocketsPerBoard field.
-func (o *V0036JobResponseProperties) SetSocketsPerBoard(v string) {
+// SetSocketsPerBoard gets a reference to the given int32 and assigns it to the SocketsPerBoard field.
+func (o *V0036JobResponseProperties) SetSocketsPerBoard(v int32) {
 	o.SocketsPerBoard = &v
 }
 
 // GetSocketsPerNode returns the SocketsPerNode field value if set, zero value otherwise.
-func (o *V0036JobResponseProperties) GetSocketsPerNode() string {
+func (o *V0036JobResponseProperties) GetSocketsPerNode() int32 {
 	if o == nil || o.SocketsPerNode == nil {
-		var ret string
+		var ret int32
 		return ret
 	}
 	return *o.SocketsPerNode
@@ -2884,7 +2884,7 @@ func (o *V0036JobResponseProperties) GetSocketsPerNode() string {
 
 // GetSocketsPerNodeOk returns a tuple with the SocketsPerNode field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *V0036JobResponseProperties) GetSocketsPerNodeOk() (*string, bool) {
+func (o *V0036JobResponseProperties) GetSocketsPerNodeOk() (*int32, bool) {
 	if o == nil || o.SocketsPerNode == nil {
 		return nil, false
 	}
@@ -2900,8 +2900,8 @@ func (o *V0036JobResponseProperties) HasSocketsPerNode() bool {
 	return false
 }
 
-// SetSocketsPerNode gets a reference to the given string and assigns it to the SocketsPerNode field.
-func (o *V0036JobResponseProperties) SetSocketsPerNode(v string) {
+// SetSocketsPerNode gets a reference to the given int32 and assigns it to the SocketsPerNode field.
+func (o *V0036JobResponseProperties) SetSocketsPerNode(v int32) {
 	o.SocketsPerNode = &v
 }
 
@@ -3194,9 +3194,9 @@ func (o *V0036JobResponseProperties) SetSystemComment(v string) {
 }
 
 // GetTimeLimit returns the TimeLimit field value if set, zero value otherwise.
-func (o *V0036JobResponseProperties) GetTimeLimit() string {
+func (o *V0036JobResponseProperties) GetTimeLimit() int64 {
 	if o == nil || o.TimeLimit == nil {
-		var ret string
+		var ret int64
 		return ret
 	}
 	return *o.TimeLimit
@@ -3204,7 +3204,7 @@ func (o *V0036JobResponseProperties) GetTimeLimit() string {
 
 // GetTimeLimitOk returns a tuple with the TimeLimit field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *V0036JobResponseProperties) GetTimeLimitOk() (*string, bool) {
+func (o *V0036JobResponseProperties) GetTimeLimitOk() (*int64, bool) {
 	if o == nil || o.TimeLimit == nil {
 		return nil, false
 	}
@@ -3220,15 +3220,15 @@ func (o *V0036JobResponseProperties) HasTimeLimit() bool {
 	return false
 }
 
-// SetTimeLimit gets a reference to the given string and assigns it to the TimeLimit field.
-func (o *V0036JobResponseProperties) SetTimeLimit(v string) {
+// SetTimeLimit gets a reference to the given int64 and assigns it to the TimeLimit field.
+func (o *V0036JobResponseProperties) SetTimeLimit(v int64) {
 	o.TimeLimit = &v
 }
 
 // GetTimeMinimum returns the TimeMinimum field value if set, zero value otherwise.
-func (o *V0036JobResponseProperties) GetTimeMinimum() string {
+func (o *V0036JobResponseProperties) GetTimeMinimum() int64 {
 	if o == nil || o.TimeMinimum == nil {
-		var ret string
+		var ret int64
 		return ret
 	}
 	return *o.TimeMinimum
@@ -3236,7 +3236,7 @@ func (o *V0036JobResponseProperties) GetTimeMinimum() string {
 
 // GetTimeMinimumOk returns a tuple with the TimeMinimum field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *V0036JobResponseProperties) GetTimeMinimumOk() (*string, bool) {
+func (o *V0036JobResponseProperties) GetTimeMinimumOk() (*int64, bool) {
 	if o == nil || o.TimeMinimum == nil {
 		return nil, false
 	}
@@ -3252,15 +3252,15 @@ func (o *V0036JobResponseProperties) HasTimeMinimum() bool {
 	return false
 }
 
-// SetTimeMinimum gets a reference to the given string and assigns it to the TimeMinimum field.
-func (o *V0036JobResponseProperties) SetTimeMinimum(v string) {
+// SetTimeMinimum gets a reference to the given int64 and assigns it to the TimeMinimum field.
+func (o *V0036JobResponseProperties) SetTimeMinimum(v int64) {
 	o.TimeMinimum = &v
 }
 
 // GetThreadsPerCore returns the ThreadsPerCore field value if set, zero value otherwise.
-func (o *V0036JobResponseProperties) GetThreadsPerCore() string {
+func (o *V0036JobResponseProperties) GetThreadsPerCore() int32 {
 	if o == nil || o.ThreadsPerCore == nil {
-		var ret string
+		var ret int32
 		return ret
 	}
 	return *o.ThreadsPerCore
@@ -3268,7 +3268,7 @@ func (o *V0036JobResponseProperties) GetThreadsPerCore() string {
 
 // GetThreadsPerCoreOk returns a tuple with the ThreadsPerCore field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *V0036JobResponseProperties) GetThreadsPerCoreOk() (*string, bool) {
+func (o *V0036JobResponseProperties) GetThreadsPerCoreOk() (*int32, bool) {
 	if o == nil || o.ThreadsPerCore == nil {
 		return nil, false
 	}
@@ -3284,8 +3284,8 @@ func (o *V0036JobResponseProperties) HasThreadsPerCore() bool {
 	return false
 }
 
-// SetThreadsPerCore gets a reference to the given string and assigns it to the ThreadsPerCore field.
-func (o *V0036JobResponseProperties) SetThreadsPerCore(v string) {
+// SetThreadsPerCore gets a reference to the given int32 and assigns it to the ThreadsPerCore field.
+func (o *V0036JobResponseProperties) SetThreadsPerCore(v int32) {
 	o.ThreadsPerCore = &v
 }
 
@@ -3546,9 +3546,9 @@ func (o *V0036JobResponseProperties) SetTresAllocStr(v string) {
 }
 
 // GetUserId returns the UserId field value if set, zero value otherwise.
-func (o *V0036JobResponseProperties) GetUserId() string {
+func (o *V0036JobResponseProperties) GetUserId() int64 {
 	if o == nil || o.UserId == nil {
-		var ret string
+		var ret int64
 		return ret
 	}
 	return *o.UserId
@@ -3556,7 +3556,7 @@ func (o *V0036JobResponseProperties) GetUserId() string {
 
 // GetUserIdOk returns a tuple with the UserId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *V0036JobResponseProperties) GetUserIdOk() (*string, bool) {
+func (o *V0036JobResponseProperties) GetUserIdOk() (*int64, bool) {
 	if o == nil || o.UserId == nil {
 		return nil, false
 	}
@@ -3572,8 +3572,8 @@ func (o *V0036JobResponseProperties) HasUserId() bool {
 	return false
 }
 
-// SetUserId gets a reference to the given string and assigns it to the UserId field.
-func (o *V0036JobResponseProperties) SetUserId(v string) {
+// SetUserId gets a reference to the given int64 and assigns it to the UserId field.
+func (o *V0036JobResponseProperties) SetUserId(v int64) {
 	o.UserId = &v
 }
 
