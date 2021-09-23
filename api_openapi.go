@@ -3,7 +3,7 @@
  *
  * API to access and control Slurm.
  *
- * API version: 0.0.36
+ * API version: 0.0.37
  * Contact: sales@schedmd.com
  */
 

@@ -3,7 +3,7 @@
  *
  * API to access and control Slurm.
  *
- * API version: 0.0.36
+ * API version: 0.0.37
  * Contact: sales@schedmd.com
  */
 
@@ -32,10 +32,10 @@ type ApiSlurmctldCancelJobRequest struct {
 	ctx _context.Context
 	ApiService *SlurmApiService
 	jobId int64
-	signal *V0036Signal
+	signal *V0037Signal
 }
 
-func (r ApiSlurmctldCancelJobRequest) Signal(signal V0036Signal) ApiSlurmctldCancelJobRequest {
+func (r ApiSlurmctldCancelJobRequest) Signal(signal V0037Signal) ApiSlurmctldCancelJobRequest {
 	r.signal = &signal
 	return r
 }
@@ -164,7 +164,7 @@ type ApiSlurmctldDiagRequest struct {
 }
 
 
-func (r ApiSlurmctldDiagRequest) Execute() (V0036Diag, *_nethttp.Response, error) {
+func (r ApiSlurmctldDiagRequest) Execute() (V0037Diag, *_nethttp.Response, error) {
 	return r.ApiService.SlurmctldDiagExecute(r)
 }
 
@@ -182,16 +182,16 @@ func (a *SlurmApiService) SlurmctldDiag(ctx _context.Context) ApiSlurmctldDiagRe
 
 /*
  * Execute executes the request
- * @return V0036Diag
+ * @return V0037Diag
  */
-func (a *SlurmApiService) SlurmctldDiagExecute(r ApiSlurmctldDiagRequest) (V0036Diag, *_nethttp.Response, error) {
+func (a *SlurmApiService) SlurmctldDiagExecute(r ApiSlurmctldDiagRequest) (V0037Diag, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodGet
 		localVarPostBody     interface{}
 		localVarFormFileName string
 		localVarFileName     string
 		localVarFileBytes    []byte
-		localVarReturnValue  V0036Diag
+		localVarReturnValue  V0037Diag
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmApiService.SlurmctldDiag")
@@ -294,7 +294,7 @@ type ApiSlurmctldGetJobRequest struct {
 }
 
 
-func (r ApiSlurmctldGetJobRequest) Execute() (V0036JobsResponse, *_nethttp.Response, error) {
+func (r ApiSlurmctldGetJobRequest) Execute() (V0037JobsResponse, *_nethttp.Response, error) {
 	return r.ApiService.SlurmctldGetJobExecute(r)
 }
 
@@ -314,16 +314,16 @@ func (a *SlurmApiService) SlurmctldGetJob(ctx _context.Context, jobId int64) Api
 
 /*
  * Execute executes the request
- * @return V0036JobsResponse
+ * @return V0037JobsResponse
  */
-func (a *SlurmApiService) SlurmctldGetJobExecute(r ApiSlurmctldGetJobRequest) (V0036JobsResponse, *_nethttp.Response, error) {
+func (a *SlurmApiService) SlurmctldGetJobExecute(r ApiSlurmctldGetJobRequest) (V0037JobsResponse, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodGet
 		localVarPostBody     interface{}
 		localVarFormFileName string
 		localVarFileName     string
 		localVarFileBytes    []byte
-		localVarReturnValue  V0036JobsResponse
+		localVarReturnValue  V0037JobsResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmApiService.SlurmctldGetJob")
@@ -423,10 +423,15 @@ func (a *SlurmApiService) SlurmctldGetJobExecute(r ApiSlurmctldGetJobRequest) (V
 type ApiSlurmctldGetJobsRequest struct {
 	ctx _context.Context
 	ApiService *SlurmApiService
+	updateTime *int64
 }
 
+func (r ApiSlurmctldGetJobsRequest) UpdateTime(updateTime int64) ApiSlurmctldGetJobsRequest {
+	r.updateTime = &updateTime
+	return r
+}
 
-func (r ApiSlurmctldGetJobsRequest) Execute() (V0036JobsResponse, *_nethttp.Response, error) {
+func (r ApiSlurmctldGetJobsRequest) Execute() (V0037JobsResponse, *_nethttp.Response, error) {
 	return r.ApiService.SlurmctldGetJobsExecute(r)
 }
 
@@ -444,16 +449,16 @@ func (a *SlurmApiService) SlurmctldGetJobs(ctx _context.Context) ApiSlurmctldGet
 
 /*
  * Execute executes the request
- * @return V0036JobsResponse
+ * @return V0037JobsResponse
  */
-func (a *SlurmApiService) SlurmctldGetJobsExecute(r ApiSlurmctldGetJobsRequest) (V0036JobsResponse, *_nethttp.Response, error) {
+func (a *SlurmApiService) SlurmctldGetJobsExecute(r ApiSlurmctldGetJobsRequest) (V0037JobsResponse, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodGet
 		localVarPostBody     interface{}
 		localVarFormFileName string
 		localVarFileName     string
 		localVarFileBytes    []byte
-		localVarReturnValue  V0036JobsResponse
+		localVarReturnValue  V0037JobsResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmApiService.SlurmctldGetJobs")
@@ -467,6 +472,9 @@ func (a *SlurmApiService) SlurmctldGetJobsExecute(r ApiSlurmctldGetJobsRequest) 
 	localVarQueryParams := _neturl.Values{}
 	localVarFormParams := _neturl.Values{}
 
+	if r.updateTime != nil {
+		localVarQueryParams.Add("update_time", parameterToString(*r.updateTime, ""))
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -556,7 +564,7 @@ type ApiSlurmctldGetNodeRequest struct {
 }
 
 
-func (r ApiSlurmctldGetNodeRequest) Execute() (V0036NodesResponse, *_nethttp.Response, error) {
+func (r ApiSlurmctldGetNodeRequest) Execute() (V0037NodesResponse, *_nethttp.Response, error) {
 	return r.ApiService.SlurmctldGetNodeExecute(r)
 }
 
@@ -576,16 +584,16 @@ func (a *SlurmApiService) SlurmctldGetNode(ctx _context.Context, nodeName string
 
 /*
  * Execute executes the request
- * @return V0036NodesResponse
+ * @return V0037NodesResponse
  */
-func (a *SlurmApiService) SlurmctldGetNodeExecute(r ApiSlurmctldGetNodeRequest) (V0036NodesResponse, *_nethttp.Response, error) {
+func (a *SlurmApiService) SlurmctldGetNodeExecute(r ApiSlurmctldGetNodeRequest) (V0037NodesResponse, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodGet
 		localVarPostBody     interface{}
 		localVarFormFileName string
 		localVarFileName     string
 		localVarFileBytes    []byte
-		localVarReturnValue  V0036NodesResponse
+		localVarReturnValue  V0037NodesResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmApiService.SlurmctldGetNode")
@@ -685,10 +693,15 @@ func (a *SlurmApiService) SlurmctldGetNodeExecute(r ApiSlurmctldGetNodeRequest) 
 type ApiSlurmctldGetNodesRequest struct {
 	ctx _context.Context
 	ApiService *SlurmApiService
+	updateTime *int64
 }
 
+func (r ApiSlurmctldGetNodesRequest) UpdateTime(updateTime int64) ApiSlurmctldGetNodesRequest {
+	r.updateTime = &updateTime
+	return r
+}
 
-func (r ApiSlurmctldGetNodesRequest) Execute() (V0036NodesResponse, *_nethttp.Response, error) {
+func (r ApiSlurmctldGetNodesRequest) Execute() (V0037NodesResponse, *_nethttp.Response, error) {
 	return r.ApiService.SlurmctldGetNodesExecute(r)
 }
 
@@ -706,16 +719,16 @@ func (a *SlurmApiService) SlurmctldGetNodes(ctx _context.Context) ApiSlurmctldGe
 
 /*
  * Execute executes the request
- * @return V0036NodesResponse
+ * @return V0037NodesResponse
  */
-func (a *SlurmApiService) SlurmctldGetNodesExecute(r ApiSlurmctldGetNodesRequest) (V0036NodesResponse, *_nethttp.Response, error) {
+func (a *SlurmApiService) SlurmctldGetNodesExecute(r ApiSlurmctldGetNodesRequest) (V0037NodesResponse, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodGet
 		localVarPostBody     interface{}
 		localVarFormFileName string
 		localVarFileName     string
 		localVarFileBytes    []byte
-		localVarReturnValue  V0036NodesResponse
+		localVarReturnValue  V0037NodesResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmApiService.SlurmctldGetNodes")
@@ -729,6 +742,9 @@ func (a *SlurmApiService) SlurmctldGetNodesExecute(r ApiSlurmctldGetNodesRequest
 	localVarQueryParams := _neturl.Values{}
 	localVarFormParams := _neturl.Values{}
 
+	if r.updateTime != nil {
+		localVarQueryParams.Add("update_time", parameterToString(*r.updateTime, ""))
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -815,10 +831,15 @@ type ApiSlurmctldGetPartitionRequest struct {
 	ctx _context.Context
 	ApiService *SlurmApiService
 	partitionName string
+	updateTime *int64
 }
 
+func (r ApiSlurmctldGetPartitionRequest) UpdateTime(updateTime int64) ApiSlurmctldGetPartitionRequest {
+	r.updateTime = &updateTime
+	return r
+}
 
-func (r ApiSlurmctldGetPartitionRequest) Execute() (V0036PartitionsResponse, *_nethttp.Response, error) {
+func (r ApiSlurmctldGetPartitionRequest) Execute() (V0037PartitionsResponse, *_nethttp.Response, error) {
 	return r.ApiService.SlurmctldGetPartitionExecute(r)
 }
 
@@ -838,16 +859,16 @@ func (a *SlurmApiService) SlurmctldGetPartition(ctx _context.Context, partitionN
 
 /*
  * Execute executes the request
- * @return V0036PartitionsResponse
+ * @return V0037PartitionsResponse
  */
-func (a *SlurmApiService) SlurmctldGetPartitionExecute(r ApiSlurmctldGetPartitionRequest) (V0036PartitionsResponse, *_nethttp.Response, error) {
+func (a *SlurmApiService) SlurmctldGetPartitionExecute(r ApiSlurmctldGetPartitionRequest) (V0037PartitionsResponse, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodGet
 		localVarPostBody     interface{}
 		localVarFormFileName string
 		localVarFileName     string
 		localVarFileBytes    []byte
-		localVarReturnValue  V0036PartitionsResponse
+		localVarReturnValue  V0037PartitionsResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmApiService.SlurmctldGetPartition")
@@ -862,6 +883,9 @@ func (a *SlurmApiService) SlurmctldGetPartitionExecute(r ApiSlurmctldGetPartitio
 	localVarQueryParams := _neturl.Values{}
 	localVarFormParams := _neturl.Values{}
 
+	if r.updateTime != nil {
+		localVarQueryParams.Add("update_time", parameterToString(*r.updateTime, ""))
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -947,10 +971,15 @@ func (a *SlurmApiService) SlurmctldGetPartitionExecute(r ApiSlurmctldGetPartitio
 type ApiSlurmctldGetPartitionsRequest struct {
 	ctx _context.Context
 	ApiService *SlurmApiService
+	updateTime *int64
 }
 
+func (r ApiSlurmctldGetPartitionsRequest) UpdateTime(updateTime int64) ApiSlurmctldGetPartitionsRequest {
+	r.updateTime = &updateTime
+	return r
+}
 
-func (r ApiSlurmctldGetPartitionsRequest) Execute() (V0036PartitionsResponse, *_nethttp.Response, error) {
+func (r ApiSlurmctldGetPartitionsRequest) Execute() (V0037PartitionsResponse, *_nethttp.Response, error) {
 	return r.ApiService.SlurmctldGetPartitionsExecute(r)
 }
 
@@ -968,16 +997,16 @@ func (a *SlurmApiService) SlurmctldGetPartitions(ctx _context.Context) ApiSlurmc
 
 /*
  * Execute executes the request
- * @return V0036PartitionsResponse
+ * @return V0037PartitionsResponse
  */
-func (a *SlurmApiService) SlurmctldGetPartitionsExecute(r ApiSlurmctldGetPartitionsRequest) (V0036PartitionsResponse, *_nethttp.Response, error) {
+func (a *SlurmApiService) SlurmctldGetPartitionsExecute(r ApiSlurmctldGetPartitionsRequest) (V0037PartitionsResponse, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodGet
 		localVarPostBody     interface{}
 		localVarFormFileName string
 		localVarFileName     string
 		localVarFileBytes    []byte
-		localVarReturnValue  V0036PartitionsResponse
+		localVarReturnValue  V0037PartitionsResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmApiService.SlurmctldGetPartitions")
@@ -991,6 +1020,287 @@ func (a *SlurmApiService) SlurmctldGetPartitionsExecute(r ApiSlurmctldGetPartiti
 	localVarQueryParams := _neturl.Values{}
 	localVarFormParams := _neturl.Values{}
 
+	if r.updateTime != nil {
+		localVarQueryParams.Add("update_time", parameterToString(*r.updateTime, ""))
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json", "application/x-yaml"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["token"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
+			}
+		}
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["user"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-SLURM-USER-NAME"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := _ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = _ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiSlurmctldGetReservationRequest struct {
+	ctx _context.Context
+	ApiService *SlurmApiService
+	reservationName string
+	updateTime *int64
+}
+
+func (r ApiSlurmctldGetReservationRequest) UpdateTime(updateTime int64) ApiSlurmctldGetReservationRequest {
+	r.updateTime = &updateTime
+	return r
+}
+
+func (r ApiSlurmctldGetReservationRequest) Execute() (V0037ReservationsResponse, *_nethttp.Response, error) {
+	return r.ApiService.SlurmctldGetReservationExecute(r)
+}
+
+/*
+ * SlurmctldGetReservation get reservation info
+ * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param reservationName Slurm Reservation Name
+ * @return ApiSlurmctldGetReservationRequest
+ */
+func (a *SlurmApiService) SlurmctldGetReservation(ctx _context.Context, reservationName string) ApiSlurmctldGetReservationRequest {
+	return ApiSlurmctldGetReservationRequest{
+		ApiService: a,
+		ctx: ctx,
+		reservationName: reservationName,
+	}
+}
+
+/*
+ * Execute executes the request
+ * @return V0037ReservationsResponse
+ */
+func (a *SlurmApiService) SlurmctldGetReservationExecute(r ApiSlurmctldGetReservationRequest) (V0037ReservationsResponse, *_nethttp.Response, error) {
+	var (
+		localVarHTTPMethod   = _nethttp.MethodGet
+		localVarPostBody     interface{}
+		localVarFormFileName string
+		localVarFileName     string
+		localVarFileBytes    []byte
+		localVarReturnValue  V0037ReservationsResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmApiService.SlurmctldGetReservation")
+	if err != nil {
+		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/reservation/{reservation_name}"
+	localVarPath = strings.Replace(localVarPath, "{"+"reservation_name"+"}", _neturl.PathEscape(parameterToString(r.reservationName, "")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := _neturl.Values{}
+	localVarFormParams := _neturl.Values{}
+
+	if r.updateTime != nil {
+		localVarQueryParams.Add("update_time", parameterToString(*r.updateTime, ""))
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json", "application/x-yaml"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["token"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
+			}
+		}
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["user"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-SLURM-USER-NAME"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := _ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = _ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiSlurmctldGetReservationsRequest struct {
+	ctx _context.Context
+	ApiService *SlurmApiService
+	updateTime *int64
+}
+
+func (r ApiSlurmctldGetReservationsRequest) UpdateTime(updateTime int64) ApiSlurmctldGetReservationsRequest {
+	r.updateTime = &updateTime
+	return r
+}
+
+func (r ApiSlurmctldGetReservationsRequest) Execute() (V0037ReservationsResponse, *_nethttp.Response, error) {
+	return r.ApiService.SlurmctldGetReservationsExecute(r)
+}
+
+/*
+ * SlurmctldGetReservations get all reservation info
+ * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @return ApiSlurmctldGetReservationsRequest
+ */
+func (a *SlurmApiService) SlurmctldGetReservations(ctx _context.Context) ApiSlurmctldGetReservationsRequest {
+	return ApiSlurmctldGetReservationsRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+/*
+ * Execute executes the request
+ * @return V0037ReservationsResponse
+ */
+func (a *SlurmApiService) SlurmctldGetReservationsExecute(r ApiSlurmctldGetReservationsRequest) (V0037ReservationsResponse, *_nethttp.Response, error) {
+	var (
+		localVarHTTPMethod   = _nethttp.MethodGet
+		localVarPostBody     interface{}
+		localVarFormFileName string
+		localVarFileName     string
+		localVarFileBytes    []byte
+		localVarReturnValue  V0037ReservationsResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmApiService.SlurmctldGetReservations")
+	if err != nil {
+		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/reservations/"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := _neturl.Values{}
+	localVarFormParams := _neturl.Values{}
+
+	if r.updateTime != nil {
+		localVarQueryParams.Add("update_time", parameterToString(*r.updateTime, ""))
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -1079,7 +1389,7 @@ type ApiSlurmctldPingRequest struct {
 }
 
 
-func (r ApiSlurmctldPingRequest) Execute() (V0036Pings, *_nethttp.Response, error) {
+func (r ApiSlurmctldPingRequest) Execute() (V0037Pings, *_nethttp.Response, error) {
 	return r.ApiService.SlurmctldPingExecute(r)
 }
 
@@ -1097,16 +1407,16 @@ func (a *SlurmApiService) SlurmctldPing(ctx _context.Context) ApiSlurmctldPingRe
 
 /*
  * Execute executes the request
- * @return V0036Pings
+ * @return V0037Pings
  */
-func (a *SlurmApiService) SlurmctldPingExecute(r ApiSlurmctldPingRequest) (V0036Pings, *_nethttp.Response, error) {
+func (a *SlurmApiService) SlurmctldPingExecute(r ApiSlurmctldPingRequest) (V0037Pings, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodGet
 		localVarPostBody     interface{}
 		localVarFormFileName string
 		localVarFileName     string
 		localVarFileBytes    []byte
-		localVarReturnValue  V0036Pings
+		localVarReturnValue  V0037Pings
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmApiService.SlurmctldPing")
@@ -1205,15 +1515,15 @@ func (a *SlurmApiService) SlurmctldPingExecute(r ApiSlurmctldPingRequest) (V0036
 type ApiSlurmctldSubmitJobRequest struct {
 	ctx _context.Context
 	ApiService *SlurmApiService
-	v0036JobSubmission *V0036JobSubmission
+	v0037JobSubmission *V0037JobSubmission
 }
 
-func (r ApiSlurmctldSubmitJobRequest) V0036JobSubmission(v0036JobSubmission V0036JobSubmission) ApiSlurmctldSubmitJobRequest {
-	r.v0036JobSubmission = &v0036JobSubmission
+func (r ApiSlurmctldSubmitJobRequest) V0037JobSubmission(v0037JobSubmission V0037JobSubmission) ApiSlurmctldSubmitJobRequest {
+	r.v0037JobSubmission = &v0037JobSubmission
 	return r
 }
 
-func (r ApiSlurmctldSubmitJobRequest) Execute() (V0036JobSubmissionResponse, *_nethttp.Response, error) {
+func (r ApiSlurmctldSubmitJobRequest) Execute() (V0037JobSubmissionResponse, *_nethttp.Response, error) {
 	return r.ApiService.SlurmctldSubmitJobExecute(r)
 }
 
@@ -1231,16 +1541,16 @@ func (a *SlurmApiService) SlurmctldSubmitJob(ctx _context.Context) ApiSlurmctldS
 
 /*
  * Execute executes the request
- * @return V0036JobSubmissionResponse
+ * @return V0037JobSubmissionResponse
  */
-func (a *SlurmApiService) SlurmctldSubmitJobExecute(r ApiSlurmctldSubmitJobRequest) (V0036JobSubmissionResponse, *_nethttp.Response, error) {
+func (a *SlurmApiService) SlurmctldSubmitJobExecute(r ApiSlurmctldSubmitJobRequest) (V0037JobSubmissionResponse, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodPost
 		localVarPostBody     interface{}
 		localVarFormFileName string
 		localVarFileName     string
 		localVarFileBytes    []byte
-		localVarReturnValue  V0036JobSubmissionResponse
+		localVarReturnValue  V0037JobSubmissionResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmApiService.SlurmctldSubmitJob")
@@ -1253,8 +1563,8 @@ func (a *SlurmApiService) SlurmctldSubmitJobExecute(r ApiSlurmctldSubmitJobReque
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
 	localVarFormParams := _neturl.Values{}
-	if r.v0036JobSubmission == nil {
-		return localVarReturnValue, nil, reportError("v0036JobSubmission is required and must be specified")
+	if r.v0037JobSubmission == nil {
+		return localVarReturnValue, nil, reportError("v0037JobSubmission is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -1275,7 +1585,7 @@ func (a *SlurmApiService) SlurmctldSubmitJobExecute(r ApiSlurmctldSubmitJobReque
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.v0036JobSubmission
+	localVarPostBody = r.v0037JobSubmission
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -1345,11 +1655,11 @@ type ApiSlurmctldUpdateJobRequest struct {
 	ctx _context.Context
 	ApiService *SlurmApiService
 	jobId int64
-	v0036JobProperties *V0036JobProperties
+	v0037JobProperties *V0037JobProperties
 }
 
-func (r ApiSlurmctldUpdateJobRequest) V0036JobProperties(v0036JobProperties V0036JobProperties) ApiSlurmctldUpdateJobRequest {
-	r.v0036JobProperties = &v0036JobProperties
+func (r ApiSlurmctldUpdateJobRequest) V0037JobProperties(v0037JobProperties V0037JobProperties) ApiSlurmctldUpdateJobRequest {
+	r.v0037JobProperties = &v0037JobProperties
 	return r
 }
 
@@ -1394,8 +1704,8 @@ func (a *SlurmApiService) SlurmctldUpdateJobExecute(r ApiSlurmctldUpdateJobReque
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
 	localVarFormParams := _neturl.Values{}
-	if r.v0036JobProperties == nil {
-		return nil, reportError("v0036JobProperties is required and must be specified")
+	if r.v0037JobProperties == nil {
+		return nil, reportError("v0037JobProperties is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -1416,7 +1726,7 @@ func (a *SlurmApiService) SlurmctldUpdateJobExecute(r ApiSlurmctldUpdateJobReque
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.v0036JobProperties
+	localVarPostBody = r.v0037JobProperties
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {

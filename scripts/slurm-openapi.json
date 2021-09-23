@@ -13,7 +13,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "version": "0.0.36"
+    "version": "0.0.37"
   },
   "tags": [
     {
@@ -27,7 +27,7 @@
   ],
   "servers": [
     {
-      "url": "/slurm/v0.0.36/"
+      "url": "/slurm/v0.0.37/"
     }
   ],
   "security": [
@@ -50,12 +50,12 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/v0.0.36_diag"
+                  "$ref": "#/components/schemas/v0.0.37_diag"
                 }
               },
               "application/x-yaml": {
                 "schema": {
-                  "$ref": "#/components/schemas/v0.0.36_diag"
+                  "$ref": "#/components/schemas/v0.0.37_diag"
                 }
               }
             }
@@ -79,12 +79,12 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/v0.0.36_pings"
+                  "$ref": "#/components/schemas/v0.0.37_pings"
                 }
               },
               "application/x-yaml": {
                 "schema": {
-                  "$ref": "#/components/schemas/v0.0.36_pings"
+                  "$ref": "#/components/schemas/v0.0.37_pings"
                 }
               }
             }
@@ -102,18 +102,32 @@
         ],
         "operationId": "slurmctld_get_jobs",
         "summary": "get list of jobs",
+        "parameters": [
+          {
+            "name": "update_time",
+            "in": "query",
+            "description": "Filter if changed since update_time. Use of this parameter can result in faster replies.",
+            "required": false,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "job(s) information",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/v0.0.36_jobs_response"
+                  "$ref": "#/components/schemas/v0.0.37_jobs_response"
                 }
               },
               "application/x-yaml": {
                 "schema": {
-                  "$ref": "#/components/schemas/v0.0.36_jobs_response"
+                  "$ref": "#/components/schemas/v0.0.37_jobs_response"
                 }
               }
             }
@@ -151,12 +165,12 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/v0.0.36_jobs_response"
+                  "$ref": "#/components/schemas/v0.0.37_jobs_response"
                 }
               },
               "application/x-yaml": {
                 "schema": {
-                  "$ref": "#/components/schemas/v0.0.36_jobs_response"
+                  "$ref": "#/components/schemas/v0.0.37_jobs_response"
                 }
               }
             }
@@ -191,12 +205,12 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/v0.0.36_job_properties"
+                "$ref": "#/components/schemas/v0.0.37_job_properties"
               }
             },
             "application/x-yaml": {
               "schema": {
-                "$ref": "#/components/schemas/v0.0.36_job_properties"
+                "$ref": "#/components/schemas/v0.0.37_job_properties"
               }
             }
           },
@@ -238,7 +252,7 @@
             "style": "form",
             "explode": true,
             "schema": {
-              "$ref": "#/components/schemas/v0.0.36_signal"
+              "$ref": "#/components/schemas/v0.0.37_signal"
             }
           }
         ],
@@ -264,12 +278,12 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/v0.0.36_job_submission"
+                "$ref": "#/components/schemas/v0.0.37_job_submission"
               }
             },
             "application/x-yaml": {
               "schema": {
-                "$ref": "#/components/schemas/v0.0.36_job_submission"
+                "$ref": "#/components/schemas/v0.0.37_job_submission"
               }
             }
           },
@@ -281,12 +295,12 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/v0.0.36_job_submission_response"
+                  "$ref": "#/components/schemas/v0.0.37_job_submission_response"
                 }
               },
               "application/x-yaml": {
                 "schema": {
-                  "$ref": "#/components/schemas/v0.0.36_job_submission_response"
+                  "$ref": "#/components/schemas/v0.0.37_job_submission_response"
                 }
               }
             }
@@ -304,18 +318,32 @@
         ],
         "operationId": "slurmctld_get_nodes",
         "summary": "get all node info",
+        "parameters": [
+          {
+            "name": "update_time",
+            "in": "query",
+            "description": "Filter if changed since update_time. Use of this parameter can result in faster replies.",
+            "required": false,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "node information",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/v0.0.36_nodes_response"
+                  "$ref": "#/components/schemas/v0.0.37_nodes_response"
                 }
               },
               "application/x-yaml": {
                 "schema": {
-                  "$ref": "#/components/schemas/v0.0.36_nodes_response"
+                  "$ref": "#/components/schemas/v0.0.37_nodes_response"
                 }
               }
             }
@@ -352,12 +380,12 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/v0.0.36_nodes_response"
+                  "$ref": "#/components/schemas/v0.0.37_nodes_response"
                 }
               },
               "application/x-yaml": {
                 "schema": {
-                  "$ref": "#/components/schemas/v0.0.36_nodes_response"
+                  "$ref": "#/components/schemas/v0.0.37_nodes_response"
                 }
               }
             }
@@ -375,18 +403,32 @@
         ],
         "operationId": "slurmctld_get_partitions",
         "summary": "get all partition info",
+        "parameters": [
+          {
+            "name": "update_time",
+            "in": "query",
+            "description": "Filter if changed since update_time. Use of this parameter can result in faster replies.",
+            "required": false,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "partition information",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/v0.0.36_partitions_response"
+                  "$ref": "#/components/schemas/v0.0.37_partitions_response"
                 }
               },
               "application/x-yaml": {
                 "schema": {
-                  "$ref": "#/components/schemas/v0.0.36_partitions_response"
+                  "$ref": "#/components/schemas/v0.0.37_partitions_response"
                 }
               }
             }
@@ -415,6 +457,18 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "update_time",
+            "in": "query",
+            "description": "Filter if there were no partition changes (not limited to partition in URL endpoint) since update_time.",
+            "required": false,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
           }
         ],
         "responses": {
@@ -423,18 +477,115 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/v0.0.36_partitions_response"
+                  "$ref": "#/components/schemas/v0.0.37_partitions_response"
                 }
               },
               "application/x-yaml": {
                 "schema": {
-                  "$ref": "#/components/schemas/v0.0.36_partitions_response"
+                  "$ref": "#/components/schemas/v0.0.37_partitions_response"
                 }
               }
             }
           },
           "default": {
             "description": "no partitions found"
+          }
+        }
+      }
+    },
+    "/reservations/": {
+      "get": {
+        "tags": [
+          "slurm"
+        ],
+        "operationId": "slurmctld_get_reservations",
+        "summary": "get all reservation info",
+        "parameters": [
+          {
+            "name": "update_time",
+            "in": "query",
+            "description": "Filter if changed since update_time. Use of this parameter can result in faster replies.",
+            "required": false,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "reservation information",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v0.0.37_reservations_response"
+                }
+              },
+              "application/x-yaml": {
+                "schema": {
+                  "$ref": "#/components/schemas/v0.0.37_reservations_response"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "no reservations found"
+          }
+        }
+      }
+    },
+    "/reservation/{reservation_name}": {
+      "get": {
+        "tags": [
+          "slurm"
+        ],
+        "operationId": "slurmctld_get_reservation",
+        "summary": "get reservation info",
+        "parameters": [
+          {
+            "name": "reservation_name",
+            "in": "path",
+            "description": "Slurm Reservation Name",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "update_time",
+            "in": "query",
+            "description": "Filter if no reservation (not limited to reservation in URL) changed since update_time.",
+            "required": false,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "reservation information",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v0.0.37_reservations_response"
+                }
+              },
+              "application/x-yaml": {
+                "schema": {
+                  "$ref": "#/components/schemas/v0.0.37_reservations_response"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "no reservations found"
           }
         }
       }
@@ -528,14 +679,14 @@
       }
     },
     "schemas": {
-      "v0.0.36_diag": {
+      "v0.0.37_diag": {
         "type": "object",
         "properties": {
           "errors": {
             "type": "array",
             "description": "slurm errors",
             "items": {
-              "$ref": "#/components/schemas/v0.0.36_error"
+              "$ref": "#/components/schemas/v0.0.37_error"
             }
           },
           "statistics": {
@@ -702,26 +853,26 @@
           }
         }
       },
-      "v0.0.36_pings": {
+      "v0.0.37_pings": {
         "type": "object",
         "properties": {
           "errors": {
             "type": "array",
             "description": "slurm errors",
             "items": {
-              "$ref": "#/components/schemas/v0.0.36_error"
+              "$ref": "#/components/schemas/v0.0.37_error"
             }
           },
           "pings": {
             "type": "array",
             "description": "slurm controller pings",
             "items": {
-              "$ref": "#/components/schemas/v0.0.36_ping"
+              "$ref": "#/components/schemas/v0.0.37_ping"
             }
           }
         }
       },
-      "v0.0.36_ping": {
+      "v0.0.37_ping": {
         "type": "object",
         "properties": {
           "hostname": {
@@ -746,7 +897,7 @@
           }
         }
       },
-      "v0.0.36_partition": {
+      "v0.0.37_partition": {
         "type": "object",
         "properties": {
           "flags": {
@@ -856,9 +1007,9 @@
             "type": "string",
             "description": "partition QOS name"
           },
-          "nodes_online": {
-            "type": "integer",
-            "description": "Nodes online (ready for jobs)"
+          "state": {
+            "type": "string",
+            "description": "Partition state"
           },
           "total_cpus": {
             "type": "integer",
@@ -874,26 +1025,135 @@
           }
         }
       },
-      "v0.0.36_partitions_response": {
+      "v0.0.37_partitions_response": {
         "type": "object",
         "properties": {
           "errors": {
             "type": "array",
             "description": "slurm errors",
             "items": {
-              "$ref": "#/components/schemas/v0.0.36_error"
+              "$ref": "#/components/schemas/v0.0.37_error"
             }
           },
           "partitions": {
             "type": "array",
             "description": "partition info",
             "items": {
-              "$ref": "#/components/schemas/v0.0.36_partition"
+              "$ref": "#/components/schemas/v0.0.37_partition"
             }
           }
         }
       },
-      "v0.0.36_error": {
+      "v0.0.37_reservation": {
+        "type": "object",
+        "properties": {
+          "accounts": {
+            "type": "string",
+            "description": "Allowed accounts"
+          },
+          "burst_buffer": {
+            "type": "string",
+            "description": "Reserved burst buffer"
+          },
+          "core_count": {
+            "type": "integer",
+            "description": "Number of reserved cores"
+          },
+          "core_spec_cnt": {
+            "type": "integer",
+            "description": "Number of reserved specialized cores"
+          },
+          "end_time": {
+            "type": "integer",
+            "description": "End time of the reservation"
+          },
+          "features": {
+            "type": "string",
+            "description": "List of features"
+          },
+          "flags": {
+            "type": "array",
+            "description": "Reservation options",
+            "items": {
+              "type": "string"
+            }
+          },
+          "groups": {
+            "type": "string",
+            "description": "List of groups permitted to use the reserved nodes"
+          },
+          "licenses": {
+            "type": "string",
+            "description": "List of licenses"
+          },
+          "max_start_delay": {
+            "type": "integer",
+            "description": "Maximum delay in which jobs outside of the reservation will be permitted to overlap once any jobs are queued for the reservation"
+          },
+          "name": {
+            "type": "string",
+            "description": "Reservationn name"
+          },
+          "node_count": {
+            "type": "integer",
+            "description": "Count of nodes reserved"
+          },
+          "node_list": {
+            "type": "string",
+            "description": "List of reserved nodes"
+          },
+          "partition": {
+            "type": "string",
+            "description": "Partition"
+          },
+          "purge_completed": {
+            "type": "object",
+            "description": "If PURGE_COMP flag is set the amount of seconds this reservation will sit idle until it is revoked",
+            "properties": {
+              "time": {
+                "type": "integer",
+                "description": "amount of seconds this reservation will sit idle until it is revoked"
+              }
+            }
+          },
+          "start_time": {
+            "type": "integer",
+            "description": "Start time of reservation"
+          },
+          "watts": {
+            "type": "integer",
+            "description": "amount of power to reserve in watts"
+          },
+          "tres": {
+            "type": "string",
+            "description": "List of TRES"
+          },
+          "users": {
+            "type": "string",
+            "description": "List of users"
+          }
+        }
+      },
+      "v0.0.37_reservations_response": {
+        "type": "object",
+        "properties": {
+          "errors": {
+            "type": "array",
+            "description": "slurm errors",
+            "items": {
+              "$ref": "#/components/schemas/v0.0.37_error"
+            }
+          },
+          "reservations": {
+            "type": "array",
+            "description": "reservation info",
+            "items": {
+              "$ref": "#/components/schemas/v0.0.37_reservation"
+            }
+          }
+        }
+      },
+      "v0.0.37_error": {
         "type": "object",
         "properties": {
           "error": {
@@ -906,7 +1166,7 @@
           }
         }
       },
-      "v0.0.36_signal": {
+      "v0.0.37_signal": {
         "type": "string",
         "description": "POSIX signal name",
         "format": "int32",
@@ -928,14 +1188,14 @@
           "TTOU"
         ]
       },
-      "v0.0.36_job_submission_response": {
+      "v0.0.37_job_submission_response": {
         "type": "object",
         "properties": {
           "errors": {
             "type": "array",
             "description": "slurm errors",
             "items": {
-              "$ref": "#/components/schemas/v0.0.36_error"
+              "$ref": "#/components/schemas/v0.0.37_error"
             }
           },
           "job_id": {
@@ -952,7 +1212,7 @@
           }
         }
       },
-      "v0.0.36_job_submission": {
+      "v0.0.37_job_submission": {
         "required": [
           "script"
         ],
@@ -963,37 +1223,37 @@
           },
           "job": {
             "description": "Properties of an array job or non-HetJob",
-            "$ref": "#/components/schemas/v0.0.36_job_properties"
+            "$ref": "#/components/schemas/v0.0.37_job_properties"
           },
           "jobs": {
             "description": "Properties of an HetJob",
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/v0.0.36_job_properties"
+              "$ref": "#/components/schemas/v0.0.37_job_properties"
             }
           }
         }
       },
-      "v0.0.36_jobs_response": {
+      "v0.0.37_jobs_response": {
         "type": "object",
         "properties": {
           "errors": {
             "type": "array",
             "description": "slurm errors",
             "items": {
-              "$ref": "#/components/schemas/v0.0.36_error"
+              "$ref": "#/components/schemas/v0.0.37_error"
             }
           },
           "jobs": {
             "type": "array",
             "description": "job descriptions",
             "items": {
-              "$ref": "#/components/schemas/v0.0.36_job_response_properties"
+              "$ref": "#/components/schemas/v0.0.37_job_response_properties"
             }
           }
         }
       },
-      "v0.0.36_job_response_properties": {
+      "v0.0.37_job_response_properties": {
         "type": "object",
         "properties": {
           "account": {
@@ -1178,7 +1438,7 @@
             "description": "job ID"
           },
           "job_resources": {
-            "$ref": "#/components/schemas/v0.0.36_job_resources"
+            "$ref": "#/components/schemas/v0.0.37_job_resources"
           },
           "job_state": {
             "type": "string",
@@ -1446,7 +1706,7 @@
           }
         }
       },
-      "v0.0.36_job_resources": {
+      "v0.0.37_job_resources": {
         "type": "object",
         "properties": {
           "nodes": {
@@ -1465,12 +1725,12 @@
             "type": "array",
             "description": "node allocations",
             "items": {
-              "$ref": "#/components/schemas/v0.0.36_node_allocation"
+              "$ref": "#/components/schemas/v0.0.37_node_allocation"
             }
           }
         }
       },
-      "v0.0.36_node_allocation": {
+      "v0.0.37_node_allocation": {
         "type": "object",
         "properties": {
           "memory": {
@@ -1491,7 +1751,7 @@
           }
         }
       },
-      "v0.0.36_job_properties": {
+      "v0.0.37_job_properties": {
         "type": "object",
         "required": [
           "environment"
@@ -1742,7 +2002,7 @@
             "description": "Allocate resources for the job from the named reservation."
           },
           "signal": {
-            "pattern": "[B:]<sig_num>[@<sig_time>]",
+            "pattern": "(B:|)sig_num(@sig_time|)",
             "type": "string",
             "description": "When a job is within sig_time seconds of its end time, send it the signal sig_num."
           },
@@ -1758,11 +2018,11 @@
             "type": "string",
             "description": "Instruct Slurm to connect the batch script's standard error directly to the file name."
           },
-          "standard_in": {
+          "standard_input": {
             "type": "string",
             "description": "Instruct Slurm to connect the batch script's standard input directly to the file name specified."
           },
-          "standard_out": {
+          "standard_output": {
             "type": "string",
             "description": "Instruct Slurm to connect the batch script's standard output directly to the file name."
           },
@@ -1808,7 +2068,7 @@
           }
         }
       },
-      "v0.0.36_node": {
+      "v0.0.37_node": {
         "type": "object",
         "properties": {
           "architecture": {
@@ -1827,10 +2087,6 @@
             "type": "integer",
             "format": "int64",
             "description": "timestamp of node boot"
-          },
-          "comment": {
-            "type": "string",
-            "description": "Arbitrary comment"
           },
           "cores": {
             "type": "integer",
@@ -1883,7 +2139,14 @@
           },
           "next_state_after_reboot": {
             "type": "string",
-            "description": ""
+            "description": "state after reboot"
+          },
+          "next_state_after_reboot_flags": {
+            "type": "array",
+            "description": "node state flags",
+            "items": {
+              "type": "string"
+            }
           },
           "address": {
             "type": "string",
@@ -1897,6 +2160,13 @@
             "type": "string",
             "description": "current node state"
           },
+          "state_flags": {
+            "type": "array",
+            "description": "node state flags",
+            "items": {
+              "type": "string"
+            }
+          },
           "operating_system": {
             "type": "string",
             "description": "operating system"
@@ -1904,6 +2174,13 @@
           "owner": {
             "type": "string",
             "description": "User allowed to use this node"
+          },
+          "partitions": {
+            "type": "array",
+            "description": "assigned partitions",
+            "items": {
+              "type": "string"
+            }
           },
           "port": {
             "type": "integer",
@@ -1954,43 +2231,47 @@
             "type": "string",
             "description": "TRES used on node"
           },
+          "tres_weighted": {
+            "type": "number",
+            "format": "double",
+            "description": "TRES weight used on node"
+          },
           "slurmd_version": {
             "type": "string",
             "description": "Slurmd version"
           },
           "alloc_cpus": {
             "type": "integer",
-            "description": ""
+            "format": "int64",
+            "description": "Allocated CPUs"
           },
           "idle_cpus": {
             "type": "integer",
-            "description": ""
-          },
-          "partitions": {
-            "type": "string",
-            "description": ""
+            "format": "int64",
+            "description": "Idle CPUs"
           },
           "alloc_memory": {
             "type": "integer",
-            "description": ""
+            "format": "int64",
+            "description": "Allocated memory (MB)"
           }
         }
       },
-      "v0.0.36_nodes_response": {
+      "v0.0.37_nodes_response": {
         "type": "object",
         "properties": {
           "errors": {
             "type": "array",
             "description": "slurm errors",
             "items": {
-              "$ref": "#/components/schemas/v0.0.36_error"
+              "$ref": "#/components/schemas/v0.0.37_error"
             }
           },
           "nodes": {
             "type": "array",
             "description": "nodes info",
             "items": {
-              "$ref": "#/components/schemas/v0.0.36_node"
+              "$ref": "#/components/schemas/v0.0.37_node"
             }
           }
         }

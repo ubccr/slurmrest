@@ -3,7 +3,7 @@
  *
  * API to access and control Slurm.
  *
- * API version: 0.0.36
+ * API version: 0.0.37
  * Contact: sales@schedmd.com
  */
 
@@ -106,7 +106,7 @@ func NewConfiguration() *Configuration {
 		Debug:            false,
 		Servers:          ServerConfigurations{
 			{
-				URL: "/slurm/v0.0.36",
+				URL: "/slurm/v0.0.37",
 				Description: "No description provided",
 			},
 		},

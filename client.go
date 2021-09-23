@@ -3,7 +3,7 @@
  *
  * API to access and control Slurm.
  *
- * API version: 0.0.36
+ * API version: 0.0.37
  * Contact: sales@schedmd.com
  */
 
@@ -41,7 +41,7 @@ var (
 	xmlCheck  = regexp.MustCompile(`(?i:(?:application|text)/xml)`)
 )
 
-// APIClient manages communication with the Slurm Rest API API v0.0.36
+// APIClient manages communication with the Slurm Rest API API v0.0.37
 // In most cases there should be only one, shared, APIClient.
 type APIClient struct {
 	cfg    *Configuration

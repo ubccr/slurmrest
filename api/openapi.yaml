@@ -10,9 +10,9 @@ info:
     url: https://www.apache.org/licenses/LICENSE-2.0.html
   termsOfService: https://github.com/SchedMD/slurm/blob/master/DISCLAIMER
   title: Slurm Rest API
-  version: 0.0.36
+  version: 0.0.37
 servers:
-- url: /slurm/v0.0.36/
+- url: /slurm/v0.0.37/
 security:
 - user: []
   token: []
@@ -30,10 +30,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/v0.0.36_diag'
+                $ref: '#/components/schemas/v0.0.37_diag'
             application/x-yaml:
               schema:
-                $ref: '#/components/schemas/v0.0.36_diag'
+                $ref: '#/components/schemas/v0.0.37_diag'
           description: diagnostic results
         default:
           description: unable to request ping test
@@ -48,10 +48,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/v0.0.36_pings'
+                $ref: '#/components/schemas/v0.0.37_pings'
             application/x-yaml:
               schema:
-                $ref: '#/components/schemas/v0.0.36_pings'
+                $ref: '#/components/schemas/v0.0.37_pings'
           description: results of ping test
         default:
           description: unable to request ping test
@@ -61,15 +61,26 @@ paths:
   /jobs/:
     get:
       operationId: slurmctld_get_jobs
+      parameters:
+      - description: Filter if changed since update_time. Use of this parameter can
+          result in faster replies.
+        explode: false
+        in: query
+        name: update_time
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: simple
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/v0.0.36_jobs_response'
+                $ref: '#/components/schemas/v0.0.37_jobs_response'
             application/x-yaml:
               schema:
-                $ref: '#/components/schemas/v0.0.36_jobs_response'
+                $ref: '#/components/schemas/v0.0.37_jobs_response'
           description: job(s) information
         default:
           description: job not found
@@ -95,7 +106,7 @@ paths:
         name: signal
         required: false
         schema:
-          $ref: '#/components/schemas/v0.0.36_signal'
+          $ref: '#/components/schemas/v0.0.37_signal'
         style: form
       responses:
         "200":
@@ -122,10 +133,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/v0.0.36_jobs_response'
+                $ref: '#/components/schemas/v0.0.37_jobs_response'
             application/x-yaml:
               schema:
-                $ref: '#/components/schemas/v0.0.36_jobs_response'
+                $ref: '#/components/schemas/v0.0.37_jobs_response'
           description: job(s) information
         default:
           description: job not found
@@ -148,10 +159,10 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/v0.0.36_job_properties'
+              $ref: '#/components/schemas/v0.0.37_job_properties'
           application/x-yaml:
             schema:
-              $ref: '#/components/schemas/v0.0.36_job_properties'
+              $ref: '#/components/schemas/v0.0.37_job_properties'
         description: update job
         required: true
       responses:
@@ -169,10 +180,10 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/v0.0.36_job_submission'
+              $ref: '#/components/schemas/v0.0.37_job_submission'
           application/x-yaml:
             schema:
-              $ref: '#/components/schemas/v0.0.36_job_submission'
+              $ref: '#/components/schemas/v0.0.37_job_submission'
         description: submit new job
         required: true
       responses:
@@ -180,10 +191,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/v0.0.36_job_submission_response'
+                $ref: '#/components/schemas/v0.0.37_job_submission_response'
             application/x-yaml:
               schema:
-                $ref: '#/components/schemas/v0.0.36_job_submission_response'
+                $ref: '#/components/schemas/v0.0.37_job_submission_response'
           description: job submitted
         default:
           description: job rejected
@@ -193,15 +204,26 @@ paths:
   /nodes/:
     get:
       operationId: slurmctld_get_nodes
+      parameters:
+      - description: Filter if changed since update_time. Use of this parameter can
+          result in faster replies.
+        explode: false
+        in: query
+        name: update_time
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: simple
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/v0.0.36_nodes_response'
+                $ref: '#/components/schemas/v0.0.37_nodes_response'
             application/x-yaml:
               schema:
-                $ref: '#/components/schemas/v0.0.36_nodes_response'
+                $ref: '#/components/schemas/v0.0.37_nodes_response'
           description: node information
         default:
           description: no nodes in cluster
@@ -225,10 +247,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/v0.0.36_nodes_response'
+                $ref: '#/components/schemas/v0.0.37_nodes_response'
             application/x-yaml:
               schema:
-                $ref: '#/components/schemas/v0.0.36_nodes_response'
+                $ref: '#/components/schemas/v0.0.37_nodes_response'
           description: node information
         default:
           description: node not found
@@ -238,15 +260,26 @@ paths:
   /partitions/:
     get:
       operationId: slurmctld_get_partitions
+      parameters:
+      - description: Filter if changed since update_time. Use of this parameter can
+          result in faster replies.
+        explode: false
+        in: query
+        name: update_time
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: simple
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/v0.0.36_partitions_response'
+                $ref: '#/components/schemas/v0.0.37_partitions_response'
             application/x-yaml:
               schema:
-                $ref: '#/components/schemas/v0.0.36_partitions_response'
+                $ref: '#/components/schemas/v0.0.37_partitions_response'
           description: partition information
         default:
           description: no partitions found
@@ -265,19 +298,95 @@ paths:
         schema:
           type: string
         style: simple
+      - description: Filter if there were no partition changes (not limited to partition
+          in URL endpoint) since update_time.
+        explode: false
+        in: query
+        name: update_time
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: simple
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/v0.0.36_partitions_response'
+                $ref: '#/components/schemas/v0.0.37_partitions_response'
             application/x-yaml:
               schema:
-                $ref: '#/components/schemas/v0.0.36_partitions_response'
+                $ref: '#/components/schemas/v0.0.37_partitions_response'
           description: partition information
         default:
           description: no partitions found
       summary: get partition info
+      tags:
+      - slurm
+  /reservations/:
+    get:
+      operationId: slurmctld_get_reservations
+      parameters:
+      - description: Filter if changed since update_time. Use of this parameter can
+          result in faster replies.
+        explode: false
+        in: query
+        name: update_time
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v0.0.37_reservations_response'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/v0.0.37_reservations_response'
+          description: reservation information
+        default:
+          description: no reservations found
+      summary: get all reservation info
+      tags:
+      - slurm
+  /reservation/{reservation_name}:
+    get:
+      operationId: slurmctld_get_reservation
+      parameters:
+      - description: Slurm Reservation Name
+        explode: false
+        in: path
+        name: reservation_name
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Filter if no reservation (not limited to reservation in URL)
+          changed since update_time.
+        explode: false
+        in: query
+        name: update_time
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v0.0.37_reservations_response'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/v0.0.37_reservations_response'
+          description: reservation information
+        default:
+          description: no reservations found
+      summary: get reservation info
       tags:
       - slurm
   /openapi.yaml:
@@ -322,7 +431,7 @@ paths:
     - url: /
 components:
   schemas:
-    v0.0.36_diag:
+    v0.0.37_diag:
       example:
         errors:
         - errno: 0
@@ -373,12 +482,12 @@ components:
         errors:
           description: slurm errors
           items:
-            $ref: '#/components/schemas/v0.0.36_error'
+            $ref: '#/components/schemas/v0.0.37_error'
           type: array
         statistics:
-          $ref: '#/components/schemas/v0_0_36_diag_statistics'
+          $ref: '#/components/schemas/v0_0_37_diag_statistics'
       type: object
-    v0.0.36_pings:
+    v0.0.37_pings:
       example:
         pings:
         - mode: mode
@@ -398,15 +507,15 @@ components:
         errors:
           description: slurm errors
           items:
-            $ref: '#/components/schemas/v0.0.36_error'
+            $ref: '#/components/schemas/v0.0.37_error'
           type: array
         pings:
           description: slurm controller pings
           items:
-            $ref: '#/components/schemas/v0.0.36_ping'
+            $ref: '#/components/schemas/v0.0.37_ping'
           type: array
       type: object
-    v0.0.36_ping:
+    v0.0.37_ping:
       example:
         mode: mode
         hostname: hostname
@@ -429,7 +538,7 @@ components:
           description: slurm controller status
           type: integer
       type: object
-    v0.0.36_partition:
+    v0.0.37_partition:
       example:
         max_time_limit: 7
         maximum_cpus_per_node: 5
@@ -439,11 +548,10 @@ components:
         - flags
         - flags
         maximum_memory_per_node: 5
-        total_cpus: 1
+        total_cpus: 7
         billing_weights: billing_weights
         default_memory_per_cpu: 0
         allowed_qos: allowed_qos
-        nodes_online: 7
         min_nodes_per_job: 9
         qos: qos
         default_time_limit: 6
@@ -451,6 +559,7 @@ components:
         priority_job_factor: 2
         tres: tres
         allowed_allocation_nodes: allowed_allocation_nodes
+        state: state
         preemption_grace_time: 1
         allowed_accounts: allowed_accounts
         alternative: alternative
@@ -546,9 +655,9 @@ components:
         qos:
           description: partition QOS name
           type: string
-        nodes_online:
-          description: Nodes online (ready for jobs)
-          type: integer
+        state:
+          description: Partition state
+          type: string
         total_cpus:
           description: Total cpus in partition
           type: integer
@@ -559,7 +668,7 @@ components:
           description: configured TRES in partition
           type: string
       type: object
-    v0.0.36_partitions_response:
+    v0.0.37_partitions_response:
       example:
         partitions:
         - max_time_limit: 7
@@ -570,11 +679,10 @@ components:
           - flags
           - flags
           maximum_memory_per_node: 5
-          total_cpus: 1
+          total_cpus: 7
           billing_weights: billing_weights
           default_memory_per_cpu: 0
           allowed_qos: allowed_qos
-          nodes_online: 7
           min_nodes_per_job: 9
           qos: qos
           default_time_limit: 6
@@ -582,6 +690,7 @@ components:
           priority_job_factor: 2
           tres: tres
           allowed_allocation_nodes: allowed_allocation_nodes
+          state: state
           preemption_grace_time: 1
           allowed_accounts: allowed_accounts
           alternative: alternative
@@ -602,11 +711,10 @@ components:
           - flags
           - flags
           maximum_memory_per_node: 5
-          total_cpus: 1
+          total_cpus: 7
           billing_weights: billing_weights
           default_memory_per_cpu: 0
           allowed_qos: allowed_qos
-          nodes_online: 7
           min_nodes_per_job: 9
           qos: qos
           default_time_limit: 6
@@ -614,6 +722,7 @@ components:
           priority_job_factor: 2
           tres: tres
           allowed_allocation_nodes: allowed_allocation_nodes
+          state: state
           preemption_grace_time: 1
           allowed_accounts: allowed_accounts
           alternative: alternative
@@ -635,15 +744,164 @@ components:
         errors:
           description: slurm errors
           items:
-            $ref: '#/components/schemas/v0.0.36_error'
+            $ref: '#/components/schemas/v0.0.37_error'
           type: array
         partitions:
           description: partition info
           items:
-            $ref: '#/components/schemas/v0.0.36_partition'
+            $ref: '#/components/schemas/v0.0.37_partition'
           type: array
       type: object
-    v0.0.36_error:
+    v0.0.37_reservation:
+      example:
+        core_spec_cnt: 6
+        end_time: 1
+        flags:
+        - flags
+        - flags
+        groups: groups
+        users: users
+        max_start_delay: 5
+        features: features
+        start_time: 7
+        burst_buffer: burst_buffer
+        licenses: licenses
+        partition: partition
+        watts: 9
+        name: name
+        tres: tres
+        accounts: accounts
+        node_count: 5
+        node_list: node_list
+        purge_completed:
+          time: 2
+        core_count: 0
+      properties:
+        accounts:
+          description: Allowed accounts
+          type: string
+        burst_buffer:
+          description: Reserved burst buffer
+          type: string
+        core_count:
+          description: Number of reserved cores
+          type: integer
+        core_spec_cnt:
+          description: Number of reserved specialized cores
+          type: integer
+        end_time:
+          description: End time of the reservation
+          type: integer
+        features:
+          description: List of features
+          type: string
+        flags:
+          description: Reservation options
+          items:
+            type: string
+          type: array
+        groups:
+          description: List of groups permitted to use the reserved nodes
+          type: string
+        licenses:
+          description: List of licenses
+          type: string
+        max_start_delay:
+          description: Maximum delay in which jobs outside of the reservation will
+            be permitted to overlap once any jobs are queued for the reservation
+          type: integer
+        name:
+          description: Reservationn name
+          type: string
+        node_count:
+          description: Count of nodes reserved
+          type: integer
+        node_list:
+          description: List of reserved nodes
+          type: string
+        partition:
+          description: Partition
+          type: string
+        purge_completed:
+          $ref: '#/components/schemas/v0_0_37_reservation_purge_completed'
+        start_time:
+          description: Start time of reservation
+          type: integer
+        watts:
+          description: amount of power to reserve in watts
+          type: integer
+        tres:
+          description: List of TRES
+          type: string
+        users:
+          description: List of users
+          type: string
+      type: object
+    v0.0.37_reservations_response:
+      example:
+        reservations:
+        - core_spec_cnt: 6
+          end_time: 1
+          flags:
+          - flags
+          - flags
+          groups: groups
+          users: users
+          max_start_delay: 5
+          features: features
+          start_time: 7
+          burst_buffer: burst_buffer
+          licenses: licenses
+          partition: partition
+          watts: 9
+          name: name
+          tres: tres
+          accounts: accounts
+          node_count: 5
+          node_list: node_list
+          purge_completed:
+            time: 2
+          core_count: 0
+        - core_spec_cnt: 6
+          end_time: 1
+          flags:
+          - flags
+          - flags
+          groups: groups
+          users: users
+          max_start_delay: 5
+          features: features
+          start_time: 7
+          burst_buffer: burst_buffer
+          licenses: licenses
+          partition: partition
+          watts: 9
+          name: name
+          tres: tres
+          accounts: accounts
+          node_count: 5
+          node_list: node_list
+          purge_completed:
+            time: 2
+          core_count: 0
+        errors:
+        - errno: 0
+          error: error
+        - errno: 0
+          error: error
+      properties:
+        errors:
+          description: slurm errors
+          items:
+            $ref: '#/components/schemas/v0.0.37_error'
+          type: array
+        reservations:
+          description: reservation info
+          items:
+            $ref: '#/components/schemas/v0.0.37_reservation'
+          type: array
+      type: object
+    v0.0.37_error:
       example:
         errno: 0
         error: error
@@ -655,7 +913,7 @@ components:
           description: error number
           type: integer
       type: object
-    v0.0.36_signal:
+    v0.0.37_signal:
       description: POSIX signal name
       enum:
       - HUP
@@ -675,7 +933,7 @@ components:
       - TTOU
       format: int32
       type: string
-    v0.0.36_job_submission_response:
+    v0.0.37_job_submission_response:
       example:
         job_id: 0
         step_id: step_id
@@ -689,7 +947,7 @@ components:
         errors:
           description: slurm errors
           items:
-            $ref: '#/components/schemas/v0.0.36_error'
+            $ref: '#/components/schemas/v0.0.37_error'
           type: array
         job_id:
           description: new job ID
@@ -701,21 +959,21 @@ components:
           description: Message to user from job_submit plugin
           type: string
       type: object
-    v0.0.36_job_submission:
+    v0.0.37_job_submission:
       properties:
         script:
           description: Executable script (full contents) to run in batch step
           type: string
         job:
-          $ref: '#/components/schemas/v0.0.36_job_properties'
+          $ref: '#/components/schemas/v0.0.37_job_properties'
         jobs:
           description: Properties of an HetJob
           items:
-            $ref: '#/components/schemas/v0.0.36_job_properties'
+            $ref: '#/components/schemas/v0.0.37_job_properties'
           type: array
       required:
       - script
-    v0.0.36_jobs_response:
+    v0.0.37_jobs_response:
       example:
         jobs:
         - cluster: cluster
@@ -981,15 +1239,15 @@ components:
         errors:
           description: slurm errors
           items:
-            $ref: '#/components/schemas/v0.0.36_error'
+            $ref: '#/components/schemas/v0.0.37_error'
           type: array
         jobs:
           description: job descriptions
           items:
-            $ref: '#/components/schemas/v0.0.36_job_response_properties'
+            $ref: '#/components/schemas/v0.0.37_job_response_properties'
           type: array
       type: object
-    v0.0.36_job_response_properties:
+    v0.0.37_job_response_properties:
       example:
         cluster: cluster
         time_minimum: time_minimum
@@ -1256,7 +1514,7 @@ components:
           description: job ID
           type: string
         job_resources:
-          $ref: '#/components/schemas/v0.0.36_job_resources'
+          $ref: '#/components/schemas/v0.0.37_job_resources'
         job_state:
           description: state of the job
           type: string
@@ -1457,7 +1715,7 @@ components:
           description: pathname of working directory
           type: string
       type: object
-    v0.0.36_job_resources:
+    v0.0.37_job_resources:
       example:
         nodes: nodes
         allocated_nodes:
@@ -1484,10 +1742,10 @@ components:
         allocated_nodes:
           description: node allocations
           items:
-            $ref: '#/components/schemas/v0.0.36_node_allocation'
+            $ref: '#/components/schemas/v0.0.37_node_allocation'
           type: array
       type: object
-    v0.0.36_node_allocation:
+    v0.0.37_node_allocation:
       example:
         memory: 7
         cores: '{}'
@@ -1507,7 +1765,7 @@ components:
           description: assignment status of each core by core id
           type: object
       type: object
-    v0.0.36_job_properties:
+    v0.0.37_job_properties:
       properties:
         account:
           description: Charge resources used by this job to specified account.
@@ -1719,7 +1977,7 @@ components:
         signal:
           description: When a job is within sig_time seconds of its end time, send
             it the signal sig_num.
-          pattern: '[B:]<sig_num>[@<sig_time>]'
+          pattern: (B:|)sig_num(@sig_time|)
           type: string
         sockets_per_node:
           description: Restrict node selection to nodes with at least the specified
@@ -1733,11 +1991,11 @@ components:
           description: Instruct Slurm to connect the batch script's standard error
             directly to the file name.
           type: string
-        standard_in:
+        standard_input:
           description: Instruct Slurm to connect the batch script's standard input
             directly to the file name specified.
           type: string
-        standard_out:
+        standard_output:
           description: Instruct Slurm to connect the batch script's standard output
             directly to the file name.
           type: string
@@ -1778,11 +2036,11 @@ components:
       required:
       - environment
       type: object
-    v0.0.36_node:
+    v0.0.37_node:
       example:
         reason: reason
         boards: 0
-        alloc_cpus: 6
+        alloc_cpus: 7
         active_features: active_features
         reason_set_by_user: reason_set_by_user
         slurmd_start_time: 4
@@ -1792,33 +2050,41 @@ components:
         slurmd_version: slurmd_version
         reason_changed_at: 2
         operating_system: operating_system
+        next_state_after_reboot_flags:
+        - next_state_after_reboot_flags
+        - next_state_after_reboot_flags
         tres: tres
         cpu_binding: 5
         state: state
         sockets: 7
         architecture: architecture
         owner: owner
-        partitions: partitions
+        partitions:
+        - partitions
+        - partitions
+        state_flags:
+        - state_flags
+        - state_flags
         address: address
         cpus: 7
         free_memory: 2
+        tres_weighted: 6.84685269835264
         gres: gres
         gres_drained: gres_drained
         threads: 1
         weight: 1
         boot_time: 6
         gres_used: gres_used
-        alloc_memory: 1
+        alloc_memory: 4
         mcs_label: mcs_label
         real_memory: 3
         burstbuffer_network_address: burstbuffer_network_address
         port: 9
         name: name
-        comment: comment
         next_state_after_reboot: next_state_after_reboot
         temporary_disk: 1
         tres_used: tres_used
-        idle_cpus: 7
+        idle_cpus: 1
         cpu_load: 5
       properties:
         architecture:
@@ -1834,9 +2100,6 @@ components:
           description: timestamp of node boot
           format: int64
           type: integer
-        comment:
-          description: Arbitrary comment
-          type: string
         cores:
           description: number of cores per socket
           type: integer
@@ -1874,7 +2137,13 @@ components:
           description: node name to slurm
           type: string
         next_state_after_reboot:
+          description: state after reboot
           type: string
+        next_state_after_reboot_flags:
+          description: node state flags
+          items:
+            type: string
+          type: array
         address:
           description: state after reboot
           type: string
@@ -1884,12 +2153,22 @@ components:
         state:
           description: current node state
           type: string
+        state_flags:
+          description: node state flags
+          items:
+            type: string
+          type: array
         operating_system:
           description: operating system
           type: string
         owner:
           description: User allowed to use this node
           type: string
+        partitions:
+          description: assigned partitions
+          items:
+            type: string
+          type: array
         port:
           description: TCP port number of the slurmd
           type: integer
@@ -1927,24 +2206,32 @@ components:
         tres_used:
           description: TRES used on node
           type: string
+        tres_weighted:
+          description: TRES weight used on node
+          format: double
+          type: number
         slurmd_version:
           description: Slurmd version
           type: string
         alloc_cpus:
+          description: Allocated CPUs
+          format: int64
           type: integer
         idle_cpus:
+          description: Idle CPUs
+          format: int64
           type: integer
-        partitions:
-          type: string
         alloc_memory:
+          description: Allocated memory (MB)
+          format: int64
           type: integer
       type: object
-    v0.0.36_nodes_response:
+    v0.0.37_nodes_response:
       example:
         nodes:
         - reason: reason
           boards: 0
-          alloc_cpus: 6
+          alloc_cpus: 7
           active_features: active_features
           reason_set_by_user: reason_set_by_user
           slurmd_start_time: 4
@@ -1954,37 +2241,45 @@ components:
           slurmd_version: slurmd_version
           reason_changed_at: 2
           operating_system: operating_system
+          next_state_after_reboot_flags:
+          - next_state_after_reboot_flags
+          - next_state_after_reboot_flags
           tres: tres
           cpu_binding: 5
           state: state
           sockets: 7
           architecture: architecture
           owner: owner
-          partitions: partitions
+          partitions:
+          - partitions
+          - partitions
+          state_flags:
+          - state_flags
+          - state_flags
           address: address
           cpus: 7
           free_memory: 2
+          tres_weighted: 6.84685269835264
           gres: gres
           gres_drained: gres_drained
           threads: 1
           weight: 1
           boot_time: 6
           gres_used: gres_used
-          alloc_memory: 1
+          alloc_memory: 4
           mcs_label: mcs_label
           real_memory: 3
           burstbuffer_network_address: burstbuffer_network_address
           port: 9
           name: name
-          comment: comment
           next_state_after_reboot: next_state_after_reboot
           temporary_disk: 1
           tres_used: tres_used
-          idle_cpus: 7
+          idle_cpus: 1
           cpu_load: 5
         - reason: reason
           boards: 0
-          alloc_cpus: 6
+          alloc_cpus: 7
           active_features: active_features
           reason_set_by_user: reason_set_by_user
           slurmd_start_time: 4
@@ -1994,33 +2289,41 @@ components:
           slurmd_version: slurmd_version
           reason_changed_at: 2
           operating_system: operating_system
+          next_state_after_reboot_flags:
+          - next_state_after_reboot_flags
+          - next_state_after_reboot_flags
           tres: tres
           cpu_binding: 5
           state: state
           sockets: 7
           architecture: architecture
           owner: owner
-          partitions: partitions
+          partitions:
+          - partitions
+          - partitions
+          state_flags:
+          - state_flags
+          - state_flags
           address: address
           cpus: 7
           free_memory: 2
+          tres_weighted: 6.84685269835264
           gres: gres
           gres_drained: gres_drained
           threads: 1
           weight: 1
           boot_time: 6
           gres_used: gres_used
-          alloc_memory: 1
+          alloc_memory: 4
           mcs_label: mcs_label
           real_memory: 3
           burstbuffer_network_address: burstbuffer_network_address
           port: 9
           name: name
-          comment: comment
           next_state_after_reboot: next_state_after_reboot
           temporary_disk: 1
           tres_used: tres_used
-          idle_cpus: 7
+          idle_cpus: 1
           cpu_load: 5
         errors:
         - errno: 0
@@ -2031,15 +2334,15 @@ components:
         errors:
           description: slurm errors
           items:
-            $ref: '#/components/schemas/v0.0.36_error'
+            $ref: '#/components/schemas/v0.0.37_error'
           type: array
         nodes:
           description: nodes info
           items:
-            $ref: '#/components/schemas/v0.0.36_node'
+            $ref: '#/components/schemas/v0.0.37_node'
           type: array
       type: object
-    v0_0_36_diag_statistics:
+    v0_0_37_diag_statistics:
       description: Slurm statistics
       example:
         schedule_cycle_per_minute: 6
@@ -2199,6 +2502,17 @@ components:
         bf_active:
           description: Backfill Schedule currently active
           type: boolean
+      type: object
+    v0_0_37_reservation_purge_completed:
+      description: If PURGE_COMP flag is set the amount of seconds this reservation
+        will sit idle until it is revoked
+      example:
+        time: 2
+      properties:
+        time:
+          description: amount of seconds this reservation will sit idle until it is
+            revoked
+          type: integer
       type: object
   securitySchemes:
     user:

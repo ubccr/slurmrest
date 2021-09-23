@@ -1,6 +1,6 @@
 # \OpenapiApi
 
-All URIs are relative to *http://localhost/slurm/v0.0.36*
+All URIs are relative to *http://localhost/slurm/v0.0.37*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
