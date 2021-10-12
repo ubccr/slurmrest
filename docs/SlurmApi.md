@@ -14,6 +14,7 @@ Method | HTTP request | Description
 [**SlurmctldGetPartitions**](SlurmApi.md#SlurmctldGetPartitions) | **Get** /partitions/ | get all partition info
 [**SlurmctldGetReservation**](SlurmApi.md#SlurmctldGetReservation) | **Get** /reservation/{reservation_name} | get reservation info
 [**SlurmctldGetReservations**](SlurmApi.md#SlurmctldGetReservations) | **Get** /reservations/ | get all reservation info
+[**SlurmctldLicenses**](SlurmApi.md#SlurmctldLicenses) | **Get** /licenses/ | get all license info
 [**SlurmctldPing**](SlurmApi.md#SlurmctldPing) | **Get** /ping/ | ping test
 [**SlurmctldSubmitJob**](SlurmApi.md#SlurmctldSubmitJob) | **Post** /job/submit | submit new job
 [**SlurmctldUpdateJob**](SlurmApi.md#SlurmctldUpdateJob) | **Post** /job/{job_id} | update job
@@ -664,6 +665,65 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**V0037ReservationsResponse**](V0037ReservationsResponse.md)
+
+### Authorization
+
+[token](../README.md#token), [user](../README.md#user)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/x-yaml
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## SlurmctldLicenses
+
+> V0037Licenses SlurmctldLicenses(ctx).Execute()
+
+get all license info
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "./openapi"
+)
+
+func main() {
+
+    configuration := openapiclient.NewConfiguration()
+    api_client := openapiclient.NewAPIClient(configuration)
+    resp, r, err := api_client.SlurmApi.SlurmctldLicenses(context.Background()).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `SlurmApi.SlurmctldLicenses``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `SlurmctldLicenses`: V0037Licenses
+    fmt.Fprintf(os.Stdout, "Response from `SlurmApi.SlurmctldLicenses`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+This endpoint does not need any parameter.
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiSlurmctldLicensesRequest struct via the builder pattern
+
+
+### Return type
+
+[**V0037Licenses**](V0037Licenses.md)
 
 ### Authorization
 

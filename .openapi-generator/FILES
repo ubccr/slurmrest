@@ -17,6 +17,8 @@ docs/V0037JobResponseProperties.md
 docs/V0037JobSubmission.md
 docs/V0037JobSubmissionResponse.md
 docs/V0037JobsResponse.md
+docs/V0037License.md
+docs/V0037Licenses.md
 docs/V0037Node.md
 docs/V0037NodeAllocation.md
 docs/V0037NodesResponse.md
@@ -38,6 +40,8 @@ model_v0_0_37_job_response_properties.go
 model_v0_0_37_job_submission.go
 model_v0_0_37_job_submission_response.go
 model_v0_0_37_jobs_response.go
+model_v0_0_37_license.go
+model_v0_0_37_licenses.go
 model_v0_0_37_node.go
 model_v0_0_37_node_allocation.go
 model_v0_0_37_nodes_response.go

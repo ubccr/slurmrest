@@ -66,6 +66,35 @@
         }
       }
     },
+    "/licenses/": {
+      "get": {
+        "tags": [
+          "slurm"
+        ],
+        "operationId": "slurmctld_licenses",
+        "summary": "get all license info",
+        "responses": {
+          "200": {
+            "description": "results of get all licenses",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/v0.0.37_licenses"
+                }
+              },
+              "application/x-yaml": {
+                "schema": {
+                  "$ref": "#/components/schemas/v0.0.37_licenses"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unable to request licenses"
+          }
+        }
+      }
+    },
     "/ping/": {
       "get": {
         "tags": [
@@ -850,6 +879,34 @@
                 "description": "Backfill Schedule currently active"
               }
             }
+          }
+        }
+      },
+      "v0.0.37_licenses": {
+        "type": "object",
+        "properties": {
+          "errors": {
+            "type": "array",
+            "description": "slurm errors",
+            "items": {
+              "$ref": "#/components/schemas/v0.0.37_error"
+            }
+          },
+          "licenses": {
+            "type": "array",
+            "description": "licenses info",
+            "items": {
+              "$ref": "#/components/schemas/v0.0.37_license"
+            }
+          }
+        }
+      },
+      "v0.0.37_license": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "name of license"
           }
         }
       },

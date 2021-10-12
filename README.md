@@ -73,6 +73,7 @@ Class | Method | HTTP request | Description
 *SlurmApi* | [**SlurmctldGetPartitions**](docs/SlurmApi.md#slurmctldgetpartitions) | **Get** /partitions/ | get all partition info
 *SlurmApi* | [**SlurmctldGetReservation**](docs/SlurmApi.md#slurmctldgetreservation) | **Get** /reservation/{reservation_name} | get reservation info
 *SlurmApi* | [**SlurmctldGetReservations**](docs/SlurmApi.md#slurmctldgetreservations) | **Get** /reservations/ | get all reservation info
+*SlurmApi* | [**SlurmctldLicenses**](docs/SlurmApi.md#slurmctldlicenses) | **Get** /licenses/ | get all license info
 *SlurmApi* | [**SlurmctldPing**](docs/SlurmApi.md#slurmctldping) | **Get** /ping/ | ping test
 *SlurmApi* | [**SlurmctldSubmitJob**](docs/SlurmApi.md#slurmctldsubmitjob) | **Post** /job/submit | submit new job
 *SlurmApi* | [**SlurmctldUpdateJob**](docs/SlurmApi.md#slurmctldupdatejob) | **Post** /job/{job_id} | update job
@@ -89,6 +90,8 @@ Class | Method | HTTP request | Description
  - [V0037JobSubmission](docs/V0037JobSubmission.md)
  - [V0037JobSubmissionResponse](docs/V0037JobSubmissionResponse.md)
  - [V0037JobsResponse](docs/V0037JobsResponse.md)
+ - [V0037License](docs/V0037License.md)
+ - [V0037Licenses](docs/V0037Licenses.md)
  - [V0037Node](docs/V0037Node.md)
  - [V0037NodeAllocation](docs/V0037NodeAllocation.md)
  - [V0037NodesResponse](docs/V0037NodesResponse.md)
