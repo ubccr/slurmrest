@@ -91,6 +91,10 @@ type V0037DiagStatistics struct {
 	BfQueueLen *int32 `json:"bf_queue_len,omitempty"`
 	// Backfill Schedule Mean queue length
 	BfQueueLenMean *int32 `json:"bf_queue_len_mean,omitempty"`
+	// Backfill table size
+	BfTableSize *int32 `json:"bf_table_size,omitempty"`
+	// Backfill table mean
+	BfTableSizeMean *int32 `json:"bf_table_size_mean,omitempty"`
 	// Last cycle timestamp
 	BfWhenLastCycle *int32 `json:"bf_when_last_cycle,omitempty"`
 	// Backfill Schedule currently active
@@ -1302,6 +1306,70 @@ func (o *V0037DiagStatistics) SetBfQueueLenMean(v int32) {
 	o.BfQueueLenMean = &v
 }
 
+// GetBfTableSize returns the BfTableSize field value if set, zero value otherwise.
+func (o *V0037DiagStatistics) GetBfTableSize() int32 {
+	if o == nil || o.BfTableSize == nil {
+		var ret int32
+		return ret
+	}
+	return *o.BfTableSize
+}
+
+// GetBfTableSizeOk returns a tuple with the BfTableSize field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *V0037DiagStatistics) GetBfTableSizeOk() (*int32, bool) {
+	if o == nil || o.BfTableSize == nil {
+		return nil, false
+	}
+	return o.BfTableSize, true
+}
+
+// HasBfTableSize returns a boolean if a field has been set.
+func (o *V0037DiagStatistics) HasBfTableSize() bool {
+	if o != nil && o.BfTableSize != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetBfTableSize gets a reference to the given int32 and assigns it to the BfTableSize field.
+func (o *V0037DiagStatistics) SetBfTableSize(v int32) {
+	o.BfTableSize = &v
+}
+
+// GetBfTableSizeMean returns the BfTableSizeMean field value if set, zero value otherwise.
+func (o *V0037DiagStatistics) GetBfTableSizeMean() int32 {
+	if o == nil || o.BfTableSizeMean == nil {
+		var ret int32
+		return ret
+	}
+	return *o.BfTableSizeMean
+}
+
+// GetBfTableSizeMeanOk returns a tuple with the BfTableSizeMean field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *V0037DiagStatistics) GetBfTableSizeMeanOk() (*int32, bool) {
+	if o == nil || o.BfTableSizeMean == nil {
+		return nil, false
+	}
+	return o.BfTableSizeMean, true
+}
+
+// HasBfTableSizeMean returns a boolean if a field has been set.
+func (o *V0037DiagStatistics) HasBfTableSizeMean() bool {
+	if o != nil && o.BfTableSizeMean != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetBfTableSizeMean gets a reference to the given int32 and assigns it to the BfTableSizeMean field.
+func (o *V0037DiagStatistics) SetBfTableSizeMean(v int32) {
+	o.BfTableSizeMean = &v
+}
+
 // GetBfWhenLastCycle returns the BfWhenLastCycle field value if set, zero value otherwise.
 func (o *V0037DiagStatistics) GetBfWhenLastCycle() int32 {
 	if o == nil || o.BfWhenLastCycle == nil {
@@ -1542,6 +1610,12 @@ func (o V0037DiagStatistics) MarshalJSON() ([]byte, error) {
 	}
 	if o.BfQueueLenMean != nil {
 		toSerialize["bf_queue_len_mean"] = o.BfQueueLenMean
+	}
+	if o.BfTableSize != nil {
+		toSerialize["bf_table_size"] = o.BfTableSize
+	}
+	if o.BfTableSizeMean != nil {
+		toSerialize["bf_table_size_mean"] = o.BfTableSizeMean
 	}
 	if o.BfWhenLastCycle != nil {
 		toSerialize["bf_when_last_cycle"] = o.BfWhenLastCycle

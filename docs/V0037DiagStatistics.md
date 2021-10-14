@@ -41,6 +41,8 @@ Name | Type | Description | Notes
 **BfCycleLast** | Pointer to **int32** | Backfill Schedule Last cycle time | [optional] 
 **BfQueueLen** | Pointer to **int32** | Backfill Schedule Last queue length | [optional] 
 **BfQueueLenMean** | Pointer to **int32** | Backfill Schedule Mean queue length | [optional] 
+**BfTableSize** | Pointer to **int32** | Backfill table size | [optional] 
+**BfTableSizeMean** | Pointer to **int32** | Backfill table mean | [optional] 
 **BfWhenLastCycle** | Pointer to **int32** | Last cycle timestamp | [optional] 
 **BfActive** | Pointer to **bool** | Backfill Schedule currently active | [optional] 
 **RpcsMessageType** | Pointer to [**[]V0037DiagRpcm**](V0037DiagRpcm.md) | Remote Procedure Call statistics by message type | [optional] 
@@ -989,6 +991,56 @@ SetBfQueueLenMean sets BfQueueLenMean field to given value.
 `func (o *V0037DiagStatistics) HasBfQueueLenMean() bool`
 
 HasBfQueueLenMean returns a boolean if a field has been set.
+
+### GetBfTableSize
+
+`func (o *V0037DiagStatistics) GetBfTableSize() int32`
+
+GetBfTableSize returns the BfTableSize field if non-nil, zero value otherwise.
+
+### GetBfTableSizeOk
+
+`func (o *V0037DiagStatistics) GetBfTableSizeOk() (*int32, bool)`
+
+GetBfTableSizeOk returns a tuple with the BfTableSize field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBfTableSize
+
+`func (o *V0037DiagStatistics) SetBfTableSize(v int32)`
+
+SetBfTableSize sets BfTableSize field to given value.
+
+### HasBfTableSize
+
+`func (o *V0037DiagStatistics) HasBfTableSize() bool`
+
+HasBfTableSize returns a boolean if a field has been set.
+
+### GetBfTableSizeMean
+
+`func (o *V0037DiagStatistics) GetBfTableSizeMean() int32`
+
+GetBfTableSizeMean returns the BfTableSizeMean field if non-nil, zero value otherwise.
+
+### GetBfTableSizeMeanOk
+
+`func (o *V0037DiagStatistics) GetBfTableSizeMeanOk() (*int32, bool)`
+
+GetBfTableSizeMeanOk returns a tuple with the BfTableSizeMean field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBfTableSizeMean
+
+`func (o *V0037DiagStatistics) SetBfTableSizeMean(v int32)`
+
+SetBfTableSizeMean sets BfTableSizeMean field to given value.
+
+### HasBfTableSizeMean
+
+`func (o *V0037DiagStatistics) HasBfTableSizeMean() bool`
+
+HasBfTableSizeMean returns a boolean if a field has been set.
 
 ### GetBfWhenLastCycle
 

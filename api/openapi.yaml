@@ -463,30 +463,31 @@ components:
           bf_cycle_max: 6
           bf_last_backfilled_jobs: 3
           rpcs_user:
-          - user_id: 7
-            ave_time: 3
-            count: 3
-            total_time: 7
+          - user_id: 3
+            ave_time: 5
+            count: 7
+            total_time: 3
             user: user
-          - user_id: 7
-            ave_time: 3
-            count: 3
-            total_time: 7
+          - user_id: 3
+            ave_time: 5
+            count: 7
+            total_time: 3
             user: user
           bf_last_depth: 6
           rpcs_message_type:
-          - type_id: 6
-            ave_time: 4
-            count: 0
+          - type_id: 4
+            ave_time: 7
+            count: 8
             message_type: message_type
-            total_time: 8
-          - type_id: 6
-            ave_time: 4
-            count: 0
+            total_time: 3
+          - type_id: 4
+            ave_time: 7
+            count: 8
             message_type: message_type
-            total_time: 8
+            total_time: 3
           bf_backfilled_het_jobs: 6
           bf_backfilled_jobs: 6
+          bf_table_size: 7
           bf_cycle_mean: 2
           job_states_ts: 9
           bf_queue_len: 7
@@ -494,6 +495,7 @@ components:
           schedule_cycle_max: 4
           server_thread_count: 5
           dbd_agent_queue_size: 3
+          bf_table_size_mean: 6
           jobs_pending: 6
           agent_count: 7
           bf_cycle_last: 3
@@ -513,7 +515,7 @@ components:
           schedule_queue_length: 7
           bf_queue_len_mean: 0
           schedule_cycle_total: 1
-          bf_when_last_cycle: 7
+          bf_when_last_cycle: 0
           schedule_cycle_last: 7
           jobs_canceled: 9
           jobs_submitted: 1
@@ -559,11 +561,11 @@ components:
       type: object
     v0.0.37_diag_rpcm:
       example:
-        type_id: 6
-        ave_time: 4
-        count: 0
+        type_id: 4
+        ave_time: 7
+        count: 8
         message_type: message_type
-        total_time: 8
+        total_time: 3
       properties:
         message_type:
           description: message type
@@ -583,10 +585,10 @@ components:
       type: object
     v0.0.37_diag_rpcu:
       example:
-        user_id: 7
-        ave_time: 3
-        count: 3
-        total_time: 7
+        user_id: 3
+        ave_time: 5
+        count: 7
+        total_time: 3
         user: user
       properties:
         user:
@@ -2460,30 +2462,31 @@ components:
         bf_cycle_max: 6
         bf_last_backfilled_jobs: 3
         rpcs_user:
-        - user_id: 7
-          ave_time: 3
-          count: 3
-          total_time: 7
+        - user_id: 3
+          ave_time: 5
+          count: 7
+          total_time: 3
           user: user
-        - user_id: 7
-          ave_time: 3
-          count: 3
-          total_time: 7
+        - user_id: 3
+          ave_time: 5
+          count: 7
+          total_time: 3
           user: user
         bf_last_depth: 6
         rpcs_message_type:
-        - type_id: 6
-          ave_time: 4
-          count: 0
+        - type_id: 4
+          ave_time: 7
+          count: 8
           message_type: message_type
-          total_time: 8
-        - type_id: 6
-          ave_time: 4
-          count: 0
+          total_time: 3
+        - type_id: 4
+          ave_time: 7
+          count: 8
           message_type: message_type
-          total_time: 8
+          total_time: 3
         bf_backfilled_het_jobs: 6
         bf_backfilled_jobs: 6
+        bf_table_size: 7
         bf_cycle_mean: 2
         job_states_ts: 9
         bf_queue_len: 7
@@ -2491,6 +2494,7 @@ components:
         schedule_cycle_max: 4
         server_thread_count: 5
         dbd_agent_queue_size: 3
+        bf_table_size_mean: 6
         jobs_pending: 6
         agent_count: 7
         bf_cycle_last: 3
@@ -2510,7 +2514,7 @@ components:
         schedule_queue_length: 7
         bf_queue_len_mean: 0
         schedule_cycle_total: 1
-        bf_when_last_cycle: 7
+        bf_when_last_cycle: 0
         schedule_cycle_last: 7
         jobs_canceled: 9
         jobs_submitted: 1
@@ -2626,6 +2630,12 @@ components:
           type: integer
         bf_queue_len_mean:
           description: Backfill Schedule Mean queue length
+          type: integer
+        bf_table_size:
+          description: Backfill table size
+          type: integer
+        bf_table_size_mean:
+          description: Backfill table mean
           type: integer
         bf_when_last_cycle:
           description: Last cycle timestamp
