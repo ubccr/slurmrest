@@ -877,6 +877,20 @@
               "bf_active": {
                 "type": "boolean",
                 "description": "Backfill Schedule currently active"
+              },
+              "rpcs_message_type": {
+                "type": "array",
+                "description": "Remote Procedure Call statistics by message type",
+                "items": {
+                  "$ref": "#/components/schemas/v0.0.37_diag_rpcm"
+                }
+              },
+              "rpcs_user": {
+                "type": "array",
+                "description": "Remote Procedure Call statistics by user",
+                "items": {
+                  "$ref": "#/components/schemas/v0.0.37_diag_rpcu"
+                }
               }
             }
           }
@@ -907,6 +921,56 @@
           "name": {
             "type": "string",
             "description": "name of license"
+          }
+        }
+      },
+      "v0.0.37_diag_rpcm": {
+        "type": "object",
+        "properties": {
+          "message_type": {
+            "type": "string",
+            "description": "message type"
+          },
+          "type_id": {
+            "type": "integer",
+            "description": "message type id"
+          },
+          "count": {
+            "type": "integer",
+            "description": "rpc count"
+          },
+          "ave_time": {
+            "type": "integer",
+            "description": "average time"
+          },
+          "total_time": {
+            "type": "integer",
+            "description": "total time"
+          }
+        }
+      },
+      "v0.0.37_diag_rpcu": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "string",
+            "description": "user"
+          },
+          "user_id": {
+            "type": "integer",
+            "description": "user id"
+          },
+          "count": {
+            "type": "integer",
+            "description": "rpc count"
+          },
+          "ave_time": {
+            "type": "integer",
+            "description": "average time"
+          },
+          "total_time": {
+            "type": "integer",
+            "description": "total time"
           }
         }
       },

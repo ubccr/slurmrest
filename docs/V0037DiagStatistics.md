@@ -43,6 +43,8 @@ Name | Type | Description | Notes
 **BfQueueLenMean** | Pointer to **int32** | Backfill Schedule Mean queue length | [optional] 
 **BfWhenLastCycle** | Pointer to **int32** | Last cycle timestamp | [optional] 
 **BfActive** | Pointer to **bool** | Backfill Schedule currently active | [optional] 
+**RpcsMessageType** | Pointer to [**[]V0037DiagRpcm**](V0037DiagRpcm.md) | Remote Procedure Call statistics by message type | [optional] 
+**RpcsUser** | Pointer to [**[]V0037DiagRpcu**](V0037DiagRpcu.md) | Remote Procedure Call statistics by user | [optional] 
 
 ## Methods
 
@@ -1037,6 +1039,56 @@ SetBfActive sets BfActive field to given value.
 `func (o *V0037DiagStatistics) HasBfActive() bool`
 
 HasBfActive returns a boolean if a field has been set.
+
+### GetRpcsMessageType
+
+`func (o *V0037DiagStatistics) GetRpcsMessageType() []V0037DiagRpcm`
+
+GetRpcsMessageType returns the RpcsMessageType field if non-nil, zero value otherwise.
+
+### GetRpcsMessageTypeOk
+
+`func (o *V0037DiagStatistics) GetRpcsMessageTypeOk() (*[]V0037DiagRpcm, bool)`
+
+GetRpcsMessageTypeOk returns a tuple with the RpcsMessageType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRpcsMessageType
+
+`func (o *V0037DiagStatistics) SetRpcsMessageType(v []V0037DiagRpcm)`
+
+SetRpcsMessageType sets RpcsMessageType field to given value.
+
+### HasRpcsMessageType
+
+`func (o *V0037DiagStatistics) HasRpcsMessageType() bool`
+
+HasRpcsMessageType returns a boolean if a field has been set.
+
+### GetRpcsUser
+
+`func (o *V0037DiagStatistics) GetRpcsUser() []V0037DiagRpcu`
+
+GetRpcsUser returns the RpcsUser field if non-nil, zero value otherwise.
+
+### GetRpcsUserOk
+
+`func (o *V0037DiagStatistics) GetRpcsUserOk() (*[]V0037DiagRpcu, bool)`
+
+GetRpcsUserOk returns a tuple with the RpcsUser field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRpcsUser
+
+`func (o *V0037DiagStatistics) SetRpcsUser(v []V0037DiagRpcu)`
+
+SetRpcsUser sets RpcsUser field to given value.
+
+### HasRpcsUser
+
+`func (o *V0037DiagStatistics) HasRpcsUser() bool`
+
+HasRpcsUser returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

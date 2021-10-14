@@ -9,6 +9,8 @@ configuration.go
 docs/OpenapiApi.md
 docs/SlurmApi.md
 docs/V0037Diag.md
+docs/V0037DiagRpcm.md
+docs/V0037DiagRpcu.md
 docs/V0037DiagStatistics.md
 docs/V0037Error.md
 docs/V0037JobProperties.md
@@ -32,6 +34,8 @@ docs/V0037ReservationsResponse.md
 docs/V0037Signal.md
 git_push.sh
 model_v0_0_37_diag.go
+model_v0_0_37_diag_rpcm.go
+model_v0_0_37_diag_rpcu.go
 model_v0_0_37_diag_statistics.go
 model_v0_0_37_error.go
 model_v0_0_37_job_properties.go

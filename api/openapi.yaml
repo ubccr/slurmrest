@@ -462,7 +462,29 @@ components:
           jobs_running: 8
           bf_cycle_max: 6
           bf_last_backfilled_jobs: 3
+          rpcs_user:
+          - user_id: 7
+            ave_time: 3
+            count: 3
+            total_time: 7
+            user: user
+          - user_id: 7
+            ave_time: 3
+            count: 3
+            total_time: 7
+            user: user
           bf_last_depth: 6
+          rpcs_message_type:
+          - type_id: 6
+            ave_time: 4
+            count: 0
+            message_type: message_type
+            total_time: 8
+          - type_id: 6
+            ave_time: 4
+            count: 0
+            message_type: message_type
+            total_time: 8
           bf_backfilled_het_jobs: 6
           bf_backfilled_jobs: 6
           bf_cycle_mean: 2
@@ -534,6 +556,54 @@ components:
         name:
           description: name of license
           type: string
+      type: object
+    v0.0.37_diag_rpcm:
+      example:
+        type_id: 6
+        ave_time: 4
+        count: 0
+        message_type: message_type
+        total_time: 8
+      properties:
+        message_type:
+          description: message type
+          type: string
+        type_id:
+          description: message type id
+          type: integer
+        count:
+          description: rpc count
+          type: integer
+        ave_time:
+          description: average time
+          type: integer
+        total_time:
+          description: total time
+          type: integer
+      type: object
+    v0.0.37_diag_rpcu:
+      example:
+        user_id: 7
+        ave_time: 3
+        count: 3
+        total_time: 7
+        user: user
+      properties:
+        user:
+          description: user
+          type: string
+        user_id:
+          description: user id
+          type: integer
+        count:
+          description: rpc count
+          type: integer
+        ave_time:
+          description: average time
+          type: integer
+        total_time:
+          description: total time
+          type: integer
       type: object
     v0.0.37_pings:
       example:
@@ -2389,7 +2459,29 @@ components:
         jobs_running: 8
         bf_cycle_max: 6
         bf_last_backfilled_jobs: 3
+        rpcs_user:
+        - user_id: 7
+          ave_time: 3
+          count: 3
+          total_time: 7
+          user: user
+        - user_id: 7
+          ave_time: 3
+          count: 3
+          total_time: 7
+          user: user
         bf_last_depth: 6
+        rpcs_message_type:
+        - type_id: 6
+          ave_time: 4
+          count: 0
+          message_type: message_type
+          total_time: 8
+        - type_id: 6
+          ave_time: 4
+          count: 0
+          message_type: message_type
+          total_time: 8
         bf_backfilled_het_jobs: 6
         bf_backfilled_jobs: 6
         bf_cycle_mean: 2
@@ -2541,6 +2633,16 @@ components:
         bf_active:
           description: Backfill Schedule currently active
           type: boolean
+        rpcs_message_type:
+          description: Remote Procedure Call statistics by message type
+          items:
+            $ref: '#/components/schemas/v0.0.37_diag_rpcm'
+          type: array
+        rpcs_user:
+          description: Remote Procedure Call statistics by user
+          items:
+            $ref: '#/components/schemas/v0.0.37_diag_rpcu'
+          type: array
       type: object
     v0_0_37_reservation_purge_completed:
       description: If PURGE_COMP flag is set the amount of seconds this reservation

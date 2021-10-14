@@ -82,6 +82,8 @@ Class | Method | HTTP request | Description
 ## Documentation For Models
 
  - [V0037Diag](docs/V0037Diag.md)
+ - [V0037DiagRpcm](docs/V0037DiagRpcm.md)
+ - [V0037DiagRpcu](docs/V0037DiagRpcu.md)
  - [V0037DiagStatistics](docs/V0037DiagStatistics.md)
  - [V0037Error](docs/V0037Error.md)
  - [V0037JobProperties](docs/V0037JobProperties.md)

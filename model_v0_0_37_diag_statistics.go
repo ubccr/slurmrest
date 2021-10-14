@@ -95,6 +95,10 @@ type V0037DiagStatistics struct {
 	BfWhenLastCycle *int32 `json:"bf_when_last_cycle,omitempty"`
 	// Backfill Schedule currently active
 	BfActive *bool `json:"bf_active,omitempty"`
+	// Remote Procedure Call statistics by message type
+	RpcsMessageType *[]V0037DiagRpcm `json:"rpcs_message_type,omitempty"`
+	// Remote Procedure Call statistics by user
+	RpcsUser *[]V0037DiagRpcu `json:"rpcs_user,omitempty"`
 }
 
 // NewV0037DiagStatistics instantiates a new V0037DiagStatistics object
@@ -1362,6 +1366,70 @@ func (o *V0037DiagStatistics) SetBfActive(v bool) {
 	o.BfActive = &v
 }
 
+// GetRpcsMessageType returns the RpcsMessageType field value if set, zero value otherwise.
+func (o *V0037DiagStatistics) GetRpcsMessageType() []V0037DiagRpcm {
+	if o == nil || o.RpcsMessageType == nil {
+		var ret []V0037DiagRpcm
+		return ret
+	}
+	return *o.RpcsMessageType
+}
+
+// GetRpcsMessageTypeOk returns a tuple with the RpcsMessageType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *V0037DiagStatistics) GetRpcsMessageTypeOk() (*[]V0037DiagRpcm, bool) {
+	if o == nil || o.RpcsMessageType == nil {
+		return nil, false
+	}
+	return o.RpcsMessageType, true
+}
+
+// HasRpcsMessageType returns a boolean if a field has been set.
+func (o *V0037DiagStatistics) HasRpcsMessageType() bool {
+	if o != nil && o.RpcsMessageType != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetRpcsMessageType gets a reference to the given []V0037DiagRpcm and assigns it to the RpcsMessageType field.
+func (o *V0037DiagStatistics) SetRpcsMessageType(v []V0037DiagRpcm) {
+	o.RpcsMessageType = &v
+}
+
+// GetRpcsUser returns the RpcsUser field value if set, zero value otherwise.
+func (o *V0037DiagStatistics) GetRpcsUser() []V0037DiagRpcu {
+	if o == nil || o.RpcsUser == nil {
+		var ret []V0037DiagRpcu
+		return ret
+	}
+	return *o.RpcsUser
+}
+
+// GetRpcsUserOk returns a tuple with the RpcsUser field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *V0037DiagStatistics) GetRpcsUserOk() (*[]V0037DiagRpcu, bool) {
+	if o == nil || o.RpcsUser == nil {
+		return nil, false
+	}
+	return o.RpcsUser, true
+}
+
+// HasRpcsUser returns a boolean if a field has been set.
+func (o *V0037DiagStatistics) HasRpcsUser() bool {
+	if o != nil && o.RpcsUser != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetRpcsUser gets a reference to the given []V0037DiagRpcu and assigns it to the RpcsUser field.
+func (o *V0037DiagStatistics) SetRpcsUser(v []V0037DiagRpcu) {
+	o.RpcsUser = &v
+}
+
 func (o V0037DiagStatistics) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.PartsPacked != nil {
@@ -1480,6 +1548,12 @@ func (o V0037DiagStatistics) MarshalJSON() ([]byte, error) {
 	}
 	if o.BfActive != nil {
 		toSerialize["bf_active"] = o.BfActive
+	}
+	if o.RpcsMessageType != nil {
+		toSerialize["rpcs_message_type"] = o.RpcsMessageType
+	}
+	if o.RpcsUser != nil {
+		toSerialize["rpcs_user"] = o.RpcsUser
 	}
 	return json.Marshal(toSerialize)
 }
