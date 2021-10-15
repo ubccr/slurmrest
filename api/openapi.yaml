@@ -532,8 +532,18 @@ components:
     v0.0.37_licenses:
       example:
         licenses:
-        - name: name
-        - name: name
+        - total: 0
+          reserved: 5
+          name: name
+          available: 1
+          in_use: 6
+          remote: true
+        - total: 0
+          reserved: 5
+          name: name
+          available: 1
+          in_use: 6
+          remote: true
         errors:
         - errno: 0
           error: error
@@ -553,11 +563,31 @@ components:
       type: object
     v0.0.37_license:
       example:
+        total: 0
+        reserved: 5
         name: name
+        available: 1
+        in_use: 6
+        remote: true
       properties:
         name:
           description: name of license
           type: string
+        total:
+          description: total number of licenses
+          type: integer
+        in_use:
+          description: number of licenses in use
+          type: integer
+        available:
+          description: number of licenses available
+          type: integer
+        reserved:
+          description: number of licenses reserved
+          type: integer
+        remote:
+          description: license is remote
+          type: boolean
       type: object
     v0.0.37_diag_rpcm:
       example:

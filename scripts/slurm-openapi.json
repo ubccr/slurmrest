@@ -929,6 +929,26 @@
           "name": {
             "type": "string",
             "description": "name of license"
+          },
+          "total": {
+            "type": "integer",
+            "description": "total number of licenses"
+          },
+          "in_use": {
+            "type": "integer",
+            "description": "number of licenses in use"
+          },
+          "available": {
+            "type": "integer",
+            "description": "number of licenses available"
+          },
+          "reserved": {
+            "type": "integer",
+            "description": "number of licenses reserved"
+          },
+          "remote": {
+            "type": "boolean",
+            "description": "license is remote"
           }
         }
       },

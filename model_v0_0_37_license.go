@@ -19,6 +19,16 @@ import (
 type V0037License struct {
 	// name of license
 	Name *string `json:"name,omitempty"`
+	// total number of licenses
+	Total *int32 `json:"total,omitempty"`
+	// number of licenses in use
+	InUse *int32 `json:"in_use,omitempty"`
+	// number of licenses available
+	Available *int32 `json:"available,omitempty"`
+	// number of licenses reserved
+	Reserved *int32 `json:"reserved,omitempty"`
+	// license is remote
+	Remote *bool `json:"remote,omitempty"`
 }
 
 // NewV0037License instantiates a new V0037License object
@@ -70,10 +80,185 @@ func (o *V0037License) SetName(v string) {
 	o.Name = &v
 }
 
+// GetTotal returns the Total field value if set, zero value otherwise.
+func (o *V0037License) GetTotal() int32 {
+	if o == nil || o.Total == nil {
+		var ret int32
+		return ret
+	}
+	return *o.Total
+}
+
+// GetTotalOk returns a tuple with the Total field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *V0037License) GetTotalOk() (*int32, bool) {
+	if o == nil || o.Total == nil {
+		return nil, false
+	}
+	return o.Total, true
+}
+
+// HasTotal returns a boolean if a field has been set.
+func (o *V0037License) HasTotal() bool {
+	if o != nil && o.Total != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetTotal gets a reference to the given int32 and assigns it to the Total field.
+func (o *V0037License) SetTotal(v int32) {
+	o.Total = &v
+}
+
+// GetInUse returns the InUse field value if set, zero value otherwise.
+func (o *V0037License) GetInUse() int32 {
+	if o == nil || o.InUse == nil {
+		var ret int32
+		return ret
+	}
+	return *o.InUse
+}
+
+// GetInUseOk returns a tuple with the InUse field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *V0037License) GetInUseOk() (*int32, bool) {
+	if o == nil || o.InUse == nil {
+		return nil, false
+	}
+	return o.InUse, true
+}
+
+// HasInUse returns a boolean if a field has been set.
+func (o *V0037License) HasInUse() bool {
+	if o != nil && o.InUse != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetInUse gets a reference to the given int32 and assigns it to the InUse field.
+func (o *V0037License) SetInUse(v int32) {
+	o.InUse = &v
+}
+
+// GetAvailable returns the Available field value if set, zero value otherwise.
+func (o *V0037License) GetAvailable() int32 {
+	if o == nil || o.Available == nil {
+		var ret int32
+		return ret
+	}
+	return *o.Available
+}
+
+// GetAvailableOk returns a tuple with the Available field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *V0037License) GetAvailableOk() (*int32, bool) {
+	if o == nil || o.Available == nil {
+		return nil, false
+	}
+	return o.Available, true
+}
+
+// HasAvailable returns a boolean if a field has been set.
+func (o *V0037License) HasAvailable() bool {
+	if o != nil && o.Available != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetAvailable gets a reference to the given int32 and assigns it to the Available field.
+func (o *V0037License) SetAvailable(v int32) {
+	o.Available = &v
+}
+
+// GetReserved returns the Reserved field value if set, zero value otherwise.
+func (o *V0037License) GetReserved() int32 {
+	if o == nil || o.Reserved == nil {
+		var ret int32
+		return ret
+	}
+	return *o.Reserved
+}
+
+// GetReservedOk returns a tuple with the Reserved field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *V0037License) GetReservedOk() (*int32, bool) {
+	if o == nil || o.Reserved == nil {
+		return nil, false
+	}
+	return o.Reserved, true
+}
+
+// HasReserved returns a boolean if a field has been set.
+func (o *V0037License) HasReserved() bool {
+	if o != nil && o.Reserved != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetReserved gets a reference to the given int32 and assigns it to the Reserved field.
+func (o *V0037License) SetReserved(v int32) {
+	o.Reserved = &v
+}
+
+// GetRemote returns the Remote field value if set, zero value otherwise.
+func (o *V0037License) GetRemote() bool {
+	if o == nil || o.Remote == nil {
+		var ret bool
+		return ret
+	}
+	return *o.Remote
+}
+
+// GetRemoteOk returns a tuple with the Remote field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *V0037License) GetRemoteOk() (*bool, bool) {
+	if o == nil || o.Remote == nil {
+		return nil, false
+	}
+	return o.Remote, true
+}
+
+// HasRemote returns a boolean if a field has been set.
+func (o *V0037License) HasRemote() bool {
+	if o != nil && o.Remote != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetRemote gets a reference to the given bool and assigns it to the Remote field.
+func (o *V0037License) SetRemote(v bool) {
+	o.Remote = &v
+}
+
 func (o V0037License) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Name != nil {
 		toSerialize["name"] = o.Name
+	}
+	if o.Total != nil {
+		toSerialize["total"] = o.Total
+	}
+	if o.InUse != nil {
+		toSerialize["in_use"] = o.InUse
+	}
+	if o.Available != nil {
+		toSerialize["available"] = o.Available
+	}
+	if o.Reserved != nil {
+		toSerialize["reserved"] = o.Reserved
+	}
+	if o.Remote != nil {
+		toSerialize["remote"] = o.Remote
 	}
 	return json.Marshal(toSerialize)
 }
