@@ -46,8 +46,8 @@ func main() {
 
 	client := slurmrest.NewAPIClient(cfg)
 
-	jreq := client.SlurmApi.SlurmctldGetJobs(context.Background())
-	jobs, resp, err := client.SlurmApi.SlurmctldGetJobsExecute(jreq)
+	req := jc.client.SlurmAPI.SlurmV0040GetJobs(context.Background())
+	jobs, resp, err := jc.client.SlurmAPI.SlurmV0040GetJobsExecute(req)
 	if err != nil {
 		log.Fatalf("FAIL: %s", err)
 	} else if resp.StatusCode != 200 {
