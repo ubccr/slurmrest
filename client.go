@@ -3,7 +3,7 @@ Slurm REST API
 
 API to access and control Slurm
 
-API version: Slurm-24.05.2&openapi/dbv0.0.39&openapi/v0.0.39&openapi/slurmdbd&openapi/slurmctld
+API version: Slurm-25.11.3
 Contact: sales@schedmd.com
 */
 
@@ -42,7 +42,7 @@ var (
 	queryDescape    = strings.NewReplacer( "%5B", "[", "%5D", "]" )
 )
 
-// APIClient manages communication with the Slurm REST API API vSlurm-24.05.2&amp;openapi/dbv0.0.39&amp;openapi/v0.0.39&amp;openapi/slurmdbd&amp;openapi/slurmctld
+// APIClient manages communication with the Slurm REST API API vSlurm-25.11.3
 // In most cases there should be only one, shared, APIClient.
 type APIClient struct {
 	cfg    *Configuration

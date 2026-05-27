@@ -3,7 +3,7 @@ Slurm REST API
 
 API to access and control Slurm
 
-API version: Slurm-24.05.2&openapi/dbv0.0.39&openapi/v0.0.39&openapi/slurmdbd&openapi/slurmctld
+API version: Slurm-25.11.3
 Contact: sales@schedmd.com
 */
 
@@ -24,2321 +24,7 @@ import (
 // SlurmAPIService SlurmAPI service
 type SlurmAPIService service
 
-type ApiSlurmV0039CancelJobRequest struct {
-	ctx context.Context
-	ApiService *SlurmAPIService
-	jobId string
-	signal *string
-}
-
-// signal to send to job
-func (r ApiSlurmV0039CancelJobRequest) Signal(signal string) ApiSlurmV0039CancelJobRequest {
-	r.signal = &signal
-	return r
-}
-
-func (r ApiSlurmV0039CancelJobRequest) Execute() (*Status, *http.Response, error) {
-	return r.ApiService.SlurmV0039CancelJobExecute(r)
-}
-
-/*
-SlurmV0039CancelJob cancel or signal job
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param jobId Slurm Job ID
- @return ApiSlurmV0039CancelJobRequest
-
-Deprecated
-*/
-func (a *SlurmAPIService) SlurmV0039CancelJob(ctx context.Context, jobId string) ApiSlurmV0039CancelJobRequest {
-	return ApiSlurmV0039CancelJobRequest{
-		ApiService: a,
-		ctx: ctx,
-		jobId: jobId,
-	}
-}
-
-// Execute executes the request
-//  @return Status
-// Deprecated
-func (a *SlurmAPIService) SlurmV0039CancelJobExecute(r ApiSlurmV0039CancelJobRequest) (*Status, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodDelete
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *Status
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0039CancelJob")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurm/v0.0.39/job/{job_id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"job_id"+"}", url.PathEscape(parameterValueToString(r.jobId, "jobId")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	if r.signal != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "signal", r.signal, "")
-	}
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json", "application/x-yaml"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v Status
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmV0039DeleteNodeRequest struct {
-	ctx context.Context
-	ApiService *SlurmAPIService
-	nodeName string
-}
-
-func (r ApiSlurmV0039DeleteNodeRequest) Execute() (*Status, *http.Response, error) {
-	return r.ApiService.SlurmV0039DeleteNodeExecute(r)
-}
-
-/*
-SlurmV0039DeleteNode delete node
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param nodeName Slurm Node Name
- @return ApiSlurmV0039DeleteNodeRequest
-
-Deprecated
-*/
-func (a *SlurmAPIService) SlurmV0039DeleteNode(ctx context.Context, nodeName string) ApiSlurmV0039DeleteNodeRequest {
-	return ApiSlurmV0039DeleteNodeRequest{
-		ApiService: a,
-		ctx: ctx,
-		nodeName: nodeName,
-	}
-}
-
-// Execute executes the request
-//  @return Status
-// Deprecated
-func (a *SlurmAPIService) SlurmV0039DeleteNodeExecute(r ApiSlurmV0039DeleteNodeRequest) (*Status, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodDelete
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *Status
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0039DeleteNode")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurm/v0.0.39/node/{node_name}"
-	localVarPath = strings.Replace(localVarPath, "{"+"node_name"+"}", url.PathEscape(parameterValueToString(r.nodeName, "nodeName")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json", "application/x-yaml"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v Status
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmV0039DiagRequest struct {
-	ctx context.Context
-	ApiService *SlurmAPIService
-}
-
-func (r ApiSlurmV0039DiagRequest) Execute() (*V0039Diag, *http.Response, error) {
-	return r.ApiService.SlurmV0039DiagExecute(r)
-}
-
-/*
-SlurmV0039Diag get diagnostics
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmV0039DiagRequest
-
-Deprecated
-*/
-func (a *SlurmAPIService) SlurmV0039Diag(ctx context.Context) ApiSlurmV0039DiagRequest {
-	return ApiSlurmV0039DiagRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-// Execute executes the request
-//  @return V0039Diag
-// Deprecated
-func (a *SlurmAPIService) SlurmV0039DiagExecute(r ApiSlurmV0039DiagRequest) (*V0039Diag, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *V0039Diag
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0039Diag")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurm/v0.0.39/diag"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json", "application/x-yaml"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v Status
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmV0039GetJobRequest struct {
-	ctx context.Context
-	ApiService *SlurmAPIService
-	jobId string
-}
-
-func (r ApiSlurmV0039GetJobRequest) Execute() (*V0039JobsResponse, *http.Response, error) {
-	return r.ApiService.SlurmV0039GetJobExecute(r)
-}
-
-/*
-SlurmV0039GetJob get job info
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param jobId Slurm JobID
- @return ApiSlurmV0039GetJobRequest
-
-Deprecated
-*/
-func (a *SlurmAPIService) SlurmV0039GetJob(ctx context.Context, jobId string) ApiSlurmV0039GetJobRequest {
-	return ApiSlurmV0039GetJobRequest{
-		ApiService: a,
-		ctx: ctx,
-		jobId: jobId,
-	}
-}
-
-// Execute executes the request
-//  @return V0039JobsResponse
-// Deprecated
-func (a *SlurmAPIService) SlurmV0039GetJobExecute(r ApiSlurmV0039GetJobRequest) (*V0039JobsResponse, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *V0039JobsResponse
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0039GetJob")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurm/v0.0.39/job/{job_id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"job_id"+"}", url.PathEscape(parameterValueToString(r.jobId, "jobId")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json", "application/x-yaml"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v Status
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmV0039GetJobsRequest struct {
-	ctx context.Context
-	ApiService *SlurmAPIService
-	updateTime *int64
-}
-
-// Filter if changed since update_time. Use of this parameter can result in faster replies.
-func (r ApiSlurmV0039GetJobsRequest) UpdateTime(updateTime int64) ApiSlurmV0039GetJobsRequest {
-	r.updateTime = &updateTime
-	return r
-}
-
-func (r ApiSlurmV0039GetJobsRequest) Execute() (*V0039JobsResponse, *http.Response, error) {
-	return r.ApiService.SlurmV0039GetJobsExecute(r)
-}
-
-/*
-SlurmV0039GetJobs get list of jobs
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmV0039GetJobsRequest
-
-Deprecated
-*/
-func (a *SlurmAPIService) SlurmV0039GetJobs(ctx context.Context) ApiSlurmV0039GetJobsRequest {
-	return ApiSlurmV0039GetJobsRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-// Execute executes the request
-//  @return V0039JobsResponse
-// Deprecated
-func (a *SlurmAPIService) SlurmV0039GetJobsExecute(r ApiSlurmV0039GetJobsRequest) (*V0039JobsResponse, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *V0039JobsResponse
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0039GetJobs")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurm/v0.0.39/jobs"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	if r.updateTime != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "update_time", r.updateTime, "")
-	}
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json", "application/x-yaml"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v Status
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmV0039GetNodeRequest struct {
-	ctx context.Context
-	ApiService *SlurmAPIService
-	nodeName string
-}
-
-func (r ApiSlurmV0039GetNodeRequest) Execute() (*V0039NodesResponse, *http.Response, error) {
-	return r.ApiService.SlurmV0039GetNodeExecute(r)
-}
-
-/*
-SlurmV0039GetNode get node info
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param nodeName Slurm Node Name
- @return ApiSlurmV0039GetNodeRequest
-
-Deprecated
-*/
-func (a *SlurmAPIService) SlurmV0039GetNode(ctx context.Context, nodeName string) ApiSlurmV0039GetNodeRequest {
-	return ApiSlurmV0039GetNodeRequest{
-		ApiService: a,
-		ctx: ctx,
-		nodeName: nodeName,
-	}
-}
-
-// Execute executes the request
-//  @return V0039NodesResponse
-// Deprecated
-func (a *SlurmAPIService) SlurmV0039GetNodeExecute(r ApiSlurmV0039GetNodeRequest) (*V0039NodesResponse, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *V0039NodesResponse
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0039GetNode")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurm/v0.0.39/node/{node_name}"
-	localVarPath = strings.Replace(localVarPath, "{"+"node_name"+"}", url.PathEscape(parameterValueToString(r.nodeName, "nodeName")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json", "application/x-yaml"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v Status
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmV0039GetNodesRequest struct {
-	ctx context.Context
-	ApiService *SlurmAPIService
-	updateTime *int64
-}
-
-// Filter if changed since update_time. Use of this parameter can result in faster replies.
-func (r ApiSlurmV0039GetNodesRequest) UpdateTime(updateTime int64) ApiSlurmV0039GetNodesRequest {
-	r.updateTime = &updateTime
-	return r
-}
-
-func (r ApiSlurmV0039GetNodesRequest) Execute() (*V0039NodesResponse, *http.Response, error) {
-	return r.ApiService.SlurmV0039GetNodesExecute(r)
-}
-
-/*
-SlurmV0039GetNodes get all node info
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmV0039GetNodesRequest
-
-Deprecated
-*/
-func (a *SlurmAPIService) SlurmV0039GetNodes(ctx context.Context) ApiSlurmV0039GetNodesRequest {
-	return ApiSlurmV0039GetNodesRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-// Execute executes the request
-//  @return V0039NodesResponse
-// Deprecated
-func (a *SlurmAPIService) SlurmV0039GetNodesExecute(r ApiSlurmV0039GetNodesRequest) (*V0039NodesResponse, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *V0039NodesResponse
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0039GetNodes")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurm/v0.0.39/nodes"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	if r.updateTime != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "update_time", r.updateTime, "")
-	}
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json", "application/x-yaml"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v Status
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmV0039GetPartitionRequest struct {
-	ctx context.Context
-	ApiService *SlurmAPIService
-	partitionName string
-	updateTime *int64
-}
-
-// Filter if there were no partition changes (not limited to partition in URL endpoint) since update_time.
-func (r ApiSlurmV0039GetPartitionRequest) UpdateTime(updateTime int64) ApiSlurmV0039GetPartitionRequest {
-	r.updateTime = &updateTime
-	return r
-}
-
-func (r ApiSlurmV0039GetPartitionRequest) Execute() (*V0039PartitionsResponse, *http.Response, error) {
-	return r.ApiService.SlurmV0039GetPartitionExecute(r)
-}
-
-/*
-SlurmV0039GetPartition get partition info
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param partitionName Slurm Partition Name
- @return ApiSlurmV0039GetPartitionRequest
-
-Deprecated
-*/
-func (a *SlurmAPIService) SlurmV0039GetPartition(ctx context.Context, partitionName string) ApiSlurmV0039GetPartitionRequest {
-	return ApiSlurmV0039GetPartitionRequest{
-		ApiService: a,
-		ctx: ctx,
-		partitionName: partitionName,
-	}
-}
-
-// Execute executes the request
-//  @return V0039PartitionsResponse
-// Deprecated
-func (a *SlurmAPIService) SlurmV0039GetPartitionExecute(r ApiSlurmV0039GetPartitionRequest) (*V0039PartitionsResponse, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *V0039PartitionsResponse
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0039GetPartition")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurm/v0.0.39/partition/{partition_name}"
-	localVarPath = strings.Replace(localVarPath, "{"+"partition_name"+"}", url.PathEscape(parameterValueToString(r.partitionName, "partitionName")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	if r.updateTime != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "update_time", r.updateTime, "")
-	}
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json", "application/x-yaml"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v Status
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmV0039GetPartitionsRequest struct {
-	ctx context.Context
-	ApiService *SlurmAPIService
-	updateTime *int64
-}
-
-// Filter if changed since update_time. Use of this parameter can result in faster replies.
-func (r ApiSlurmV0039GetPartitionsRequest) UpdateTime(updateTime int64) ApiSlurmV0039GetPartitionsRequest {
-	r.updateTime = &updateTime
-	return r
-}
-
-func (r ApiSlurmV0039GetPartitionsRequest) Execute() (*V0039PartitionsResponse, *http.Response, error) {
-	return r.ApiService.SlurmV0039GetPartitionsExecute(r)
-}
-
-/*
-SlurmV0039GetPartitions get all partition info
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmV0039GetPartitionsRequest
-
-Deprecated
-*/
-func (a *SlurmAPIService) SlurmV0039GetPartitions(ctx context.Context) ApiSlurmV0039GetPartitionsRequest {
-	return ApiSlurmV0039GetPartitionsRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-// Execute executes the request
-//  @return V0039PartitionsResponse
-// Deprecated
-func (a *SlurmAPIService) SlurmV0039GetPartitionsExecute(r ApiSlurmV0039GetPartitionsRequest) (*V0039PartitionsResponse, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *V0039PartitionsResponse
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0039GetPartitions")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurm/v0.0.39/partitions"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	if r.updateTime != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "update_time", r.updateTime, "")
-	}
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json", "application/x-yaml"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v Status
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmV0039GetReservationRequest struct {
-	ctx context.Context
-	ApiService *SlurmAPIService
-	reservationName string
-	updateTime *int64
-}
-
-// Filter if no reservation (not limited to reservation in URL) changed since update_time.
-func (r ApiSlurmV0039GetReservationRequest) UpdateTime(updateTime int64) ApiSlurmV0039GetReservationRequest {
-	r.updateTime = &updateTime
-	return r
-}
-
-func (r ApiSlurmV0039GetReservationRequest) Execute() (*V0039ReservationsResponse, *http.Response, error) {
-	return r.ApiService.SlurmV0039GetReservationExecute(r)
-}
-
-/*
-SlurmV0039GetReservation get reservation info
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param reservationName Slurm Reservation Name
- @return ApiSlurmV0039GetReservationRequest
-
-Deprecated
-*/
-func (a *SlurmAPIService) SlurmV0039GetReservation(ctx context.Context, reservationName string) ApiSlurmV0039GetReservationRequest {
-	return ApiSlurmV0039GetReservationRequest{
-		ApiService: a,
-		ctx: ctx,
-		reservationName: reservationName,
-	}
-}
-
-// Execute executes the request
-//  @return V0039ReservationsResponse
-// Deprecated
-func (a *SlurmAPIService) SlurmV0039GetReservationExecute(r ApiSlurmV0039GetReservationRequest) (*V0039ReservationsResponse, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *V0039ReservationsResponse
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0039GetReservation")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurm/v0.0.39/reservation/{reservation_name}"
-	localVarPath = strings.Replace(localVarPath, "{"+"reservation_name"+"}", url.PathEscape(parameterValueToString(r.reservationName, "reservationName")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	if r.updateTime != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "update_time", r.updateTime, "")
-	}
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json", "application/x-yaml"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v Status
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmV0039GetReservationsRequest struct {
-	ctx context.Context
-	ApiService *SlurmAPIService
-	updateTime *int64
-}
-
-// Filter if changed since update_time. Use of this parameter can result in faster replies.
-func (r ApiSlurmV0039GetReservationsRequest) UpdateTime(updateTime int64) ApiSlurmV0039GetReservationsRequest {
-	r.updateTime = &updateTime
-	return r
-}
-
-func (r ApiSlurmV0039GetReservationsRequest) Execute() (*V0039ReservationsResponse, *http.Response, error) {
-	return r.ApiService.SlurmV0039GetReservationsExecute(r)
-}
-
-/*
-SlurmV0039GetReservations get all reservation info
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmV0039GetReservationsRequest
-
-Deprecated
-*/
-func (a *SlurmAPIService) SlurmV0039GetReservations(ctx context.Context) ApiSlurmV0039GetReservationsRequest {
-	return ApiSlurmV0039GetReservationsRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-// Execute executes the request
-//  @return V0039ReservationsResponse
-// Deprecated
-func (a *SlurmAPIService) SlurmV0039GetReservationsExecute(r ApiSlurmV0039GetReservationsRequest) (*V0039ReservationsResponse, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *V0039ReservationsResponse
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0039GetReservations")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurm/v0.0.39/reservations"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	if r.updateTime != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "update_time", r.updateTime, "")
-	}
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json", "application/x-yaml"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v Status
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmV0039PingRequest struct {
-	ctx context.Context
-	ApiService *SlurmAPIService
-}
-
-func (r ApiSlurmV0039PingRequest) Execute() (*V0039Pings, *http.Response, error) {
-	return r.ApiService.SlurmV0039PingExecute(r)
-}
-
-/*
-SlurmV0039Ping ping test
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmV0039PingRequest
-
-Deprecated
-*/
-func (a *SlurmAPIService) SlurmV0039Ping(ctx context.Context) ApiSlurmV0039PingRequest {
-	return ApiSlurmV0039PingRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-// Execute executes the request
-//  @return V0039Pings
-// Deprecated
-func (a *SlurmAPIService) SlurmV0039PingExecute(r ApiSlurmV0039PingRequest) (*V0039Pings, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *V0039Pings
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0039Ping")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurm/v0.0.39/ping"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json", "application/x-yaml"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v Status
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmV0039SlurmctldGetLicensesRequest struct {
-	ctx context.Context
-	ApiService *SlurmAPIService
-}
-
-func (r ApiSlurmV0039SlurmctldGetLicensesRequest) Execute() (*V0039LicensesInfo, *http.Response, error) {
-	return r.ApiService.SlurmV0039SlurmctldGetLicensesExecute(r)
-}
-
-/*
-SlurmV0039SlurmctldGetLicenses get all Slurm tracked license info
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmV0039SlurmctldGetLicensesRequest
-
-Deprecated
-*/
-func (a *SlurmAPIService) SlurmV0039SlurmctldGetLicenses(ctx context.Context) ApiSlurmV0039SlurmctldGetLicensesRequest {
-	return ApiSlurmV0039SlurmctldGetLicensesRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-// Execute executes the request
-//  @return V0039LicensesInfo
-// Deprecated
-func (a *SlurmAPIService) SlurmV0039SlurmctldGetLicensesExecute(r ApiSlurmV0039SlurmctldGetLicensesRequest) (*V0039LicensesInfo, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *V0039LicensesInfo
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0039SlurmctldGetLicenses")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurm/v0.0.39/licenses"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json", "application/x-yaml"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v Status
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmV0039SubmitJobRequest struct {
-	ctx context.Context
-	ApiService *SlurmAPIService
-	v0039JobSubmission *V0039JobSubmission
-}
-
-// submit new job
-func (r ApiSlurmV0039SubmitJobRequest) V0039JobSubmission(v0039JobSubmission V0039JobSubmission) ApiSlurmV0039SubmitJobRequest {
-	r.v0039JobSubmission = &v0039JobSubmission
-	return r
-}
-
-func (r ApiSlurmV0039SubmitJobRequest) Execute() (*V0039JobSubmissionResponse, *http.Response, error) {
-	return r.ApiService.SlurmV0039SubmitJobExecute(r)
-}
-
-/*
-SlurmV0039SubmitJob submit new job
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmV0039SubmitJobRequest
-
-Deprecated
-*/
-func (a *SlurmAPIService) SlurmV0039SubmitJob(ctx context.Context) ApiSlurmV0039SubmitJobRequest {
-	return ApiSlurmV0039SubmitJobRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-// Execute executes the request
-//  @return V0039JobSubmissionResponse
-// Deprecated
-func (a *SlurmAPIService) SlurmV0039SubmitJobExecute(r ApiSlurmV0039SubmitJobRequest) (*V0039JobSubmissionResponse, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *V0039JobSubmissionResponse
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0039SubmitJob")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurm/v0.0.39/job/submit"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-	if r.v0039JobSubmission == nil {
-		return localVarReturnValue, nil, reportError("v0039JobSubmission is required and must be specified")
-	}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/json", "application/x-yaml"}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json", "application/x-yaml"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	// body params
-	localVarPostBody = r.v0039JobSubmission
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v Status
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmV0039UpdateJobRequest struct {
-	ctx context.Context
-	ApiService *SlurmAPIService
-	jobId string
-	v0039JobDescMsg *V0039JobDescMsg
-}
-
-// update job
-func (r ApiSlurmV0039UpdateJobRequest) V0039JobDescMsg(v0039JobDescMsg V0039JobDescMsg) ApiSlurmV0039UpdateJobRequest {
-	r.v0039JobDescMsg = &v0039JobDescMsg
-	return r
-}
-
-func (r ApiSlurmV0039UpdateJobRequest) Execute() (*V0039JobUpdateResponse, *http.Response, error) {
-	return r.ApiService.SlurmV0039UpdateJobExecute(r)
-}
-
-/*
-SlurmV0039UpdateJob update job
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param jobId Slurm Job ID
- @return ApiSlurmV0039UpdateJobRequest
-
-Deprecated
-*/
-func (a *SlurmAPIService) SlurmV0039UpdateJob(ctx context.Context, jobId string) ApiSlurmV0039UpdateJobRequest {
-	return ApiSlurmV0039UpdateJobRequest{
-		ApiService: a,
-		ctx: ctx,
-		jobId: jobId,
-	}
-}
-
-// Execute executes the request
-//  @return V0039JobUpdateResponse
-// Deprecated
-func (a *SlurmAPIService) SlurmV0039UpdateJobExecute(r ApiSlurmV0039UpdateJobRequest) (*V0039JobUpdateResponse, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *V0039JobUpdateResponse
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0039UpdateJob")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurm/v0.0.39/job/{job_id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"job_id"+"}", url.PathEscape(parameterValueToString(r.jobId, "jobId")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-	if r.v0039JobDescMsg == nil {
-		return localVarReturnValue, nil, reportError("v0039JobDescMsg is required and must be specified")
-	}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/json", "application/x-yaml"}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json", "application/x-yaml"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	// body params
-	localVarPostBody = r.v0039JobDescMsg
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v Status
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmV0039UpdateNodeRequest struct {
-	ctx context.Context
-	ApiService *SlurmAPIService
-	nodeName string
-	v0039UpdateNodeMsg *V0039UpdateNodeMsg
-}
-
-// update node
-func (r ApiSlurmV0039UpdateNodeRequest) V0039UpdateNodeMsg(v0039UpdateNodeMsg V0039UpdateNodeMsg) ApiSlurmV0039UpdateNodeRequest {
-	r.v0039UpdateNodeMsg = &v0039UpdateNodeMsg
-	return r
-}
-
-func (r ApiSlurmV0039UpdateNodeRequest) Execute() (*Status, *http.Response, error) {
-	return r.ApiService.SlurmV0039UpdateNodeExecute(r)
-}
-
-/*
-SlurmV0039UpdateNode update node properties
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param nodeName Slurm Node Name
- @return ApiSlurmV0039UpdateNodeRequest
-
-Deprecated
-*/
-func (a *SlurmAPIService) SlurmV0039UpdateNode(ctx context.Context, nodeName string) ApiSlurmV0039UpdateNodeRequest {
-	return ApiSlurmV0039UpdateNodeRequest{
-		ApiService: a,
-		ctx: ctx,
-		nodeName: nodeName,
-	}
-}
-
-// Execute executes the request
-//  @return Status
-// Deprecated
-func (a *SlurmAPIService) SlurmV0039UpdateNodeExecute(r ApiSlurmV0039UpdateNodeRequest) (*Status, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *Status
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0039UpdateNode")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurm/v0.0.39/node/{node_name}"
-	localVarPath = strings.Replace(localVarPath, "{"+"node_name"+"}", url.PathEscape(parameterValueToString(r.nodeName, "nodeName")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-	if r.v0039UpdateNodeMsg == nil {
-		return localVarReturnValue, nil, reportError("v0039UpdateNodeMsg is required and must be specified")
-	}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/json", "application/x-yaml"}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json", "application/x-yaml"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	// body params
-	localVarPostBody = r.v0039UpdateNodeMsg
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v Status
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmV0040DeleteJobRequest struct {
+type ApiSlurmV0044DeleteJobRequest struct {
 	ctx context.Context
 	ApiService *SlurmAPIService
 	jobId string
@@ -2347,30 +33,30 @@ type ApiSlurmV0040DeleteJobRequest struct {
 }
 
 // Signal to send to Job
-func (r ApiSlurmV0040DeleteJobRequest) Signal(signal string) ApiSlurmV0040DeleteJobRequest {
+func (r ApiSlurmV0044DeleteJobRequest) Signal(signal string) ApiSlurmV0044DeleteJobRequest {
 	r.signal = &signal
 	return r
 }
 
 // Signalling flags
-func (r ApiSlurmV0040DeleteJobRequest) Flags(flags string) ApiSlurmV0040DeleteJobRequest {
+func (r ApiSlurmV0044DeleteJobRequest) Flags(flags string) ApiSlurmV0044DeleteJobRequest {
 	r.flags = &flags
 	return r
 }
 
-func (r ApiSlurmV0040DeleteJobRequest) Execute() (*V0040OpenapiResp, *http.Response, error) {
-	return r.ApiService.SlurmV0040DeleteJobExecute(r)
+func (r ApiSlurmV0044DeleteJobRequest) Execute() (*V0044OpenapiKillJobResp, *http.Response, error) {
+	return r.ApiService.SlurmV0044DeleteJobExecute(r)
 }
 
 /*
-SlurmV0040DeleteJob cancel or signal job
+SlurmV0044DeleteJob cancel or signal job
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param jobId JobId
- @return ApiSlurmV0040DeleteJobRequest
+ @param jobId Job ID
+ @return ApiSlurmV0044DeleteJobRequest
 */
-func (a *SlurmAPIService) SlurmV0040DeleteJob(ctx context.Context, jobId string) ApiSlurmV0040DeleteJobRequest {
-	return ApiSlurmV0040DeleteJobRequest{
+func (a *SlurmAPIService) SlurmV0044DeleteJob(ctx context.Context, jobId string) ApiSlurmV0044DeleteJobRequest {
+	return ApiSlurmV0044DeleteJobRequest{
 		ApiService: a,
 		ctx: ctx,
 		jobId: jobId,
@@ -2378,21 +64,21 @@ func (a *SlurmAPIService) SlurmV0040DeleteJob(ctx context.Context, jobId string)
 }
 
 // Execute executes the request
-//  @return V0040OpenapiResp
-func (a *SlurmAPIService) SlurmV0040DeleteJobExecute(r ApiSlurmV0040DeleteJobRequest) (*V0040OpenapiResp, *http.Response, error) {
+//  @return V0044OpenapiKillJobResp
+func (a *SlurmAPIService) SlurmV0044DeleteJobExecute(r ApiSlurmV0044DeleteJobRequest) (*V0044OpenapiKillJobResp, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *V0040OpenapiResp
+		localVarReturnValue  *V0044OpenapiKillJobResp
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0040DeleteJob")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0044DeleteJob")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/slurm/v0.0.40/job/{job_id}"
+	localVarPath := localBasePath + "/slurm/v0.0.44/job/{job_id}"
 	localVarPath = strings.Replace(localVarPath, "{"+"job_id"+"}", url.PathEscape(parameterValueToString(r.jobId, "jobId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -2415,7 +101,7 @@ func (a *SlurmAPIService) SlurmV0040DeleteJobExecute(r ApiSlurmV0040DeleteJobReq
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -2472,7 +158,7 @@ func (a *SlurmAPIService) SlurmV0040DeleteJobExecute(r ApiSlurmV0040DeleteJobReq
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v V0040OpenapiResp
+			var v V0044OpenapiKillJobResp
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -2495,181 +181,58 @@ func (a *SlurmAPIService) SlurmV0040DeleteJobExecute(r ApiSlurmV0040DeleteJobReq
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiSlurmV0040DeleteJobsRequest struct {
+type ApiSlurmV0044DeleteJobsRequest struct {
 	ctx context.Context
 	ApiService *SlurmAPIService
-	account *string
-	flags *string
-	jobName *string
-	jobs *string
-	partition *string
-	qos *string
-	reservation *string
-	signal *string
-	jobState *string
-	userId *string
-	userName *string
-	wckey *string
-	nodes *string
+	v0044KillJobsMsg *V0044KillJobsMsg
 }
 
-// Filter jobs to a specific account
-func (r ApiSlurmV0040DeleteJobsRequest) Account(account string) ApiSlurmV0040DeleteJobsRequest {
-	r.account = &account
+// Signal or cancel jobs
+func (r ApiSlurmV0044DeleteJobsRequest) V0044KillJobsMsg(v0044KillJobsMsg V0044KillJobsMsg) ApiSlurmV0044DeleteJobsRequest {
+	r.v0044KillJobsMsg = &v0044KillJobsMsg
 	return r
 }
 
-// Filter jobs according to flags
-func (r ApiSlurmV0040DeleteJobsRequest) Flags(flags string) ApiSlurmV0040DeleteJobsRequest {
-	r.flags = &flags
-	return r
-}
-
-// Filter jobs to a specific name
-func (r ApiSlurmV0040DeleteJobsRequest) JobName(jobName string) ApiSlurmV0040DeleteJobsRequest {
-	r.jobName = &jobName
-	return r
-}
-
-// List of jobs to signal
-func (r ApiSlurmV0040DeleteJobsRequest) Jobs(jobs string) ApiSlurmV0040DeleteJobsRequest {
-	r.jobs = &jobs
-	return r
-}
-
-// Filter jobs to a specific partition
-func (r ApiSlurmV0040DeleteJobsRequest) Partition(partition string) ApiSlurmV0040DeleteJobsRequest {
-	r.partition = &partition
-	return r
-}
-
-// Filter jobs to a specific QOS
-func (r ApiSlurmV0040DeleteJobsRequest) Qos(qos string) ApiSlurmV0040DeleteJobsRequest {
-	r.qos = &qos
-	return r
-}
-
-// Filter jobs to a specific reservation
-func (r ApiSlurmV0040DeleteJobsRequest) Reservation(reservation string) ApiSlurmV0040DeleteJobsRequest {
-	r.reservation = &reservation
-	return r
-}
-
-// Signal to send to jobs
-func (r ApiSlurmV0040DeleteJobsRequest) Signal(signal string) ApiSlurmV0040DeleteJobsRequest {
-	r.signal = &signal
-	return r
-}
-
-// Filter jobs to a specific state
-func (r ApiSlurmV0040DeleteJobsRequest) JobState(jobState string) ApiSlurmV0040DeleteJobsRequest {
-	r.jobState = &jobState
-	return r
-}
-
-// Filter jobs to a specific numeric user id
-func (r ApiSlurmV0040DeleteJobsRequest) UserId(userId string) ApiSlurmV0040DeleteJobsRequest {
-	r.userId = &userId
-	return r
-}
-
-// Filter jobs to a specific user name
-func (r ApiSlurmV0040DeleteJobsRequest) UserName(userName string) ApiSlurmV0040DeleteJobsRequest {
-	r.userName = &userName
-	return r
-}
-
-// Filter jobs to a specific wckey
-func (r ApiSlurmV0040DeleteJobsRequest) Wckey(wckey string) ApiSlurmV0040DeleteJobsRequest {
-	r.wckey = &wckey
-	return r
-}
-
-// Filter jobs to a set of nodes
-func (r ApiSlurmV0040DeleteJobsRequest) Nodes(nodes string) ApiSlurmV0040DeleteJobsRequest {
-	r.nodes = &nodes
-	return r
-}
-
-func (r ApiSlurmV0040DeleteJobsRequest) Execute() (*V0040OpenapiKillJobsResp, *http.Response, error) {
-	return r.ApiService.SlurmV0040DeleteJobsExecute(r)
+func (r ApiSlurmV0044DeleteJobsRequest) Execute() (*V0044OpenapiKillJobsResp, *http.Response, error) {
+	return r.ApiService.SlurmV0044DeleteJobsExecute(r)
 }
 
 /*
-SlurmV0040DeleteJobs send signal to list of jobs
+SlurmV0044DeleteJobs send signal to list of jobs
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmV0040DeleteJobsRequest
+ @return ApiSlurmV0044DeleteJobsRequest
 */
-func (a *SlurmAPIService) SlurmV0040DeleteJobs(ctx context.Context) ApiSlurmV0040DeleteJobsRequest {
-	return ApiSlurmV0040DeleteJobsRequest{
+func (a *SlurmAPIService) SlurmV0044DeleteJobs(ctx context.Context) ApiSlurmV0044DeleteJobsRequest {
+	return ApiSlurmV0044DeleteJobsRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
 }
 
 // Execute executes the request
-//  @return V0040OpenapiKillJobsResp
-func (a *SlurmAPIService) SlurmV0040DeleteJobsExecute(r ApiSlurmV0040DeleteJobsRequest) (*V0040OpenapiKillJobsResp, *http.Response, error) {
+//  @return V0044OpenapiKillJobsResp
+func (a *SlurmAPIService) SlurmV0044DeleteJobsExecute(r ApiSlurmV0044DeleteJobsRequest) (*V0044OpenapiKillJobsResp, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *V0040OpenapiKillJobsResp
+		localVarReturnValue  *V0044OpenapiKillJobsResp
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0040DeleteJobs")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0044DeleteJobs")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/slurm/v0.0.40/jobs/"
+	localVarPath := localBasePath + "/slurm/v0.0.44/jobs/"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-	if r.account != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "account", r.account, "")
-	}
-	if r.flags != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "flags", r.flags, "")
-	}
-	if r.jobName != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "job_name", r.jobName, "")
-	}
-	if r.jobs != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "jobs", r.jobs, "")
-	}
-	if r.partition != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "partition", r.partition, "")
-	}
-	if r.qos != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "qos", r.qos, "")
-	}
-	if r.reservation != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "reservation", r.reservation, "")
-	}
-	if r.signal != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "signal", r.signal, "")
-	}
-	if r.jobState != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "job_state", r.jobState, "")
-	}
-	if r.userId != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "user_id", r.userId, "")
-	}
-	if r.userName != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "user_name", r.userName, "")
-	}
-	if r.wckey != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "wckey", r.wckey, "")
-	}
-	if r.nodes != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "nodes", r.nodes, "")
-	}
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -2678,13 +241,15 @@ func (a *SlurmAPIService) SlurmV0040DeleteJobsExecute(r ApiSlurmV0040DeleteJobsR
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.v0044KillJobsMsg
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -2735,7 +300,7 @@ func (a *SlurmAPIService) SlurmV0040DeleteJobsExecute(r ApiSlurmV0040DeleteJobsR
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v V0040OpenapiKillJobsResp
+			var v V0044OpenapiKillJobsResp
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -2758,25 +323,25 @@ func (a *SlurmAPIService) SlurmV0040DeleteJobsExecute(r ApiSlurmV0040DeleteJobsR
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiSlurmV0040DeleteNodeRequest struct {
+type ApiSlurmV0044DeleteNodeRequest struct {
 	ctx context.Context
 	ApiService *SlurmAPIService
 	nodeName string
 }
 
-func (r ApiSlurmV0040DeleteNodeRequest) Execute() (*V0040OpenapiResp, *http.Response, error) {
-	return r.ApiService.SlurmV0040DeleteNodeExecute(r)
+func (r ApiSlurmV0044DeleteNodeRequest) Execute() (*V0044OpenapiResp, *http.Response, error) {
+	return r.ApiService.SlurmV0044DeleteNodeExecute(r)
 }
 
 /*
-SlurmV0040DeleteNode delete node
+SlurmV0044DeleteNode delete node
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param nodeName Node name
- @return ApiSlurmV0040DeleteNodeRequest
+ @return ApiSlurmV0044DeleteNodeRequest
 */
-func (a *SlurmAPIService) SlurmV0040DeleteNode(ctx context.Context, nodeName string) ApiSlurmV0040DeleteNodeRequest {
-	return ApiSlurmV0040DeleteNodeRequest{
+func (a *SlurmAPIService) SlurmV0044DeleteNode(ctx context.Context, nodeName string) ApiSlurmV0044DeleteNodeRequest {
+	return ApiSlurmV0044DeleteNodeRequest{
 		ApiService: a,
 		ctx: ctx,
 		nodeName: nodeName,
@@ -2784,21 +349,21 @@ func (a *SlurmAPIService) SlurmV0040DeleteNode(ctx context.Context, nodeName str
 }
 
 // Execute executes the request
-//  @return V0040OpenapiResp
-func (a *SlurmAPIService) SlurmV0040DeleteNodeExecute(r ApiSlurmV0040DeleteNodeRequest) (*V0040OpenapiResp, *http.Response, error) {
+//  @return V0044OpenapiResp
+func (a *SlurmAPIService) SlurmV0044DeleteNodeExecute(r ApiSlurmV0044DeleteNodeRequest) (*V0044OpenapiResp, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *V0040OpenapiResp
+		localVarReturnValue  *V0044OpenapiResp
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0040DeleteNode")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0044DeleteNode")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/slurm/v0.0.40/node/{node_name}"
+	localVarPath := localBasePath + "/slurm/v0.0.44/node/{node_name}"
 	localVarPath = strings.Replace(localVarPath, "{"+"node_name"+"}", url.PathEscape(parameterValueToString(r.nodeName, "nodeName")), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -2815,7 +380,7 @@ func (a *SlurmAPIService) SlurmV0040DeleteNodeExecute(r ApiSlurmV0040DeleteNodeR
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -2872,7 +437,7 @@ func (a *SlurmAPIService) SlurmV0040DeleteNodeExecute(r ApiSlurmV0040DeleteNodeR
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v V0040OpenapiResp
+			var v V0044OpenapiResp
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -2895,44 +460,48 @@ func (a *SlurmAPIService) SlurmV0040DeleteNodeExecute(r ApiSlurmV0040DeleteNodeR
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiSlurmV0040GetDiagRequest struct {
+type ApiSlurmV0044DeleteReservationRequest struct {
 	ctx context.Context
 	ApiService *SlurmAPIService
+	reservationName string
 }
 
-func (r ApiSlurmV0040GetDiagRequest) Execute() (*V0040OpenapiDiagResp, *http.Response, error) {
-	return r.ApiService.SlurmV0040GetDiagExecute(r)
+func (r ApiSlurmV0044DeleteReservationRequest) Execute() (*V0044OpenapiResp, *http.Response, error) {
+	return r.ApiService.SlurmV0044DeleteReservationExecute(r)
 }
 
 /*
-SlurmV0040GetDiag get diagnostics
+SlurmV0044DeleteReservation delete a reservation
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmV0040GetDiagRequest
+ @param reservationName Reservation name
+ @return ApiSlurmV0044DeleteReservationRequest
 */
-func (a *SlurmAPIService) SlurmV0040GetDiag(ctx context.Context) ApiSlurmV0040GetDiagRequest {
-	return ApiSlurmV0040GetDiagRequest{
+func (a *SlurmAPIService) SlurmV0044DeleteReservation(ctx context.Context, reservationName string) ApiSlurmV0044DeleteReservationRequest {
+	return ApiSlurmV0044DeleteReservationRequest{
 		ApiService: a,
 		ctx: ctx,
+		reservationName: reservationName,
 	}
 }
 
 // Execute executes the request
-//  @return V0040OpenapiDiagResp
-func (a *SlurmAPIService) SlurmV0040GetDiagExecute(r ApiSlurmV0040GetDiagRequest) (*V0040OpenapiDiagResp, *http.Response, error) {
+//  @return V0044OpenapiResp
+func (a *SlurmAPIService) SlurmV0044DeleteReservationExecute(r ApiSlurmV0044DeleteReservationRequest) (*V0044OpenapiResp, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodGet
+		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *V0040OpenapiDiagResp
+		localVarReturnValue  *V0044OpenapiResp
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0040GetDiag")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0044DeleteReservation")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/slurm/v0.0.40/diag/"
+	localVarPath := localBasePath + "/slurm/v0.0.44/reservation/{reservation_name}"
+	localVarPath = strings.Replace(localVarPath, "{"+"reservation_name"+"}", url.PathEscape(parameterValueToString(r.reservationName, "reservationName")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -2948,7 +517,7 @@ func (a *SlurmAPIService) SlurmV0040GetDiagExecute(r ApiSlurmV0040GetDiagRequest
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -3005,7 +574,7 @@ func (a *SlurmAPIService) SlurmV0040GetDiagExecute(r ApiSlurmV0040GetDiagRequest
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v V0040OpenapiDiagResp
+			var v V0044OpenapiResp
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -3028,7 +597,140 @@ func (a *SlurmAPIService) SlurmV0040GetDiagExecute(r ApiSlurmV0040GetDiagRequest
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiSlurmV0040GetJobRequest struct {
+type ApiSlurmV0044GetDiagRequest struct {
+	ctx context.Context
+	ApiService *SlurmAPIService
+}
+
+func (r ApiSlurmV0044GetDiagRequest) Execute() (*V0044OpenapiDiagResp, *http.Response, error) {
+	return r.ApiService.SlurmV0044GetDiagExecute(r)
+}
+
+/*
+SlurmV0044GetDiag get diagnostics
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiSlurmV0044GetDiagRequest
+*/
+func (a *SlurmAPIService) SlurmV0044GetDiag(ctx context.Context) ApiSlurmV0044GetDiagRequest {
+	return ApiSlurmV0044GetDiagRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return V0044OpenapiDiagResp
+func (a *SlurmAPIService) SlurmV0044GetDiagExecute(r ApiSlurmV0044GetDiagRequest) (*V0044OpenapiDiagResp, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *V0044OpenapiDiagResp
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0044GetDiag")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/slurm/v0.0.44/diag/"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["user"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-SLURM-USER-NAME"] = key
+			}
+		}
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["token"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+			var v V0044OpenapiDiagResp
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiSlurmV0044GetJobRequest struct {
 	ctx context.Context
 	ApiService *SlurmAPIService
 	jobId string
@@ -3036,31 +738,31 @@ type ApiSlurmV0040GetJobRequest struct {
 	flags *string
 }
 
-// Filter jobs since update timestamp
-func (r ApiSlurmV0040GetJobRequest) UpdateTime(updateTime string) ApiSlurmV0040GetJobRequest {
+// Query jobs updated more recently than this time (UNIX timestamp)
+func (r ApiSlurmV0044GetJobRequest) UpdateTime(updateTime string) ApiSlurmV0044GetJobRequest {
 	r.updateTime = &updateTime
 	return r
 }
 
 // Query flags
-func (r ApiSlurmV0040GetJobRequest) Flags(flags string) ApiSlurmV0040GetJobRequest {
+func (r ApiSlurmV0044GetJobRequest) Flags(flags string) ApiSlurmV0044GetJobRequest {
 	r.flags = &flags
 	return r
 }
 
-func (r ApiSlurmV0040GetJobRequest) Execute() (*V0040OpenapiJobInfoResp, *http.Response, error) {
-	return r.ApiService.SlurmV0040GetJobExecute(r)
+func (r ApiSlurmV0044GetJobRequest) Execute() (*V0044OpenapiJobInfoResp, *http.Response, error) {
+	return r.ApiService.SlurmV0044GetJobExecute(r)
 }
 
 /*
-SlurmV0040GetJob get job info
+SlurmV0044GetJob get job info
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param jobId JobId
- @return ApiSlurmV0040GetJobRequest
+ @param jobId Job ID
+ @return ApiSlurmV0044GetJobRequest
 */
-func (a *SlurmAPIService) SlurmV0040GetJob(ctx context.Context, jobId string) ApiSlurmV0040GetJobRequest {
-	return ApiSlurmV0040GetJobRequest{
+func (a *SlurmAPIService) SlurmV0044GetJob(ctx context.Context, jobId string) ApiSlurmV0044GetJobRequest {
+	return ApiSlurmV0044GetJobRequest{
 		ApiService: a,
 		ctx: ctx,
 		jobId: jobId,
@@ -3068,21 +770,21 @@ func (a *SlurmAPIService) SlurmV0040GetJob(ctx context.Context, jobId string) Ap
 }
 
 // Execute executes the request
-//  @return V0040OpenapiJobInfoResp
-func (a *SlurmAPIService) SlurmV0040GetJobExecute(r ApiSlurmV0040GetJobRequest) (*V0040OpenapiJobInfoResp, *http.Response, error) {
+//  @return V0044OpenapiJobInfoResp
+func (a *SlurmAPIService) SlurmV0044GetJobExecute(r ApiSlurmV0044GetJobRequest) (*V0044OpenapiJobInfoResp, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *V0040OpenapiJobInfoResp
+		localVarReturnValue  *V0044OpenapiJobInfoResp
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0040GetJob")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0044GetJob")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/slurm/v0.0.40/job/{job_id}"
+	localVarPath := localBasePath + "/slurm/v0.0.44/job/{job_id}"
 	localVarPath = strings.Replace(localVarPath, "{"+"job_id"+"}", url.PathEscape(parameterValueToString(r.jobId, "jobId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -3105,7 +807,7 @@ func (a *SlurmAPIService) SlurmV0040GetJobExecute(r ApiSlurmV0040GetJobRequest) 
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -3162,7 +864,7 @@ func (a *SlurmAPIService) SlurmV0040GetJobExecute(r ApiSlurmV0040GetJobRequest) 
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v V0040OpenapiJobInfoResp
+			var v V0044OpenapiJobInfoResp
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -3185,58 +887,58 @@ func (a *SlurmAPIService) SlurmV0040GetJobExecute(r ApiSlurmV0040GetJobRequest) 
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiSlurmV0040GetJobsRequest struct {
+type ApiSlurmV0044GetJobsRequest struct {
 	ctx context.Context
 	ApiService *SlurmAPIService
 	updateTime *string
 	flags *string
 }
 
-// Filter jobs since update timestamp
-func (r ApiSlurmV0040GetJobsRequest) UpdateTime(updateTime string) ApiSlurmV0040GetJobsRequest {
+// Query jobs updated more recently than this time (UNIX timestamp)
+func (r ApiSlurmV0044GetJobsRequest) UpdateTime(updateTime string) ApiSlurmV0044GetJobsRequest {
 	r.updateTime = &updateTime
 	return r
 }
 
 // Query flags
-func (r ApiSlurmV0040GetJobsRequest) Flags(flags string) ApiSlurmV0040GetJobsRequest {
+func (r ApiSlurmV0044GetJobsRequest) Flags(flags string) ApiSlurmV0044GetJobsRequest {
 	r.flags = &flags
 	return r
 }
 
-func (r ApiSlurmV0040GetJobsRequest) Execute() (*V0040OpenapiJobInfoResp, *http.Response, error) {
-	return r.ApiService.SlurmV0040GetJobsExecute(r)
+func (r ApiSlurmV0044GetJobsRequest) Execute() (*V0044OpenapiJobInfoResp, *http.Response, error) {
+	return r.ApiService.SlurmV0044GetJobsExecute(r)
 }
 
 /*
-SlurmV0040GetJobs get list of jobs
+SlurmV0044GetJobs get list of jobs
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmV0040GetJobsRequest
+ @return ApiSlurmV0044GetJobsRequest
 */
-func (a *SlurmAPIService) SlurmV0040GetJobs(ctx context.Context) ApiSlurmV0040GetJobsRequest {
-	return ApiSlurmV0040GetJobsRequest{
+func (a *SlurmAPIService) SlurmV0044GetJobs(ctx context.Context) ApiSlurmV0044GetJobsRequest {
+	return ApiSlurmV0044GetJobsRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
 }
 
 // Execute executes the request
-//  @return V0040OpenapiJobInfoResp
-func (a *SlurmAPIService) SlurmV0040GetJobsExecute(r ApiSlurmV0040GetJobsRequest) (*V0040OpenapiJobInfoResp, *http.Response, error) {
+//  @return V0044OpenapiJobInfoResp
+func (a *SlurmAPIService) SlurmV0044GetJobsExecute(r ApiSlurmV0044GetJobsRequest) (*V0044OpenapiJobInfoResp, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *V0040OpenapiJobInfoResp
+		localVarReturnValue  *V0044OpenapiJobInfoResp
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0040GetJobs")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0044GetJobs")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/slurm/v0.0.40/jobs/"
+	localVarPath := localBasePath + "/slurm/v0.0.44/jobs/"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -3258,7 +960,7 @@ func (a *SlurmAPIService) SlurmV0040GetJobsExecute(r ApiSlurmV0040GetJobsRequest
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -3315,7 +1017,7 @@ func (a *SlurmAPIService) SlurmV0040GetJobsExecute(r ApiSlurmV0040GetJobsRequest
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v V0040OpenapiJobInfoResp
+			var v V0044OpenapiJobInfoResp
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -3338,68 +1040,58 @@ func (a *SlurmAPIService) SlurmV0040GetJobsExecute(r ApiSlurmV0040GetJobsRequest
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiSlurmV0040GetJobsStateRequest struct {
+type ApiSlurmV0044GetJobsStateRequest struct {
 	ctx context.Context
 	ApiService *SlurmAPIService
-	updateTime *string
-	flags *string
+	jobId *string
 }
 
-// Filter jobs since update timestamp
-func (r ApiSlurmV0040GetJobsStateRequest) UpdateTime(updateTime string) ApiSlurmV0040GetJobsStateRequest {
-	r.updateTime = &updateTime
+// CSV list of Job IDs to search for
+func (r ApiSlurmV0044GetJobsStateRequest) JobId(jobId string) ApiSlurmV0044GetJobsStateRequest {
+	r.jobId = &jobId
 	return r
 }
 
-// Query flags
-func (r ApiSlurmV0040GetJobsStateRequest) Flags(flags string) ApiSlurmV0040GetJobsStateRequest {
-	r.flags = &flags
-	return r
-}
-
-func (r ApiSlurmV0040GetJobsStateRequest) Execute() (*V0040OpenapiJobInfoResp, *http.Response, error) {
-	return r.ApiService.SlurmV0040GetJobsStateExecute(r)
+func (r ApiSlurmV0044GetJobsStateRequest) Execute() (*V0044OpenapiJobInfoResp, *http.Response, error) {
+	return r.ApiService.SlurmV0044GetJobsStateExecute(r)
 }
 
 /*
-SlurmV0040GetJobsState get list of job states
+SlurmV0044GetJobsState get list of job states
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmV0040GetJobsStateRequest
+ @return ApiSlurmV0044GetJobsStateRequest
 */
-func (a *SlurmAPIService) SlurmV0040GetJobsState(ctx context.Context) ApiSlurmV0040GetJobsStateRequest {
-	return ApiSlurmV0040GetJobsStateRequest{
+func (a *SlurmAPIService) SlurmV0044GetJobsState(ctx context.Context) ApiSlurmV0044GetJobsStateRequest {
+	return ApiSlurmV0044GetJobsStateRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
 }
 
 // Execute executes the request
-//  @return V0040OpenapiJobInfoResp
-func (a *SlurmAPIService) SlurmV0040GetJobsStateExecute(r ApiSlurmV0040GetJobsStateRequest) (*V0040OpenapiJobInfoResp, *http.Response, error) {
+//  @return V0044OpenapiJobInfoResp
+func (a *SlurmAPIService) SlurmV0044GetJobsStateExecute(r ApiSlurmV0044GetJobsStateRequest) (*V0044OpenapiJobInfoResp, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *V0040OpenapiJobInfoResp
+		localVarReturnValue  *V0044OpenapiJobInfoResp
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0040GetJobsState")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0044GetJobsState")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/slurm/v0.0.40/jobs/state/"
+	localVarPath := localBasePath + "/slurm/v0.0.44/jobs/state/"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-	if r.updateTime != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "update_time", r.updateTime, "")
-	}
-	if r.flags != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "flags", r.flags, "")
+	if r.jobId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "job_id", r.jobId, "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -3411,7 +1103,7 @@ func (a *SlurmAPIService) SlurmV0040GetJobsStateExecute(r ApiSlurmV0040GetJobsSt
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -3468,7 +1160,7 @@ func (a *SlurmAPIService) SlurmV0040GetJobsStateExecute(r ApiSlurmV0040GetJobsSt
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v V0040OpenapiJobInfoResp
+			var v V0044OpenapiJobInfoResp
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -3491,44 +1183,44 @@ func (a *SlurmAPIService) SlurmV0040GetJobsStateExecute(r ApiSlurmV0040GetJobsSt
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiSlurmV0040GetLicensesRequest struct {
+type ApiSlurmV0044GetLicensesRequest struct {
 	ctx context.Context
 	ApiService *SlurmAPIService
 }
 
-func (r ApiSlurmV0040GetLicensesRequest) Execute() (*V0040OpenapiLicensesResp, *http.Response, error) {
-	return r.ApiService.SlurmV0040GetLicensesExecute(r)
+func (r ApiSlurmV0044GetLicensesRequest) Execute() (*V0044OpenapiLicensesResp, *http.Response, error) {
+	return r.ApiService.SlurmV0044GetLicensesExecute(r)
 }
 
 /*
-SlurmV0040GetLicenses get all Slurm tracked license info
+SlurmV0044GetLicenses get all Slurm tracked license info
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmV0040GetLicensesRequest
+ @return ApiSlurmV0044GetLicensesRequest
 */
-func (a *SlurmAPIService) SlurmV0040GetLicenses(ctx context.Context) ApiSlurmV0040GetLicensesRequest {
-	return ApiSlurmV0040GetLicensesRequest{
+func (a *SlurmAPIService) SlurmV0044GetLicenses(ctx context.Context) ApiSlurmV0044GetLicensesRequest {
+	return ApiSlurmV0044GetLicensesRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
 }
 
 // Execute executes the request
-//  @return V0040OpenapiLicensesResp
-func (a *SlurmAPIService) SlurmV0040GetLicensesExecute(r ApiSlurmV0040GetLicensesRequest) (*V0040OpenapiLicensesResp, *http.Response, error) {
+//  @return V0044OpenapiLicensesResp
+func (a *SlurmAPIService) SlurmV0044GetLicensesExecute(r ApiSlurmV0044GetLicensesRequest) (*V0044OpenapiLicensesResp, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *V0040OpenapiLicensesResp
+		localVarReturnValue  *V0044OpenapiLicensesResp
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0040GetLicenses")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0044GetLicenses")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/slurm/v0.0.40/licenses/"
+	localVarPath := localBasePath + "/slurm/v0.0.44/licenses/"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -3544,7 +1236,7 @@ func (a *SlurmAPIService) SlurmV0040GetLicensesExecute(r ApiSlurmV0040GetLicense
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -3601,7 +1293,7 @@ func (a *SlurmAPIService) SlurmV0040GetLicensesExecute(r ApiSlurmV0040GetLicense
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v V0040OpenapiLicensesResp
+			var v V0044OpenapiLicensesResp
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -3624,7 +1316,7 @@ func (a *SlurmAPIService) SlurmV0040GetLicensesExecute(r ApiSlurmV0040GetLicense
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiSlurmV0040GetNodeRequest struct {
+type ApiSlurmV0044GetNodeRequest struct {
 	ctx context.Context
 	ApiService *SlurmAPIService
 	nodeName string
@@ -3632,31 +1324,31 @@ type ApiSlurmV0040GetNodeRequest struct {
 	flags *string
 }
 
-// Filter jobs since update timestamp
-func (r ApiSlurmV0040GetNodeRequest) UpdateTime(updateTime string) ApiSlurmV0040GetNodeRequest {
+// Query jobs updated more recently than this time (UNIX timestamp)
+func (r ApiSlurmV0044GetNodeRequest) UpdateTime(updateTime string) ApiSlurmV0044GetNodeRequest {
 	r.updateTime = &updateTime
 	return r
 }
 
 // Query flags
-func (r ApiSlurmV0040GetNodeRequest) Flags(flags string) ApiSlurmV0040GetNodeRequest {
+func (r ApiSlurmV0044GetNodeRequest) Flags(flags string) ApiSlurmV0044GetNodeRequest {
 	r.flags = &flags
 	return r
 }
 
-func (r ApiSlurmV0040GetNodeRequest) Execute() (*V0040OpenapiNodesResp, *http.Response, error) {
-	return r.ApiService.SlurmV0040GetNodeExecute(r)
+func (r ApiSlurmV0044GetNodeRequest) Execute() (*V0044OpenapiNodesResp, *http.Response, error) {
+	return r.ApiService.SlurmV0044GetNodeExecute(r)
 }
 
 /*
-SlurmV0040GetNode get node info
+SlurmV0044GetNode get node info
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param nodeName Node name
- @return ApiSlurmV0040GetNodeRequest
+ @return ApiSlurmV0044GetNodeRequest
 */
-func (a *SlurmAPIService) SlurmV0040GetNode(ctx context.Context, nodeName string) ApiSlurmV0040GetNodeRequest {
-	return ApiSlurmV0040GetNodeRequest{
+func (a *SlurmAPIService) SlurmV0044GetNode(ctx context.Context, nodeName string) ApiSlurmV0044GetNodeRequest {
+	return ApiSlurmV0044GetNodeRequest{
 		ApiService: a,
 		ctx: ctx,
 		nodeName: nodeName,
@@ -3664,21 +1356,21 @@ func (a *SlurmAPIService) SlurmV0040GetNode(ctx context.Context, nodeName string
 }
 
 // Execute executes the request
-//  @return V0040OpenapiNodesResp
-func (a *SlurmAPIService) SlurmV0040GetNodeExecute(r ApiSlurmV0040GetNodeRequest) (*V0040OpenapiNodesResp, *http.Response, error) {
+//  @return V0044OpenapiNodesResp
+func (a *SlurmAPIService) SlurmV0044GetNodeExecute(r ApiSlurmV0044GetNodeRequest) (*V0044OpenapiNodesResp, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *V0040OpenapiNodesResp
+		localVarReturnValue  *V0044OpenapiNodesResp
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0040GetNode")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0044GetNode")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/slurm/v0.0.40/node/{node_name}"
+	localVarPath := localBasePath + "/slurm/v0.0.44/node/{node_name}"
 	localVarPath = strings.Replace(localVarPath, "{"+"node_name"+"}", url.PathEscape(parameterValueToString(r.nodeName, "nodeName")), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -3701,7 +1393,7 @@ func (a *SlurmAPIService) SlurmV0040GetNodeExecute(r ApiSlurmV0040GetNodeRequest
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -3758,7 +1450,7 @@ func (a *SlurmAPIService) SlurmV0040GetNodeExecute(r ApiSlurmV0040GetNodeRequest
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v V0040OpenapiNodesResp
+			var v V0044OpenapiNodesResp
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -3781,58 +1473,58 @@ func (a *SlurmAPIService) SlurmV0040GetNodeExecute(r ApiSlurmV0040GetNodeRequest
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiSlurmV0040GetNodesRequest struct {
+type ApiSlurmV0044GetNodesRequest struct {
 	ctx context.Context
 	ApiService *SlurmAPIService
 	updateTime *string
 	flags *string
 }
 
-// Filter jobs since update timestamp
-func (r ApiSlurmV0040GetNodesRequest) UpdateTime(updateTime string) ApiSlurmV0040GetNodesRequest {
+// Query jobs updated more recently than this time (UNIX timestamp)
+func (r ApiSlurmV0044GetNodesRequest) UpdateTime(updateTime string) ApiSlurmV0044GetNodesRequest {
 	r.updateTime = &updateTime
 	return r
 }
 
 // Query flags
-func (r ApiSlurmV0040GetNodesRequest) Flags(flags string) ApiSlurmV0040GetNodesRequest {
+func (r ApiSlurmV0044GetNodesRequest) Flags(flags string) ApiSlurmV0044GetNodesRequest {
 	r.flags = &flags
 	return r
 }
 
-func (r ApiSlurmV0040GetNodesRequest) Execute() (*V0040OpenapiNodesResp, *http.Response, error) {
-	return r.ApiService.SlurmV0040GetNodesExecute(r)
+func (r ApiSlurmV0044GetNodesRequest) Execute() (*V0044OpenapiNodesResp, *http.Response, error) {
+	return r.ApiService.SlurmV0044GetNodesExecute(r)
 }
 
 /*
-SlurmV0040GetNodes get node(s) info
+SlurmV0044GetNodes get node(s) info
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmV0040GetNodesRequest
+ @return ApiSlurmV0044GetNodesRequest
 */
-func (a *SlurmAPIService) SlurmV0040GetNodes(ctx context.Context) ApiSlurmV0040GetNodesRequest {
-	return ApiSlurmV0040GetNodesRequest{
+func (a *SlurmAPIService) SlurmV0044GetNodes(ctx context.Context) ApiSlurmV0044GetNodesRequest {
+	return ApiSlurmV0044GetNodesRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
 }
 
 // Execute executes the request
-//  @return V0040OpenapiNodesResp
-func (a *SlurmAPIService) SlurmV0040GetNodesExecute(r ApiSlurmV0040GetNodesRequest) (*V0040OpenapiNodesResp, *http.Response, error) {
+//  @return V0044OpenapiNodesResp
+func (a *SlurmAPIService) SlurmV0044GetNodesExecute(r ApiSlurmV0044GetNodesRequest) (*V0044OpenapiNodesResp, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *V0040OpenapiNodesResp
+		localVarReturnValue  *V0044OpenapiNodesResp
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0040GetNodes")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0044GetNodes")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/slurm/v0.0.40/nodes/"
+	localVarPath := localBasePath + "/slurm/v0.0.44/nodes/"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -3854,7 +1546,7 @@ func (a *SlurmAPIService) SlurmV0040GetNodesExecute(r ApiSlurmV0040GetNodesReque
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -3911,7 +1603,7 @@ func (a *SlurmAPIService) SlurmV0040GetNodesExecute(r ApiSlurmV0040GetNodesReque
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v V0040OpenapiNodesResp
+			var v V0044OpenapiNodesResp
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -3934,7 +1626,7 @@ func (a *SlurmAPIService) SlurmV0040GetNodesExecute(r ApiSlurmV0040GetNodesReque
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiSlurmV0040GetPartitionRequest struct {
+type ApiSlurmV0044GetPartitionRequest struct {
 	ctx context.Context
 	ApiService *SlurmAPIService
 	partitionName string
@@ -3942,31 +1634,31 @@ type ApiSlurmV0040GetPartitionRequest struct {
 	flags *string
 }
 
-// Filter partitions since update timestamp
-func (r ApiSlurmV0040GetPartitionRequest) UpdateTime(updateTime string) ApiSlurmV0040GetPartitionRequest {
+// Query partitions updated more recently than this time (UNIX timestamp)
+func (r ApiSlurmV0044GetPartitionRequest) UpdateTime(updateTime string) ApiSlurmV0044GetPartitionRequest {
 	r.updateTime = &updateTime
 	return r
 }
 
 // Query flags
-func (r ApiSlurmV0040GetPartitionRequest) Flags(flags string) ApiSlurmV0040GetPartitionRequest {
+func (r ApiSlurmV0044GetPartitionRequest) Flags(flags string) ApiSlurmV0044GetPartitionRequest {
 	r.flags = &flags
 	return r
 }
 
-func (r ApiSlurmV0040GetPartitionRequest) Execute() (*V0040OpenapiPartitionResp, *http.Response, error) {
-	return r.ApiService.SlurmV0040GetPartitionExecute(r)
+func (r ApiSlurmV0044GetPartitionRequest) Execute() (*V0044OpenapiPartitionResp, *http.Response, error) {
+	return r.ApiService.SlurmV0044GetPartitionExecute(r)
 }
 
 /*
-SlurmV0040GetPartition get partition info
+SlurmV0044GetPartition get partition info
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param partitionName Partition name
- @return ApiSlurmV0040GetPartitionRequest
+ @return ApiSlurmV0044GetPartitionRequest
 */
-func (a *SlurmAPIService) SlurmV0040GetPartition(ctx context.Context, partitionName string) ApiSlurmV0040GetPartitionRequest {
-	return ApiSlurmV0040GetPartitionRequest{
+func (a *SlurmAPIService) SlurmV0044GetPartition(ctx context.Context, partitionName string) ApiSlurmV0044GetPartitionRequest {
+	return ApiSlurmV0044GetPartitionRequest{
 		ApiService: a,
 		ctx: ctx,
 		partitionName: partitionName,
@@ -3974,21 +1666,21 @@ func (a *SlurmAPIService) SlurmV0040GetPartition(ctx context.Context, partitionN
 }
 
 // Execute executes the request
-//  @return V0040OpenapiPartitionResp
-func (a *SlurmAPIService) SlurmV0040GetPartitionExecute(r ApiSlurmV0040GetPartitionRequest) (*V0040OpenapiPartitionResp, *http.Response, error) {
+//  @return V0044OpenapiPartitionResp
+func (a *SlurmAPIService) SlurmV0044GetPartitionExecute(r ApiSlurmV0044GetPartitionRequest) (*V0044OpenapiPartitionResp, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *V0040OpenapiPartitionResp
+		localVarReturnValue  *V0044OpenapiPartitionResp
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0040GetPartition")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0044GetPartition")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/slurm/v0.0.40/partition/{partition_name}"
+	localVarPath := localBasePath + "/slurm/v0.0.44/partition/{partition_name}"
 	localVarPath = strings.Replace(localVarPath, "{"+"partition_name"+"}", url.PathEscape(parameterValueToString(r.partitionName, "partitionName")), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -4011,7 +1703,7 @@ func (a *SlurmAPIService) SlurmV0040GetPartitionExecute(r ApiSlurmV0040GetPartit
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -4068,7 +1760,7 @@ func (a *SlurmAPIService) SlurmV0040GetPartitionExecute(r ApiSlurmV0040GetPartit
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v V0040OpenapiPartitionResp
+			var v V0044OpenapiPartitionResp
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -4091,58 +1783,58 @@ func (a *SlurmAPIService) SlurmV0040GetPartitionExecute(r ApiSlurmV0040GetPartit
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiSlurmV0040GetPartitionsRequest struct {
+type ApiSlurmV0044GetPartitionsRequest struct {
 	ctx context.Context
 	ApiService *SlurmAPIService
 	updateTime *string
 	flags *string
 }
 
-// Filter partitions since update timestamp
-func (r ApiSlurmV0040GetPartitionsRequest) UpdateTime(updateTime string) ApiSlurmV0040GetPartitionsRequest {
+// Query partitions updated more recently than this time (UNIX timestamp)
+func (r ApiSlurmV0044GetPartitionsRequest) UpdateTime(updateTime string) ApiSlurmV0044GetPartitionsRequest {
 	r.updateTime = &updateTime
 	return r
 }
 
 // Query flags
-func (r ApiSlurmV0040GetPartitionsRequest) Flags(flags string) ApiSlurmV0040GetPartitionsRequest {
+func (r ApiSlurmV0044GetPartitionsRequest) Flags(flags string) ApiSlurmV0044GetPartitionsRequest {
 	r.flags = &flags
 	return r
 }
 
-func (r ApiSlurmV0040GetPartitionsRequest) Execute() (*V0040OpenapiPartitionResp, *http.Response, error) {
-	return r.ApiService.SlurmV0040GetPartitionsExecute(r)
+func (r ApiSlurmV0044GetPartitionsRequest) Execute() (*V0044OpenapiPartitionResp, *http.Response, error) {
+	return r.ApiService.SlurmV0044GetPartitionsExecute(r)
 }
 
 /*
-SlurmV0040GetPartitions get all partition info
+SlurmV0044GetPartitions get all partition info
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmV0040GetPartitionsRequest
+ @return ApiSlurmV0044GetPartitionsRequest
 */
-func (a *SlurmAPIService) SlurmV0040GetPartitions(ctx context.Context) ApiSlurmV0040GetPartitionsRequest {
-	return ApiSlurmV0040GetPartitionsRequest{
+func (a *SlurmAPIService) SlurmV0044GetPartitions(ctx context.Context) ApiSlurmV0044GetPartitionsRequest {
+	return ApiSlurmV0044GetPartitionsRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
 }
 
 // Execute executes the request
-//  @return V0040OpenapiPartitionResp
-func (a *SlurmAPIService) SlurmV0040GetPartitionsExecute(r ApiSlurmV0040GetPartitionsRequest) (*V0040OpenapiPartitionResp, *http.Response, error) {
+//  @return V0044OpenapiPartitionResp
+func (a *SlurmAPIService) SlurmV0044GetPartitionsExecute(r ApiSlurmV0044GetPartitionsRequest) (*V0044OpenapiPartitionResp, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *V0040OpenapiPartitionResp
+		localVarReturnValue  *V0044OpenapiPartitionResp
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0040GetPartitions")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0044GetPartitions")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/slurm/v0.0.40/partitions/"
+	localVarPath := localBasePath + "/slurm/v0.0.44/partitions/"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -4164,7 +1856,7 @@ func (a *SlurmAPIService) SlurmV0040GetPartitionsExecute(r ApiSlurmV0040GetParti
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -4221,7 +1913,7 @@ func (a *SlurmAPIService) SlurmV0040GetPartitionsExecute(r ApiSlurmV0040GetParti
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v V0040OpenapiPartitionResp
+			var v V0044OpenapiPartitionResp
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -4244,44 +1936,44 @@ func (a *SlurmAPIService) SlurmV0040GetPartitionsExecute(r ApiSlurmV0040GetParti
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiSlurmV0040GetPingRequest struct {
+type ApiSlurmV0044GetPingRequest struct {
 	ctx context.Context
 	ApiService *SlurmAPIService
 }
 
-func (r ApiSlurmV0040GetPingRequest) Execute() (*V0040OpenapiPingArrayResp, *http.Response, error) {
-	return r.ApiService.SlurmV0040GetPingExecute(r)
+func (r ApiSlurmV0044GetPingRequest) Execute() (*V0044OpenapiPingArrayResp, *http.Response, error) {
+	return r.ApiService.SlurmV0044GetPingExecute(r)
 }
 
 /*
-SlurmV0040GetPing ping test
+SlurmV0044GetPing ping test
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmV0040GetPingRequest
+ @return ApiSlurmV0044GetPingRequest
 */
-func (a *SlurmAPIService) SlurmV0040GetPing(ctx context.Context) ApiSlurmV0040GetPingRequest {
-	return ApiSlurmV0040GetPingRequest{
+func (a *SlurmAPIService) SlurmV0044GetPing(ctx context.Context) ApiSlurmV0044GetPingRequest {
+	return ApiSlurmV0044GetPingRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
 }
 
 // Execute executes the request
-//  @return V0040OpenapiPingArrayResp
-func (a *SlurmAPIService) SlurmV0040GetPingExecute(r ApiSlurmV0040GetPingRequest) (*V0040OpenapiPingArrayResp, *http.Response, error) {
+//  @return V0044OpenapiPingArrayResp
+func (a *SlurmAPIService) SlurmV0044GetPingExecute(r ApiSlurmV0044GetPingRequest) (*V0044OpenapiPingArrayResp, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *V0040OpenapiPingArrayResp
+		localVarReturnValue  *V0044OpenapiPingArrayResp
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0040GetPing")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0044GetPing")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/slurm/v0.0.40/ping/"
+	localVarPath := localBasePath + "/slurm/v0.0.44/ping/"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -4297,7 +1989,7 @@ func (a *SlurmAPIService) SlurmV0040GetPingExecute(r ApiSlurmV0040GetPingRequest
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -4354,7 +2046,7 @@ func (a *SlurmAPIService) SlurmV0040GetPingExecute(r ApiSlurmV0040GetPingRequest
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v V0040OpenapiPingArrayResp
+			var v V0044OpenapiPingArrayResp
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -4377,44 +2069,44 @@ func (a *SlurmAPIService) SlurmV0040GetPingExecute(r ApiSlurmV0040GetPingRequest
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiSlurmV0040GetReconfigureRequest struct {
+type ApiSlurmV0044GetReconfigureRequest struct {
 	ctx context.Context
 	ApiService *SlurmAPIService
 }
 
-func (r ApiSlurmV0040GetReconfigureRequest) Execute() (*V0040OpenapiResp, *http.Response, error) {
-	return r.ApiService.SlurmV0040GetReconfigureExecute(r)
+func (r ApiSlurmV0044GetReconfigureRequest) Execute() (*V0044OpenapiResp, *http.Response, error) {
+	return r.ApiService.SlurmV0044GetReconfigureExecute(r)
 }
 
 /*
-SlurmV0040GetReconfigure request slurmctld reconfigure
+SlurmV0044GetReconfigure request slurmctld reconfigure
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmV0040GetReconfigureRequest
+ @return ApiSlurmV0044GetReconfigureRequest
 */
-func (a *SlurmAPIService) SlurmV0040GetReconfigure(ctx context.Context) ApiSlurmV0040GetReconfigureRequest {
-	return ApiSlurmV0040GetReconfigureRequest{
+func (a *SlurmAPIService) SlurmV0044GetReconfigure(ctx context.Context) ApiSlurmV0044GetReconfigureRequest {
+	return ApiSlurmV0044GetReconfigureRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
 }
 
 // Execute executes the request
-//  @return V0040OpenapiResp
-func (a *SlurmAPIService) SlurmV0040GetReconfigureExecute(r ApiSlurmV0040GetReconfigureRequest) (*V0040OpenapiResp, *http.Response, error) {
+//  @return V0044OpenapiResp
+func (a *SlurmAPIService) SlurmV0044GetReconfigureExecute(r ApiSlurmV0044GetReconfigureRequest) (*V0044OpenapiResp, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *V0040OpenapiResp
+		localVarReturnValue  *V0044OpenapiResp
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0040GetReconfigure")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0044GetReconfigure")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/slurm/v0.0.40/reconfigure/"
+	localVarPath := localBasePath + "/slurm/v0.0.44/reconfigure/"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -4430,7 +2122,7 @@ func (a *SlurmAPIService) SlurmV0040GetReconfigureExecute(r ApiSlurmV0040GetReco
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -4487,7 +2179,7 @@ func (a *SlurmAPIService) SlurmV0040GetReconfigureExecute(r ApiSlurmV0040GetReco
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v V0040OpenapiResp
+			var v V0044OpenapiResp
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -4510,32 +2202,32 @@ func (a *SlurmAPIService) SlurmV0040GetReconfigureExecute(r ApiSlurmV0040GetReco
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiSlurmV0040GetReservationRequest struct {
+type ApiSlurmV0044GetReservationRequest struct {
 	ctx context.Context
 	ApiService *SlurmAPIService
 	reservationName string
 	updateTime *string
 }
 
-// Filter reservations since update timestamp
-func (r ApiSlurmV0040GetReservationRequest) UpdateTime(updateTime string) ApiSlurmV0040GetReservationRequest {
+// Query reservations updated more recently than this time (UNIX timestamp)
+func (r ApiSlurmV0044GetReservationRequest) UpdateTime(updateTime string) ApiSlurmV0044GetReservationRequest {
 	r.updateTime = &updateTime
 	return r
 }
 
-func (r ApiSlurmV0040GetReservationRequest) Execute() (*V0040OpenapiReservationResp, *http.Response, error) {
-	return r.ApiService.SlurmV0040GetReservationExecute(r)
+func (r ApiSlurmV0044GetReservationRequest) Execute() (*V0044OpenapiReservationResp, *http.Response, error) {
+	return r.ApiService.SlurmV0044GetReservationExecute(r)
 }
 
 /*
-SlurmV0040GetReservation get reservation info
+SlurmV0044GetReservation get reservation info
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param reservationName Reservation name
- @return ApiSlurmV0040GetReservationRequest
+ @return ApiSlurmV0044GetReservationRequest
 */
-func (a *SlurmAPIService) SlurmV0040GetReservation(ctx context.Context, reservationName string) ApiSlurmV0040GetReservationRequest {
-	return ApiSlurmV0040GetReservationRequest{
+func (a *SlurmAPIService) SlurmV0044GetReservation(ctx context.Context, reservationName string) ApiSlurmV0044GetReservationRequest {
+	return ApiSlurmV0044GetReservationRequest{
 		ApiService: a,
 		ctx: ctx,
 		reservationName: reservationName,
@@ -4543,21 +2235,21 @@ func (a *SlurmAPIService) SlurmV0040GetReservation(ctx context.Context, reservat
 }
 
 // Execute executes the request
-//  @return V0040OpenapiReservationResp
-func (a *SlurmAPIService) SlurmV0040GetReservationExecute(r ApiSlurmV0040GetReservationRequest) (*V0040OpenapiReservationResp, *http.Response, error) {
+//  @return V0044OpenapiReservationResp
+func (a *SlurmAPIService) SlurmV0044GetReservationExecute(r ApiSlurmV0044GetReservationRequest) (*V0044OpenapiReservationResp, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *V0040OpenapiReservationResp
+		localVarReturnValue  *V0044OpenapiReservationResp
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0040GetReservation")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0044GetReservation")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/slurm/v0.0.40/reservation/{reservation_name}"
+	localVarPath := localBasePath + "/slurm/v0.0.44/reservation/{reservation_name}"
 	localVarPath = strings.Replace(localVarPath, "{"+"reservation_name"+"}", url.PathEscape(parameterValueToString(r.reservationName, "reservationName")), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -4577,7 +2269,7 @@ func (a *SlurmAPIService) SlurmV0040GetReservationExecute(r ApiSlurmV0040GetRese
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -4634,7 +2326,7 @@ func (a *SlurmAPIService) SlurmV0040GetReservationExecute(r ApiSlurmV0040GetRese
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v V0040OpenapiReservationResp
+			var v V0044OpenapiReservationResp
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -4657,51 +2349,51 @@ func (a *SlurmAPIService) SlurmV0040GetReservationExecute(r ApiSlurmV0040GetRese
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiSlurmV0040GetReservationsRequest struct {
+type ApiSlurmV0044GetReservationsRequest struct {
 	ctx context.Context
 	ApiService *SlurmAPIService
 	updateTime *string
 }
 
-// Filter reservations since update timestamp
-func (r ApiSlurmV0040GetReservationsRequest) UpdateTime(updateTime string) ApiSlurmV0040GetReservationsRequest {
+// Query reservations updated more recently than this time (UNIX timestamp)
+func (r ApiSlurmV0044GetReservationsRequest) UpdateTime(updateTime string) ApiSlurmV0044GetReservationsRequest {
 	r.updateTime = &updateTime
 	return r
 }
 
-func (r ApiSlurmV0040GetReservationsRequest) Execute() (*V0040OpenapiReservationResp, *http.Response, error) {
-	return r.ApiService.SlurmV0040GetReservationsExecute(r)
+func (r ApiSlurmV0044GetReservationsRequest) Execute() (*V0044OpenapiReservationResp, *http.Response, error) {
+	return r.ApiService.SlurmV0044GetReservationsExecute(r)
 }
 
 /*
-SlurmV0040GetReservations get all reservation info
+SlurmV0044GetReservations get all reservation info
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmV0040GetReservationsRequest
+ @return ApiSlurmV0044GetReservationsRequest
 */
-func (a *SlurmAPIService) SlurmV0040GetReservations(ctx context.Context) ApiSlurmV0040GetReservationsRequest {
-	return ApiSlurmV0040GetReservationsRequest{
+func (a *SlurmAPIService) SlurmV0044GetReservations(ctx context.Context) ApiSlurmV0044GetReservationsRequest {
+	return ApiSlurmV0044GetReservationsRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
 }
 
 // Execute executes the request
-//  @return V0040OpenapiReservationResp
-func (a *SlurmAPIService) SlurmV0040GetReservationsExecute(r ApiSlurmV0040GetReservationsRequest) (*V0040OpenapiReservationResp, *http.Response, error) {
+//  @return V0044OpenapiReservationResp
+func (a *SlurmAPIService) SlurmV0044GetReservationsExecute(r ApiSlurmV0044GetReservationsRequest) (*V0044OpenapiReservationResp, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *V0040OpenapiReservationResp
+		localVarReturnValue  *V0044OpenapiReservationResp
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0040GetReservations")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0044GetReservations")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/slurm/v0.0.40/reservations/"
+	localVarPath := localBasePath + "/slurm/v0.0.44/reservations/"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -4720,7 +2412,7 @@ func (a *SlurmAPIService) SlurmV0040GetReservationsExecute(r ApiSlurmV0040GetRes
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -4777,7 +2469,7 @@ func (a *SlurmAPIService) SlurmV0040GetReservationsExecute(r ApiSlurmV0040GetRes
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v V0040OpenapiReservationResp
+			var v V0044OpenapiReservationResp
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -4800,7 +2492,144 @@ func (a *SlurmAPIService) SlurmV0040GetReservationsExecute(r ApiSlurmV0040GetRes
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiSlurmV0040GetSharesRequest struct {
+type ApiSlurmV0044GetResourcesRequest struct {
+	ctx context.Context
+	ApiService *SlurmAPIService
+	jobId string
+}
+
+func (r ApiSlurmV0044GetResourcesRequest) Execute() (*V0044OpenapiResourceLayoutResp, *http.Response, error) {
+	return r.ApiService.SlurmV0044GetResourcesExecute(r)
+}
+
+/*
+SlurmV0044GetResources get resource layout info
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param jobId Job ID
+ @return ApiSlurmV0044GetResourcesRequest
+*/
+func (a *SlurmAPIService) SlurmV0044GetResources(ctx context.Context, jobId string) ApiSlurmV0044GetResourcesRequest {
+	return ApiSlurmV0044GetResourcesRequest{
+		ApiService: a,
+		ctx: ctx,
+		jobId: jobId,
+	}
+}
+
+// Execute executes the request
+//  @return V0044OpenapiResourceLayoutResp
+func (a *SlurmAPIService) SlurmV0044GetResourcesExecute(r ApiSlurmV0044GetResourcesRequest) (*V0044OpenapiResourceLayoutResp, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *V0044OpenapiResourceLayoutResp
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0044GetResources")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/slurm/v0.0.44/resources/{job_id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"job_id"+"}", url.PathEscape(parameterValueToString(r.jobId, "jobId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["user"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-SLURM-USER-NAME"] = key
+			}
+		}
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["token"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+			var v V0044OpenapiResourceLayoutResp
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiSlurmV0044GetSharesRequest struct {
 	ctx context.Context
 	ApiService *SlurmAPIService
 	accounts *string
@@ -4808,50 +2637,50 @@ type ApiSlurmV0040GetSharesRequest struct {
 }
 
 // Accounts to query
-func (r ApiSlurmV0040GetSharesRequest) Accounts(accounts string) ApiSlurmV0040GetSharesRequest {
+func (r ApiSlurmV0044GetSharesRequest) Accounts(accounts string) ApiSlurmV0044GetSharesRequest {
 	r.accounts = &accounts
 	return r
 }
 
 // Users to query
-func (r ApiSlurmV0040GetSharesRequest) Users(users string) ApiSlurmV0040GetSharesRequest {
+func (r ApiSlurmV0044GetSharesRequest) Users(users string) ApiSlurmV0044GetSharesRequest {
 	r.users = &users
 	return r
 }
 
-func (r ApiSlurmV0040GetSharesRequest) Execute() (*V0040OpenapiSharesResp, *http.Response, error) {
-	return r.ApiService.SlurmV0040GetSharesExecute(r)
+func (r ApiSlurmV0044GetSharesRequest) Execute() (*V0044OpenapiSharesResp, *http.Response, error) {
+	return r.ApiService.SlurmV0044GetSharesExecute(r)
 }
 
 /*
-SlurmV0040GetShares get fairshare info
+SlurmV0044GetShares get fairshare info
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmV0040GetSharesRequest
+ @return ApiSlurmV0044GetSharesRequest
 */
-func (a *SlurmAPIService) SlurmV0040GetShares(ctx context.Context) ApiSlurmV0040GetSharesRequest {
-	return ApiSlurmV0040GetSharesRequest{
+func (a *SlurmAPIService) SlurmV0044GetShares(ctx context.Context) ApiSlurmV0044GetSharesRequest {
+	return ApiSlurmV0044GetSharesRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
 }
 
 // Execute executes the request
-//  @return V0040OpenapiSharesResp
-func (a *SlurmAPIService) SlurmV0040GetSharesExecute(r ApiSlurmV0040GetSharesRequest) (*V0040OpenapiSharesResp, *http.Response, error) {
+//  @return V0044OpenapiSharesResp
+func (a *SlurmAPIService) SlurmV0044GetSharesExecute(r ApiSlurmV0044GetSharesRequest) (*V0044OpenapiSharesResp, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *V0040OpenapiSharesResp
+		localVarReturnValue  *V0044OpenapiSharesResp
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0040GetShares")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0044GetShares")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/slurm/v0.0.40/shares"
+	localVarPath := localBasePath + "/slurm/v0.0.44/shares"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -4873,7 +2702,7 @@ func (a *SlurmAPIService) SlurmV0040GetSharesExecute(r ApiSlurmV0040GetSharesReq
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -4930,7 +2759,7 @@ func (a *SlurmAPIService) SlurmV0040GetSharesExecute(r ApiSlurmV0040GetSharesReq
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v V0040OpenapiSharesResp
+			var v V0044OpenapiSharesResp
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -4953,32 +2782,32 @@ func (a *SlurmAPIService) SlurmV0040GetSharesExecute(r ApiSlurmV0040GetSharesReq
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiSlurmV0040PostJobRequest struct {
+type ApiSlurmV0044PostJobRequest struct {
 	ctx context.Context
 	ApiService *SlurmAPIService
 	jobId string
-	v0040JobDescMsg *V0040JobDescMsg
+	v0044JobDescMsg *V0044JobDescMsg
 }
 
 // Job update description
-func (r ApiSlurmV0040PostJobRequest) V0040JobDescMsg(v0040JobDescMsg V0040JobDescMsg) ApiSlurmV0040PostJobRequest {
-	r.v0040JobDescMsg = &v0040JobDescMsg
+func (r ApiSlurmV0044PostJobRequest) V0044JobDescMsg(v0044JobDescMsg V0044JobDescMsg) ApiSlurmV0044PostJobRequest {
+	r.v0044JobDescMsg = &v0044JobDescMsg
 	return r
 }
 
-func (r ApiSlurmV0040PostJobRequest) Execute() (*V0040OpenapiJobPostResponse, *http.Response, error) {
-	return r.ApiService.SlurmV0040PostJobExecute(r)
+func (r ApiSlurmV0044PostJobRequest) Execute() (*V0044OpenapiJobPostResponse, *http.Response, error) {
+	return r.ApiService.SlurmV0044PostJobExecute(r)
 }
 
 /*
-SlurmV0040PostJob update job
+SlurmV0044PostJob update job
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param jobId JobId
- @return ApiSlurmV0040PostJobRequest
+ @param jobId Job ID
+ @return ApiSlurmV0044PostJobRequest
 */
-func (a *SlurmAPIService) SlurmV0040PostJob(ctx context.Context, jobId string) ApiSlurmV0040PostJobRequest {
-	return ApiSlurmV0040PostJobRequest{
+func (a *SlurmAPIService) SlurmV0044PostJob(ctx context.Context, jobId string) ApiSlurmV0044PostJobRequest {
+	return ApiSlurmV0044PostJobRequest{
 		ApiService: a,
 		ctx: ctx,
 		jobId: jobId,
@@ -4986,21 +2815,21 @@ func (a *SlurmAPIService) SlurmV0040PostJob(ctx context.Context, jobId string) A
 }
 
 // Execute executes the request
-//  @return V0040OpenapiJobPostResponse
-func (a *SlurmAPIService) SlurmV0040PostJobExecute(r ApiSlurmV0040PostJobRequest) (*V0040OpenapiJobPostResponse, *http.Response, error) {
+//  @return V0044OpenapiJobPostResponse
+func (a *SlurmAPIService) SlurmV0044PostJobExecute(r ApiSlurmV0044PostJobRequest) (*V0044OpenapiJobPostResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *V0040OpenapiJobPostResponse
+		localVarReturnValue  *V0044OpenapiJobPostResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0040PostJob")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0044PostJob")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/slurm/v0.0.40/job/{job_id}"
+	localVarPath := localBasePath + "/slurm/v0.0.44/job/{job_id}"
 	localVarPath = strings.Replace(localVarPath, "{"+"job_id"+"}", url.PathEscape(parameterValueToString(r.jobId, "jobId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -5008,7 +2837,7 @@ func (a *SlurmAPIService) SlurmV0040PostJobExecute(r ApiSlurmV0040PostJobRequest
 	localVarFormParams := url.Values{}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/x-yaml", "application/json"}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -5017,7 +2846,7 @@ func (a *SlurmAPIService) SlurmV0040PostJobExecute(r ApiSlurmV0040PostJobRequest
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -5025,7 +2854,7 @@ func (a *SlurmAPIService) SlurmV0040PostJobExecute(r ApiSlurmV0040PostJobRequest
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.v0040JobDescMsg
+	localVarPostBody = r.v0044JobDescMsg
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -5076,7 +2905,7 @@ func (a *SlurmAPIService) SlurmV0040PostJobExecute(r ApiSlurmV0040PostJobRequest
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v V0040OpenapiJobPostResponse
+			var v V0044OpenapiJobPostResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -5099,3107 +2928,58 @@ func (a *SlurmAPIService) SlurmV0040PostJobExecute(r ApiSlurmV0040PostJobRequest
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiSlurmV0040PostJobSubmitRequest struct {
+type ApiSlurmV0044PostJobAllocateRequest struct {
 	ctx context.Context
 	ApiService *SlurmAPIService
-	v0040JobSubmitReq *V0040JobSubmitReq
-}
-
-// Job description
-func (r ApiSlurmV0040PostJobSubmitRequest) V0040JobSubmitReq(v0040JobSubmitReq V0040JobSubmitReq) ApiSlurmV0040PostJobSubmitRequest {
-	r.v0040JobSubmitReq = &v0040JobSubmitReq
-	return r
-}
-
-func (r ApiSlurmV0040PostJobSubmitRequest) Execute() (*V0040OpenapiJobSubmitResponse, *http.Response, error) {
-	return r.ApiService.SlurmV0040PostJobSubmitExecute(r)
-}
-
-/*
-SlurmV0040PostJobSubmit submit new job
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmV0040PostJobSubmitRequest
-*/
-func (a *SlurmAPIService) SlurmV0040PostJobSubmit(ctx context.Context) ApiSlurmV0040PostJobSubmitRequest {
-	return ApiSlurmV0040PostJobSubmitRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-// Execute executes the request
-//  @return V0040OpenapiJobSubmitResponse
-func (a *SlurmAPIService) SlurmV0040PostJobSubmitExecute(r ApiSlurmV0040PostJobSubmitRequest) (*V0040OpenapiJobSubmitResponse, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *V0040OpenapiJobSubmitResponse
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0040PostJobSubmit")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurm/v0.0.40/job/submit"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/x-yaml", "application/json"}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	// body params
-	localVarPostBody = r.v0040JobSubmitReq
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v V0040OpenapiJobSubmitResponse
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmV0040PostNodeRequest struct {
-	ctx context.Context
-	ApiService *SlurmAPIService
-	nodeName string
-	v0040UpdateNodeMsg *V0040UpdateNodeMsg
-}
-
-// Node update description
-func (r ApiSlurmV0040PostNodeRequest) V0040UpdateNodeMsg(v0040UpdateNodeMsg V0040UpdateNodeMsg) ApiSlurmV0040PostNodeRequest {
-	r.v0040UpdateNodeMsg = &v0040UpdateNodeMsg
-	return r
-}
-
-func (r ApiSlurmV0040PostNodeRequest) Execute() (*V0040OpenapiResp, *http.Response, error) {
-	return r.ApiService.SlurmV0040PostNodeExecute(r)
-}
-
-/*
-SlurmV0040PostNode update node properties
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param nodeName Node name
- @return ApiSlurmV0040PostNodeRequest
-*/
-func (a *SlurmAPIService) SlurmV0040PostNode(ctx context.Context, nodeName string) ApiSlurmV0040PostNodeRequest {
-	return ApiSlurmV0040PostNodeRequest{
-		ApiService: a,
-		ctx: ctx,
-		nodeName: nodeName,
-	}
-}
-
-// Execute executes the request
-//  @return V0040OpenapiResp
-func (a *SlurmAPIService) SlurmV0040PostNodeExecute(r ApiSlurmV0040PostNodeRequest) (*V0040OpenapiResp, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *V0040OpenapiResp
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0040PostNode")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurm/v0.0.40/node/{node_name}"
-	localVarPath = strings.Replace(localVarPath, "{"+"node_name"+"}", url.PathEscape(parameterValueToString(r.nodeName, "nodeName")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/x-yaml", "application/json"}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	// body params
-	localVarPostBody = r.v0040UpdateNodeMsg
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v V0040OpenapiResp
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmV0041DeleteJobRequest struct {
-	ctx context.Context
-	ApiService *SlurmAPIService
-	jobId string
-	signal *string
-	flags *string
-}
-
-// Signal to send to Job
-func (r ApiSlurmV0041DeleteJobRequest) Signal(signal string) ApiSlurmV0041DeleteJobRequest {
-	r.signal = &signal
-	return r
-}
-
-// Signalling flags
-func (r ApiSlurmV0041DeleteJobRequest) Flags(flags string) ApiSlurmV0041DeleteJobRequest {
-	r.flags = &flags
-	return r
-}
-
-func (r ApiSlurmV0041DeleteJobRequest) Execute() (*V0041OpenapiResp, *http.Response, error) {
-	return r.ApiService.SlurmV0041DeleteJobExecute(r)
-}
-
-/*
-SlurmV0041DeleteJob cancel or signal job
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param jobId JobId
- @return ApiSlurmV0041DeleteJobRequest
-*/
-func (a *SlurmAPIService) SlurmV0041DeleteJob(ctx context.Context, jobId string) ApiSlurmV0041DeleteJobRequest {
-	return ApiSlurmV0041DeleteJobRequest{
-		ApiService: a,
-		ctx: ctx,
-		jobId: jobId,
-	}
-}
-
-// Execute executes the request
-//  @return V0041OpenapiResp
-func (a *SlurmAPIService) SlurmV0041DeleteJobExecute(r ApiSlurmV0041DeleteJobRequest) (*V0041OpenapiResp, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodDelete
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *V0041OpenapiResp
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0041DeleteJob")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurm/v0.0.41/job/{job_id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"job_id"+"}", url.PathEscape(parameterValueToString(r.jobId, "jobId")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	if r.signal != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "signal", r.signal, "")
-	}
-	if r.flags != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "flags", r.flags, "")
-	}
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v V0041OpenapiResp
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmV0041DeleteJobsRequest struct {
-	ctx context.Context
-	ApiService *SlurmAPIService
-	account *string
-	flags *string
-	jobName *string
-	jobs *string
-	partition *string
-	qos *string
-	reservation *string
-	signal *string
-	jobState *string
-	userId *string
-	userName *string
-	wckey *string
-	nodes *string
-}
-
-// Filter jobs to a specific account
-func (r ApiSlurmV0041DeleteJobsRequest) Account(account string) ApiSlurmV0041DeleteJobsRequest {
-	r.account = &account
-	return r
-}
-
-// Filter jobs according to flags
-func (r ApiSlurmV0041DeleteJobsRequest) Flags(flags string) ApiSlurmV0041DeleteJobsRequest {
-	r.flags = &flags
-	return r
-}
-
-// Filter jobs to a specific name
-func (r ApiSlurmV0041DeleteJobsRequest) JobName(jobName string) ApiSlurmV0041DeleteJobsRequest {
-	r.jobName = &jobName
-	return r
-}
-
-// List of jobs to signal
-func (r ApiSlurmV0041DeleteJobsRequest) Jobs(jobs string) ApiSlurmV0041DeleteJobsRequest {
-	r.jobs = &jobs
-	return r
-}
-
-// Filter jobs to a specific partition
-func (r ApiSlurmV0041DeleteJobsRequest) Partition(partition string) ApiSlurmV0041DeleteJobsRequest {
-	r.partition = &partition
-	return r
-}
-
-// Filter jobs to a specific QOS
-func (r ApiSlurmV0041DeleteJobsRequest) Qos(qos string) ApiSlurmV0041DeleteJobsRequest {
-	r.qos = &qos
-	return r
-}
-
-// Filter jobs to a specific reservation
-func (r ApiSlurmV0041DeleteJobsRequest) Reservation(reservation string) ApiSlurmV0041DeleteJobsRequest {
-	r.reservation = &reservation
-	return r
-}
-
-// Signal to send to jobs
-func (r ApiSlurmV0041DeleteJobsRequest) Signal(signal string) ApiSlurmV0041DeleteJobsRequest {
-	r.signal = &signal
-	return r
-}
-
-// Filter jobs to a specific state
-func (r ApiSlurmV0041DeleteJobsRequest) JobState(jobState string) ApiSlurmV0041DeleteJobsRequest {
-	r.jobState = &jobState
-	return r
-}
-
-// Filter jobs to a specific numeric user id
-func (r ApiSlurmV0041DeleteJobsRequest) UserId(userId string) ApiSlurmV0041DeleteJobsRequest {
-	r.userId = &userId
-	return r
-}
-
-// Filter jobs to a specific user name
-func (r ApiSlurmV0041DeleteJobsRequest) UserName(userName string) ApiSlurmV0041DeleteJobsRequest {
-	r.userName = &userName
-	return r
-}
-
-// Filter jobs to a specific wckey
-func (r ApiSlurmV0041DeleteJobsRequest) Wckey(wckey string) ApiSlurmV0041DeleteJobsRequest {
-	r.wckey = &wckey
-	return r
-}
-
-// Filter jobs to a set of nodes
-func (r ApiSlurmV0041DeleteJobsRequest) Nodes(nodes string) ApiSlurmV0041DeleteJobsRequest {
-	r.nodes = &nodes
-	return r
-}
-
-func (r ApiSlurmV0041DeleteJobsRequest) Execute() (*V0041OpenapiKillJobsResp, *http.Response, error) {
-	return r.ApiService.SlurmV0041DeleteJobsExecute(r)
-}
-
-/*
-SlurmV0041DeleteJobs send signal to list of jobs
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmV0041DeleteJobsRequest
-*/
-func (a *SlurmAPIService) SlurmV0041DeleteJobs(ctx context.Context) ApiSlurmV0041DeleteJobsRequest {
-	return ApiSlurmV0041DeleteJobsRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-// Execute executes the request
-//  @return V0041OpenapiKillJobsResp
-func (a *SlurmAPIService) SlurmV0041DeleteJobsExecute(r ApiSlurmV0041DeleteJobsRequest) (*V0041OpenapiKillJobsResp, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodDelete
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *V0041OpenapiKillJobsResp
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0041DeleteJobs")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurm/v0.0.41/jobs/"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	if r.account != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "account", r.account, "")
-	}
-	if r.flags != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "flags", r.flags, "")
-	}
-	if r.jobName != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "job_name", r.jobName, "")
-	}
-	if r.jobs != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "jobs", r.jobs, "")
-	}
-	if r.partition != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "partition", r.partition, "")
-	}
-	if r.qos != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "qos", r.qos, "")
-	}
-	if r.reservation != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "reservation", r.reservation, "")
-	}
-	if r.signal != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "signal", r.signal, "")
-	}
-	if r.jobState != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "job_state", r.jobState, "")
-	}
-	if r.userId != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "user_id", r.userId, "")
-	}
-	if r.userName != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "user_name", r.userName, "")
-	}
-	if r.wckey != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "wckey", r.wckey, "")
-	}
-	if r.nodes != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "nodes", r.nodes, "")
-	}
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v V0041OpenapiKillJobsResp
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmV0041DeleteNodeRequest struct {
-	ctx context.Context
-	ApiService *SlurmAPIService
-	nodeName string
-}
-
-func (r ApiSlurmV0041DeleteNodeRequest) Execute() (*V0041OpenapiResp, *http.Response, error) {
-	return r.ApiService.SlurmV0041DeleteNodeExecute(r)
-}
-
-/*
-SlurmV0041DeleteNode delete node
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param nodeName Node name
- @return ApiSlurmV0041DeleteNodeRequest
-*/
-func (a *SlurmAPIService) SlurmV0041DeleteNode(ctx context.Context, nodeName string) ApiSlurmV0041DeleteNodeRequest {
-	return ApiSlurmV0041DeleteNodeRequest{
-		ApiService: a,
-		ctx: ctx,
-		nodeName: nodeName,
-	}
-}
-
-// Execute executes the request
-//  @return V0041OpenapiResp
-func (a *SlurmAPIService) SlurmV0041DeleteNodeExecute(r ApiSlurmV0041DeleteNodeRequest) (*V0041OpenapiResp, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodDelete
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *V0041OpenapiResp
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0041DeleteNode")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurm/v0.0.41/node/{node_name}"
-	localVarPath = strings.Replace(localVarPath, "{"+"node_name"+"}", url.PathEscape(parameterValueToString(r.nodeName, "nodeName")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v V0041OpenapiResp
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmV0041GetDiagRequest struct {
-	ctx context.Context
-	ApiService *SlurmAPIService
-}
-
-func (r ApiSlurmV0041GetDiagRequest) Execute() (*V0041OpenapiDiagResp, *http.Response, error) {
-	return r.ApiService.SlurmV0041GetDiagExecute(r)
-}
-
-/*
-SlurmV0041GetDiag get diagnostics
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmV0041GetDiagRequest
-*/
-func (a *SlurmAPIService) SlurmV0041GetDiag(ctx context.Context) ApiSlurmV0041GetDiagRequest {
-	return ApiSlurmV0041GetDiagRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-// Execute executes the request
-//  @return V0041OpenapiDiagResp
-func (a *SlurmAPIService) SlurmV0041GetDiagExecute(r ApiSlurmV0041GetDiagRequest) (*V0041OpenapiDiagResp, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *V0041OpenapiDiagResp
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0041GetDiag")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurm/v0.0.41/diag/"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v V0041OpenapiDiagResp
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmV0041GetJobRequest struct {
-	ctx context.Context
-	ApiService *SlurmAPIService
-	jobId string
-	updateTime *string
-	flags *string
-}
-
-// Filter jobs since update timestamp
-func (r ApiSlurmV0041GetJobRequest) UpdateTime(updateTime string) ApiSlurmV0041GetJobRequest {
-	r.updateTime = &updateTime
-	return r
-}
-
-// Query flags
-func (r ApiSlurmV0041GetJobRequest) Flags(flags string) ApiSlurmV0041GetJobRequest {
-	r.flags = &flags
-	return r
-}
-
-func (r ApiSlurmV0041GetJobRequest) Execute() (*V0041OpenapiJobInfoResp, *http.Response, error) {
-	return r.ApiService.SlurmV0041GetJobExecute(r)
-}
-
-/*
-SlurmV0041GetJob get job info
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param jobId JobId
- @return ApiSlurmV0041GetJobRequest
-*/
-func (a *SlurmAPIService) SlurmV0041GetJob(ctx context.Context, jobId string) ApiSlurmV0041GetJobRequest {
-	return ApiSlurmV0041GetJobRequest{
-		ApiService: a,
-		ctx: ctx,
-		jobId: jobId,
-	}
-}
-
-// Execute executes the request
-//  @return V0041OpenapiJobInfoResp
-func (a *SlurmAPIService) SlurmV0041GetJobExecute(r ApiSlurmV0041GetJobRequest) (*V0041OpenapiJobInfoResp, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *V0041OpenapiJobInfoResp
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0041GetJob")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurm/v0.0.41/job/{job_id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"job_id"+"}", url.PathEscape(parameterValueToString(r.jobId, "jobId")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	if r.updateTime != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "update_time", r.updateTime, "")
-	}
-	if r.flags != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "flags", r.flags, "")
-	}
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v V0041OpenapiJobInfoResp
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmV0041GetJobsRequest struct {
-	ctx context.Context
-	ApiService *SlurmAPIService
-	updateTime *string
-	flags *string
-}
-
-// Filter jobs since update timestamp
-func (r ApiSlurmV0041GetJobsRequest) UpdateTime(updateTime string) ApiSlurmV0041GetJobsRequest {
-	r.updateTime = &updateTime
-	return r
-}
-
-// Query flags
-func (r ApiSlurmV0041GetJobsRequest) Flags(flags string) ApiSlurmV0041GetJobsRequest {
-	r.flags = &flags
-	return r
-}
-
-func (r ApiSlurmV0041GetJobsRequest) Execute() (*V0041OpenapiJobInfoResp, *http.Response, error) {
-	return r.ApiService.SlurmV0041GetJobsExecute(r)
-}
-
-/*
-SlurmV0041GetJobs get list of jobs
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmV0041GetJobsRequest
-*/
-func (a *SlurmAPIService) SlurmV0041GetJobs(ctx context.Context) ApiSlurmV0041GetJobsRequest {
-	return ApiSlurmV0041GetJobsRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-// Execute executes the request
-//  @return V0041OpenapiJobInfoResp
-func (a *SlurmAPIService) SlurmV0041GetJobsExecute(r ApiSlurmV0041GetJobsRequest) (*V0041OpenapiJobInfoResp, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *V0041OpenapiJobInfoResp
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0041GetJobs")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurm/v0.0.41/jobs/"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	if r.updateTime != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "update_time", r.updateTime, "")
-	}
-	if r.flags != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "flags", r.flags, "")
-	}
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v V0041OpenapiJobInfoResp
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmV0041GetJobsStateRequest struct {
-	ctx context.Context
-	ApiService *SlurmAPIService
-	updateTime *string
-	flags *string
-}
-
-// Filter jobs since update timestamp
-func (r ApiSlurmV0041GetJobsStateRequest) UpdateTime(updateTime string) ApiSlurmV0041GetJobsStateRequest {
-	r.updateTime = &updateTime
-	return r
-}
-
-// Query flags
-func (r ApiSlurmV0041GetJobsStateRequest) Flags(flags string) ApiSlurmV0041GetJobsStateRequest {
-	r.flags = &flags
-	return r
-}
-
-func (r ApiSlurmV0041GetJobsStateRequest) Execute() (*V0041OpenapiJobInfoResp, *http.Response, error) {
-	return r.ApiService.SlurmV0041GetJobsStateExecute(r)
-}
-
-/*
-SlurmV0041GetJobsState get list of job states
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmV0041GetJobsStateRequest
-*/
-func (a *SlurmAPIService) SlurmV0041GetJobsState(ctx context.Context) ApiSlurmV0041GetJobsStateRequest {
-	return ApiSlurmV0041GetJobsStateRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-// Execute executes the request
-//  @return V0041OpenapiJobInfoResp
-func (a *SlurmAPIService) SlurmV0041GetJobsStateExecute(r ApiSlurmV0041GetJobsStateRequest) (*V0041OpenapiJobInfoResp, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *V0041OpenapiJobInfoResp
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0041GetJobsState")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurm/v0.0.41/jobs/state/"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	if r.updateTime != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "update_time", r.updateTime, "")
-	}
-	if r.flags != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "flags", r.flags, "")
-	}
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v V0041OpenapiJobInfoResp
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmV0041GetLicensesRequest struct {
-	ctx context.Context
-	ApiService *SlurmAPIService
-}
-
-func (r ApiSlurmV0041GetLicensesRequest) Execute() (*V0041OpenapiLicensesResp, *http.Response, error) {
-	return r.ApiService.SlurmV0041GetLicensesExecute(r)
-}
-
-/*
-SlurmV0041GetLicenses get all Slurm tracked license info
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmV0041GetLicensesRequest
-*/
-func (a *SlurmAPIService) SlurmV0041GetLicenses(ctx context.Context) ApiSlurmV0041GetLicensesRequest {
-	return ApiSlurmV0041GetLicensesRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-// Execute executes the request
-//  @return V0041OpenapiLicensesResp
-func (a *SlurmAPIService) SlurmV0041GetLicensesExecute(r ApiSlurmV0041GetLicensesRequest) (*V0041OpenapiLicensesResp, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *V0041OpenapiLicensesResp
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0041GetLicenses")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurm/v0.0.41/licenses/"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v V0041OpenapiLicensesResp
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmV0041GetNodeRequest struct {
-	ctx context.Context
-	ApiService *SlurmAPIService
-	nodeName string
-	updateTime *string
-	flags *string
-}
-
-// Filter jobs since update timestamp
-func (r ApiSlurmV0041GetNodeRequest) UpdateTime(updateTime string) ApiSlurmV0041GetNodeRequest {
-	r.updateTime = &updateTime
-	return r
-}
-
-// Query flags
-func (r ApiSlurmV0041GetNodeRequest) Flags(flags string) ApiSlurmV0041GetNodeRequest {
-	r.flags = &flags
-	return r
-}
-
-func (r ApiSlurmV0041GetNodeRequest) Execute() (*V0041OpenapiNodesResp, *http.Response, error) {
-	return r.ApiService.SlurmV0041GetNodeExecute(r)
-}
-
-/*
-SlurmV0041GetNode get node info
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param nodeName Node name
- @return ApiSlurmV0041GetNodeRequest
-*/
-func (a *SlurmAPIService) SlurmV0041GetNode(ctx context.Context, nodeName string) ApiSlurmV0041GetNodeRequest {
-	return ApiSlurmV0041GetNodeRequest{
-		ApiService: a,
-		ctx: ctx,
-		nodeName: nodeName,
-	}
-}
-
-// Execute executes the request
-//  @return V0041OpenapiNodesResp
-func (a *SlurmAPIService) SlurmV0041GetNodeExecute(r ApiSlurmV0041GetNodeRequest) (*V0041OpenapiNodesResp, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *V0041OpenapiNodesResp
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0041GetNode")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurm/v0.0.41/node/{node_name}"
-	localVarPath = strings.Replace(localVarPath, "{"+"node_name"+"}", url.PathEscape(parameterValueToString(r.nodeName, "nodeName")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	if r.updateTime != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "update_time", r.updateTime, "")
-	}
-	if r.flags != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "flags", r.flags, "")
-	}
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v V0041OpenapiNodesResp
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmV0041GetNodesRequest struct {
-	ctx context.Context
-	ApiService *SlurmAPIService
-	updateTime *string
-	flags *string
-}
-
-// Filter jobs since update timestamp
-func (r ApiSlurmV0041GetNodesRequest) UpdateTime(updateTime string) ApiSlurmV0041GetNodesRequest {
-	r.updateTime = &updateTime
-	return r
-}
-
-// Query flags
-func (r ApiSlurmV0041GetNodesRequest) Flags(flags string) ApiSlurmV0041GetNodesRequest {
-	r.flags = &flags
-	return r
-}
-
-func (r ApiSlurmV0041GetNodesRequest) Execute() (*V0041OpenapiNodesResp, *http.Response, error) {
-	return r.ApiService.SlurmV0041GetNodesExecute(r)
-}
-
-/*
-SlurmV0041GetNodes get node(s) info
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmV0041GetNodesRequest
-*/
-func (a *SlurmAPIService) SlurmV0041GetNodes(ctx context.Context) ApiSlurmV0041GetNodesRequest {
-	return ApiSlurmV0041GetNodesRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-// Execute executes the request
-//  @return V0041OpenapiNodesResp
-func (a *SlurmAPIService) SlurmV0041GetNodesExecute(r ApiSlurmV0041GetNodesRequest) (*V0041OpenapiNodesResp, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *V0041OpenapiNodesResp
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0041GetNodes")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurm/v0.0.41/nodes/"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	if r.updateTime != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "update_time", r.updateTime, "")
-	}
-	if r.flags != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "flags", r.flags, "")
-	}
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v V0041OpenapiNodesResp
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmV0041GetPartitionRequest struct {
-	ctx context.Context
-	ApiService *SlurmAPIService
-	partitionName string
-	updateTime *string
-	flags *string
-}
-
-// Filter partitions since update timestamp
-func (r ApiSlurmV0041GetPartitionRequest) UpdateTime(updateTime string) ApiSlurmV0041GetPartitionRequest {
-	r.updateTime = &updateTime
-	return r
-}
-
-// Query flags
-func (r ApiSlurmV0041GetPartitionRequest) Flags(flags string) ApiSlurmV0041GetPartitionRequest {
-	r.flags = &flags
-	return r
-}
-
-func (r ApiSlurmV0041GetPartitionRequest) Execute() (*V0041OpenapiPartitionResp, *http.Response, error) {
-	return r.ApiService.SlurmV0041GetPartitionExecute(r)
-}
-
-/*
-SlurmV0041GetPartition get partition info
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param partitionName Partition name
- @return ApiSlurmV0041GetPartitionRequest
-*/
-func (a *SlurmAPIService) SlurmV0041GetPartition(ctx context.Context, partitionName string) ApiSlurmV0041GetPartitionRequest {
-	return ApiSlurmV0041GetPartitionRequest{
-		ApiService: a,
-		ctx: ctx,
-		partitionName: partitionName,
-	}
-}
-
-// Execute executes the request
-//  @return V0041OpenapiPartitionResp
-func (a *SlurmAPIService) SlurmV0041GetPartitionExecute(r ApiSlurmV0041GetPartitionRequest) (*V0041OpenapiPartitionResp, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *V0041OpenapiPartitionResp
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0041GetPartition")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurm/v0.0.41/partition/{partition_name}"
-	localVarPath = strings.Replace(localVarPath, "{"+"partition_name"+"}", url.PathEscape(parameterValueToString(r.partitionName, "partitionName")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	if r.updateTime != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "update_time", r.updateTime, "")
-	}
-	if r.flags != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "flags", r.flags, "")
-	}
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v V0041OpenapiPartitionResp
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmV0041GetPartitionsRequest struct {
-	ctx context.Context
-	ApiService *SlurmAPIService
-	updateTime *string
-	flags *string
-}
-
-// Filter partitions since update timestamp
-func (r ApiSlurmV0041GetPartitionsRequest) UpdateTime(updateTime string) ApiSlurmV0041GetPartitionsRequest {
-	r.updateTime = &updateTime
-	return r
-}
-
-// Query flags
-func (r ApiSlurmV0041GetPartitionsRequest) Flags(flags string) ApiSlurmV0041GetPartitionsRequest {
-	r.flags = &flags
-	return r
-}
-
-func (r ApiSlurmV0041GetPartitionsRequest) Execute() (*V0041OpenapiPartitionResp, *http.Response, error) {
-	return r.ApiService.SlurmV0041GetPartitionsExecute(r)
-}
-
-/*
-SlurmV0041GetPartitions get all partition info
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmV0041GetPartitionsRequest
-*/
-func (a *SlurmAPIService) SlurmV0041GetPartitions(ctx context.Context) ApiSlurmV0041GetPartitionsRequest {
-	return ApiSlurmV0041GetPartitionsRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-// Execute executes the request
-//  @return V0041OpenapiPartitionResp
-func (a *SlurmAPIService) SlurmV0041GetPartitionsExecute(r ApiSlurmV0041GetPartitionsRequest) (*V0041OpenapiPartitionResp, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *V0041OpenapiPartitionResp
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0041GetPartitions")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurm/v0.0.41/partitions/"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	if r.updateTime != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "update_time", r.updateTime, "")
-	}
-	if r.flags != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "flags", r.flags, "")
-	}
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v V0041OpenapiPartitionResp
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmV0041GetPingRequest struct {
-	ctx context.Context
-	ApiService *SlurmAPIService
-}
-
-func (r ApiSlurmV0041GetPingRequest) Execute() (*V0041OpenapiPingArrayResp, *http.Response, error) {
-	return r.ApiService.SlurmV0041GetPingExecute(r)
-}
-
-/*
-SlurmV0041GetPing ping test
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmV0041GetPingRequest
-*/
-func (a *SlurmAPIService) SlurmV0041GetPing(ctx context.Context) ApiSlurmV0041GetPingRequest {
-	return ApiSlurmV0041GetPingRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-// Execute executes the request
-//  @return V0041OpenapiPingArrayResp
-func (a *SlurmAPIService) SlurmV0041GetPingExecute(r ApiSlurmV0041GetPingRequest) (*V0041OpenapiPingArrayResp, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *V0041OpenapiPingArrayResp
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0041GetPing")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurm/v0.0.41/ping/"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v V0041OpenapiPingArrayResp
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmV0041GetReconfigureRequest struct {
-	ctx context.Context
-	ApiService *SlurmAPIService
-}
-
-func (r ApiSlurmV0041GetReconfigureRequest) Execute() (*V0041OpenapiResp, *http.Response, error) {
-	return r.ApiService.SlurmV0041GetReconfigureExecute(r)
-}
-
-/*
-SlurmV0041GetReconfigure request slurmctld reconfigure
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmV0041GetReconfigureRequest
-*/
-func (a *SlurmAPIService) SlurmV0041GetReconfigure(ctx context.Context) ApiSlurmV0041GetReconfigureRequest {
-	return ApiSlurmV0041GetReconfigureRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-// Execute executes the request
-//  @return V0041OpenapiResp
-func (a *SlurmAPIService) SlurmV0041GetReconfigureExecute(r ApiSlurmV0041GetReconfigureRequest) (*V0041OpenapiResp, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *V0041OpenapiResp
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0041GetReconfigure")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurm/v0.0.41/reconfigure/"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v V0041OpenapiResp
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmV0041GetReservationRequest struct {
-	ctx context.Context
-	ApiService *SlurmAPIService
-	reservationName string
-	updateTime *string
-}
-
-// Filter reservations since update timestamp
-func (r ApiSlurmV0041GetReservationRequest) UpdateTime(updateTime string) ApiSlurmV0041GetReservationRequest {
-	r.updateTime = &updateTime
-	return r
-}
-
-func (r ApiSlurmV0041GetReservationRequest) Execute() (*V0041OpenapiReservationResp, *http.Response, error) {
-	return r.ApiService.SlurmV0041GetReservationExecute(r)
-}
-
-/*
-SlurmV0041GetReservation get reservation info
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param reservationName Reservation name
- @return ApiSlurmV0041GetReservationRequest
-*/
-func (a *SlurmAPIService) SlurmV0041GetReservation(ctx context.Context, reservationName string) ApiSlurmV0041GetReservationRequest {
-	return ApiSlurmV0041GetReservationRequest{
-		ApiService: a,
-		ctx: ctx,
-		reservationName: reservationName,
-	}
-}
-
-// Execute executes the request
-//  @return V0041OpenapiReservationResp
-func (a *SlurmAPIService) SlurmV0041GetReservationExecute(r ApiSlurmV0041GetReservationRequest) (*V0041OpenapiReservationResp, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *V0041OpenapiReservationResp
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0041GetReservation")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurm/v0.0.41/reservation/{reservation_name}"
-	localVarPath = strings.Replace(localVarPath, "{"+"reservation_name"+"}", url.PathEscape(parameterValueToString(r.reservationName, "reservationName")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	if r.updateTime != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "update_time", r.updateTime, "")
-	}
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v V0041OpenapiReservationResp
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmV0041GetReservationsRequest struct {
-	ctx context.Context
-	ApiService *SlurmAPIService
-	updateTime *string
-}
-
-// Filter reservations since update timestamp
-func (r ApiSlurmV0041GetReservationsRequest) UpdateTime(updateTime string) ApiSlurmV0041GetReservationsRequest {
-	r.updateTime = &updateTime
-	return r
-}
-
-func (r ApiSlurmV0041GetReservationsRequest) Execute() (*V0041OpenapiReservationResp, *http.Response, error) {
-	return r.ApiService.SlurmV0041GetReservationsExecute(r)
-}
-
-/*
-SlurmV0041GetReservations get all reservation info
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmV0041GetReservationsRequest
-*/
-func (a *SlurmAPIService) SlurmV0041GetReservations(ctx context.Context) ApiSlurmV0041GetReservationsRequest {
-	return ApiSlurmV0041GetReservationsRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-// Execute executes the request
-//  @return V0041OpenapiReservationResp
-func (a *SlurmAPIService) SlurmV0041GetReservationsExecute(r ApiSlurmV0041GetReservationsRequest) (*V0041OpenapiReservationResp, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *V0041OpenapiReservationResp
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0041GetReservations")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurm/v0.0.41/reservations/"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	if r.updateTime != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "update_time", r.updateTime, "")
-	}
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v V0041OpenapiReservationResp
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmV0041GetSharesRequest struct {
-	ctx context.Context
-	ApiService *SlurmAPIService
-	accounts *string
-	users *string
-}
-
-// Accounts to query
-func (r ApiSlurmV0041GetSharesRequest) Accounts(accounts string) ApiSlurmV0041GetSharesRequest {
-	r.accounts = &accounts
-	return r
-}
-
-// Users to query
-func (r ApiSlurmV0041GetSharesRequest) Users(users string) ApiSlurmV0041GetSharesRequest {
-	r.users = &users
-	return r
-}
-
-func (r ApiSlurmV0041GetSharesRequest) Execute() (*V0041OpenapiSharesResp, *http.Response, error) {
-	return r.ApiService.SlurmV0041GetSharesExecute(r)
-}
-
-/*
-SlurmV0041GetShares get fairshare info
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmV0041GetSharesRequest
-*/
-func (a *SlurmAPIService) SlurmV0041GetShares(ctx context.Context) ApiSlurmV0041GetSharesRequest {
-	return ApiSlurmV0041GetSharesRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-// Execute executes the request
-//  @return V0041OpenapiSharesResp
-func (a *SlurmAPIService) SlurmV0041GetSharesExecute(r ApiSlurmV0041GetSharesRequest) (*V0041OpenapiSharesResp, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *V0041OpenapiSharesResp
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0041GetShares")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurm/v0.0.41/shares"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	if r.accounts != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "accounts", r.accounts, "")
-	}
-	if r.users != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "users", r.users, "")
-	}
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v V0041OpenapiSharesResp
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmV0041PostJobRequest struct {
-	ctx context.Context
-	ApiService *SlurmAPIService
-	jobId string
-	v0041JobDescMsg *V0041JobDescMsg
-}
-
-// Job update description
-func (r ApiSlurmV0041PostJobRequest) V0041JobDescMsg(v0041JobDescMsg V0041JobDescMsg) ApiSlurmV0041PostJobRequest {
-	r.v0041JobDescMsg = &v0041JobDescMsg
-	return r
-}
-
-func (r ApiSlurmV0041PostJobRequest) Execute() (*V0041OpenapiJobPostResponse, *http.Response, error) {
-	return r.ApiService.SlurmV0041PostJobExecute(r)
-}
-
-/*
-SlurmV0041PostJob update job
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param jobId JobId
- @return ApiSlurmV0041PostJobRequest
-*/
-func (a *SlurmAPIService) SlurmV0041PostJob(ctx context.Context, jobId string) ApiSlurmV0041PostJobRequest {
-	return ApiSlurmV0041PostJobRequest{
-		ApiService: a,
-		ctx: ctx,
-		jobId: jobId,
-	}
-}
-
-// Execute executes the request
-//  @return V0041OpenapiJobPostResponse
-func (a *SlurmAPIService) SlurmV0041PostJobExecute(r ApiSlurmV0041PostJobRequest) (*V0041OpenapiJobPostResponse, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *V0041OpenapiJobPostResponse
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0041PostJob")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurm/v0.0.41/job/{job_id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"job_id"+"}", url.PathEscape(parameterValueToString(r.jobId, "jobId")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/x-yaml", "application/json"}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	// body params
-	localVarPostBody = r.v0041JobDescMsg
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v V0041OpenapiJobPostResponse
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmV0041PostJobAllocateRequest struct {
-	ctx context.Context
-	ApiService *SlurmAPIService
-	v0041JobAllocReq *V0041JobAllocReq
+	v0044JobAllocReq *V0044JobAllocReq
 }
 
 // Job allocation description
-func (r ApiSlurmV0041PostJobAllocateRequest) V0041JobAllocReq(v0041JobAllocReq V0041JobAllocReq) ApiSlurmV0041PostJobAllocateRequest {
-	r.v0041JobAllocReq = &v0041JobAllocReq
+func (r ApiSlurmV0044PostJobAllocateRequest) V0044JobAllocReq(v0044JobAllocReq V0044JobAllocReq) ApiSlurmV0044PostJobAllocateRequest {
+	r.v0044JobAllocReq = &v0044JobAllocReq
 	return r
 }
 
-func (r ApiSlurmV0041PostJobAllocateRequest) Execute() (*V0041OpenapiJobAllocResp, *http.Response, error) {
-	return r.ApiService.SlurmV0041PostJobAllocateExecute(r)
+func (r ApiSlurmV0044PostJobAllocateRequest) Execute() (*V0044OpenapiJobAllocResp, *http.Response, error) {
+	return r.ApiService.SlurmV0044PostJobAllocateExecute(r)
 }
 
 /*
-SlurmV0041PostJobAllocate submit new job allocation without any steps that must be signaled to stop
+SlurmV0044PostJobAllocate submit new job allocation without any steps that must be signaled to stop
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmV0041PostJobAllocateRequest
+ @return ApiSlurmV0044PostJobAllocateRequest
 */
-func (a *SlurmAPIService) SlurmV0041PostJobAllocate(ctx context.Context) ApiSlurmV0041PostJobAllocateRequest {
-	return ApiSlurmV0041PostJobAllocateRequest{
+func (a *SlurmAPIService) SlurmV0044PostJobAllocate(ctx context.Context) ApiSlurmV0044PostJobAllocateRequest {
+	return ApiSlurmV0044PostJobAllocateRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
 }
 
 // Execute executes the request
-//  @return V0041OpenapiJobAllocResp
-func (a *SlurmAPIService) SlurmV0041PostJobAllocateExecute(r ApiSlurmV0041PostJobAllocateRequest) (*V0041OpenapiJobAllocResp, *http.Response, error) {
+//  @return V0044OpenapiJobAllocResp
+func (a *SlurmAPIService) SlurmV0044PostJobAllocateExecute(r ApiSlurmV0044PostJobAllocateRequest) (*V0044OpenapiJobAllocResp, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *V0041OpenapiJobAllocResp
+		localVarReturnValue  *V0044OpenapiJobAllocResp
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0041PostJobAllocate")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0044PostJobAllocate")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/slurm/v0.0.41/job/allocate"
+	localVarPath := localBasePath + "/slurm/v0.0.44/job/allocate"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/x-yaml", "application/json"}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -8208,7 +2988,7 @@ func (a *SlurmAPIService) SlurmV0041PostJobAllocateExecute(r ApiSlurmV0041PostJo
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -8216,7 +2996,7 @@ func (a *SlurmAPIService) SlurmV0041PostJobAllocateExecute(r ApiSlurmV0041PostJo
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.v0041JobAllocReq
+	localVarPostBody = r.v0044JobAllocReq
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -8267,7 +3047,7 @@ func (a *SlurmAPIService) SlurmV0041PostJobAllocateExecute(r ApiSlurmV0041PostJo
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v V0041OpenapiJobAllocResp
+			var v V0044OpenapiJobAllocResp
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -8290,58 +3070,58 @@ func (a *SlurmAPIService) SlurmV0041PostJobAllocateExecute(r ApiSlurmV0041PostJo
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiSlurmV0041PostJobSubmitRequest struct {
+type ApiSlurmV0044PostJobSubmitRequest struct {
 	ctx context.Context
 	ApiService *SlurmAPIService
-	v0041JobSubmitReq *V0041JobSubmitReq
+	v0044JobSubmitReq *V0044JobSubmitReq
 }
 
 // Job description
-func (r ApiSlurmV0041PostJobSubmitRequest) V0041JobSubmitReq(v0041JobSubmitReq V0041JobSubmitReq) ApiSlurmV0041PostJobSubmitRequest {
-	r.v0041JobSubmitReq = &v0041JobSubmitReq
+func (r ApiSlurmV0044PostJobSubmitRequest) V0044JobSubmitReq(v0044JobSubmitReq V0044JobSubmitReq) ApiSlurmV0044PostJobSubmitRequest {
+	r.v0044JobSubmitReq = &v0044JobSubmitReq
 	return r
 }
 
-func (r ApiSlurmV0041PostJobSubmitRequest) Execute() (*V0041OpenapiJobSubmitResponse, *http.Response, error) {
-	return r.ApiService.SlurmV0041PostJobSubmitExecute(r)
+func (r ApiSlurmV0044PostJobSubmitRequest) Execute() (*V0044OpenapiJobSubmitResponse, *http.Response, error) {
+	return r.ApiService.SlurmV0044PostJobSubmitExecute(r)
 }
 
 /*
-SlurmV0041PostJobSubmit submit new job
+SlurmV0044PostJobSubmit submit new job
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmV0041PostJobSubmitRequest
+ @return ApiSlurmV0044PostJobSubmitRequest
 */
-func (a *SlurmAPIService) SlurmV0041PostJobSubmit(ctx context.Context) ApiSlurmV0041PostJobSubmitRequest {
-	return ApiSlurmV0041PostJobSubmitRequest{
+func (a *SlurmAPIService) SlurmV0044PostJobSubmit(ctx context.Context) ApiSlurmV0044PostJobSubmitRequest {
+	return ApiSlurmV0044PostJobSubmitRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
 }
 
 // Execute executes the request
-//  @return V0041OpenapiJobSubmitResponse
-func (a *SlurmAPIService) SlurmV0041PostJobSubmitExecute(r ApiSlurmV0041PostJobSubmitRequest) (*V0041OpenapiJobSubmitResponse, *http.Response, error) {
+//  @return V0044OpenapiJobSubmitResponse
+func (a *SlurmAPIService) SlurmV0044PostJobSubmitExecute(r ApiSlurmV0044PostJobSubmitRequest) (*V0044OpenapiJobSubmitResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *V0041OpenapiJobSubmitResponse
+		localVarReturnValue  *V0044OpenapiJobSubmitResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0041PostJobSubmit")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0044PostJobSubmit")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/slurm/v0.0.41/job/submit"
+	localVarPath := localBasePath + "/slurm/v0.0.44/job/submit"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/x-yaml", "application/json"}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -8350,7 +3130,7 @@ func (a *SlurmAPIService) SlurmV0041PostJobSubmitExecute(r ApiSlurmV0041PostJobS
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -8358,7 +3138,7 @@ func (a *SlurmAPIService) SlurmV0041PostJobSubmitExecute(r ApiSlurmV0041PostJobS
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.v0041JobSubmitReq
+	localVarPostBody = r.v0044JobSubmitReq
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -8409,7 +3189,7 @@ func (a *SlurmAPIService) SlurmV0041PostJobSubmitExecute(r ApiSlurmV0041PostJobS
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v V0041OpenapiJobSubmitResponse
+			var v V0044OpenapiJobSubmitResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -8432,32 +3212,174 @@ func (a *SlurmAPIService) SlurmV0041PostJobSubmitExecute(r ApiSlurmV0041PostJobS
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiSlurmV0041PostNodeRequest struct {
+type ApiSlurmV0044PostNewNodeRequest struct {
 	ctx context.Context
 	ApiService *SlurmAPIService
-	nodeName string
-	v0041UpdateNodeMsg *V0041UpdateNodeMsg
+	v0044OpenapiCreateNodeReq *V0044OpenapiCreateNodeReq
 }
 
-// Node update description
-func (r ApiSlurmV0041PostNodeRequest) V0041UpdateNodeMsg(v0041UpdateNodeMsg V0041UpdateNodeMsg) ApiSlurmV0041PostNodeRequest {
-	r.v0041UpdateNodeMsg = &v0041UpdateNodeMsg
+// node create request
+func (r ApiSlurmV0044PostNewNodeRequest) V0044OpenapiCreateNodeReq(v0044OpenapiCreateNodeReq V0044OpenapiCreateNodeReq) ApiSlurmV0044PostNewNodeRequest {
+	r.v0044OpenapiCreateNodeReq = &v0044OpenapiCreateNodeReq
 	return r
 }
 
-func (r ApiSlurmV0041PostNodeRequest) Execute() (*V0041OpenapiResp, *http.Response, error) {
-	return r.ApiService.SlurmV0041PostNodeExecute(r)
+func (r ApiSlurmV0044PostNewNodeRequest) Execute() (*V0044OpenapiResp, *http.Response, error) {
+	return r.ApiService.SlurmV0044PostNewNodeExecute(r)
 }
 
 /*
-SlurmV0041PostNode update node properties
+SlurmV0044PostNewNode create node
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiSlurmV0044PostNewNodeRequest
+*/
+func (a *SlurmAPIService) SlurmV0044PostNewNode(ctx context.Context) ApiSlurmV0044PostNewNodeRequest {
+	return ApiSlurmV0044PostNewNodeRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return V0044OpenapiResp
+func (a *SlurmAPIService) SlurmV0044PostNewNodeExecute(r ApiSlurmV0044PostNewNodeRequest) (*V0044OpenapiResp, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *V0044OpenapiResp
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0044PostNewNode")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/slurm/v0.0.44/new/node/"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.v0044OpenapiCreateNodeReq
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["user"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-SLURM-USER-NAME"] = key
+			}
+		}
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["token"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+			var v V0044OpenapiResp
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiSlurmV0044PostNodeRequest struct {
+	ctx context.Context
+	ApiService *SlurmAPIService
+	nodeName string
+	v0044UpdateNodeMsg *V0044UpdateNodeMsg
+}
+
+// Node update description
+func (r ApiSlurmV0044PostNodeRequest) V0044UpdateNodeMsg(v0044UpdateNodeMsg V0044UpdateNodeMsg) ApiSlurmV0044PostNodeRequest {
+	r.v0044UpdateNodeMsg = &v0044UpdateNodeMsg
+	return r
+}
+
+func (r ApiSlurmV0044PostNodeRequest) Execute() (*V0044OpenapiResp, *http.Response, error) {
+	return r.ApiService.SlurmV0044PostNodeExecute(r)
+}
+
+/*
+SlurmV0044PostNode update node properties
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param nodeName Node name
- @return ApiSlurmV0041PostNodeRequest
+ @return ApiSlurmV0044PostNodeRequest
 */
-func (a *SlurmAPIService) SlurmV0041PostNode(ctx context.Context, nodeName string) ApiSlurmV0041PostNodeRequest {
-	return ApiSlurmV0041PostNodeRequest{
+func (a *SlurmAPIService) SlurmV0044PostNode(ctx context.Context, nodeName string) ApiSlurmV0044PostNodeRequest {
+	return ApiSlurmV0044PostNodeRequest{
 		ApiService: a,
 		ctx: ctx,
 		nodeName: nodeName,
@@ -8465,21 +3387,21 @@ func (a *SlurmAPIService) SlurmV0041PostNode(ctx context.Context, nodeName strin
 }
 
 // Execute executes the request
-//  @return V0041OpenapiResp
-func (a *SlurmAPIService) SlurmV0041PostNodeExecute(r ApiSlurmV0041PostNodeRequest) (*V0041OpenapiResp, *http.Response, error) {
+//  @return V0044OpenapiResp
+func (a *SlurmAPIService) SlurmV0044PostNodeExecute(r ApiSlurmV0044PostNodeRequest) (*V0044OpenapiResp, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *V0041OpenapiResp
+		localVarReturnValue  *V0044OpenapiResp
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0041PostNode")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0044PostNode")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/slurm/v0.0.41/node/{node_name}"
+	localVarPath := localBasePath + "/slurm/v0.0.44/node/{node_name}"
 	localVarPath = strings.Replace(localVarPath, "{"+"node_name"+"}", url.PathEscape(parameterValueToString(r.nodeName, "nodeName")), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -8487,7 +3409,7 @@ func (a *SlurmAPIService) SlurmV0041PostNodeExecute(r ApiSlurmV0041PostNodeReque
 	localVarFormParams := url.Values{}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/x-yaml", "application/json"}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -8496,7 +3418,7 @@ func (a *SlurmAPIService) SlurmV0041PostNodeExecute(r ApiSlurmV0041PostNodeReque
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -8504,7 +3426,7 @@ func (a *SlurmAPIService) SlurmV0041PostNodeExecute(r ApiSlurmV0041PostNodeReque
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.v0041UpdateNodeMsg
+	localVarPostBody = r.v0044UpdateNodeMsg
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -8555,7 +3477,7 @@ func (a *SlurmAPIService) SlurmV0041PostNodeExecute(r ApiSlurmV0041PostNodeReque
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v V0041OpenapiResp
+			var v V0044OpenapiResp
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -8578,64 +3500,58 @@ func (a *SlurmAPIService) SlurmV0041PostNodeExecute(r ApiSlurmV0041PostNodeReque
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiSlurmdbV0039AddClustersRequest struct {
+type ApiSlurmV0044PostNodesRequest struct {
 	ctx context.Context
 	ApiService *SlurmAPIService
-	dbv0039ClustersInfo *Dbv0039ClustersInfo
+	v0044UpdateNodeMsg *V0044UpdateNodeMsg
 }
 
-// Add or update clusters
-func (r ApiSlurmdbV0039AddClustersRequest) Dbv0039ClustersInfo(dbv0039ClustersInfo Dbv0039ClustersInfo) ApiSlurmdbV0039AddClustersRequest {
-	r.dbv0039ClustersInfo = &dbv0039ClustersInfo
+// Nodelist update description
+func (r ApiSlurmV0044PostNodesRequest) V0044UpdateNodeMsg(v0044UpdateNodeMsg V0044UpdateNodeMsg) ApiSlurmV0044PostNodesRequest {
+	r.v0044UpdateNodeMsg = &v0044UpdateNodeMsg
 	return r
 }
 
-func (r ApiSlurmdbV0039AddClustersRequest) Execute() (*Status, *http.Response, error) {
-	return r.ApiService.SlurmdbV0039AddClustersExecute(r)
+func (r ApiSlurmV0044PostNodesRequest) Execute() (*V0044OpenapiResp, *http.Response, error) {
+	return r.ApiService.SlurmV0044PostNodesExecute(r)
 }
 
 /*
-SlurmdbV0039AddClusters Add clusters
+SlurmV0044PostNodes batch update node(s)
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmdbV0039AddClustersRequest
-
-Deprecated
+ @return ApiSlurmV0044PostNodesRequest
 */
-func (a *SlurmAPIService) SlurmdbV0039AddClusters(ctx context.Context) ApiSlurmdbV0039AddClustersRequest {
-	return ApiSlurmdbV0039AddClustersRequest{
+func (a *SlurmAPIService) SlurmV0044PostNodes(ctx context.Context) ApiSlurmV0044PostNodesRequest {
+	return ApiSlurmV0044PostNodesRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
 }
 
 // Execute executes the request
-//  @return Status
-// Deprecated
-func (a *SlurmAPIService) SlurmdbV0039AddClustersExecute(r ApiSlurmdbV0039AddClustersRequest) (*Status, *http.Response, error) {
+//  @return V0044OpenapiResp
+func (a *SlurmAPIService) SlurmV0044PostNodesExecute(r ApiSlurmV0044PostNodesRequest) (*V0044OpenapiResp, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *Status
+		localVarReturnValue  *V0044OpenapiResp
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmdbV0039AddClusters")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0044PostNodes")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/slurmdb/v0.0.39/clusters"
+	localVarPath := localBasePath + "/slurm/v0.0.44/nodes/"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.dbv0039ClustersInfo == nil {
-		return localVarReturnValue, nil, reportError("dbv0039ClustersInfo is required and must be specified")
-	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/json", "application/x-yaml"}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -8644,7 +3560,7 @@ func (a *SlurmAPIService) SlurmdbV0039AddClustersExecute(r ApiSlurmdbV0039AddClu
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json", "application/x-yaml"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -8652,7 +3568,7 @@ func (a *SlurmAPIService) SlurmdbV0039AddClustersExecute(r ApiSlurmdbV0039AddClu
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.dbv0039ClustersInfo
+	localVarPostBody = r.v0044UpdateNodeMsg
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -8703,7 +3619,7 @@ func (a *SlurmAPIService) SlurmdbV0039AddClustersExecute(r ApiSlurmdbV0039AddClu
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v Status
+			var v V0044OpenapiResp
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -8726,61 +3642,58 @@ func (a *SlurmAPIService) SlurmdbV0039AddClustersExecute(r ApiSlurmdbV0039AddClu
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiSlurmdbV0039AddWckeysRequest struct {
+type ApiSlurmV0044PostReservationRequest struct {
 	ctx context.Context
 	ApiService *SlurmAPIService
-	dbv0039WckeyInfo *Dbv0039WckeyInfo
+	v0044ReservationDescMsg *V0044ReservationDescMsg
 }
 
-// add wckeys
-func (r ApiSlurmdbV0039AddWckeysRequest) Dbv0039WckeyInfo(dbv0039WckeyInfo Dbv0039WckeyInfo) ApiSlurmdbV0039AddWckeysRequest {
-	r.dbv0039WckeyInfo = &dbv0039WckeyInfo
+// reservation description
+func (r ApiSlurmV0044PostReservationRequest) V0044ReservationDescMsg(v0044ReservationDescMsg V0044ReservationDescMsg) ApiSlurmV0044PostReservationRequest {
+	r.v0044ReservationDescMsg = &v0044ReservationDescMsg
 	return r
 }
 
-func (r ApiSlurmdbV0039AddWckeysRequest) Execute() (*Status, *http.Response, error) {
-	return r.ApiService.SlurmdbV0039AddWckeysExecute(r)
+func (r ApiSlurmV0044PostReservationRequest) Execute() (*V0044OpenapiReservationModResp, *http.Response, error) {
+	return r.ApiService.SlurmV0044PostReservationExecute(r)
 }
 
 /*
-SlurmdbV0039AddWckeys Add wckeys
+SlurmV0044PostReservation create or update a reservation
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmdbV0039AddWckeysRequest
-
-Deprecated
+ @return ApiSlurmV0044PostReservationRequest
 */
-func (a *SlurmAPIService) SlurmdbV0039AddWckeys(ctx context.Context) ApiSlurmdbV0039AddWckeysRequest {
-	return ApiSlurmdbV0039AddWckeysRequest{
+func (a *SlurmAPIService) SlurmV0044PostReservation(ctx context.Context) ApiSlurmV0044PostReservationRequest {
+	return ApiSlurmV0044PostReservationRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
 }
 
 // Execute executes the request
-//  @return Status
-// Deprecated
-func (a *SlurmAPIService) SlurmdbV0039AddWckeysExecute(r ApiSlurmdbV0039AddWckeysRequest) (*Status, *http.Response, error) {
+//  @return V0044OpenapiReservationModResp
+func (a *SlurmAPIService) SlurmV0044PostReservationExecute(r ApiSlurmV0044PostReservationRequest) (*V0044OpenapiReservationModResp, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *Status
+		localVarReturnValue  *V0044OpenapiReservationModResp
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmdbV0039AddWckeys")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0044PostReservation")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/slurmdb/v0.0.39/wckeys"
+	localVarPath := localBasePath + "/slurm/v0.0.44/reservation"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/json", "application/x-yaml"}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -8789,7 +3702,7 @@ func (a *SlurmAPIService) SlurmdbV0039AddWckeysExecute(r ApiSlurmdbV0039AddWckey
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json", "application/x-yaml"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -8797,7 +3710,7 @@ func (a *SlurmAPIService) SlurmdbV0039AddWckeysExecute(r ApiSlurmdbV0039AddWckey
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.dbv0039WckeyInfo
+	localVarPostBody = r.v0044ReservationDescMsg
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -8848,7 +3761,7 @@ func (a *SlurmAPIService) SlurmdbV0039AddWckeysExecute(r ApiSlurmdbV0039AddWckey
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v Status
+			var v V0044OpenapiReservationModResp
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -8871,3867 +3784,58 @@ func (a *SlurmAPIService) SlurmdbV0039AddWckeysExecute(r ApiSlurmdbV0039AddWckey
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiSlurmdbV0039DeleteAccountRequest struct {
+type ApiSlurmV0044PostReservationsRequest struct {
 	ctx context.Context
 	ApiService *SlurmAPIService
-	accountName string
+	v0044ReservationModReq *V0044ReservationModReq
 }
 
-func (r ApiSlurmdbV0039DeleteAccountRequest) Execute() (*Status, *http.Response, error) {
-	return r.ApiService.SlurmdbV0039DeleteAccountExecute(r)
+// reservation descriptions
+func (r ApiSlurmV0044PostReservationsRequest) V0044ReservationModReq(v0044ReservationModReq V0044ReservationModReq) ApiSlurmV0044PostReservationsRequest {
+	r.v0044ReservationModReq = &v0044ReservationModReq
+	return r
+}
+
+func (r ApiSlurmV0044PostReservationsRequest) Execute() (*V0044OpenapiReservationModResp, *http.Response, error) {
+	return r.ApiService.SlurmV0044PostReservationsExecute(r)
 }
 
 /*
-SlurmdbV0039DeleteAccount Delete account
+SlurmV0044PostReservations create or update reservations
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param accountName Slurm Account Name
- @return ApiSlurmdbV0039DeleteAccountRequest
-
-Deprecated
+ @return ApiSlurmV0044PostReservationsRequest
 */
-func (a *SlurmAPIService) SlurmdbV0039DeleteAccount(ctx context.Context, accountName string) ApiSlurmdbV0039DeleteAccountRequest {
-	return ApiSlurmdbV0039DeleteAccountRequest{
-		ApiService: a,
-		ctx: ctx,
-		accountName: accountName,
-	}
-}
-
-// Execute executes the request
-//  @return Status
-// Deprecated
-func (a *SlurmAPIService) SlurmdbV0039DeleteAccountExecute(r ApiSlurmdbV0039DeleteAccountRequest) (*Status, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodDelete
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *Status
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmdbV0039DeleteAccount")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurmdb/v0.0.39/account/{account_name}"
-	localVarPath = strings.Replace(localVarPath, "{"+"account_name"+"}", url.PathEscape(parameterValueToString(r.accountName, "accountName")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json", "application/x-yaml"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v Status
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmdbV0039DeleteAssociationRequest struct {
-	ctx context.Context
-	ApiService *SlurmAPIService
-	cluster *string
-	account *string
-	user *string
-	partition *string
-}
-
-// Cluster name
-func (r ApiSlurmdbV0039DeleteAssociationRequest) Cluster(cluster string) ApiSlurmdbV0039DeleteAssociationRequest {
-	r.cluster = &cluster
-	return r
-}
-
-// Account name
-func (r ApiSlurmdbV0039DeleteAssociationRequest) Account(account string) ApiSlurmdbV0039DeleteAssociationRequest {
-	r.account = &account
-	return r
-}
-
-// User name
-func (r ApiSlurmdbV0039DeleteAssociationRequest) User(user string) ApiSlurmdbV0039DeleteAssociationRequest {
-	r.user = &user
-	return r
-}
-
-// Partition Name
-func (r ApiSlurmdbV0039DeleteAssociationRequest) Partition(partition string) ApiSlurmdbV0039DeleteAssociationRequest {
-	r.partition = &partition
-	return r
-}
-
-func (r ApiSlurmdbV0039DeleteAssociationRequest) Execute() (*Dbv0039ResponseAssociationsDelete, *http.Response, error) {
-	return r.ApiService.SlurmdbV0039DeleteAssociationExecute(r)
-}
-
-/*
-SlurmdbV0039DeleteAssociation Delete association
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmdbV0039DeleteAssociationRequest
-
-Deprecated
-*/
-func (a *SlurmAPIService) SlurmdbV0039DeleteAssociation(ctx context.Context) ApiSlurmdbV0039DeleteAssociationRequest {
-	return ApiSlurmdbV0039DeleteAssociationRequest{
+func (a *SlurmAPIService) SlurmV0044PostReservations(ctx context.Context) ApiSlurmV0044PostReservationsRequest {
+	return ApiSlurmV0044PostReservationsRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
 }
 
 // Execute executes the request
-//  @return Dbv0039ResponseAssociationsDelete
-// Deprecated
-func (a *SlurmAPIService) SlurmdbV0039DeleteAssociationExecute(r ApiSlurmdbV0039DeleteAssociationRequest) (*Dbv0039ResponseAssociationsDelete, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodDelete
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *Dbv0039ResponseAssociationsDelete
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmdbV0039DeleteAssociation")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurmdb/v0.0.39/association"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	if r.cluster != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cluster", r.cluster, "")
-	}
-	if r.account != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "account", r.account, "")
-	}
-	if r.user != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "user", r.user, "")
-	}
-	if r.partition != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "partition", r.partition, "")
-	}
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json", "application/x-yaml"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v Status
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmdbV0039DeleteAssociationsRequest struct {
-	ctx context.Context
-	ApiService *SlurmAPIService
-	cluster *string
-	account *string
-	user *string
-	partition *string
-}
-
-// Cluster name
-func (r ApiSlurmdbV0039DeleteAssociationsRequest) Cluster(cluster string) ApiSlurmdbV0039DeleteAssociationsRequest {
-	r.cluster = &cluster
-	return r
-}
-
-// Account name
-func (r ApiSlurmdbV0039DeleteAssociationsRequest) Account(account string) ApiSlurmdbV0039DeleteAssociationsRequest {
-	r.account = &account
-	return r
-}
-
-// User name
-func (r ApiSlurmdbV0039DeleteAssociationsRequest) User(user string) ApiSlurmdbV0039DeleteAssociationsRequest {
-	r.user = &user
-	return r
-}
-
-// Partition Name
-func (r ApiSlurmdbV0039DeleteAssociationsRequest) Partition(partition string) ApiSlurmdbV0039DeleteAssociationsRequest {
-	r.partition = &partition
-	return r
-}
-
-func (r ApiSlurmdbV0039DeleteAssociationsRequest) Execute() (*Dbv0039ResponseAssociationsDelete, *http.Response, error) {
-	return r.ApiService.SlurmdbV0039DeleteAssociationsExecute(r)
-}
-
-/*
-SlurmdbV0039DeleteAssociations Delete associations
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmdbV0039DeleteAssociationsRequest
-
-Deprecated
-*/
-func (a *SlurmAPIService) SlurmdbV0039DeleteAssociations(ctx context.Context) ApiSlurmdbV0039DeleteAssociationsRequest {
-	return ApiSlurmdbV0039DeleteAssociationsRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-// Execute executes the request
-//  @return Dbv0039ResponseAssociationsDelete
-// Deprecated
-func (a *SlurmAPIService) SlurmdbV0039DeleteAssociationsExecute(r ApiSlurmdbV0039DeleteAssociationsRequest) (*Dbv0039ResponseAssociationsDelete, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodDelete
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *Dbv0039ResponseAssociationsDelete
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmdbV0039DeleteAssociations")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurmdb/v0.0.39/associations"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	if r.cluster != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cluster", r.cluster, "")
-	}
-	if r.account != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "account", r.account, "")
-	}
-	if r.user != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "user", r.user, "")
-	}
-	if r.partition != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "partition", r.partition, "")
-	}
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json", "application/x-yaml"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v Status
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmdbV0039DeleteClusterRequest struct {
-	ctx context.Context
-	ApiService *SlurmAPIService
-	clusterName string
-}
-
-func (r ApiSlurmdbV0039DeleteClusterRequest) Execute() (*Status, *http.Response, error) {
-	return r.ApiService.SlurmdbV0039DeleteClusterExecute(r)
-}
-
-/*
-SlurmdbV0039DeleteCluster Delete cluster
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param clusterName Slurm cluster name
- @return ApiSlurmdbV0039DeleteClusterRequest
-
-Deprecated
-*/
-func (a *SlurmAPIService) SlurmdbV0039DeleteCluster(ctx context.Context, clusterName string) ApiSlurmdbV0039DeleteClusterRequest {
-	return ApiSlurmdbV0039DeleteClusterRequest{
-		ApiService: a,
-		ctx: ctx,
-		clusterName: clusterName,
-	}
-}
-
-// Execute executes the request
-//  @return Status
-// Deprecated
-func (a *SlurmAPIService) SlurmdbV0039DeleteClusterExecute(r ApiSlurmdbV0039DeleteClusterRequest) (*Status, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodDelete
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *Status
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmdbV0039DeleteCluster")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurmdb/v0.0.39/cluster/{cluster_name}"
-	localVarPath = strings.Replace(localVarPath, "{"+"cluster_name"+"}", url.PathEscape(parameterValueToString(r.clusterName, "clusterName")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json", "application/x-yaml"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v Status
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmdbV0039DeleteQosRequest struct {
-	ctx context.Context
-	ApiService *SlurmAPIService
-	qosName string
-}
-
-func (r ApiSlurmdbV0039DeleteQosRequest) Execute() (*Status, *http.Response, error) {
-	return r.ApiService.SlurmdbV0039DeleteQosExecute(r)
-}
-
-/*
-SlurmdbV0039DeleteQos Delete QOS
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param qosName Slurm QOS Name
- @return ApiSlurmdbV0039DeleteQosRequest
-
-Deprecated
-*/
-func (a *SlurmAPIService) SlurmdbV0039DeleteQos(ctx context.Context, qosName string) ApiSlurmdbV0039DeleteQosRequest {
-	return ApiSlurmdbV0039DeleteQosRequest{
-		ApiService: a,
-		ctx: ctx,
-		qosName: qosName,
-	}
-}
-
-// Execute executes the request
-//  @return Status
-// Deprecated
-func (a *SlurmAPIService) SlurmdbV0039DeleteQosExecute(r ApiSlurmdbV0039DeleteQosRequest) (*Status, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodDelete
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *Status
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmdbV0039DeleteQos")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurmdb/v0.0.39/qos/{qos_name}"
-	localVarPath = strings.Replace(localVarPath, "{"+"qos_name"+"}", url.PathEscape(parameterValueToString(r.qosName, "qosName")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json", "application/x-yaml"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v Status
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmdbV0039DeleteUserRequest struct {
-	ctx context.Context
-	ApiService *SlurmAPIService
-	userName string
-}
-
-func (r ApiSlurmdbV0039DeleteUserRequest) Execute() (*Status, *http.Response, error) {
-	return r.ApiService.SlurmdbV0039DeleteUserExecute(r)
-}
-
-/*
-SlurmdbV0039DeleteUser Delete user
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param userName Slurm User Name
- @return ApiSlurmdbV0039DeleteUserRequest
-
-Deprecated
-*/
-func (a *SlurmAPIService) SlurmdbV0039DeleteUser(ctx context.Context, userName string) ApiSlurmdbV0039DeleteUserRequest {
-	return ApiSlurmdbV0039DeleteUserRequest{
-		ApiService: a,
-		ctx: ctx,
-		userName: userName,
-	}
-}
-
-// Execute executes the request
-//  @return Status
-// Deprecated
-func (a *SlurmAPIService) SlurmdbV0039DeleteUserExecute(r ApiSlurmdbV0039DeleteUserRequest) (*Status, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodDelete
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *Status
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmdbV0039DeleteUser")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurmdb/v0.0.39/user/{user_name}"
-	localVarPath = strings.Replace(localVarPath, "{"+"user_name"+"}", url.PathEscape(parameterValueToString(r.userName, "userName")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json", "application/x-yaml"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v Status
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmdbV0039DeleteWckeyRequest struct {
-	ctx context.Context
-	ApiService *SlurmAPIService
-	wckey string
-}
-
-func (r ApiSlurmdbV0039DeleteWckeyRequest) Execute() (*Status, *http.Response, error) {
-	return r.ApiService.SlurmdbV0039DeleteWckeyExecute(r)
-}
-
-/*
-SlurmdbV0039DeleteWckey Delete wckey
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param wckey Slurm wckey name
- @return ApiSlurmdbV0039DeleteWckeyRequest
-
-Deprecated
-*/
-func (a *SlurmAPIService) SlurmdbV0039DeleteWckey(ctx context.Context, wckey string) ApiSlurmdbV0039DeleteWckeyRequest {
-	return ApiSlurmdbV0039DeleteWckeyRequest{
-		ApiService: a,
-		ctx: ctx,
-		wckey: wckey,
-	}
-}
-
-// Execute executes the request
-//  @return Status
-// Deprecated
-func (a *SlurmAPIService) SlurmdbV0039DeleteWckeyExecute(r ApiSlurmdbV0039DeleteWckeyRequest) (*Status, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodDelete
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *Status
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmdbV0039DeleteWckey")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurmdb/v0.0.39/wckey/{wckey}"
-	localVarPath = strings.Replace(localVarPath, "{"+"wckey"+"}", url.PathEscape(parameterValueToString(r.wckey, "wckey")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json", "application/x-yaml"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v Status
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmdbV0039DiagRequest struct {
-	ctx context.Context
-	ApiService *SlurmAPIService
-}
-
-func (r ApiSlurmdbV0039DiagRequest) Execute() (*Dbv0039Diag, *http.Response, error) {
-	return r.ApiService.SlurmdbV0039DiagExecute(r)
-}
-
-/*
-SlurmdbV0039Diag Get slurmdb diagnostics
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmdbV0039DiagRequest
-
-Deprecated
-*/
-func (a *SlurmAPIService) SlurmdbV0039Diag(ctx context.Context) ApiSlurmdbV0039DiagRequest {
-	return ApiSlurmdbV0039DiagRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-// Execute executes the request
-//  @return Dbv0039Diag
-// Deprecated
-func (a *SlurmAPIService) SlurmdbV0039DiagExecute(r ApiSlurmdbV0039DiagRequest) (*Dbv0039Diag, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *Dbv0039Diag
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmdbV0039Diag")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurmdb/v0.0.39/diag"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json", "application/x-yaml"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v Status
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmdbV0039GetAccountRequest struct {
-	ctx context.Context
-	ApiService *SlurmAPIService
-	accountName string
-	withDeleted *string
-}
-
-// Include deleted accounts. False by default.
-func (r ApiSlurmdbV0039GetAccountRequest) WithDeleted(withDeleted string) ApiSlurmdbV0039GetAccountRequest {
-	r.withDeleted = &withDeleted
-	return r
-}
-
-func (r ApiSlurmdbV0039GetAccountRequest) Execute() (*Dbv0039AccountInfo, *http.Response, error) {
-	return r.ApiService.SlurmdbV0039GetAccountExecute(r)
-}
-
-/*
-SlurmdbV0039GetAccount Get account info
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param accountName Slurm Account Name
- @return ApiSlurmdbV0039GetAccountRequest
-
-Deprecated
-*/
-func (a *SlurmAPIService) SlurmdbV0039GetAccount(ctx context.Context, accountName string) ApiSlurmdbV0039GetAccountRequest {
-	return ApiSlurmdbV0039GetAccountRequest{
-		ApiService: a,
-		ctx: ctx,
-		accountName: accountName,
-	}
-}
-
-// Execute executes the request
-//  @return Dbv0039AccountInfo
-// Deprecated
-func (a *SlurmAPIService) SlurmdbV0039GetAccountExecute(r ApiSlurmdbV0039GetAccountRequest) (*Dbv0039AccountInfo, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *Dbv0039AccountInfo
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmdbV0039GetAccount")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurmdb/v0.0.39/account/{account_name}"
-	localVarPath = strings.Replace(localVarPath, "{"+"account_name"+"}", url.PathEscape(parameterValueToString(r.accountName, "accountName")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	if r.withDeleted != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "with_deleted", r.withDeleted, "")
-	} else {
-		var defaultValue string = "false"
-		r.withDeleted = &defaultValue
-	}
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json", "application/x-yaml"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v Status
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmdbV0039GetAccountsRequest struct {
-	ctx context.Context
-	ApiService *SlurmAPIService
-	withDeleted *string
-}
-
-// Include deleted accounts. False by default.
-func (r ApiSlurmdbV0039GetAccountsRequest) WithDeleted(withDeleted string) ApiSlurmdbV0039GetAccountsRequest {
-	r.withDeleted = &withDeleted
-	return r
-}
-
-func (r ApiSlurmdbV0039GetAccountsRequest) Execute() (*Dbv0039AccountInfo, *http.Response, error) {
-	return r.ApiService.SlurmdbV0039GetAccountsExecute(r)
-}
-
-/*
-SlurmdbV0039GetAccounts Get account list
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmdbV0039GetAccountsRequest
-
-Deprecated
-*/
-func (a *SlurmAPIService) SlurmdbV0039GetAccounts(ctx context.Context) ApiSlurmdbV0039GetAccountsRequest {
-	return ApiSlurmdbV0039GetAccountsRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-// Execute executes the request
-//  @return Dbv0039AccountInfo
-// Deprecated
-func (a *SlurmAPIService) SlurmdbV0039GetAccountsExecute(r ApiSlurmdbV0039GetAccountsRequest) (*Dbv0039AccountInfo, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *Dbv0039AccountInfo
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmdbV0039GetAccounts")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurmdb/v0.0.39/accounts"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	if r.withDeleted != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "with_deleted", r.withDeleted, "")
-	} else {
-		var defaultValue string = "false"
-		r.withDeleted = &defaultValue
-	}
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json", "application/x-yaml"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v Status
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmdbV0039GetAssociationRequest struct {
-	ctx context.Context
-	ApiService *SlurmAPIService
-	cluster *string
-	account *string
-	user *string
-	partition *string
-}
-
-// Cluster name
-func (r ApiSlurmdbV0039GetAssociationRequest) Cluster(cluster string) ApiSlurmdbV0039GetAssociationRequest {
-	r.cluster = &cluster
-	return r
-}
-
-// Account name
-func (r ApiSlurmdbV0039GetAssociationRequest) Account(account string) ApiSlurmdbV0039GetAssociationRequest {
-	r.account = &account
-	return r
-}
-
-// User name
-func (r ApiSlurmdbV0039GetAssociationRequest) User(user string) ApiSlurmdbV0039GetAssociationRequest {
-	r.user = &user
-	return r
-}
-
-// Partition Name
-func (r ApiSlurmdbV0039GetAssociationRequest) Partition(partition string) ApiSlurmdbV0039GetAssociationRequest {
-	r.partition = &partition
-	return r
-}
-
-func (r ApiSlurmdbV0039GetAssociationRequest) Execute() (*Dbv0039AssociationsInfo, *http.Response, error) {
-	return r.ApiService.SlurmdbV0039GetAssociationExecute(r)
-}
-
-/*
-SlurmdbV0039GetAssociation Get association info
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmdbV0039GetAssociationRequest
-
-Deprecated
-*/
-func (a *SlurmAPIService) SlurmdbV0039GetAssociation(ctx context.Context) ApiSlurmdbV0039GetAssociationRequest {
-	return ApiSlurmdbV0039GetAssociationRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-// Execute executes the request
-//  @return Dbv0039AssociationsInfo
-// Deprecated
-func (a *SlurmAPIService) SlurmdbV0039GetAssociationExecute(r ApiSlurmdbV0039GetAssociationRequest) (*Dbv0039AssociationsInfo, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *Dbv0039AssociationsInfo
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmdbV0039GetAssociation")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurmdb/v0.0.39/association"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	if r.cluster != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cluster", r.cluster, "")
-	}
-	if r.account != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "account", r.account, "")
-	}
-	if r.user != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "user", r.user, "")
-	}
-	if r.partition != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "partition", r.partition, "")
-	}
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json", "application/x-yaml"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v Status
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmdbV0039GetAssociationsRequest struct {
-	ctx context.Context
-	ApiService *SlurmAPIService
-	cluster *string
-	account *string
-	user *string
-	partition *string
-}
-
-// Cluster name
-func (r ApiSlurmdbV0039GetAssociationsRequest) Cluster(cluster string) ApiSlurmdbV0039GetAssociationsRequest {
-	r.cluster = &cluster
-	return r
-}
-
-// Account name
-func (r ApiSlurmdbV0039GetAssociationsRequest) Account(account string) ApiSlurmdbV0039GetAssociationsRequest {
-	r.account = &account
-	return r
-}
-
-// User name
-func (r ApiSlurmdbV0039GetAssociationsRequest) User(user string) ApiSlurmdbV0039GetAssociationsRequest {
-	r.user = &user
-	return r
-}
-
-// Partition Name
-func (r ApiSlurmdbV0039GetAssociationsRequest) Partition(partition string) ApiSlurmdbV0039GetAssociationsRequest {
-	r.partition = &partition
-	return r
-}
-
-func (r ApiSlurmdbV0039GetAssociationsRequest) Execute() (*Dbv0039AssociationsInfo, *http.Response, error) {
-	return r.ApiService.SlurmdbV0039GetAssociationsExecute(r)
-}
-
-/*
-SlurmdbV0039GetAssociations Get association list
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmdbV0039GetAssociationsRequest
-
-Deprecated
-*/
-func (a *SlurmAPIService) SlurmdbV0039GetAssociations(ctx context.Context) ApiSlurmdbV0039GetAssociationsRequest {
-	return ApiSlurmdbV0039GetAssociationsRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-// Execute executes the request
-//  @return Dbv0039AssociationsInfo
-// Deprecated
-func (a *SlurmAPIService) SlurmdbV0039GetAssociationsExecute(r ApiSlurmdbV0039GetAssociationsRequest) (*Dbv0039AssociationsInfo, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *Dbv0039AssociationsInfo
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmdbV0039GetAssociations")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurmdb/v0.0.39/associations"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	if r.cluster != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cluster", r.cluster, "")
-	}
-	if r.account != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "account", r.account, "")
-	}
-	if r.user != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "user", r.user, "")
-	}
-	if r.partition != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "partition", r.partition, "")
-	}
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json", "application/x-yaml"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v Status
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmdbV0039GetClusterRequest struct {
-	ctx context.Context
-	ApiService *SlurmAPIService
-	clusterName string
-}
-
-func (r ApiSlurmdbV0039GetClusterRequest) Execute() (*Dbv0039ClustersInfo, *http.Response, error) {
-	return r.ApiService.SlurmdbV0039GetClusterExecute(r)
-}
-
-/*
-SlurmdbV0039GetCluster Get cluster info
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param clusterName Slurm cluster name
- @return ApiSlurmdbV0039GetClusterRequest
-
-Deprecated
-*/
-func (a *SlurmAPIService) SlurmdbV0039GetCluster(ctx context.Context, clusterName string) ApiSlurmdbV0039GetClusterRequest {
-	return ApiSlurmdbV0039GetClusterRequest{
-		ApiService: a,
-		ctx: ctx,
-		clusterName: clusterName,
-	}
-}
-
-// Execute executes the request
-//  @return Dbv0039ClustersInfo
-// Deprecated
-func (a *SlurmAPIService) SlurmdbV0039GetClusterExecute(r ApiSlurmdbV0039GetClusterRequest) (*Dbv0039ClustersInfo, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *Dbv0039ClustersInfo
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmdbV0039GetCluster")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurmdb/v0.0.39/cluster/{cluster_name}"
-	localVarPath = strings.Replace(localVarPath, "{"+"cluster_name"+"}", url.PathEscape(parameterValueToString(r.clusterName, "clusterName")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json", "application/x-yaml"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v Status
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmdbV0039GetClustersRequest struct {
-	ctx context.Context
-	ApiService *SlurmAPIService
-}
-
-func (r ApiSlurmdbV0039GetClustersRequest) Execute() (*Dbv0039ClustersInfo, *http.Response, error) {
-	return r.ApiService.SlurmdbV0039GetClustersExecute(r)
-}
-
-/*
-SlurmdbV0039GetClusters Get cluster list
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmdbV0039GetClustersRequest
-
-Deprecated
-*/
-func (a *SlurmAPIService) SlurmdbV0039GetClusters(ctx context.Context) ApiSlurmdbV0039GetClustersRequest {
-	return ApiSlurmdbV0039GetClustersRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-// Execute executes the request
-//  @return Dbv0039ClustersInfo
-// Deprecated
-func (a *SlurmAPIService) SlurmdbV0039GetClustersExecute(r ApiSlurmdbV0039GetClustersRequest) (*Dbv0039ClustersInfo, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *Dbv0039ClustersInfo
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmdbV0039GetClusters")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurmdb/v0.0.39/clusters"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json", "application/x-yaml"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v Status
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmdbV0039GetConfigRequest struct {
-	ctx context.Context
-	ApiService *SlurmAPIService
-}
-
-func (r ApiSlurmdbV0039GetConfigRequest) Execute() (*Dbv0039ConfigInfo, *http.Response, error) {
-	return r.ApiService.SlurmdbV0039GetConfigExecute(r)
-}
-
-/*
-SlurmdbV0039GetConfig Dump all configuration information
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmdbV0039GetConfigRequest
-
-Deprecated
-*/
-func (a *SlurmAPIService) SlurmdbV0039GetConfig(ctx context.Context) ApiSlurmdbV0039GetConfigRequest {
-	return ApiSlurmdbV0039GetConfigRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-// Execute executes the request
-//  @return Dbv0039ConfigInfo
-// Deprecated
-func (a *SlurmAPIService) SlurmdbV0039GetConfigExecute(r ApiSlurmdbV0039GetConfigRequest) (*Dbv0039ConfigInfo, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *Dbv0039ConfigInfo
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmdbV0039GetConfig")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurmdb/v0.0.39/config"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json", "application/x-yaml"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v Status
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmdbV0039GetJobRequest struct {
-	ctx context.Context
-	ApiService *SlurmAPIService
-	jobId string
-}
-
-func (r ApiSlurmdbV0039GetJobRequest) Execute() (*Dbv0039JobInfo, *http.Response, error) {
-	return r.ApiService.SlurmdbV0039GetJobExecute(r)
-}
-
-/*
-SlurmdbV0039GetJob Get job info
-
-This endpoint may return multiple job entries since job_id is not a unique key - only the tuple (cluster, job_id, start_time) is unique. If the requested job_id is a component of a heterogeneous job all components are returned.
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param jobId Slurm JobID
- @return ApiSlurmdbV0039GetJobRequest
-
-Deprecated
-*/
-func (a *SlurmAPIService) SlurmdbV0039GetJob(ctx context.Context, jobId string) ApiSlurmdbV0039GetJobRequest {
-	return ApiSlurmdbV0039GetJobRequest{
-		ApiService: a,
-		ctx: ctx,
-		jobId: jobId,
-	}
-}
-
-// Execute executes the request
-//  @return Dbv0039JobInfo
-// Deprecated
-func (a *SlurmAPIService) SlurmdbV0039GetJobExecute(r ApiSlurmdbV0039GetJobRequest) (*Dbv0039JobInfo, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *Dbv0039JobInfo
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmdbV0039GetJob")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurmdb/v0.0.39/job/{job_id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"job_id"+"}", url.PathEscape(parameterValueToString(r.jobId, "jobId")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json", "application/x-yaml"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v Status
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmdbV0039GetJobsRequest struct {
-	ctx context.Context
-	ApiService *SlurmAPIService
-	users *string
-	submitTime *string
-	startTime *string
-	endTime *string
-	account *string
-	association *string
-	cluster *string
-	constraints *string
-	cpusMax *string
-	cpusMin *string
-	skipSteps *string
-	disableWaitForResult *string
-	exitCode *string
-	format *string
-	group *string
-	jobName *string
-	nodesMax *string
-	nodesMin *string
-	partition *string
-	qos *string
-	reason *string
-	reservation *string
-	state *string
-	step *string
-	node *string
-	wckey *string
-}
-
-// Filter by comma delimited list of user names
-func (r ApiSlurmdbV0039GetJobsRequest) Users(users string) ApiSlurmdbV0039GetJobsRequest {
-	r.users = &users
-	return r
-}
-
-// Filter by submission time  Accepted formats:  HH:MM[:SS] [AM|PM]  MMDD[YY] or MM/DD[/YY] or MM.DD[.YY]  MM/DD[/YY]-HH:MM[:SS]  YYYY-MM-DD[THH:MM[:SS]]
-func (r ApiSlurmdbV0039GetJobsRequest) SubmitTime(submitTime string) ApiSlurmdbV0039GetJobsRequest {
-	r.submitTime = &submitTime
-	return r
-}
-
-// Filter by start time  Accepted formats:  HH:MM[:SS] [AM|PM]  MMDD[YY] or MM/DD[/YY] or MM.DD[.YY]  MM/DD[/YY]-HH:MM[:SS]  YYYY-MM-DD[THH:MM[:SS]]
-func (r ApiSlurmdbV0039GetJobsRequest) StartTime(startTime string) ApiSlurmdbV0039GetJobsRequest {
-	r.startTime = &startTime
-	return r
-}
-
-// Filter by end time  Accepted formats:  HH:MM[:SS] [AM|PM]  MMDD[YY] or MM/DD[/YY] or MM.DD[.YY]  MM/DD[/YY]-HH:MM[:SS]  YYYY-MM-DD[THH:MM[:SS]]
-func (r ApiSlurmdbV0039GetJobsRequest) EndTime(endTime string) ApiSlurmdbV0039GetJobsRequest {
-	r.endTime = &endTime
-	return r
-}
-
-// Comma delimited list of accounts to match
-func (r ApiSlurmdbV0039GetJobsRequest) Account(account string) ApiSlurmdbV0039GetJobsRequest {
-	r.account = &account
-	return r
-}
-
-// Comma delimited list of associations to match
-func (r ApiSlurmdbV0039GetJobsRequest) Association(association string) ApiSlurmdbV0039GetJobsRequest {
-	r.association = &association
-	return r
-}
-
-// Comma delimited list of cluster to match
-func (r ApiSlurmdbV0039GetJobsRequest) Cluster(cluster string) ApiSlurmdbV0039GetJobsRequest {
-	r.cluster = &cluster
-	return r
-}
-
-// Comma delimited list of constraints to match
-func (r ApiSlurmdbV0039GetJobsRequest) Constraints(constraints string) ApiSlurmdbV0039GetJobsRequest {
-	r.constraints = &constraints
-	return r
-}
-
-// Number of CPUs high range
-func (r ApiSlurmdbV0039GetJobsRequest) CpusMax(cpusMax string) ApiSlurmdbV0039GetJobsRequest {
-	r.cpusMax = &cpusMax
-	return r
-}
-
-// Number of CPUs low range
-func (r ApiSlurmdbV0039GetJobsRequest) CpusMin(cpusMin string) ApiSlurmdbV0039GetJobsRequest {
-	r.cpusMin = &cpusMin
-	return r
-}
-
-// Report job step information
-func (r ApiSlurmdbV0039GetJobsRequest) SkipSteps(skipSteps string) ApiSlurmdbV0039GetJobsRequest {
-	r.skipSteps = &skipSteps
-	return r
-}
-
-// Disable waiting for result from slurmdbd
-func (r ApiSlurmdbV0039GetJobsRequest) DisableWaitForResult(disableWaitForResult string) ApiSlurmdbV0039GetJobsRequest {
-	r.disableWaitForResult = &disableWaitForResult
-	return r
-}
-
-// Exit code of job
-func (r ApiSlurmdbV0039GetJobsRequest) ExitCode(exitCode string) ApiSlurmdbV0039GetJobsRequest {
-	r.exitCode = &exitCode
-	return r
-}
-
-// Comma delimited list of formats to match
-func (r ApiSlurmdbV0039GetJobsRequest) Format(format string) ApiSlurmdbV0039GetJobsRequest {
-	r.format = &format
-	return r
-}
-
-// Comma delimited list of groups to match
-func (r ApiSlurmdbV0039GetJobsRequest) Group(group string) ApiSlurmdbV0039GetJobsRequest {
-	r.group = &group
-	return r
-}
-
-// Comma delimited list of job names to match
-func (r ApiSlurmdbV0039GetJobsRequest) JobName(jobName string) ApiSlurmdbV0039GetJobsRequest {
-	r.jobName = &jobName
-	return r
-}
-
-// Number of nodes high range
-func (r ApiSlurmdbV0039GetJobsRequest) NodesMax(nodesMax string) ApiSlurmdbV0039GetJobsRequest {
-	r.nodesMax = &nodesMax
-	return r
-}
-
-// Number of nodes low range
-func (r ApiSlurmdbV0039GetJobsRequest) NodesMin(nodesMin string) ApiSlurmdbV0039GetJobsRequest {
-	r.nodesMin = &nodesMin
-	return r
-}
-
-// Comma delimited list of partitions to match
-func (r ApiSlurmdbV0039GetJobsRequest) Partition(partition string) ApiSlurmdbV0039GetJobsRequest {
-	r.partition = &partition
-	return r
-}
-
-// Comma delimited list of QOS to match
-func (r ApiSlurmdbV0039GetJobsRequest) Qos(qos string) ApiSlurmdbV0039GetJobsRequest {
-	r.qos = &qos
-	return r
-}
-
-// Comma delimited list of job reasons to match
-func (r ApiSlurmdbV0039GetJobsRequest) Reason(reason string) ApiSlurmdbV0039GetJobsRequest {
-	r.reason = &reason
-	return r
-}
-
-// Comma delimited list of reservations to match
-func (r ApiSlurmdbV0039GetJobsRequest) Reservation(reservation string) ApiSlurmdbV0039GetJobsRequest {
-	r.reservation = &reservation
-	return r
-}
-
-// Comma delimited list of states to match
-func (r ApiSlurmdbV0039GetJobsRequest) State(state string) ApiSlurmdbV0039GetJobsRequest {
-	r.state = &state
-	return r
-}
-
-// Comma delimited list of job steps to match
-func (r ApiSlurmdbV0039GetJobsRequest) Step(step string) ApiSlurmdbV0039GetJobsRequest {
-	r.step = &step
-	return r
-}
-
-// Comma delimited list of used nodes to match
-func (r ApiSlurmdbV0039GetJobsRequest) Node(node string) ApiSlurmdbV0039GetJobsRequest {
-	r.node = &node
-	return r
-}
-
-// Comma delimited list of wckeys to match
-func (r ApiSlurmdbV0039GetJobsRequest) Wckey(wckey string) ApiSlurmdbV0039GetJobsRequest {
-	r.wckey = &wckey
-	return r
-}
-
-func (r ApiSlurmdbV0039GetJobsRequest) Execute() (*Dbv0039JobInfo, *http.Response, error) {
-	return r.ApiService.SlurmdbV0039GetJobsExecute(r)
-}
-
-/*
-SlurmdbV0039GetJobs Get job list
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmdbV0039GetJobsRequest
-
-Deprecated
-*/
-func (a *SlurmAPIService) SlurmdbV0039GetJobs(ctx context.Context) ApiSlurmdbV0039GetJobsRequest {
-	return ApiSlurmdbV0039GetJobsRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-// Execute executes the request
-//  @return Dbv0039JobInfo
-// Deprecated
-func (a *SlurmAPIService) SlurmdbV0039GetJobsExecute(r ApiSlurmdbV0039GetJobsRequest) (*Dbv0039JobInfo, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *Dbv0039JobInfo
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmdbV0039GetJobs")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurmdb/v0.0.39/jobs"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	if r.users != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "users", r.users, "")
-	}
-	if r.submitTime != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "submit_time", r.submitTime, "")
-	}
-	if r.startTime != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "start_time", r.startTime, "")
-	}
-	if r.endTime != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "end_time", r.endTime, "")
-	}
-	if r.account != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "account", r.account, "")
-	}
-	if r.association != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "association", r.association, "")
-	}
-	if r.cluster != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cluster", r.cluster, "")
-	}
-	if r.constraints != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "constraints", r.constraints, "")
-	}
-	if r.cpusMax != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cpus_max", r.cpusMax, "")
-	}
-	if r.cpusMin != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cpus_min", r.cpusMin, "")
-	}
-	if r.skipSteps != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "skip_steps", r.skipSteps, "")
-	} else {
-		var defaultValue string = "false"
-		r.skipSteps = &defaultValue
-	}
-	if r.disableWaitForResult != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "disable_wait_for_result", r.disableWaitForResult, "")
-	} else {
-		var defaultValue string = "false"
-		r.disableWaitForResult = &defaultValue
-	}
-	if r.exitCode != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "exit_code", r.exitCode, "")
-	}
-	if r.format != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "format", r.format, "")
-	}
-	if r.group != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "group", r.group, "")
-	}
-	if r.jobName != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "job_name", r.jobName, "")
-	}
-	if r.nodesMax != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "nodes_max", r.nodesMax, "")
-	}
-	if r.nodesMin != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "nodes_min", r.nodesMin, "")
-	}
-	if r.partition != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "partition", r.partition, "")
-	}
-	if r.qos != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "qos", r.qos, "")
-	}
-	if r.reason != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "reason", r.reason, "")
-	}
-	if r.reservation != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "reservation", r.reservation, "")
-	}
-	if r.state != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "state", r.state, "")
-	}
-	if r.step != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "step", r.step, "")
-	}
-	if r.node != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "node", r.node, "")
-	}
-	if r.wckey != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "wckey", r.wckey, "")
-	}
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json", "application/x-yaml"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v Status
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmdbV0039GetQosRequest struct {
-	ctx context.Context
-	ApiService *SlurmAPIService
-	withDeleted *string
-}
-
-// Include deleted QOSs. False by default.
-func (r ApiSlurmdbV0039GetQosRequest) WithDeleted(withDeleted string) ApiSlurmdbV0039GetQosRequest {
-	r.withDeleted = &withDeleted
-	return r
-}
-
-func (r ApiSlurmdbV0039GetQosRequest) Execute() (*Dbv0039QosInfo, *http.Response, error) {
-	return r.ApiService.SlurmdbV0039GetQosExecute(r)
-}
-
-/*
-SlurmdbV0039GetQos Get QOS list
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmdbV0039GetQosRequest
-
-Deprecated
-*/
-func (a *SlurmAPIService) SlurmdbV0039GetQos(ctx context.Context) ApiSlurmdbV0039GetQosRequest {
-	return ApiSlurmdbV0039GetQosRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-// Execute executes the request
-//  @return Dbv0039QosInfo
-// Deprecated
-func (a *SlurmAPIService) SlurmdbV0039GetQosExecute(r ApiSlurmdbV0039GetQosRequest) (*Dbv0039QosInfo, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *Dbv0039QosInfo
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmdbV0039GetQos")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurmdb/v0.0.39/qos"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	if r.withDeleted != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "with_deleted", r.withDeleted, "")
-	} else {
-		var defaultValue string = "false"
-		r.withDeleted = &defaultValue
-	}
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json", "application/x-yaml"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v Status
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmdbV0039GetSingleQosRequest struct {
-	ctx context.Context
-	ApiService *SlurmAPIService
-	qosName string
-	withDeleted *string
-}
-
-// Include deleted QOSs. False by default.
-func (r ApiSlurmdbV0039GetSingleQosRequest) WithDeleted(withDeleted string) ApiSlurmdbV0039GetSingleQosRequest {
-	r.withDeleted = &withDeleted
-	return r
-}
-
-func (r ApiSlurmdbV0039GetSingleQosRequest) Execute() (*Dbv0039QosInfo, *http.Response, error) {
-	return r.ApiService.SlurmdbV0039GetSingleQosExecute(r)
-}
-
-/*
-SlurmdbV0039GetSingleQos Get QOS info
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param qosName Slurm QOS Name
- @return ApiSlurmdbV0039GetSingleQosRequest
-
-Deprecated
-*/
-func (a *SlurmAPIService) SlurmdbV0039GetSingleQos(ctx context.Context, qosName string) ApiSlurmdbV0039GetSingleQosRequest {
-	return ApiSlurmdbV0039GetSingleQosRequest{
-		ApiService: a,
-		ctx: ctx,
-		qosName: qosName,
-	}
-}
-
-// Execute executes the request
-//  @return Dbv0039QosInfo
-// Deprecated
-func (a *SlurmAPIService) SlurmdbV0039GetSingleQosExecute(r ApiSlurmdbV0039GetSingleQosRequest) (*Dbv0039QosInfo, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *Dbv0039QosInfo
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmdbV0039GetSingleQos")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurmdb/v0.0.39/qos/{qos_name}"
-	localVarPath = strings.Replace(localVarPath, "{"+"qos_name"+"}", url.PathEscape(parameterValueToString(r.qosName, "qosName")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	if r.withDeleted != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "with_deleted", r.withDeleted, "")
-	} else {
-		var defaultValue string = "false"
-		r.withDeleted = &defaultValue
-	}
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json", "application/x-yaml"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v Status
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmdbV0039GetTresRequest struct {
-	ctx context.Context
-	ApiService *SlurmAPIService
-}
-
-func (r ApiSlurmdbV0039GetTresRequest) Execute() (*Dbv0039TresInfo, *http.Response, error) {
-	return r.ApiService.SlurmdbV0039GetTresExecute(r)
-}
-
-/*
-SlurmdbV0039GetTres Get TRES info
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmdbV0039GetTresRequest
-
-Deprecated
-*/
-func (a *SlurmAPIService) SlurmdbV0039GetTres(ctx context.Context) ApiSlurmdbV0039GetTresRequest {
-	return ApiSlurmdbV0039GetTresRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-// Execute executes the request
-//  @return Dbv0039TresInfo
-// Deprecated
-func (a *SlurmAPIService) SlurmdbV0039GetTresExecute(r ApiSlurmdbV0039GetTresRequest) (*Dbv0039TresInfo, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *Dbv0039TresInfo
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmdbV0039GetTres")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurmdb/v0.0.39/tres"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json", "application/x-yaml"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmdbV0039GetUserRequest struct {
-	ctx context.Context
-	ApiService *SlurmAPIService
-	userName string
-	withDeleted *string
-}
-
-// Include deleted users. False by default.
-func (r ApiSlurmdbV0039GetUserRequest) WithDeleted(withDeleted string) ApiSlurmdbV0039GetUserRequest {
-	r.withDeleted = &withDeleted
-	return r
-}
-
-func (r ApiSlurmdbV0039GetUserRequest) Execute() (*Dbv0039UserInfo, *http.Response, error) {
-	return r.ApiService.SlurmdbV0039GetUserExecute(r)
-}
-
-/*
-SlurmdbV0039GetUser Get user info
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param userName Slurm User Name
- @return ApiSlurmdbV0039GetUserRequest
-
-Deprecated
-*/
-func (a *SlurmAPIService) SlurmdbV0039GetUser(ctx context.Context, userName string) ApiSlurmdbV0039GetUserRequest {
-	return ApiSlurmdbV0039GetUserRequest{
-		ApiService: a,
-		ctx: ctx,
-		userName: userName,
-	}
-}
-
-// Execute executes the request
-//  @return Dbv0039UserInfo
-// Deprecated
-func (a *SlurmAPIService) SlurmdbV0039GetUserExecute(r ApiSlurmdbV0039GetUserRequest) (*Dbv0039UserInfo, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *Dbv0039UserInfo
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmdbV0039GetUser")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurmdb/v0.0.39/user/{user_name}"
-	localVarPath = strings.Replace(localVarPath, "{"+"user_name"+"}", url.PathEscape(parameterValueToString(r.userName, "userName")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	if r.withDeleted != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "with_deleted", r.withDeleted, "")
-	} else {
-		var defaultValue string = "false"
-		r.withDeleted = &defaultValue
-	}
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json", "application/x-yaml"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v Status
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmdbV0039GetUsersRequest struct {
-	ctx context.Context
-	ApiService *SlurmAPIService
-	withDeleted *string
-}
-
-// Include deleted users. False by default.
-func (r ApiSlurmdbV0039GetUsersRequest) WithDeleted(withDeleted string) ApiSlurmdbV0039GetUsersRequest {
-	r.withDeleted = &withDeleted
-	return r
-}
-
-func (r ApiSlurmdbV0039GetUsersRequest) Execute() (*Dbv0039UserInfo, *http.Response, error) {
-	return r.ApiService.SlurmdbV0039GetUsersExecute(r)
-}
-
-/*
-SlurmdbV0039GetUsers Get user list
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmdbV0039GetUsersRequest
-
-Deprecated
-*/
-func (a *SlurmAPIService) SlurmdbV0039GetUsers(ctx context.Context) ApiSlurmdbV0039GetUsersRequest {
-	return ApiSlurmdbV0039GetUsersRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-// Execute executes the request
-//  @return Dbv0039UserInfo
-// Deprecated
-func (a *SlurmAPIService) SlurmdbV0039GetUsersExecute(r ApiSlurmdbV0039GetUsersRequest) (*Dbv0039UserInfo, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *Dbv0039UserInfo
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmdbV0039GetUsers")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurmdb/v0.0.39/users"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	if r.withDeleted != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "with_deleted", r.withDeleted, "")
-	} else {
-		var defaultValue string = "false"
-		r.withDeleted = &defaultValue
-	}
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json", "application/x-yaml"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v Status
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmdbV0039GetWckeyRequest struct {
-	ctx context.Context
-	ApiService *SlurmAPIService
-	wckey string
-}
-
-func (r ApiSlurmdbV0039GetWckeyRequest) Execute() (*Dbv0039WckeyInfo, *http.Response, error) {
-	return r.ApiService.SlurmdbV0039GetWckeyExecute(r)
-}
-
-/*
-SlurmdbV0039GetWckey Get wckey info
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param wckey Slurm wckey name
- @return ApiSlurmdbV0039GetWckeyRequest
-
-Deprecated
-*/
-func (a *SlurmAPIService) SlurmdbV0039GetWckey(ctx context.Context, wckey string) ApiSlurmdbV0039GetWckeyRequest {
-	return ApiSlurmdbV0039GetWckeyRequest{
-		ApiService: a,
-		ctx: ctx,
-		wckey: wckey,
-	}
-}
-
-// Execute executes the request
-//  @return Dbv0039WckeyInfo
-// Deprecated
-func (a *SlurmAPIService) SlurmdbV0039GetWckeyExecute(r ApiSlurmdbV0039GetWckeyRequest) (*Dbv0039WckeyInfo, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *Dbv0039WckeyInfo
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmdbV0039GetWckey")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurmdb/v0.0.39/wckey/{wckey}"
-	localVarPath = strings.Replace(localVarPath, "{"+"wckey"+"}", url.PathEscape(parameterValueToString(r.wckey, "wckey")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json", "application/x-yaml"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v Status
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmdbV0039GetWckeysRequest struct {
-	ctx context.Context
-	ApiService *SlurmAPIService
-}
-
-func (r ApiSlurmdbV0039GetWckeysRequest) Execute() (*Dbv0039WckeyInfo, *http.Response, error) {
-	return r.ApiService.SlurmdbV0039GetWckeysExecute(r)
-}
-
-/*
-SlurmdbV0039GetWckeys Get wckey list
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmdbV0039GetWckeysRequest
-
-Deprecated
-*/
-func (a *SlurmAPIService) SlurmdbV0039GetWckeys(ctx context.Context) ApiSlurmdbV0039GetWckeysRequest {
-	return ApiSlurmdbV0039GetWckeysRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-// Execute executes the request
-//  @return Dbv0039WckeyInfo
-// Deprecated
-func (a *SlurmAPIService) SlurmdbV0039GetWckeysExecute(r ApiSlurmdbV0039GetWckeysRequest) (*Dbv0039WckeyInfo, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *Dbv0039WckeyInfo
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmdbV0039GetWckeys")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurmdb/v0.0.39/wckeys"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json", "application/x-yaml"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v Status
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmdbV0039SetConfigRequest struct {
-	ctx context.Context
-	ApiService *SlurmAPIService
-	dbv0039SetConfig *Dbv0039SetConfig
-}
-
-// Add or update config
-func (r ApiSlurmdbV0039SetConfigRequest) Dbv0039SetConfig(dbv0039SetConfig Dbv0039SetConfig) ApiSlurmdbV0039SetConfigRequest {
-	r.dbv0039SetConfig = &dbv0039SetConfig
-	return r
-}
-
-func (r ApiSlurmdbV0039SetConfigRequest) Execute() (*Status, *http.Response, error) {
-	return r.ApiService.SlurmdbV0039SetConfigExecute(r)
-}
-
-/*
-SlurmdbV0039SetConfig Load all configuration information
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmdbV0039SetConfigRequest
-
-Deprecated
-*/
-func (a *SlurmAPIService) SlurmdbV0039SetConfig(ctx context.Context) ApiSlurmdbV0039SetConfigRequest {
-	return ApiSlurmdbV0039SetConfigRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-// Execute executes the request
-//  @return Status
-// Deprecated
-func (a *SlurmAPIService) SlurmdbV0039SetConfigExecute(r ApiSlurmdbV0039SetConfigRequest) (*Status, *http.Response, error) {
+//  @return V0044OpenapiReservationModResp
+func (a *SlurmAPIService) SlurmV0044PostReservationsExecute(r ApiSlurmV0044PostReservationsRequest) (*V0044OpenapiReservationModResp, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *Status
+		localVarReturnValue  *V0044OpenapiReservationModResp
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmdbV0039SetConfig")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmV0044PostReservations")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/slurmdb/v0.0.39/config"
+	localVarPath := localBasePath + "/slurm/v0.0.44/reservations/"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/json", "application/x-yaml"}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -12740,7 +3844,7 @@ func (a *SlurmAPIService) SlurmdbV0039SetConfigExecute(r ApiSlurmdbV0039SetConfi
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json", "application/x-yaml"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -12748,7 +3852,7 @@ func (a *SlurmAPIService) SlurmdbV0039SetConfigExecute(r ApiSlurmdbV0039SetConfi
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.dbv0039SetConfig
+	localVarPostBody = r.v0044ReservationModReq
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -12799,747 +3903,7 @@ func (a *SlurmAPIService) SlurmdbV0039SetConfigExecute(r ApiSlurmdbV0039SetConfi
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v Status
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmdbV0039UpdateAccountsRequest struct {
-	ctx context.Context
-	ApiService *SlurmAPIService
-	dbv0039AccountInfo *Dbv0039AccountInfo
-}
-
-// update/create accounts
-func (r ApiSlurmdbV0039UpdateAccountsRequest) Dbv0039AccountInfo(dbv0039AccountInfo Dbv0039AccountInfo) ApiSlurmdbV0039UpdateAccountsRequest {
-	r.dbv0039AccountInfo = &dbv0039AccountInfo
-	return r
-}
-
-func (r ApiSlurmdbV0039UpdateAccountsRequest) Execute() (*Status, *http.Response, error) {
-	return r.ApiService.SlurmdbV0039UpdateAccountsExecute(r)
-}
-
-/*
-SlurmdbV0039UpdateAccounts Update accounts
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmdbV0039UpdateAccountsRequest
-
-Deprecated
-*/
-func (a *SlurmAPIService) SlurmdbV0039UpdateAccounts(ctx context.Context) ApiSlurmdbV0039UpdateAccountsRequest {
-	return ApiSlurmdbV0039UpdateAccountsRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-// Execute executes the request
-//  @return Status
-// Deprecated
-func (a *SlurmAPIService) SlurmdbV0039UpdateAccountsExecute(r ApiSlurmdbV0039UpdateAccountsRequest) (*Status, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *Status
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmdbV0039UpdateAccounts")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurmdb/v0.0.39/accounts"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-	if r.dbv0039AccountInfo == nil {
-		return localVarReturnValue, nil, reportError("dbv0039AccountInfo is required and must be specified")
-	}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/json", "application/x-yaml"}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json", "application/x-yaml"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	// body params
-	localVarPostBody = r.dbv0039AccountInfo
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v Status
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmdbV0039UpdateAssociationsRequest struct {
-	ctx context.Context
-	ApiService *SlurmAPIService
-	dbv0039AssociationsInfo *Dbv0039AssociationsInfo
-}
-
-// Add or update associations
-func (r ApiSlurmdbV0039UpdateAssociationsRequest) Dbv0039AssociationsInfo(dbv0039AssociationsInfo Dbv0039AssociationsInfo) ApiSlurmdbV0039UpdateAssociationsRequest {
-	r.dbv0039AssociationsInfo = &dbv0039AssociationsInfo
-	return r
-}
-
-func (r ApiSlurmdbV0039UpdateAssociationsRequest) Execute() (*Status, *http.Response, error) {
-	return r.ApiService.SlurmdbV0039UpdateAssociationsExecute(r)
-}
-
-/*
-SlurmdbV0039UpdateAssociations Set associations info
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmdbV0039UpdateAssociationsRequest
-
-Deprecated
-*/
-func (a *SlurmAPIService) SlurmdbV0039UpdateAssociations(ctx context.Context) ApiSlurmdbV0039UpdateAssociationsRequest {
-	return ApiSlurmdbV0039UpdateAssociationsRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-// Execute executes the request
-//  @return Status
-// Deprecated
-func (a *SlurmAPIService) SlurmdbV0039UpdateAssociationsExecute(r ApiSlurmdbV0039UpdateAssociationsRequest) (*Status, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *Status
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmdbV0039UpdateAssociations")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurmdb/v0.0.39/associations"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-	if r.dbv0039AssociationsInfo == nil {
-		return localVarReturnValue, nil, reportError("dbv0039AssociationsInfo is required and must be specified")
-	}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/json", "application/x-yaml"}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json", "application/x-yaml"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	// body params
-	localVarPostBody = r.dbv0039AssociationsInfo
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v Status
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmdbV0039UpdateQosRequest struct {
-	ctx context.Context
-	ApiService *SlurmAPIService
-	dbv0039UpdateQos *Dbv0039UpdateQos
-}
-
-// Add or update QOSs
-func (r ApiSlurmdbV0039UpdateQosRequest) Dbv0039UpdateQos(dbv0039UpdateQos Dbv0039UpdateQos) ApiSlurmdbV0039UpdateQosRequest {
-	r.dbv0039UpdateQos = &dbv0039UpdateQos
-	return r
-}
-
-func (r ApiSlurmdbV0039UpdateQosRequest) Execute() (*Status, *http.Response, error) {
-	return r.ApiService.SlurmdbV0039UpdateQosExecute(r)
-}
-
-/*
-SlurmdbV0039UpdateQos Set QOS info
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmdbV0039UpdateQosRequest
-
-Deprecated
-*/
-func (a *SlurmAPIService) SlurmdbV0039UpdateQos(ctx context.Context) ApiSlurmdbV0039UpdateQosRequest {
-	return ApiSlurmdbV0039UpdateQosRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-// Execute executes the request
-//  @return Status
-// Deprecated
-func (a *SlurmAPIService) SlurmdbV0039UpdateQosExecute(r ApiSlurmdbV0039UpdateQosRequest) (*Status, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *Status
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmdbV0039UpdateQos")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurmdb/v0.0.39/qos"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-	if r.dbv0039UpdateQos == nil {
-		return localVarReturnValue, nil, reportError("dbv0039UpdateQos is required and must be specified")
-	}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/json", "application/x-yaml"}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json", "application/x-yaml"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	// body params
-	localVarPostBody = r.dbv0039UpdateQos
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v Status
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmdbV0039UpdateTresRequest struct {
-	ctx context.Context
-	ApiService *SlurmAPIService
-	dbv0039TresUpdate *Dbv0039TresUpdate
-}
-
-// Add or Update TRES
-func (r ApiSlurmdbV0039UpdateTresRequest) Dbv0039TresUpdate(dbv0039TresUpdate Dbv0039TresUpdate) ApiSlurmdbV0039UpdateTresRequest {
-	r.dbv0039TresUpdate = &dbv0039TresUpdate
-	return r
-}
-
-func (r ApiSlurmdbV0039UpdateTresRequest) Execute() (*Status, *http.Response, error) {
-	return r.ApiService.SlurmdbV0039UpdateTresExecute(r)
-}
-
-/*
-SlurmdbV0039UpdateTres Set TRES info
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmdbV0039UpdateTresRequest
-
-Deprecated
-*/
-func (a *SlurmAPIService) SlurmdbV0039UpdateTres(ctx context.Context) ApiSlurmdbV0039UpdateTresRequest {
-	return ApiSlurmdbV0039UpdateTresRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-// Execute executes the request
-//  @return Status
-// Deprecated
-func (a *SlurmAPIService) SlurmdbV0039UpdateTresExecute(r ApiSlurmdbV0039UpdateTresRequest) (*Status, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *Status
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmdbV0039UpdateTres")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurmdb/v0.0.39/tres"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-	if r.dbv0039TresUpdate == nil {
-		return localVarReturnValue, nil, reportError("dbv0039TresUpdate is required and must be specified")
-	}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/json", "application/x-yaml"}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json", "application/x-yaml"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	// body params
-	localVarPostBody = r.dbv0039TresUpdate
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v Status
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmdbV0039UpdateUsersRequest struct {
-	ctx context.Context
-	ApiService *SlurmAPIService
-	dbv0039UpdateUsers *Dbv0039UpdateUsers
-}
-
-// add or update user
-func (r ApiSlurmdbV0039UpdateUsersRequest) Dbv0039UpdateUsers(dbv0039UpdateUsers Dbv0039UpdateUsers) ApiSlurmdbV0039UpdateUsersRequest {
-	r.dbv0039UpdateUsers = &dbv0039UpdateUsers
-	return r
-}
-
-func (r ApiSlurmdbV0039UpdateUsersRequest) Execute() (*Status, *http.Response, error) {
-	return r.ApiService.SlurmdbV0039UpdateUsersExecute(r)
-}
-
-/*
-SlurmdbV0039UpdateUsers Update user
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmdbV0039UpdateUsersRequest
-
-Deprecated
-*/
-func (a *SlurmAPIService) SlurmdbV0039UpdateUsers(ctx context.Context) ApiSlurmdbV0039UpdateUsersRequest {
-	return ApiSlurmdbV0039UpdateUsersRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-// Execute executes the request
-//  @return Status
-// Deprecated
-func (a *SlurmAPIService) SlurmdbV0039UpdateUsersExecute(r ApiSlurmdbV0039UpdateUsersRequest) (*Status, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *Status
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmAPIService.SlurmdbV0039UpdateUsers")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurmdb/v0.0.39/users"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-	if r.dbv0039UpdateUsers == nil {
-		return localVarReturnValue, nil, reportError("dbv0039UpdateUsers is required and must be specified")
-	}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/json", "application/x-yaml"}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json", "application/x-yaml"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	// body params
-	localVarPostBody = r.dbv0039UpdateUsers
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v Status
+			var v V0044OpenapiReservationModResp
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()

@@ -3,7 +3,7 @@ Slurm REST API
 
 API to access and control Slurm
 
-API version: Slurm-24.05.2&openapi/dbv0.0.39&openapi/v0.0.39&openapi/slurmdbd&openapi/slurmctld
+API version: Slurm-25.11.3
 Contact: sales@schedmd.com
 */
 
@@ -24,25 +24,25 @@ import (
 // SlurmdbAPIService SlurmdbAPI service
 type SlurmdbAPIService service
 
-type ApiSlurmdbV0040DeleteAccountRequest struct {
+type ApiSlurmdbV0044DeleteAccountRequest struct {
 	ctx context.Context
 	ApiService *SlurmdbAPIService
 	accountName string
 }
 
-func (r ApiSlurmdbV0040DeleteAccountRequest) Execute() (*V0040OpenapiAccountsRemovedResp, *http.Response, error) {
-	return r.ApiService.SlurmdbV0040DeleteAccountExecute(r)
+func (r ApiSlurmdbV0044DeleteAccountRequest) Execute() (*V0044OpenapiAccountsRemovedResp, *http.Response, error) {
+	return r.ApiService.SlurmdbV0044DeleteAccountExecute(r)
 }
 
 /*
-SlurmdbV0040DeleteAccount Delete account
+SlurmdbV0044DeleteAccount Delete account
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param accountName Account name
- @return ApiSlurmdbV0040DeleteAccountRequest
+ @return ApiSlurmdbV0044DeleteAccountRequest
 */
-func (a *SlurmdbAPIService) SlurmdbV0040DeleteAccount(ctx context.Context, accountName string) ApiSlurmdbV0040DeleteAccountRequest {
-	return ApiSlurmdbV0040DeleteAccountRequest{
+func (a *SlurmdbAPIService) SlurmdbV0044DeleteAccount(ctx context.Context, accountName string) ApiSlurmdbV0044DeleteAccountRequest {
+	return ApiSlurmdbV0044DeleteAccountRequest{
 		ApiService: a,
 		ctx: ctx,
 		accountName: accountName,
@@ -50,21 +50,21 @@ func (a *SlurmdbAPIService) SlurmdbV0040DeleteAccount(ctx context.Context, accou
 }
 
 // Execute executes the request
-//  @return V0040OpenapiAccountsRemovedResp
-func (a *SlurmdbAPIService) SlurmdbV0040DeleteAccountExecute(r ApiSlurmdbV0040DeleteAccountRequest) (*V0040OpenapiAccountsRemovedResp, *http.Response, error) {
+//  @return V0044OpenapiAccountsRemovedResp
+func (a *SlurmdbAPIService) SlurmdbV0044DeleteAccountExecute(r ApiSlurmdbV0044DeleteAccountRequest) (*V0044OpenapiAccountsRemovedResp, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *V0040OpenapiAccountsRemovedResp
+		localVarReturnValue  *V0044OpenapiAccountsRemovedResp
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0040DeleteAccount")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0044DeleteAccount")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/slurmdb/v0.0.40/account/{account_name}"
+	localVarPath := localBasePath + "/slurmdb/v0.0.44/account/{account_name}"
 	localVarPath = strings.Replace(localVarPath, "{"+"account_name"+"}", url.PathEscape(parameterValueToString(r.accountName, "accountName")), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -81,7 +81,7 @@ func (a *SlurmdbAPIService) SlurmdbV0040DeleteAccountExecute(r ApiSlurmdbV0040De
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -138,7 +138,7 @@ func (a *SlurmdbAPIService) SlurmdbV0040DeleteAccountExecute(r ApiSlurmdbV0040De
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v V0040OpenapiAccountsRemovedResp
+			var v V0044OpenapiAccountsRemovedResp
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -161,170 +161,164 @@ func (a *SlurmdbAPIService) SlurmdbV0040DeleteAccountExecute(r ApiSlurmdbV0040De
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiSlurmdbV0040DeleteAssociationRequest struct {
+type ApiSlurmdbV0044DeleteAssociationRequest struct {
 	ctx context.Context
 	ApiService *SlurmdbAPIService
 	account *string
 	cluster *string
 	defaultQos *string
+	includeDeletedAssociations *string
+	includeUsage *string
+	filterToOnlyDefaults *string
+	includeTheRawQOSOrDeltaQos *string
+	includeSubAcctInformation *string
+	excludeParentIdName *string
+	excludeLimitsFromParents *string
 	format *string
 	id *string
-	onlyDefaults *string
 	parentAccount *string
 	partition *string
 	qos *string
 	usageEnd *string
 	usageStart *string
 	user *string
-	withUsage *string
-	withDeleted *string
-	withRawQos *string
-	withSubAccts *string
-	withoutParentInfo *string
-	withoutParentLimits *string
 }
 
 // CSV accounts list
-func (r ApiSlurmdbV0040DeleteAssociationRequest) Account(account string) ApiSlurmdbV0040DeleteAssociationRequest {
+func (r ApiSlurmdbV0044DeleteAssociationRequest) Account(account string) ApiSlurmdbV0044DeleteAssociationRequest {
 	r.account = &account
 	return r
 }
 
 // CSV clusters list
-func (r ApiSlurmdbV0040DeleteAssociationRequest) Cluster(cluster string) ApiSlurmdbV0040DeleteAssociationRequest {
+func (r ApiSlurmdbV0044DeleteAssociationRequest) Cluster(cluster string) ApiSlurmdbV0044DeleteAssociationRequest {
 	r.cluster = &cluster
 	return r
 }
 
 // CSV QOS list
-func (r ApiSlurmdbV0040DeleteAssociationRequest) DefaultQos(defaultQos string) ApiSlurmdbV0040DeleteAssociationRequest {
+func (r ApiSlurmdbV0044DeleteAssociationRequest) DefaultQos(defaultQos string) ApiSlurmdbV0044DeleteAssociationRequest {
 	r.defaultQos = &defaultQos
 	return r
 }
 
-// CSV format list
-func (r ApiSlurmdbV0040DeleteAssociationRequest) Format(format string) ApiSlurmdbV0040DeleteAssociationRequest {
+func (r ApiSlurmdbV0044DeleteAssociationRequest) IncludeDeletedAssociations(includeDeletedAssociations string) ApiSlurmdbV0044DeleteAssociationRequest {
+	r.includeDeletedAssociations = &includeDeletedAssociations
+	return r
+}
+
+func (r ApiSlurmdbV0044DeleteAssociationRequest) IncludeUsage(includeUsage string) ApiSlurmdbV0044DeleteAssociationRequest {
+	r.includeUsage = &includeUsage
+	return r
+}
+
+func (r ApiSlurmdbV0044DeleteAssociationRequest) FilterToOnlyDefaults(filterToOnlyDefaults string) ApiSlurmdbV0044DeleteAssociationRequest {
+	r.filterToOnlyDefaults = &filterToOnlyDefaults
+	return r
+}
+
+func (r ApiSlurmdbV0044DeleteAssociationRequest) IncludeTheRawQOSOrDeltaQos(includeTheRawQOSOrDeltaQos string) ApiSlurmdbV0044DeleteAssociationRequest {
+	r.includeTheRawQOSOrDeltaQos = &includeTheRawQOSOrDeltaQos
+	return r
+}
+
+func (r ApiSlurmdbV0044DeleteAssociationRequest) IncludeSubAcctInformation(includeSubAcctInformation string) ApiSlurmdbV0044DeleteAssociationRequest {
+	r.includeSubAcctInformation = &includeSubAcctInformation
+	return r
+}
+
+func (r ApiSlurmdbV0044DeleteAssociationRequest) ExcludeParentIdName(excludeParentIdName string) ApiSlurmdbV0044DeleteAssociationRequest {
+	r.excludeParentIdName = &excludeParentIdName
+	return r
+}
+
+func (r ApiSlurmdbV0044DeleteAssociationRequest) ExcludeLimitsFromParents(excludeLimitsFromParents string) ApiSlurmdbV0044DeleteAssociationRequest {
+	r.excludeLimitsFromParents = &excludeLimitsFromParents
+	return r
+}
+
+// Ignored; process JSON manually to control output format
+// Deprecated
+func (r ApiSlurmdbV0044DeleteAssociationRequest) Format(format string) ApiSlurmdbV0044DeleteAssociationRequest {
 	r.format = &format
 	return r
 }
 
-// CSV id list
-func (r ApiSlurmdbV0040DeleteAssociationRequest) Id(id string) ApiSlurmdbV0040DeleteAssociationRequest {
+// CSV ID list
+func (r ApiSlurmdbV0044DeleteAssociationRequest) Id(id string) ApiSlurmdbV0044DeleteAssociationRequest {
 	r.id = &id
 	return r
 }
 
-// filter to only defaults
-func (r ApiSlurmdbV0040DeleteAssociationRequest) OnlyDefaults(onlyDefaults string) ApiSlurmdbV0040DeleteAssociationRequest {
-	r.onlyDefaults = &onlyDefaults
-	return r
-}
-
 // CSV names of parent account
-func (r ApiSlurmdbV0040DeleteAssociationRequest) ParentAccount(parentAccount string) ApiSlurmdbV0040DeleteAssociationRequest {
+func (r ApiSlurmdbV0044DeleteAssociationRequest) ParentAccount(parentAccount string) ApiSlurmdbV0044DeleteAssociationRequest {
 	r.parentAccount = &parentAccount
 	return r
 }
 
 // CSV partition name list
-func (r ApiSlurmdbV0040DeleteAssociationRequest) Partition(partition string) ApiSlurmdbV0040DeleteAssociationRequest {
+func (r ApiSlurmdbV0044DeleteAssociationRequest) Partition(partition string) ApiSlurmdbV0044DeleteAssociationRequest {
 	r.partition = &partition
 	return r
 }
 
 // CSV QOS list
-func (r ApiSlurmdbV0040DeleteAssociationRequest) Qos(qos string) ApiSlurmdbV0040DeleteAssociationRequest {
+func (r ApiSlurmdbV0044DeleteAssociationRequest) Qos(qos string) ApiSlurmdbV0044DeleteAssociationRequest {
 	r.qos = &qos
 	return r
 }
 
-// usage end UNIX timestamp
-func (r ApiSlurmdbV0040DeleteAssociationRequest) UsageEnd(usageEnd string) ApiSlurmdbV0040DeleteAssociationRequest {
+// Usage end (UNIX timestamp)
+func (r ApiSlurmdbV0044DeleteAssociationRequest) UsageEnd(usageEnd string) ApiSlurmdbV0044DeleteAssociationRequest {
 	r.usageEnd = &usageEnd
 	return r
 }
 
-// usage start UNIX timestamp
-func (r ApiSlurmdbV0040DeleteAssociationRequest) UsageStart(usageStart string) ApiSlurmdbV0040DeleteAssociationRequest {
+// Usage start (UNIX timestamp)
+func (r ApiSlurmdbV0044DeleteAssociationRequest) UsageStart(usageStart string) ApiSlurmdbV0044DeleteAssociationRequest {
 	r.usageStart = &usageStart
 	return r
 }
 
 // CSV user list
-func (r ApiSlurmdbV0040DeleteAssociationRequest) User(user string) ApiSlurmdbV0040DeleteAssociationRequest {
+func (r ApiSlurmdbV0044DeleteAssociationRequest) User(user string) ApiSlurmdbV0044DeleteAssociationRequest {
 	r.user = &user
 	return r
 }
 
-// fill in usage
-func (r ApiSlurmdbV0040DeleteAssociationRequest) WithUsage(withUsage string) ApiSlurmdbV0040DeleteAssociationRequest {
-	r.withUsage = &withUsage
-	return r
-}
-
-// return deleted associations
-func (r ApiSlurmdbV0040DeleteAssociationRequest) WithDeleted(withDeleted string) ApiSlurmdbV0040DeleteAssociationRequest {
-	r.withDeleted = &withDeleted
-	return r
-}
-
-// return a raw qos or delta_qos
-func (r ApiSlurmdbV0040DeleteAssociationRequest) WithRawQos(withRawQos string) ApiSlurmdbV0040DeleteAssociationRequest {
-	r.withRawQos = &withRawQos
-	return r
-}
-
-// return sub acct information also
-func (r ApiSlurmdbV0040DeleteAssociationRequest) WithSubAccts(withSubAccts string) ApiSlurmdbV0040DeleteAssociationRequest {
-	r.withSubAccts = &withSubAccts
-	return r
-}
-
-// don&#39;t give me parent id/name
-func (r ApiSlurmdbV0040DeleteAssociationRequest) WithoutParentInfo(withoutParentInfo string) ApiSlurmdbV0040DeleteAssociationRequest {
-	r.withoutParentInfo = &withoutParentInfo
-	return r
-}
-
-// don&#39;t give me limits from parents
-func (r ApiSlurmdbV0040DeleteAssociationRequest) WithoutParentLimits(withoutParentLimits string) ApiSlurmdbV0040DeleteAssociationRequest {
-	r.withoutParentLimits = &withoutParentLimits
-	return r
-}
-
-func (r ApiSlurmdbV0040DeleteAssociationRequest) Execute() (*V0040OpenapiAssocsRemovedResp, *http.Response, error) {
-	return r.ApiService.SlurmdbV0040DeleteAssociationExecute(r)
+func (r ApiSlurmdbV0044DeleteAssociationRequest) Execute() (*V0044OpenapiAssocsRemovedResp, *http.Response, error) {
+	return r.ApiService.SlurmdbV0044DeleteAssociationExecute(r)
 }
 
 /*
-SlurmdbV0040DeleteAssociation Delete association
+SlurmdbV0044DeleteAssociation Delete association
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmdbV0040DeleteAssociationRequest
+ @return ApiSlurmdbV0044DeleteAssociationRequest
 */
-func (a *SlurmdbAPIService) SlurmdbV0040DeleteAssociation(ctx context.Context) ApiSlurmdbV0040DeleteAssociationRequest {
-	return ApiSlurmdbV0040DeleteAssociationRequest{
+func (a *SlurmdbAPIService) SlurmdbV0044DeleteAssociation(ctx context.Context) ApiSlurmdbV0044DeleteAssociationRequest {
+	return ApiSlurmdbV0044DeleteAssociationRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
 }
 
 // Execute executes the request
-//  @return V0040OpenapiAssocsRemovedResp
-func (a *SlurmdbAPIService) SlurmdbV0040DeleteAssociationExecute(r ApiSlurmdbV0040DeleteAssociationRequest) (*V0040OpenapiAssocsRemovedResp, *http.Response, error) {
+//  @return V0044OpenapiAssocsRemovedResp
+func (a *SlurmdbAPIService) SlurmdbV0044DeleteAssociationExecute(r ApiSlurmdbV0044DeleteAssociationRequest) (*V0044OpenapiAssocsRemovedResp, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *V0040OpenapiAssocsRemovedResp
+		localVarReturnValue  *V0044OpenapiAssocsRemovedResp
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0040DeleteAssociation")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0044DeleteAssociation")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/slurmdb/v0.0.40/association/"
+	localVarPath := localBasePath + "/slurmdb/v0.0.44/association/"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -339,14 +333,32 @@ func (a *SlurmdbAPIService) SlurmdbV0040DeleteAssociationExecute(r ApiSlurmdbV00
 	if r.defaultQos != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "default_qos", r.defaultQos, "")
 	}
+	if r.includeDeletedAssociations != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "Include deleted associations", r.includeDeletedAssociations, "")
+	}
+	if r.includeUsage != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "Include usage", r.includeUsage, "")
+	}
+	if r.filterToOnlyDefaults != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "Filter to only defaults", r.filterToOnlyDefaults, "")
+	}
+	if r.includeTheRawQOSOrDeltaQos != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "Include the raw QOS or delta_qos", r.includeTheRawQOSOrDeltaQos, "")
+	}
+	if r.includeSubAcctInformation != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "Include sub acct information", r.includeSubAcctInformation, "")
+	}
+	if r.excludeParentIdName != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "Exclude parent id/name", r.excludeParentIdName, "")
+	}
+	if r.excludeLimitsFromParents != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "Exclude limits from parents", r.excludeLimitsFromParents, "")
+	}
 	if r.format != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "format", r.format, "")
 	}
 	if r.id != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "id", r.id, "")
-	}
-	if r.onlyDefaults != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "only_defaults", r.onlyDefaults, "")
 	}
 	if r.parentAccount != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "parent_account", r.parentAccount, "")
@@ -366,24 +378,6 @@ func (a *SlurmdbAPIService) SlurmdbV0040DeleteAssociationExecute(r ApiSlurmdbV00
 	if r.user != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "user", r.user, "")
 	}
-	if r.withUsage != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "with_usage", r.withUsage, "")
-	}
-	if r.withDeleted != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "with_deleted", r.withDeleted, "")
-	}
-	if r.withRawQos != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "with_raw_qos", r.withRawQos, "")
-	}
-	if r.withSubAccts != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "with_sub_accts", r.withSubAccts, "")
-	}
-	if r.withoutParentInfo != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "without_parent_info", r.withoutParentInfo, "")
-	}
-	if r.withoutParentLimits != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "without_parent_limits", r.withoutParentLimits, "")
-	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -394,7 +388,7 @@ func (a *SlurmdbAPIService) SlurmdbV0040DeleteAssociationExecute(r ApiSlurmdbV00
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -451,7 +445,7 @@ func (a *SlurmdbAPIService) SlurmdbV0040DeleteAssociationExecute(r ApiSlurmdbV00
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v V0040OpenapiAssocsRemovedResp
+			var v V0044OpenapiAssocsRemovedResp
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -474,170 +468,164 @@ func (a *SlurmdbAPIService) SlurmdbV0040DeleteAssociationExecute(r ApiSlurmdbV00
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiSlurmdbV0040DeleteAssociationsRequest struct {
+type ApiSlurmdbV0044DeleteAssociationsRequest struct {
 	ctx context.Context
 	ApiService *SlurmdbAPIService
 	account *string
 	cluster *string
 	defaultQos *string
+	includeDeletedAssociations *string
+	includeUsage *string
+	filterToOnlyDefaults *string
+	includeTheRawQOSOrDeltaQos *string
+	includeSubAcctInformation *string
+	excludeParentIdName *string
+	excludeLimitsFromParents *string
 	format *string
 	id *string
-	onlyDefaults *string
 	parentAccount *string
 	partition *string
 	qos *string
 	usageEnd *string
 	usageStart *string
 	user *string
-	withUsage *string
-	withDeleted *string
-	withRawQos *string
-	withSubAccts *string
-	withoutParentInfo *string
-	withoutParentLimits *string
 }
 
 // CSV accounts list
-func (r ApiSlurmdbV0040DeleteAssociationsRequest) Account(account string) ApiSlurmdbV0040DeleteAssociationsRequest {
+func (r ApiSlurmdbV0044DeleteAssociationsRequest) Account(account string) ApiSlurmdbV0044DeleteAssociationsRequest {
 	r.account = &account
 	return r
 }
 
 // CSV clusters list
-func (r ApiSlurmdbV0040DeleteAssociationsRequest) Cluster(cluster string) ApiSlurmdbV0040DeleteAssociationsRequest {
+func (r ApiSlurmdbV0044DeleteAssociationsRequest) Cluster(cluster string) ApiSlurmdbV0044DeleteAssociationsRequest {
 	r.cluster = &cluster
 	return r
 }
 
 // CSV QOS list
-func (r ApiSlurmdbV0040DeleteAssociationsRequest) DefaultQos(defaultQos string) ApiSlurmdbV0040DeleteAssociationsRequest {
+func (r ApiSlurmdbV0044DeleteAssociationsRequest) DefaultQos(defaultQos string) ApiSlurmdbV0044DeleteAssociationsRequest {
 	r.defaultQos = &defaultQos
 	return r
 }
 
-// CSV format list
-func (r ApiSlurmdbV0040DeleteAssociationsRequest) Format(format string) ApiSlurmdbV0040DeleteAssociationsRequest {
+func (r ApiSlurmdbV0044DeleteAssociationsRequest) IncludeDeletedAssociations(includeDeletedAssociations string) ApiSlurmdbV0044DeleteAssociationsRequest {
+	r.includeDeletedAssociations = &includeDeletedAssociations
+	return r
+}
+
+func (r ApiSlurmdbV0044DeleteAssociationsRequest) IncludeUsage(includeUsage string) ApiSlurmdbV0044DeleteAssociationsRequest {
+	r.includeUsage = &includeUsage
+	return r
+}
+
+func (r ApiSlurmdbV0044DeleteAssociationsRequest) FilterToOnlyDefaults(filterToOnlyDefaults string) ApiSlurmdbV0044DeleteAssociationsRequest {
+	r.filterToOnlyDefaults = &filterToOnlyDefaults
+	return r
+}
+
+func (r ApiSlurmdbV0044DeleteAssociationsRequest) IncludeTheRawQOSOrDeltaQos(includeTheRawQOSOrDeltaQos string) ApiSlurmdbV0044DeleteAssociationsRequest {
+	r.includeTheRawQOSOrDeltaQos = &includeTheRawQOSOrDeltaQos
+	return r
+}
+
+func (r ApiSlurmdbV0044DeleteAssociationsRequest) IncludeSubAcctInformation(includeSubAcctInformation string) ApiSlurmdbV0044DeleteAssociationsRequest {
+	r.includeSubAcctInformation = &includeSubAcctInformation
+	return r
+}
+
+func (r ApiSlurmdbV0044DeleteAssociationsRequest) ExcludeParentIdName(excludeParentIdName string) ApiSlurmdbV0044DeleteAssociationsRequest {
+	r.excludeParentIdName = &excludeParentIdName
+	return r
+}
+
+func (r ApiSlurmdbV0044DeleteAssociationsRequest) ExcludeLimitsFromParents(excludeLimitsFromParents string) ApiSlurmdbV0044DeleteAssociationsRequest {
+	r.excludeLimitsFromParents = &excludeLimitsFromParents
+	return r
+}
+
+// Ignored; process JSON manually to control output format
+// Deprecated
+func (r ApiSlurmdbV0044DeleteAssociationsRequest) Format(format string) ApiSlurmdbV0044DeleteAssociationsRequest {
 	r.format = &format
 	return r
 }
 
-// CSV id list
-func (r ApiSlurmdbV0040DeleteAssociationsRequest) Id(id string) ApiSlurmdbV0040DeleteAssociationsRequest {
+// CSV ID list
+func (r ApiSlurmdbV0044DeleteAssociationsRequest) Id(id string) ApiSlurmdbV0044DeleteAssociationsRequest {
 	r.id = &id
 	return r
 }
 
-// filter to only defaults
-func (r ApiSlurmdbV0040DeleteAssociationsRequest) OnlyDefaults(onlyDefaults string) ApiSlurmdbV0040DeleteAssociationsRequest {
-	r.onlyDefaults = &onlyDefaults
-	return r
-}
-
 // CSV names of parent account
-func (r ApiSlurmdbV0040DeleteAssociationsRequest) ParentAccount(parentAccount string) ApiSlurmdbV0040DeleteAssociationsRequest {
+func (r ApiSlurmdbV0044DeleteAssociationsRequest) ParentAccount(parentAccount string) ApiSlurmdbV0044DeleteAssociationsRequest {
 	r.parentAccount = &parentAccount
 	return r
 }
 
 // CSV partition name list
-func (r ApiSlurmdbV0040DeleteAssociationsRequest) Partition(partition string) ApiSlurmdbV0040DeleteAssociationsRequest {
+func (r ApiSlurmdbV0044DeleteAssociationsRequest) Partition(partition string) ApiSlurmdbV0044DeleteAssociationsRequest {
 	r.partition = &partition
 	return r
 }
 
 // CSV QOS list
-func (r ApiSlurmdbV0040DeleteAssociationsRequest) Qos(qos string) ApiSlurmdbV0040DeleteAssociationsRequest {
+func (r ApiSlurmdbV0044DeleteAssociationsRequest) Qos(qos string) ApiSlurmdbV0044DeleteAssociationsRequest {
 	r.qos = &qos
 	return r
 }
 
-// usage end UNIX timestamp
-func (r ApiSlurmdbV0040DeleteAssociationsRequest) UsageEnd(usageEnd string) ApiSlurmdbV0040DeleteAssociationsRequest {
+// Usage end (UNIX timestamp)
+func (r ApiSlurmdbV0044DeleteAssociationsRequest) UsageEnd(usageEnd string) ApiSlurmdbV0044DeleteAssociationsRequest {
 	r.usageEnd = &usageEnd
 	return r
 }
 
-// usage start UNIX timestamp
-func (r ApiSlurmdbV0040DeleteAssociationsRequest) UsageStart(usageStart string) ApiSlurmdbV0040DeleteAssociationsRequest {
+// Usage start (UNIX timestamp)
+func (r ApiSlurmdbV0044DeleteAssociationsRequest) UsageStart(usageStart string) ApiSlurmdbV0044DeleteAssociationsRequest {
 	r.usageStart = &usageStart
 	return r
 }
 
 // CSV user list
-func (r ApiSlurmdbV0040DeleteAssociationsRequest) User(user string) ApiSlurmdbV0040DeleteAssociationsRequest {
+func (r ApiSlurmdbV0044DeleteAssociationsRequest) User(user string) ApiSlurmdbV0044DeleteAssociationsRequest {
 	r.user = &user
 	return r
 }
 
-// fill in usage
-func (r ApiSlurmdbV0040DeleteAssociationsRequest) WithUsage(withUsage string) ApiSlurmdbV0040DeleteAssociationsRequest {
-	r.withUsage = &withUsage
-	return r
-}
-
-// return deleted associations
-func (r ApiSlurmdbV0040DeleteAssociationsRequest) WithDeleted(withDeleted string) ApiSlurmdbV0040DeleteAssociationsRequest {
-	r.withDeleted = &withDeleted
-	return r
-}
-
-// return a raw qos or delta_qos
-func (r ApiSlurmdbV0040DeleteAssociationsRequest) WithRawQos(withRawQos string) ApiSlurmdbV0040DeleteAssociationsRequest {
-	r.withRawQos = &withRawQos
-	return r
-}
-
-// return sub acct information also
-func (r ApiSlurmdbV0040DeleteAssociationsRequest) WithSubAccts(withSubAccts string) ApiSlurmdbV0040DeleteAssociationsRequest {
-	r.withSubAccts = &withSubAccts
-	return r
-}
-
-// don&#39;t give me parent id/name
-func (r ApiSlurmdbV0040DeleteAssociationsRequest) WithoutParentInfo(withoutParentInfo string) ApiSlurmdbV0040DeleteAssociationsRequest {
-	r.withoutParentInfo = &withoutParentInfo
-	return r
-}
-
-// don&#39;t give me limits from parents
-func (r ApiSlurmdbV0040DeleteAssociationsRequest) WithoutParentLimits(withoutParentLimits string) ApiSlurmdbV0040DeleteAssociationsRequest {
-	r.withoutParentLimits = &withoutParentLimits
-	return r
-}
-
-func (r ApiSlurmdbV0040DeleteAssociationsRequest) Execute() (*V0040OpenapiAssocsRemovedResp, *http.Response, error) {
-	return r.ApiService.SlurmdbV0040DeleteAssociationsExecute(r)
+func (r ApiSlurmdbV0044DeleteAssociationsRequest) Execute() (*V0044OpenapiAssocsRemovedResp, *http.Response, error) {
+	return r.ApiService.SlurmdbV0044DeleteAssociationsExecute(r)
 }
 
 /*
-SlurmdbV0040DeleteAssociations Delete associations
+SlurmdbV0044DeleteAssociations Delete associations
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmdbV0040DeleteAssociationsRequest
+ @return ApiSlurmdbV0044DeleteAssociationsRequest
 */
-func (a *SlurmdbAPIService) SlurmdbV0040DeleteAssociations(ctx context.Context) ApiSlurmdbV0040DeleteAssociationsRequest {
-	return ApiSlurmdbV0040DeleteAssociationsRequest{
+func (a *SlurmdbAPIService) SlurmdbV0044DeleteAssociations(ctx context.Context) ApiSlurmdbV0044DeleteAssociationsRequest {
+	return ApiSlurmdbV0044DeleteAssociationsRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
 }
 
 // Execute executes the request
-//  @return V0040OpenapiAssocsRemovedResp
-func (a *SlurmdbAPIService) SlurmdbV0040DeleteAssociationsExecute(r ApiSlurmdbV0040DeleteAssociationsRequest) (*V0040OpenapiAssocsRemovedResp, *http.Response, error) {
+//  @return V0044OpenapiAssocsRemovedResp
+func (a *SlurmdbAPIService) SlurmdbV0044DeleteAssociationsExecute(r ApiSlurmdbV0044DeleteAssociationsRequest) (*V0044OpenapiAssocsRemovedResp, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *V0040OpenapiAssocsRemovedResp
+		localVarReturnValue  *V0044OpenapiAssocsRemovedResp
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0040DeleteAssociations")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0044DeleteAssociations")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/slurmdb/v0.0.40/associations/"
+	localVarPath := localBasePath + "/slurmdb/v0.0.44/associations/"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -652,14 +640,32 @@ func (a *SlurmdbAPIService) SlurmdbV0040DeleteAssociationsExecute(r ApiSlurmdbV0
 	if r.defaultQos != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "default_qos", r.defaultQos, "")
 	}
+	if r.includeDeletedAssociations != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "Include deleted associations", r.includeDeletedAssociations, "")
+	}
+	if r.includeUsage != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "Include usage", r.includeUsage, "")
+	}
+	if r.filterToOnlyDefaults != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "Filter to only defaults", r.filterToOnlyDefaults, "")
+	}
+	if r.includeTheRawQOSOrDeltaQos != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "Include the raw QOS or delta_qos", r.includeTheRawQOSOrDeltaQos, "")
+	}
+	if r.includeSubAcctInformation != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "Include sub acct information", r.includeSubAcctInformation, "")
+	}
+	if r.excludeParentIdName != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "Exclude parent id/name", r.excludeParentIdName, "")
+	}
+	if r.excludeLimitsFromParents != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "Exclude limits from parents", r.excludeLimitsFromParents, "")
+	}
 	if r.format != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "format", r.format, "")
 	}
 	if r.id != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "id", r.id, "")
-	}
-	if r.onlyDefaults != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "only_defaults", r.onlyDefaults, "")
 	}
 	if r.parentAccount != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "parent_account", r.parentAccount, "")
@@ -679,24 +685,6 @@ func (a *SlurmdbAPIService) SlurmdbV0040DeleteAssociationsExecute(r ApiSlurmdbV0
 	if r.user != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "user", r.user, "")
 	}
-	if r.withUsage != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "with_usage", r.withUsage, "")
-	}
-	if r.withDeleted != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "with_deleted", r.withDeleted, "")
-	}
-	if r.withRawQos != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "with_raw_qos", r.withRawQos, "")
-	}
-	if r.withSubAccts != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "with_sub_accts", r.withSubAccts, "")
-	}
-	if r.withoutParentInfo != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "without_parent_info", r.withoutParentInfo, "")
-	}
-	if r.withoutParentLimits != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "without_parent_limits", r.withoutParentLimits, "")
-	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -707,7 +695,7 @@ func (a *SlurmdbAPIService) SlurmdbV0040DeleteAssociationsExecute(r ApiSlurmdbV0
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -764,7 +752,7 @@ func (a *SlurmdbAPIService) SlurmdbV0040DeleteAssociationsExecute(r ApiSlurmdbV0
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v V0040OpenapiAssocsRemovedResp
+			var v V0044OpenapiAssocsRemovedResp
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -787,7 +775,7 @@ func (a *SlurmdbAPIService) SlurmdbV0040DeleteAssociationsExecute(r ApiSlurmdbV0
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiSlurmdbV0040DeleteClusterRequest struct {
+type ApiSlurmdbV0044DeleteClusterRequest struct {
 	ctx context.Context
 	ApiService *SlurmdbAPIService
 	clusterName string
@@ -803,77 +791,80 @@ type ApiSlurmdbV0040DeleteClusterRequest struct {
 	withUsage *string
 }
 
-func (r ApiSlurmdbV0040DeleteClusterRequest) Classification(classification string) ApiSlurmdbV0040DeleteClusterRequest {
+// Type of machine
+func (r ApiSlurmdbV0044DeleteClusterRequest) Classification(classification string) ApiSlurmdbV0044DeleteClusterRequest {
 	r.classification = &classification
 	return r
 }
 
 // CSV cluster list
-func (r ApiSlurmdbV0040DeleteClusterRequest) Cluster(cluster string) ApiSlurmdbV0040DeleteClusterRequest {
+func (r ApiSlurmdbV0044DeleteClusterRequest) Cluster(cluster string) ApiSlurmdbV0044DeleteClusterRequest {
 	r.cluster = &cluster
 	return r
 }
 
 // CSV federation list
-func (r ApiSlurmdbV0040DeleteClusterRequest) Federation(federation string) ApiSlurmdbV0040DeleteClusterRequest {
+func (r ApiSlurmdbV0044DeleteClusterRequest) Federation(federation string) ApiSlurmdbV0044DeleteClusterRequest {
 	r.federation = &federation
 	return r
 }
 
-func (r ApiSlurmdbV0040DeleteClusterRequest) Flags(flags string) ApiSlurmdbV0040DeleteClusterRequest {
+// Query flags
+func (r ApiSlurmdbV0044DeleteClusterRequest) Flags(flags string) ApiSlurmdbV0044DeleteClusterRequest {
 	r.flags = &flags
 	return r
 }
 
-// CSV format list
-func (r ApiSlurmdbV0040DeleteClusterRequest) Format(format string) ApiSlurmdbV0040DeleteClusterRequest {
+// Ignored; process JSON manually to control output format
+// Deprecated
+func (r ApiSlurmdbV0044DeleteClusterRequest) Format(format string) ApiSlurmdbV0044DeleteClusterRequest {
 	r.format = &format
 	return r
 }
 
 // CSV RPC version list
-func (r ApiSlurmdbV0040DeleteClusterRequest) RpcVersion(rpcVersion string) ApiSlurmdbV0040DeleteClusterRequest {
+func (r ApiSlurmdbV0044DeleteClusterRequest) RpcVersion(rpcVersion string) ApiSlurmdbV0044DeleteClusterRequest {
 	r.rpcVersion = &rpcVersion
 	return r
 }
 
-// Usage end UNIX timestamp (seconds)
-func (r ApiSlurmdbV0040DeleteClusterRequest) UsageEnd(usageEnd string) ApiSlurmdbV0040DeleteClusterRequest {
+// Usage end (UNIX timestamp)
+func (r ApiSlurmdbV0044DeleteClusterRequest) UsageEnd(usageEnd string) ApiSlurmdbV0044DeleteClusterRequest {
 	r.usageEnd = &usageEnd
 	return r
 }
 
-// Usage start UNIX timestamp (seconds)
-func (r ApiSlurmdbV0040DeleteClusterRequest) UsageStart(usageStart string) ApiSlurmdbV0040DeleteClusterRequest {
+// Usage start (UNIX timestamp)
+func (r ApiSlurmdbV0044DeleteClusterRequest) UsageStart(usageStart string) ApiSlurmdbV0044DeleteClusterRequest {
 	r.usageStart = &usageStart
 	return r
 }
 
-// include deleted clusters
-func (r ApiSlurmdbV0040DeleteClusterRequest) WithDeleted(withDeleted string) ApiSlurmdbV0040DeleteClusterRequest {
+// Include deleted clusters
+func (r ApiSlurmdbV0044DeleteClusterRequest) WithDeleted(withDeleted string) ApiSlurmdbV0044DeleteClusterRequest {
 	r.withDeleted = &withDeleted
 	return r
 }
 
-// query usage
-func (r ApiSlurmdbV0040DeleteClusterRequest) WithUsage(withUsage string) ApiSlurmdbV0040DeleteClusterRequest {
+// Include usage
+func (r ApiSlurmdbV0044DeleteClusterRequest) WithUsage(withUsage string) ApiSlurmdbV0044DeleteClusterRequest {
 	r.withUsage = &withUsage
 	return r
 }
 
-func (r ApiSlurmdbV0040DeleteClusterRequest) Execute() (*V0040OpenapiClustersRemovedResp, *http.Response, error) {
-	return r.ApiService.SlurmdbV0040DeleteClusterExecute(r)
+func (r ApiSlurmdbV0044DeleteClusterRequest) Execute() (*V0044OpenapiClustersRemovedResp, *http.Response, error) {
+	return r.ApiService.SlurmdbV0044DeleteClusterExecute(r)
 }
 
 /*
-SlurmdbV0040DeleteCluster Delete cluster
+SlurmdbV0044DeleteCluster Delete cluster
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param clusterName Cluster name
- @return ApiSlurmdbV0040DeleteClusterRequest
+ @return ApiSlurmdbV0044DeleteClusterRequest
 */
-func (a *SlurmdbAPIService) SlurmdbV0040DeleteCluster(ctx context.Context, clusterName string) ApiSlurmdbV0040DeleteClusterRequest {
-	return ApiSlurmdbV0040DeleteClusterRequest{
+func (a *SlurmdbAPIService) SlurmdbV0044DeleteCluster(ctx context.Context, clusterName string) ApiSlurmdbV0044DeleteClusterRequest {
+	return ApiSlurmdbV0044DeleteClusterRequest{
 		ApiService: a,
 		ctx: ctx,
 		clusterName: clusterName,
@@ -881,21 +872,21 @@ func (a *SlurmdbAPIService) SlurmdbV0040DeleteCluster(ctx context.Context, clust
 }
 
 // Execute executes the request
-//  @return V0040OpenapiClustersRemovedResp
-func (a *SlurmdbAPIService) SlurmdbV0040DeleteClusterExecute(r ApiSlurmdbV0040DeleteClusterRequest) (*V0040OpenapiClustersRemovedResp, *http.Response, error) {
+//  @return V0044OpenapiClustersRemovedResp
+func (a *SlurmdbAPIService) SlurmdbV0044DeleteClusterExecute(r ApiSlurmdbV0044DeleteClusterRequest) (*V0044OpenapiClustersRemovedResp, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *V0040OpenapiClustersRemovedResp
+		localVarReturnValue  *V0044OpenapiClustersRemovedResp
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0040DeleteCluster")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0044DeleteCluster")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/slurmdb/v0.0.40/cluster/{cluster_name}"
+	localVarPath := localBasePath + "/slurmdb/v0.0.44/cluster/{cluster_name}"
 	localVarPath = strings.Replace(localVarPath, "{"+"cluster_name"+"}", url.PathEscape(parameterValueToString(r.clusterName, "clusterName")), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -942,7 +933,7 @@ func (a *SlurmdbAPIService) SlurmdbV0040DeleteClusterExecute(r ApiSlurmdbV0040De
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -999,7 +990,7 @@ func (a *SlurmdbAPIService) SlurmdbV0040DeleteClusterExecute(r ApiSlurmdbV0040De
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v V0040OpenapiClustersRemovedResp
+			var v V0044OpenapiClustersRemovedResp
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1022,25 +1013,25 @@ func (a *SlurmdbAPIService) SlurmdbV0040DeleteClusterExecute(r ApiSlurmdbV0040De
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiSlurmdbV0040DeleteSingleQosRequest struct {
+type ApiSlurmdbV0044DeleteSingleQosRequest struct {
 	ctx context.Context
 	ApiService *SlurmdbAPIService
 	qos string
 }
 
-func (r ApiSlurmdbV0040DeleteSingleQosRequest) Execute() (*V0040OpenapiSlurmdbdQosRemovedResp, *http.Response, error) {
-	return r.ApiService.SlurmdbV0040DeleteSingleQosExecute(r)
+func (r ApiSlurmdbV0044DeleteSingleQosRequest) Execute() (*V0044OpenapiSlurmdbdQosRemovedResp, *http.Response, error) {
+	return r.ApiService.SlurmdbV0044DeleteSingleQosExecute(r)
 }
 
 /*
-SlurmdbV0040DeleteSingleQos Delete QOS
+SlurmdbV0044DeleteSingleQos Delete QOS
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param qos QOS name
- @return ApiSlurmdbV0040DeleteSingleQosRequest
+ @return ApiSlurmdbV0044DeleteSingleQosRequest
 */
-func (a *SlurmdbAPIService) SlurmdbV0040DeleteSingleQos(ctx context.Context, qos string) ApiSlurmdbV0040DeleteSingleQosRequest {
-	return ApiSlurmdbV0040DeleteSingleQosRequest{
+func (a *SlurmdbAPIService) SlurmdbV0044DeleteSingleQos(ctx context.Context, qos string) ApiSlurmdbV0044DeleteSingleQosRequest {
+	return ApiSlurmdbV0044DeleteSingleQosRequest{
 		ApiService: a,
 		ctx: ctx,
 		qos: qos,
@@ -1048,21 +1039,21 @@ func (a *SlurmdbAPIService) SlurmdbV0040DeleteSingleQos(ctx context.Context, qos
 }
 
 // Execute executes the request
-//  @return V0040OpenapiSlurmdbdQosRemovedResp
-func (a *SlurmdbAPIService) SlurmdbV0040DeleteSingleQosExecute(r ApiSlurmdbV0040DeleteSingleQosRequest) (*V0040OpenapiSlurmdbdQosRemovedResp, *http.Response, error) {
+//  @return V0044OpenapiSlurmdbdQosRemovedResp
+func (a *SlurmdbAPIService) SlurmdbV0044DeleteSingleQosExecute(r ApiSlurmdbV0044DeleteSingleQosRequest) (*V0044OpenapiSlurmdbdQosRemovedResp, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *V0040OpenapiSlurmdbdQosRemovedResp
+		localVarReturnValue  *V0044OpenapiSlurmdbdQosRemovedResp
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0040DeleteSingleQos")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0044DeleteSingleQos")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/slurmdb/v0.0.40/qos/{qos}"
+	localVarPath := localBasePath + "/slurmdb/v0.0.44/qos/{qos}"
 	localVarPath = strings.Replace(localVarPath, "{"+"qos"+"}", url.PathEscape(parameterValueToString(r.qos, "qos")), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -1079,7 +1070,7 @@ func (a *SlurmdbAPIService) SlurmdbV0040DeleteSingleQosExecute(r ApiSlurmdbV0040
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1136,7 +1127,7 @@ func (a *SlurmdbAPIService) SlurmdbV0040DeleteSingleQosExecute(r ApiSlurmdbV0040
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v V0040OpenapiSlurmdbdQosRemovedResp
+			var v V0044OpenapiSlurmdbdQosRemovedResp
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1159,25 +1150,25 @@ func (a *SlurmdbAPIService) SlurmdbV0040DeleteSingleQosExecute(r ApiSlurmdbV0040
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiSlurmdbV0040DeleteUserRequest struct {
+type ApiSlurmdbV0044DeleteUserRequest struct {
 	ctx context.Context
 	ApiService *SlurmdbAPIService
 	name string
 }
 
-func (r ApiSlurmdbV0040DeleteUserRequest) Execute() (*V0040OpenapiResp, *http.Response, error) {
-	return r.ApiService.SlurmdbV0040DeleteUserExecute(r)
+func (r ApiSlurmdbV0044DeleteUserRequest) Execute() (*V0044OpenapiResp, *http.Response, error) {
+	return r.ApiService.SlurmdbV0044DeleteUserExecute(r)
 }
 
 /*
-SlurmdbV0040DeleteUser Delete user
+SlurmdbV0044DeleteUser Delete user
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param name User name
- @return ApiSlurmdbV0040DeleteUserRequest
+ @return ApiSlurmdbV0044DeleteUserRequest
 */
-func (a *SlurmdbAPIService) SlurmdbV0040DeleteUser(ctx context.Context, name string) ApiSlurmdbV0040DeleteUserRequest {
-	return ApiSlurmdbV0040DeleteUserRequest{
+func (a *SlurmdbAPIService) SlurmdbV0044DeleteUser(ctx context.Context, name string) ApiSlurmdbV0044DeleteUserRequest {
+	return ApiSlurmdbV0044DeleteUserRequest{
 		ApiService: a,
 		ctx: ctx,
 		name: name,
@@ -1185,21 +1176,21 @@ func (a *SlurmdbAPIService) SlurmdbV0040DeleteUser(ctx context.Context, name str
 }
 
 // Execute executes the request
-//  @return V0040OpenapiResp
-func (a *SlurmdbAPIService) SlurmdbV0040DeleteUserExecute(r ApiSlurmdbV0040DeleteUserRequest) (*V0040OpenapiResp, *http.Response, error) {
+//  @return V0044OpenapiResp
+func (a *SlurmdbAPIService) SlurmdbV0044DeleteUserExecute(r ApiSlurmdbV0044DeleteUserRequest) (*V0044OpenapiResp, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *V0040OpenapiResp
+		localVarReturnValue  *V0044OpenapiResp
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0040DeleteUser")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0044DeleteUser")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/slurmdb/v0.0.40/user/{name}"
+	localVarPath := localBasePath + "/slurmdb/v0.0.44/user/{name}"
 	localVarPath = strings.Replace(localVarPath, "{"+"name"+"}", url.PathEscape(parameterValueToString(r.name, "name")), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -1216,7 +1207,7 @@ func (a *SlurmdbAPIService) SlurmdbV0040DeleteUserExecute(r ApiSlurmdbV0040Delet
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1273,7 +1264,7 @@ func (a *SlurmdbAPIService) SlurmdbV0040DeleteUserExecute(r ApiSlurmdbV0040Delet
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v V0040OpenapiResp
+			var v V0044OpenapiResp
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1296,25 +1287,25 @@ func (a *SlurmdbAPIService) SlurmdbV0040DeleteUserExecute(r ApiSlurmdbV0040Delet
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiSlurmdbV0040DeleteWckeyRequest struct {
+type ApiSlurmdbV0044DeleteWckeyRequest struct {
 	ctx context.Context
 	ApiService *SlurmdbAPIService
 	id string
 }
 
-func (r ApiSlurmdbV0040DeleteWckeyRequest) Execute() (*V0040OpenapiWckeyRemovedResp, *http.Response, error) {
-	return r.ApiService.SlurmdbV0040DeleteWckeyExecute(r)
+func (r ApiSlurmdbV0044DeleteWckeyRequest) Execute() (*V0044OpenapiWckeyRemovedResp, *http.Response, error) {
+	return r.ApiService.SlurmdbV0044DeleteWckeyExecute(r)
 }
 
 /*
-SlurmdbV0040DeleteWckey Delete wckey
+SlurmdbV0044DeleteWckey Delete wckey
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id wckey id
- @return ApiSlurmdbV0040DeleteWckeyRequest
+ @param id WCKey ID
+ @return ApiSlurmdbV0044DeleteWckeyRequest
 */
-func (a *SlurmdbAPIService) SlurmdbV0040DeleteWckey(ctx context.Context, id string) ApiSlurmdbV0040DeleteWckeyRequest {
-	return ApiSlurmdbV0040DeleteWckeyRequest{
+func (a *SlurmdbAPIService) SlurmdbV0044DeleteWckey(ctx context.Context, id string) ApiSlurmdbV0044DeleteWckeyRequest {
+	return ApiSlurmdbV0044DeleteWckeyRequest{
 		ApiService: a,
 		ctx: ctx,
 		id: id,
@@ -1322,21 +1313,21 @@ func (a *SlurmdbAPIService) SlurmdbV0040DeleteWckey(ctx context.Context, id stri
 }
 
 // Execute executes the request
-//  @return V0040OpenapiWckeyRemovedResp
-func (a *SlurmdbAPIService) SlurmdbV0040DeleteWckeyExecute(r ApiSlurmdbV0040DeleteWckeyRequest) (*V0040OpenapiWckeyRemovedResp, *http.Response, error) {
+//  @return V0044OpenapiWckeyRemovedResp
+func (a *SlurmdbAPIService) SlurmdbV0044DeleteWckeyExecute(r ApiSlurmdbV0044DeleteWckeyRequest) (*V0044OpenapiWckeyRemovedResp, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *V0040OpenapiWckeyRemovedResp
+		localVarReturnValue  *V0044OpenapiWckeyRemovedResp
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0040DeleteWckey")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0044DeleteWckey")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/slurmdb/v0.0.40/wckey/{id}"
+	localVarPath := localBasePath + "/slurmdb/v0.0.44/wckey/{id}"
 	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -1353,7 +1344,7 @@ func (a *SlurmdbAPIService) SlurmdbV0040DeleteWckeyExecute(r ApiSlurmdbV0040Dele
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1410,7 +1401,7 @@ func (a *SlurmdbAPIService) SlurmdbV0040DeleteWckeyExecute(r ApiSlurmdbV0040Dele
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v V0040OpenapiWckeyRemovedResp
+			var v V0044OpenapiWckeyRemovedResp
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1433,7 +1424,7 @@ func (a *SlurmdbAPIService) SlurmdbV0040DeleteWckeyExecute(r ApiSlurmdbV0040Dele
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiSlurmdbV0040GetAccountRequest struct {
+type ApiSlurmdbV0044GetAccountRequest struct {
 	ctx context.Context
 	ApiService *SlurmdbAPIService
 	accountName string
@@ -1442,5561 +1433,37 @@ type ApiSlurmdbV0040GetAccountRequest struct {
 	withDeleted *string
 }
 
-// include associations
-func (r ApiSlurmdbV0040GetAccountRequest) WithAssocs(withAssocs string) ApiSlurmdbV0040GetAccountRequest {
-	r.withAssocs = &withAssocs
-	return r
-}
-
-// include coordinators
-func (r ApiSlurmdbV0040GetAccountRequest) WithCoords(withCoords string) ApiSlurmdbV0040GetAccountRequest {
-	r.withCoords = &withCoords
-	return r
-}
-
-// include deleted
-func (r ApiSlurmdbV0040GetAccountRequest) WithDeleted(withDeleted string) ApiSlurmdbV0040GetAccountRequest {
-	r.withDeleted = &withDeleted
-	return r
-}
-
-func (r ApiSlurmdbV0040GetAccountRequest) Execute() (*V0040OpenapiAccountsResp, *http.Response, error) {
-	return r.ApiService.SlurmdbV0040GetAccountExecute(r)
-}
-
-/*
-SlurmdbV0040GetAccount Get account info
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param accountName Account name
- @return ApiSlurmdbV0040GetAccountRequest
-*/
-func (a *SlurmdbAPIService) SlurmdbV0040GetAccount(ctx context.Context, accountName string) ApiSlurmdbV0040GetAccountRequest {
-	return ApiSlurmdbV0040GetAccountRequest{
-		ApiService: a,
-		ctx: ctx,
-		accountName: accountName,
-	}
-}
-
-// Execute executes the request
-//  @return V0040OpenapiAccountsResp
-func (a *SlurmdbAPIService) SlurmdbV0040GetAccountExecute(r ApiSlurmdbV0040GetAccountRequest) (*V0040OpenapiAccountsResp, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *V0040OpenapiAccountsResp
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0040GetAccount")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurmdb/v0.0.40/account/{account_name}"
-	localVarPath = strings.Replace(localVarPath, "{"+"account_name"+"}", url.PathEscape(parameterValueToString(r.accountName, "accountName")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	if r.withAssocs != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "with_assocs", r.withAssocs, "")
-	}
-	if r.withCoords != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "with_coords", r.withCoords, "")
-	}
-	if r.withDeleted != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "with_deleted", r.withDeleted, "")
-	}
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v V0040OpenapiAccountsResp
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmdbV0040GetAccountsRequest struct {
-	ctx context.Context
-	ApiService *SlurmdbAPIService
-	description *string
-	withAssocs *string
-	withCoords *string
-	withDeleted *string
-}
-
-// CSV description list
-func (r ApiSlurmdbV0040GetAccountsRequest) Description(description string) ApiSlurmdbV0040GetAccountsRequest {
-	r.description = &description
-	return r
-}
-
-// include associations
-func (r ApiSlurmdbV0040GetAccountsRequest) WithAssocs(withAssocs string) ApiSlurmdbV0040GetAccountsRequest {
-	r.withAssocs = &withAssocs
-	return r
-}
-
-// include coordinators
-func (r ApiSlurmdbV0040GetAccountsRequest) WithCoords(withCoords string) ApiSlurmdbV0040GetAccountsRequest {
-	r.withCoords = &withCoords
-	return r
-}
-
-// include deleted accounts
-func (r ApiSlurmdbV0040GetAccountsRequest) WithDeleted(withDeleted string) ApiSlurmdbV0040GetAccountsRequest {
-	r.withDeleted = &withDeleted
-	return r
-}
-
-func (r ApiSlurmdbV0040GetAccountsRequest) Execute() (*V0040OpenapiAccountsResp, *http.Response, error) {
-	return r.ApiService.SlurmdbV0040GetAccountsExecute(r)
-}
-
-/*
-SlurmdbV0040GetAccounts Get account list
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmdbV0040GetAccountsRequest
-*/
-func (a *SlurmdbAPIService) SlurmdbV0040GetAccounts(ctx context.Context) ApiSlurmdbV0040GetAccountsRequest {
-	return ApiSlurmdbV0040GetAccountsRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-// Execute executes the request
-//  @return V0040OpenapiAccountsResp
-func (a *SlurmdbAPIService) SlurmdbV0040GetAccountsExecute(r ApiSlurmdbV0040GetAccountsRequest) (*V0040OpenapiAccountsResp, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *V0040OpenapiAccountsResp
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0040GetAccounts")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurmdb/v0.0.40/accounts/"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	if r.description != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "description", r.description, "")
-	}
-	if r.withAssocs != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "with_assocs", r.withAssocs, "")
-	}
-	if r.withCoords != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "with_coords", r.withCoords, "")
-	}
-	if r.withDeleted != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "with_deleted", r.withDeleted, "")
-	}
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v V0040OpenapiAccountsResp
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmdbV0040GetAssociationRequest struct {
-	ctx context.Context
-	ApiService *SlurmdbAPIService
-	account *string
-	cluster *string
-	defaultQos *string
-	format *string
-	id *string
-	onlyDefaults *string
-	parentAccount *string
-	partition *string
-	qos *string
-	usageEnd *string
-	usageStart *string
-	user *string
-	withUsage *string
-	withDeleted *string
-	withRawQos *string
-	withSubAccts *string
-	withoutParentInfo *string
-	withoutParentLimits *string
-}
-
-// CSV accounts list
-func (r ApiSlurmdbV0040GetAssociationRequest) Account(account string) ApiSlurmdbV0040GetAssociationRequest {
-	r.account = &account
-	return r
-}
-
-// CSV clusters list
-func (r ApiSlurmdbV0040GetAssociationRequest) Cluster(cluster string) ApiSlurmdbV0040GetAssociationRequest {
-	r.cluster = &cluster
-	return r
-}
-
-// CSV QOS list
-func (r ApiSlurmdbV0040GetAssociationRequest) DefaultQos(defaultQos string) ApiSlurmdbV0040GetAssociationRequest {
-	r.defaultQos = &defaultQos
-	return r
-}
-
-// CSV format list
-func (r ApiSlurmdbV0040GetAssociationRequest) Format(format string) ApiSlurmdbV0040GetAssociationRequest {
-	r.format = &format
-	return r
-}
-
-// CSV id list
-func (r ApiSlurmdbV0040GetAssociationRequest) Id(id string) ApiSlurmdbV0040GetAssociationRequest {
-	r.id = &id
-	return r
-}
-
-// filter to only defaults
-func (r ApiSlurmdbV0040GetAssociationRequest) OnlyDefaults(onlyDefaults string) ApiSlurmdbV0040GetAssociationRequest {
-	r.onlyDefaults = &onlyDefaults
-	return r
-}
-
-// CSV names of parent account
-func (r ApiSlurmdbV0040GetAssociationRequest) ParentAccount(parentAccount string) ApiSlurmdbV0040GetAssociationRequest {
-	r.parentAccount = &parentAccount
-	return r
-}
-
-// CSV partition name list
-func (r ApiSlurmdbV0040GetAssociationRequest) Partition(partition string) ApiSlurmdbV0040GetAssociationRequest {
-	r.partition = &partition
-	return r
-}
-
-// CSV QOS list
-func (r ApiSlurmdbV0040GetAssociationRequest) Qos(qos string) ApiSlurmdbV0040GetAssociationRequest {
-	r.qos = &qos
-	return r
-}
-
-// usage end UNIX timestamp
-func (r ApiSlurmdbV0040GetAssociationRequest) UsageEnd(usageEnd string) ApiSlurmdbV0040GetAssociationRequest {
-	r.usageEnd = &usageEnd
-	return r
-}
-
-// usage start UNIX timestamp
-func (r ApiSlurmdbV0040GetAssociationRequest) UsageStart(usageStart string) ApiSlurmdbV0040GetAssociationRequest {
-	r.usageStart = &usageStart
-	return r
-}
-
-// CSV user list
-func (r ApiSlurmdbV0040GetAssociationRequest) User(user string) ApiSlurmdbV0040GetAssociationRequest {
-	r.user = &user
-	return r
-}
-
-// fill in usage
-func (r ApiSlurmdbV0040GetAssociationRequest) WithUsage(withUsage string) ApiSlurmdbV0040GetAssociationRequest {
-	r.withUsage = &withUsage
-	return r
-}
-
-// return deleted associations
-func (r ApiSlurmdbV0040GetAssociationRequest) WithDeleted(withDeleted string) ApiSlurmdbV0040GetAssociationRequest {
-	r.withDeleted = &withDeleted
-	return r
-}
-
-// return a raw qos or delta_qos
-func (r ApiSlurmdbV0040GetAssociationRequest) WithRawQos(withRawQos string) ApiSlurmdbV0040GetAssociationRequest {
-	r.withRawQos = &withRawQos
-	return r
-}
-
-// return sub acct information also
-func (r ApiSlurmdbV0040GetAssociationRequest) WithSubAccts(withSubAccts string) ApiSlurmdbV0040GetAssociationRequest {
-	r.withSubAccts = &withSubAccts
-	return r
-}
-
-// don&#39;t give me parent id/name
-func (r ApiSlurmdbV0040GetAssociationRequest) WithoutParentInfo(withoutParentInfo string) ApiSlurmdbV0040GetAssociationRequest {
-	r.withoutParentInfo = &withoutParentInfo
-	return r
-}
-
-// don&#39;t give me limits from parents
-func (r ApiSlurmdbV0040GetAssociationRequest) WithoutParentLimits(withoutParentLimits string) ApiSlurmdbV0040GetAssociationRequest {
-	r.withoutParentLimits = &withoutParentLimits
-	return r
-}
-
-func (r ApiSlurmdbV0040GetAssociationRequest) Execute() (*V0040OpenapiAssocsResp, *http.Response, error) {
-	return r.ApiService.SlurmdbV0040GetAssociationExecute(r)
-}
-
-/*
-SlurmdbV0040GetAssociation Get association info
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmdbV0040GetAssociationRequest
-*/
-func (a *SlurmdbAPIService) SlurmdbV0040GetAssociation(ctx context.Context) ApiSlurmdbV0040GetAssociationRequest {
-	return ApiSlurmdbV0040GetAssociationRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-// Execute executes the request
-//  @return V0040OpenapiAssocsResp
-func (a *SlurmdbAPIService) SlurmdbV0040GetAssociationExecute(r ApiSlurmdbV0040GetAssociationRequest) (*V0040OpenapiAssocsResp, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *V0040OpenapiAssocsResp
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0040GetAssociation")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurmdb/v0.0.40/association/"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	if r.account != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "account", r.account, "")
-	}
-	if r.cluster != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cluster", r.cluster, "")
-	}
-	if r.defaultQos != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "default_qos", r.defaultQos, "")
-	}
-	if r.format != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "format", r.format, "")
-	}
-	if r.id != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "id", r.id, "")
-	}
-	if r.onlyDefaults != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "only_defaults", r.onlyDefaults, "")
-	}
-	if r.parentAccount != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "parent_account", r.parentAccount, "")
-	}
-	if r.partition != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "partition", r.partition, "")
-	}
-	if r.qos != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "qos", r.qos, "")
-	}
-	if r.usageEnd != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "usage_end", r.usageEnd, "")
-	}
-	if r.usageStart != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "usage_start", r.usageStart, "")
-	}
-	if r.user != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "user", r.user, "")
-	}
-	if r.withUsage != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "with_usage", r.withUsage, "")
-	}
-	if r.withDeleted != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "with_deleted", r.withDeleted, "")
-	}
-	if r.withRawQos != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "with_raw_qos", r.withRawQos, "")
-	}
-	if r.withSubAccts != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "with_sub_accts", r.withSubAccts, "")
-	}
-	if r.withoutParentInfo != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "without_parent_info", r.withoutParentInfo, "")
-	}
-	if r.withoutParentLimits != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "without_parent_limits", r.withoutParentLimits, "")
-	}
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v V0040OpenapiAssocsResp
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmdbV0040GetAssociationsRequest struct {
-	ctx context.Context
-	ApiService *SlurmdbAPIService
-	account *string
-	cluster *string
-	defaultQos *string
-	format *string
-	id *string
-	onlyDefaults *string
-	parentAccount *string
-	partition *string
-	qos *string
-	usageEnd *string
-	usageStart *string
-	user *string
-	withUsage *string
-	withDeleted *string
-	withRawQos *string
-	withSubAccts *string
-	withoutParentInfo *string
-	withoutParentLimits *string
-}
-
-// CSV accounts list
-func (r ApiSlurmdbV0040GetAssociationsRequest) Account(account string) ApiSlurmdbV0040GetAssociationsRequest {
-	r.account = &account
-	return r
-}
-
-// CSV clusters list
-func (r ApiSlurmdbV0040GetAssociationsRequest) Cluster(cluster string) ApiSlurmdbV0040GetAssociationsRequest {
-	r.cluster = &cluster
-	return r
-}
-
-// CSV QOS list
-func (r ApiSlurmdbV0040GetAssociationsRequest) DefaultQos(defaultQos string) ApiSlurmdbV0040GetAssociationsRequest {
-	r.defaultQos = &defaultQos
-	return r
-}
-
-// CSV format list
-func (r ApiSlurmdbV0040GetAssociationsRequest) Format(format string) ApiSlurmdbV0040GetAssociationsRequest {
-	r.format = &format
-	return r
-}
-
-// CSV id list
-func (r ApiSlurmdbV0040GetAssociationsRequest) Id(id string) ApiSlurmdbV0040GetAssociationsRequest {
-	r.id = &id
-	return r
-}
-
-// filter to only defaults
-func (r ApiSlurmdbV0040GetAssociationsRequest) OnlyDefaults(onlyDefaults string) ApiSlurmdbV0040GetAssociationsRequest {
-	r.onlyDefaults = &onlyDefaults
-	return r
-}
-
-// CSV names of parent account
-func (r ApiSlurmdbV0040GetAssociationsRequest) ParentAccount(parentAccount string) ApiSlurmdbV0040GetAssociationsRequest {
-	r.parentAccount = &parentAccount
-	return r
-}
-
-// CSV partition name list
-func (r ApiSlurmdbV0040GetAssociationsRequest) Partition(partition string) ApiSlurmdbV0040GetAssociationsRequest {
-	r.partition = &partition
-	return r
-}
-
-// CSV QOS list
-func (r ApiSlurmdbV0040GetAssociationsRequest) Qos(qos string) ApiSlurmdbV0040GetAssociationsRequest {
-	r.qos = &qos
-	return r
-}
-
-// usage end UNIX timestamp
-func (r ApiSlurmdbV0040GetAssociationsRequest) UsageEnd(usageEnd string) ApiSlurmdbV0040GetAssociationsRequest {
-	r.usageEnd = &usageEnd
-	return r
-}
-
-// usage start UNIX timestamp
-func (r ApiSlurmdbV0040GetAssociationsRequest) UsageStart(usageStart string) ApiSlurmdbV0040GetAssociationsRequest {
-	r.usageStart = &usageStart
-	return r
-}
-
-// CSV user list
-func (r ApiSlurmdbV0040GetAssociationsRequest) User(user string) ApiSlurmdbV0040GetAssociationsRequest {
-	r.user = &user
-	return r
-}
-
-// fill in usage
-func (r ApiSlurmdbV0040GetAssociationsRequest) WithUsage(withUsage string) ApiSlurmdbV0040GetAssociationsRequest {
-	r.withUsage = &withUsage
-	return r
-}
-
-// return deleted associations
-func (r ApiSlurmdbV0040GetAssociationsRequest) WithDeleted(withDeleted string) ApiSlurmdbV0040GetAssociationsRequest {
-	r.withDeleted = &withDeleted
-	return r
-}
-
-// return a raw qos or delta_qos
-func (r ApiSlurmdbV0040GetAssociationsRequest) WithRawQos(withRawQos string) ApiSlurmdbV0040GetAssociationsRequest {
-	r.withRawQos = &withRawQos
-	return r
-}
-
-// return sub acct information also
-func (r ApiSlurmdbV0040GetAssociationsRequest) WithSubAccts(withSubAccts string) ApiSlurmdbV0040GetAssociationsRequest {
-	r.withSubAccts = &withSubAccts
-	return r
-}
-
-// don&#39;t give me parent id/name
-func (r ApiSlurmdbV0040GetAssociationsRequest) WithoutParentInfo(withoutParentInfo string) ApiSlurmdbV0040GetAssociationsRequest {
-	r.withoutParentInfo = &withoutParentInfo
-	return r
-}
-
-// don&#39;t give me limits from parents
-func (r ApiSlurmdbV0040GetAssociationsRequest) WithoutParentLimits(withoutParentLimits string) ApiSlurmdbV0040GetAssociationsRequest {
-	r.withoutParentLimits = &withoutParentLimits
-	return r
-}
-
-func (r ApiSlurmdbV0040GetAssociationsRequest) Execute() (*V0040OpenapiAssocsResp, *http.Response, error) {
-	return r.ApiService.SlurmdbV0040GetAssociationsExecute(r)
-}
-
-/*
-SlurmdbV0040GetAssociations Get association list
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmdbV0040GetAssociationsRequest
-*/
-func (a *SlurmdbAPIService) SlurmdbV0040GetAssociations(ctx context.Context) ApiSlurmdbV0040GetAssociationsRequest {
-	return ApiSlurmdbV0040GetAssociationsRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-// Execute executes the request
-//  @return V0040OpenapiAssocsResp
-func (a *SlurmdbAPIService) SlurmdbV0040GetAssociationsExecute(r ApiSlurmdbV0040GetAssociationsRequest) (*V0040OpenapiAssocsResp, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *V0040OpenapiAssocsResp
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0040GetAssociations")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurmdb/v0.0.40/associations/"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	if r.account != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "account", r.account, "")
-	}
-	if r.cluster != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cluster", r.cluster, "")
-	}
-	if r.defaultQos != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "default_qos", r.defaultQos, "")
-	}
-	if r.format != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "format", r.format, "")
-	}
-	if r.id != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "id", r.id, "")
-	}
-	if r.onlyDefaults != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "only_defaults", r.onlyDefaults, "")
-	}
-	if r.parentAccount != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "parent_account", r.parentAccount, "")
-	}
-	if r.partition != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "partition", r.partition, "")
-	}
-	if r.qos != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "qos", r.qos, "")
-	}
-	if r.usageEnd != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "usage_end", r.usageEnd, "")
-	}
-	if r.usageStart != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "usage_start", r.usageStart, "")
-	}
-	if r.user != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "user", r.user, "")
-	}
-	if r.withUsage != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "with_usage", r.withUsage, "")
-	}
-	if r.withDeleted != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "with_deleted", r.withDeleted, "")
-	}
-	if r.withRawQos != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "with_raw_qos", r.withRawQos, "")
-	}
-	if r.withSubAccts != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "with_sub_accts", r.withSubAccts, "")
-	}
-	if r.withoutParentInfo != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "without_parent_info", r.withoutParentInfo, "")
-	}
-	if r.withoutParentLimits != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "without_parent_limits", r.withoutParentLimits, "")
-	}
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v V0040OpenapiAssocsResp
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmdbV0040GetClusterRequest struct {
-	ctx context.Context
-	ApiService *SlurmdbAPIService
-	clusterName string
-	classification *string
-	cluster *string
-	federation *string
-	flags *string
-	format *string
-	rpcVersion *string
-	usageEnd *string
-	usageStart *string
-	withDeleted *string
-	withUsage *string
-}
-
-func (r ApiSlurmdbV0040GetClusterRequest) Classification(classification string) ApiSlurmdbV0040GetClusterRequest {
-	r.classification = &classification
-	return r
-}
-
-// CSV cluster list
-func (r ApiSlurmdbV0040GetClusterRequest) Cluster(cluster string) ApiSlurmdbV0040GetClusterRequest {
-	r.cluster = &cluster
-	return r
-}
-
-// CSV federation list
-func (r ApiSlurmdbV0040GetClusterRequest) Federation(federation string) ApiSlurmdbV0040GetClusterRequest {
-	r.federation = &federation
-	return r
-}
-
-func (r ApiSlurmdbV0040GetClusterRequest) Flags(flags string) ApiSlurmdbV0040GetClusterRequest {
-	r.flags = &flags
-	return r
-}
-
-// CSV format list
-func (r ApiSlurmdbV0040GetClusterRequest) Format(format string) ApiSlurmdbV0040GetClusterRequest {
-	r.format = &format
-	return r
-}
-
-// CSV RPC version list
-func (r ApiSlurmdbV0040GetClusterRequest) RpcVersion(rpcVersion string) ApiSlurmdbV0040GetClusterRequest {
-	r.rpcVersion = &rpcVersion
-	return r
-}
-
-// Usage end UNIX timestamp (seconds)
-func (r ApiSlurmdbV0040GetClusterRequest) UsageEnd(usageEnd string) ApiSlurmdbV0040GetClusterRequest {
-	r.usageEnd = &usageEnd
-	return r
-}
-
-// Usage start UNIX timestamp (seconds)
-func (r ApiSlurmdbV0040GetClusterRequest) UsageStart(usageStart string) ApiSlurmdbV0040GetClusterRequest {
-	r.usageStart = &usageStart
-	return r
-}
-
-// include deleted clusters
-func (r ApiSlurmdbV0040GetClusterRequest) WithDeleted(withDeleted string) ApiSlurmdbV0040GetClusterRequest {
-	r.withDeleted = &withDeleted
-	return r
-}
-
-// query usage
-func (r ApiSlurmdbV0040GetClusterRequest) WithUsage(withUsage string) ApiSlurmdbV0040GetClusterRequest {
-	r.withUsage = &withUsage
-	return r
-}
-
-func (r ApiSlurmdbV0040GetClusterRequest) Execute() (*V0040OpenapiClustersResp, *http.Response, error) {
-	return r.ApiService.SlurmdbV0040GetClusterExecute(r)
-}
-
-/*
-SlurmdbV0040GetCluster Get cluster info
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param clusterName Cluster name
- @return ApiSlurmdbV0040GetClusterRequest
-*/
-func (a *SlurmdbAPIService) SlurmdbV0040GetCluster(ctx context.Context, clusterName string) ApiSlurmdbV0040GetClusterRequest {
-	return ApiSlurmdbV0040GetClusterRequest{
-		ApiService: a,
-		ctx: ctx,
-		clusterName: clusterName,
-	}
-}
-
-// Execute executes the request
-//  @return V0040OpenapiClustersResp
-func (a *SlurmdbAPIService) SlurmdbV0040GetClusterExecute(r ApiSlurmdbV0040GetClusterRequest) (*V0040OpenapiClustersResp, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *V0040OpenapiClustersResp
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0040GetCluster")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurmdb/v0.0.40/cluster/{cluster_name}"
-	localVarPath = strings.Replace(localVarPath, "{"+"cluster_name"+"}", url.PathEscape(parameterValueToString(r.clusterName, "clusterName")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	if r.classification != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "classification", r.classification, "")
-	}
-	if r.cluster != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cluster", r.cluster, "")
-	}
-	if r.federation != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "federation", r.federation, "")
-	}
-	if r.flags != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "flags", r.flags, "")
-	}
-	if r.format != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "format", r.format, "")
-	}
-	if r.rpcVersion != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "rpc_version", r.rpcVersion, "")
-	}
-	if r.usageEnd != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "usage_end", r.usageEnd, "")
-	}
-	if r.usageStart != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "usage_start", r.usageStart, "")
-	}
-	if r.withDeleted != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "with_deleted", r.withDeleted, "")
-	}
-	if r.withUsage != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "with_usage", r.withUsage, "")
-	}
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v V0040OpenapiClustersResp
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmdbV0040GetClustersRequest struct {
-	ctx context.Context
-	ApiService *SlurmdbAPIService
-	updateTime *string
-}
-
-// Filter reservations since update timestamp
-func (r ApiSlurmdbV0040GetClustersRequest) UpdateTime(updateTime string) ApiSlurmdbV0040GetClustersRequest {
-	r.updateTime = &updateTime
-	return r
-}
-
-func (r ApiSlurmdbV0040GetClustersRequest) Execute() (*V0040OpenapiClustersResp, *http.Response, error) {
-	return r.ApiService.SlurmdbV0040GetClustersExecute(r)
-}
-
-/*
-SlurmdbV0040GetClusters Get cluster list
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmdbV0040GetClustersRequest
-*/
-func (a *SlurmdbAPIService) SlurmdbV0040GetClusters(ctx context.Context) ApiSlurmdbV0040GetClustersRequest {
-	return ApiSlurmdbV0040GetClustersRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-// Execute executes the request
-//  @return V0040OpenapiClustersResp
-func (a *SlurmdbAPIService) SlurmdbV0040GetClustersExecute(r ApiSlurmdbV0040GetClustersRequest) (*V0040OpenapiClustersResp, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *V0040OpenapiClustersResp
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0040GetClusters")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurmdb/v0.0.40/clusters/"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	if r.updateTime != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "update_time", r.updateTime, "")
-	}
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v V0040OpenapiClustersResp
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmdbV0040GetConfigRequest struct {
-	ctx context.Context
-	ApiService *SlurmdbAPIService
-}
-
-func (r ApiSlurmdbV0040GetConfigRequest) Execute() (*V0040OpenapiSlurmdbdConfigResp, *http.Response, error) {
-	return r.ApiService.SlurmdbV0040GetConfigExecute(r)
-}
-
-/*
-SlurmdbV0040GetConfig Dump all configuration information
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmdbV0040GetConfigRequest
-*/
-func (a *SlurmdbAPIService) SlurmdbV0040GetConfig(ctx context.Context) ApiSlurmdbV0040GetConfigRequest {
-	return ApiSlurmdbV0040GetConfigRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-// Execute executes the request
-//  @return V0040OpenapiSlurmdbdConfigResp
-func (a *SlurmdbAPIService) SlurmdbV0040GetConfigExecute(r ApiSlurmdbV0040GetConfigRequest) (*V0040OpenapiSlurmdbdConfigResp, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *V0040OpenapiSlurmdbdConfigResp
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0040GetConfig")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurmdb/v0.0.40/config"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v V0040OpenapiSlurmdbdConfigResp
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmdbV0040GetDiagRequest struct {
-	ctx context.Context
-	ApiService *SlurmdbAPIService
-}
-
-func (r ApiSlurmdbV0040GetDiagRequest) Execute() (*V0040OpenapiSlurmdbdStatsResp, *http.Response, error) {
-	return r.ApiService.SlurmdbV0040GetDiagExecute(r)
-}
-
-/*
-SlurmdbV0040GetDiag Get slurmdb diagnostics
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmdbV0040GetDiagRequest
-*/
-func (a *SlurmdbAPIService) SlurmdbV0040GetDiag(ctx context.Context) ApiSlurmdbV0040GetDiagRequest {
-	return ApiSlurmdbV0040GetDiagRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-// Execute executes the request
-//  @return V0040OpenapiSlurmdbdStatsResp
-func (a *SlurmdbAPIService) SlurmdbV0040GetDiagExecute(r ApiSlurmdbV0040GetDiagRequest) (*V0040OpenapiSlurmdbdStatsResp, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *V0040OpenapiSlurmdbdStatsResp
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0040GetDiag")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurmdb/v0.0.40/diag/"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v V0040OpenapiSlurmdbdStatsResp
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmdbV0040GetInstanceRequest struct {
-	ctx context.Context
-	ApiService *SlurmdbAPIService
-	cluster *string
-	extra *string
-	format *string
-	instanceId *string
-	instanceType *string
-	nodeList *string
-	timeEnd *string
-	timeStart *string
-}
-
-// CSV clusters list
-func (r ApiSlurmdbV0040GetInstanceRequest) Cluster(cluster string) ApiSlurmdbV0040GetInstanceRequest {
-	r.cluster = &cluster
-	return r
-}
-
-// CSV extra list
-func (r ApiSlurmdbV0040GetInstanceRequest) Extra(extra string) ApiSlurmdbV0040GetInstanceRequest {
-	r.extra = &extra
-	return r
-}
-
-// CSV format list
-func (r ApiSlurmdbV0040GetInstanceRequest) Format(format string) ApiSlurmdbV0040GetInstanceRequest {
-	r.format = &format
-	return r
-}
-
-// CSV instance_id list
-func (r ApiSlurmdbV0040GetInstanceRequest) InstanceId(instanceId string) ApiSlurmdbV0040GetInstanceRequest {
-	r.instanceId = &instanceId
-	return r
-}
-
-// CSV instance_type list
-func (r ApiSlurmdbV0040GetInstanceRequest) InstanceType(instanceType string) ApiSlurmdbV0040GetInstanceRequest {
-	r.instanceType = &instanceType
-	return r
-}
-
-// ranged node string
-func (r ApiSlurmdbV0040GetInstanceRequest) NodeList(nodeList string) ApiSlurmdbV0040GetInstanceRequest {
-	r.nodeList = &nodeList
-	return r
-}
-
-// time end UNIX timestamp
-func (r ApiSlurmdbV0040GetInstanceRequest) TimeEnd(timeEnd string) ApiSlurmdbV0040GetInstanceRequest {
-	r.timeEnd = &timeEnd
-	return r
-}
-
-// time start UNIX timestamp
-func (r ApiSlurmdbV0040GetInstanceRequest) TimeStart(timeStart string) ApiSlurmdbV0040GetInstanceRequest {
-	r.timeStart = &timeStart
-	return r
-}
-
-func (r ApiSlurmdbV0040GetInstanceRequest) Execute() (*V0040OpenapiInstancesResp, *http.Response, error) {
-	return r.ApiService.SlurmdbV0040GetInstanceExecute(r)
-}
-
-/*
-SlurmdbV0040GetInstance Get instance info
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmdbV0040GetInstanceRequest
-*/
-func (a *SlurmdbAPIService) SlurmdbV0040GetInstance(ctx context.Context) ApiSlurmdbV0040GetInstanceRequest {
-	return ApiSlurmdbV0040GetInstanceRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-// Execute executes the request
-//  @return V0040OpenapiInstancesResp
-func (a *SlurmdbAPIService) SlurmdbV0040GetInstanceExecute(r ApiSlurmdbV0040GetInstanceRequest) (*V0040OpenapiInstancesResp, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *V0040OpenapiInstancesResp
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0040GetInstance")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurmdb/v0.0.40/instance/"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	if r.cluster != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cluster", r.cluster, "")
-	}
-	if r.extra != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "extra", r.extra, "")
-	}
-	if r.format != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "format", r.format, "")
-	}
-	if r.instanceId != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "instance_id", r.instanceId, "")
-	}
-	if r.instanceType != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "instance_type", r.instanceType, "")
-	}
-	if r.nodeList != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "node_list", r.nodeList, "")
-	}
-	if r.timeEnd != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "time_end", r.timeEnd, "")
-	}
-	if r.timeStart != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "time_start", r.timeStart, "")
-	}
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v V0040OpenapiInstancesResp
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmdbV0040GetInstancesRequest struct {
-	ctx context.Context
-	ApiService *SlurmdbAPIService
-	cluster *string
-	extra *string
-	format *string
-	instanceId *string
-	instanceType *string
-	nodeList *string
-	timeEnd *string
-	timeStart *string
-}
-
-// CSV clusters list
-func (r ApiSlurmdbV0040GetInstancesRequest) Cluster(cluster string) ApiSlurmdbV0040GetInstancesRequest {
-	r.cluster = &cluster
-	return r
-}
-
-// CSV extra list
-func (r ApiSlurmdbV0040GetInstancesRequest) Extra(extra string) ApiSlurmdbV0040GetInstancesRequest {
-	r.extra = &extra
-	return r
-}
-
-// CSV format list
-func (r ApiSlurmdbV0040GetInstancesRequest) Format(format string) ApiSlurmdbV0040GetInstancesRequest {
-	r.format = &format
-	return r
-}
-
-// CSV instance_id list
-func (r ApiSlurmdbV0040GetInstancesRequest) InstanceId(instanceId string) ApiSlurmdbV0040GetInstancesRequest {
-	r.instanceId = &instanceId
-	return r
-}
-
-// CSV instance_type list
-func (r ApiSlurmdbV0040GetInstancesRequest) InstanceType(instanceType string) ApiSlurmdbV0040GetInstancesRequest {
-	r.instanceType = &instanceType
-	return r
-}
-
-// ranged node string
-func (r ApiSlurmdbV0040GetInstancesRequest) NodeList(nodeList string) ApiSlurmdbV0040GetInstancesRequest {
-	r.nodeList = &nodeList
-	return r
-}
-
-// time end UNIX timestamp
-func (r ApiSlurmdbV0040GetInstancesRequest) TimeEnd(timeEnd string) ApiSlurmdbV0040GetInstancesRequest {
-	r.timeEnd = &timeEnd
-	return r
-}
-
-// time start UNIX timestamp
-func (r ApiSlurmdbV0040GetInstancesRequest) TimeStart(timeStart string) ApiSlurmdbV0040GetInstancesRequest {
-	r.timeStart = &timeStart
-	return r
-}
-
-func (r ApiSlurmdbV0040GetInstancesRequest) Execute() (*V0040OpenapiInstancesResp, *http.Response, error) {
-	return r.ApiService.SlurmdbV0040GetInstancesExecute(r)
-}
-
-/*
-SlurmdbV0040GetInstances Get instance list
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmdbV0040GetInstancesRequest
-*/
-func (a *SlurmdbAPIService) SlurmdbV0040GetInstances(ctx context.Context) ApiSlurmdbV0040GetInstancesRequest {
-	return ApiSlurmdbV0040GetInstancesRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-// Execute executes the request
-//  @return V0040OpenapiInstancesResp
-func (a *SlurmdbAPIService) SlurmdbV0040GetInstancesExecute(r ApiSlurmdbV0040GetInstancesRequest) (*V0040OpenapiInstancesResp, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *V0040OpenapiInstancesResp
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0040GetInstances")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurmdb/v0.0.40/instances/"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	if r.cluster != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cluster", r.cluster, "")
-	}
-	if r.extra != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "extra", r.extra, "")
-	}
-	if r.format != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "format", r.format, "")
-	}
-	if r.instanceId != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "instance_id", r.instanceId, "")
-	}
-	if r.instanceType != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "instance_type", r.instanceType, "")
-	}
-	if r.nodeList != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "node_list", r.nodeList, "")
-	}
-	if r.timeEnd != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "time_end", r.timeEnd, "")
-	}
-	if r.timeStart != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "time_start", r.timeStart, "")
-	}
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v V0040OpenapiInstancesResp
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmdbV0040GetJobRequest struct {
-	ctx context.Context
-	ApiService *SlurmdbAPIService
-	jobId string
-}
-
-func (r ApiSlurmdbV0040GetJobRequest) Execute() (*V0040OpenapiSlurmdbdJobsResp, *http.Response, error) {
-	return r.ApiService.SlurmdbV0040GetJobExecute(r)
-}
-
-/*
-SlurmdbV0040GetJob Get job info
-
-This endpoint may return multiple job entries since job_id is not a unique key - only the tuple (cluster, job_id, start_time) is unique. If the requested job_id is a component of a heterogeneous job all components are returned.
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param jobId Job id
- @return ApiSlurmdbV0040GetJobRequest
-*/
-func (a *SlurmdbAPIService) SlurmdbV0040GetJob(ctx context.Context, jobId string) ApiSlurmdbV0040GetJobRequest {
-	return ApiSlurmdbV0040GetJobRequest{
-		ApiService: a,
-		ctx: ctx,
-		jobId: jobId,
-	}
-}
-
-// Execute executes the request
-//  @return V0040OpenapiSlurmdbdJobsResp
-func (a *SlurmdbAPIService) SlurmdbV0040GetJobExecute(r ApiSlurmdbV0040GetJobRequest) (*V0040OpenapiSlurmdbdJobsResp, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *V0040OpenapiSlurmdbdJobsResp
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0040GetJob")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurmdb/v0.0.40/job/{job_id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"job_id"+"}", url.PathEscape(parameterValueToString(r.jobId, "jobId")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v V0040OpenapiSlurmdbdJobsResp
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmdbV0040GetJobsRequest struct {
-	ctx context.Context
-	ApiService *SlurmdbAPIService
-	account *string
-	association *string
-	cluster *string
-	constraints *string
-	cpusMax *string
-	cpusMin *string
-	schedulerUnset *string
-	scheduledOnSubmit *string
-	scheduledByMain *string
-	scheduledByBackfill *string
-	jobStarted *string
-	exitCode *string
-	showDuplicates *string
-	skipSteps *string
-	disableTruncateUsageTime *string
-	wholeHetjob *string
-	disableWholeHetjob *string
-	disableWaitForResult *string
-	usageTimeAsSubmitTime *string
-	showBatchScript *string
-	showJobEnvironment *string
-	format *string
-	groups *string
-	jobName *string
-	nodesMax *string
-	nodesMin *string
-	partition *string
-	qos *string
-	reason *string
-	reservation *string
-	reservationId *string
-	state *string
-	step *string
-	timelimitMax *string
-	timelimitMin *string
-	endTime *string
-	startTime *string
-	submitTime *string
-	node *string
-	users *string
-	wckey *string
-}
-
-// CSV account list
-func (r ApiSlurmdbV0040GetJobsRequest) Account(account string) ApiSlurmdbV0040GetJobsRequest {
-	r.account = &account
-	return r
-}
-
-// CSV association list
-func (r ApiSlurmdbV0040GetJobsRequest) Association(association string) ApiSlurmdbV0040GetJobsRequest {
-	r.association = &association
-	return r
-}
-
-// CSV cluster list
-func (r ApiSlurmdbV0040GetJobsRequest) Cluster(cluster string) ApiSlurmdbV0040GetJobsRequest {
-	r.cluster = &cluster
-	return r
-}
-
-// CSV constraint list
-func (r ApiSlurmdbV0040GetJobsRequest) Constraints(constraints string) ApiSlurmdbV0040GetJobsRequest {
-	r.constraints = &constraints
-	return r
-}
-
-// number of cpus high range
-func (r ApiSlurmdbV0040GetJobsRequest) CpusMax(cpusMax string) ApiSlurmdbV0040GetJobsRequest {
-	r.cpusMax = &cpusMax
-	return r
-}
-
-// number of cpus low range
-func (r ApiSlurmdbV0040GetJobsRequest) CpusMin(cpusMin string) ApiSlurmdbV0040GetJobsRequest {
-	r.cpusMin = &cpusMin
-	return r
-}
-
-func (r ApiSlurmdbV0040GetJobsRequest) SchedulerUnset(schedulerUnset string) ApiSlurmdbV0040GetJobsRequest {
-	r.schedulerUnset = &schedulerUnset
-	return r
-}
-
-func (r ApiSlurmdbV0040GetJobsRequest) ScheduledOnSubmit(scheduledOnSubmit string) ApiSlurmdbV0040GetJobsRequest {
-	r.scheduledOnSubmit = &scheduledOnSubmit
-	return r
-}
-
-func (r ApiSlurmdbV0040GetJobsRequest) ScheduledByMain(scheduledByMain string) ApiSlurmdbV0040GetJobsRequest {
-	r.scheduledByMain = &scheduledByMain
-	return r
-}
-
-func (r ApiSlurmdbV0040GetJobsRequest) ScheduledByBackfill(scheduledByBackfill string) ApiSlurmdbV0040GetJobsRequest {
-	r.scheduledByBackfill = &scheduledByBackfill
-	return r
-}
-
-func (r ApiSlurmdbV0040GetJobsRequest) JobStarted(jobStarted string) ApiSlurmdbV0040GetJobsRequest {
-	r.jobStarted = &jobStarted
-	return r
-}
-
-// job exit code (numeric)
-func (r ApiSlurmdbV0040GetJobsRequest) ExitCode(exitCode string) ApiSlurmdbV0040GetJobsRequest {
-	r.exitCode = &exitCode
-	return r
-}
-
-func (r ApiSlurmdbV0040GetJobsRequest) ShowDuplicates(showDuplicates string) ApiSlurmdbV0040GetJobsRequest {
-	r.showDuplicates = &showDuplicates
-	return r
-}
-
-func (r ApiSlurmdbV0040GetJobsRequest) SkipSteps(skipSteps string) ApiSlurmdbV0040GetJobsRequest {
-	r.skipSteps = &skipSteps
-	return r
-}
-
-func (r ApiSlurmdbV0040GetJobsRequest) DisableTruncateUsageTime(disableTruncateUsageTime string) ApiSlurmdbV0040GetJobsRequest {
-	r.disableTruncateUsageTime = &disableTruncateUsageTime
-	return r
-}
-
-func (r ApiSlurmdbV0040GetJobsRequest) WholeHetjob(wholeHetjob string) ApiSlurmdbV0040GetJobsRequest {
-	r.wholeHetjob = &wholeHetjob
-	return r
-}
-
-func (r ApiSlurmdbV0040GetJobsRequest) DisableWholeHetjob(disableWholeHetjob string) ApiSlurmdbV0040GetJobsRequest {
-	r.disableWholeHetjob = &disableWholeHetjob
-	return r
-}
-
-func (r ApiSlurmdbV0040GetJobsRequest) DisableWaitForResult(disableWaitForResult string) ApiSlurmdbV0040GetJobsRequest {
-	r.disableWaitForResult = &disableWaitForResult
-	return r
-}
-
-func (r ApiSlurmdbV0040GetJobsRequest) UsageTimeAsSubmitTime(usageTimeAsSubmitTime string) ApiSlurmdbV0040GetJobsRequest {
-	r.usageTimeAsSubmitTime = &usageTimeAsSubmitTime
-	return r
-}
-
-func (r ApiSlurmdbV0040GetJobsRequest) ShowBatchScript(showBatchScript string) ApiSlurmdbV0040GetJobsRequest {
-	r.showBatchScript = &showBatchScript
-	return r
-}
-
-func (r ApiSlurmdbV0040GetJobsRequest) ShowJobEnvironment(showJobEnvironment string) ApiSlurmdbV0040GetJobsRequest {
-	r.showJobEnvironment = &showJobEnvironment
-	return r
-}
-
-// CSV format list
-func (r ApiSlurmdbV0040GetJobsRequest) Format(format string) ApiSlurmdbV0040GetJobsRequest {
-	r.format = &format
-	return r
-}
-
-// CSV group list
-func (r ApiSlurmdbV0040GetJobsRequest) Groups(groups string) ApiSlurmdbV0040GetJobsRequest {
-	r.groups = &groups
-	return r
-}
-
-// CSV job name list
-func (r ApiSlurmdbV0040GetJobsRequest) JobName(jobName string) ApiSlurmdbV0040GetJobsRequest {
-	r.jobName = &jobName
-	return r
-}
-
-// number of nodes high range
-func (r ApiSlurmdbV0040GetJobsRequest) NodesMax(nodesMax string) ApiSlurmdbV0040GetJobsRequest {
-	r.nodesMax = &nodesMax
-	return r
-}
-
-// number of nodes low range
-func (r ApiSlurmdbV0040GetJobsRequest) NodesMin(nodesMin string) ApiSlurmdbV0040GetJobsRequest {
-	r.nodesMin = &nodesMin
-	return r
-}
-
-// CSV partition name list
-func (r ApiSlurmdbV0040GetJobsRequest) Partition(partition string) ApiSlurmdbV0040GetJobsRequest {
-	r.partition = &partition
-	return r
-}
-
-// CSV QOS name list
-func (r ApiSlurmdbV0040GetJobsRequest) Qos(qos string) ApiSlurmdbV0040GetJobsRequest {
-	r.qos = &qos
-	return r
-}
-
-// CSV reason list
-func (r ApiSlurmdbV0040GetJobsRequest) Reason(reason string) ApiSlurmdbV0040GetJobsRequest {
-	r.reason = &reason
-	return r
-}
-
-// CSV reservation name list
-func (r ApiSlurmdbV0040GetJobsRequest) Reservation(reservation string) ApiSlurmdbV0040GetJobsRequest {
-	r.reservation = &reservation
-	return r
-}
-
-// CSV reservation ID list
-func (r ApiSlurmdbV0040GetJobsRequest) ReservationId(reservationId string) ApiSlurmdbV0040GetJobsRequest {
-	r.reservationId = &reservationId
-	return r
-}
-
-// CSV state list
-func (r ApiSlurmdbV0040GetJobsRequest) State(state string) ApiSlurmdbV0040GetJobsRequest {
-	r.state = &state
-	return r
-}
-
-// CSV step id list
-func (r ApiSlurmdbV0040GetJobsRequest) Step(step string) ApiSlurmdbV0040GetJobsRequest {
-	r.step = &step
-	return r
-}
-
-// maximum timelimit (seconds)
-func (r ApiSlurmdbV0040GetJobsRequest) TimelimitMax(timelimitMax string) ApiSlurmdbV0040GetJobsRequest {
-	r.timelimitMax = &timelimitMax
-	return r
-}
-
-// minimum timelimit (seconds)
-func (r ApiSlurmdbV0040GetJobsRequest) TimelimitMin(timelimitMin string) ApiSlurmdbV0040GetJobsRequest {
-	r.timelimitMin = &timelimitMin
-	return r
-}
-
-// usage end timestamp
-func (r ApiSlurmdbV0040GetJobsRequest) EndTime(endTime string) ApiSlurmdbV0040GetJobsRequest {
-	r.endTime = &endTime
-	return r
-}
-
-// usage start timestamp
-func (r ApiSlurmdbV0040GetJobsRequest) StartTime(startTime string) ApiSlurmdbV0040GetJobsRequest {
-	r.startTime = &startTime
-	return r
-}
-
-// submit time timestamp
-func (r ApiSlurmdbV0040GetJobsRequest) SubmitTime(submitTime string) ApiSlurmdbV0040GetJobsRequest {
-	r.submitTime = &submitTime
-	return r
-}
-
-// ranged node string where jobs ran
-func (r ApiSlurmdbV0040GetJobsRequest) Node(node string) ApiSlurmdbV0040GetJobsRequest {
-	r.node = &node
-	return r
-}
-
-// CSV user name list
-func (r ApiSlurmdbV0040GetJobsRequest) Users(users string) ApiSlurmdbV0040GetJobsRequest {
-	r.users = &users
-	return r
-}
-
-// CSV wckey list
-func (r ApiSlurmdbV0040GetJobsRequest) Wckey(wckey string) ApiSlurmdbV0040GetJobsRequest {
-	r.wckey = &wckey
-	return r
-}
-
-func (r ApiSlurmdbV0040GetJobsRequest) Execute() (*V0040OpenapiSlurmdbdJobsResp, *http.Response, error) {
-	return r.ApiService.SlurmdbV0040GetJobsExecute(r)
-}
-
-/*
-SlurmdbV0040GetJobs Get job list
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmdbV0040GetJobsRequest
-*/
-func (a *SlurmdbAPIService) SlurmdbV0040GetJobs(ctx context.Context) ApiSlurmdbV0040GetJobsRequest {
-	return ApiSlurmdbV0040GetJobsRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-// Execute executes the request
-//  @return V0040OpenapiSlurmdbdJobsResp
-func (a *SlurmdbAPIService) SlurmdbV0040GetJobsExecute(r ApiSlurmdbV0040GetJobsRequest) (*V0040OpenapiSlurmdbdJobsResp, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *V0040OpenapiSlurmdbdJobsResp
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0040GetJobs")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurmdb/v0.0.40/jobs/"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	if r.account != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "account", r.account, "")
-	}
-	if r.association != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "association", r.association, "")
-	}
-	if r.cluster != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cluster", r.cluster, "")
-	}
-	if r.constraints != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "constraints", r.constraints, "")
-	}
-	if r.cpusMax != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cpus_max", r.cpusMax, "")
-	}
-	if r.cpusMin != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cpus_min", r.cpusMin, "")
-	}
-	if r.schedulerUnset != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "scheduler_unset", r.schedulerUnset, "")
-	}
-	if r.scheduledOnSubmit != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "scheduled_on_submit", r.scheduledOnSubmit, "")
-	}
-	if r.scheduledByMain != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "scheduled_by_main", r.scheduledByMain, "")
-	}
-	if r.scheduledByBackfill != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "scheduled_by_backfill", r.scheduledByBackfill, "")
-	}
-	if r.jobStarted != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "job_started", r.jobStarted, "")
-	}
-	if r.exitCode != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "exit_code", r.exitCode, "")
-	}
-	if r.showDuplicates != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "show_duplicates", r.showDuplicates, "")
-	}
-	if r.skipSteps != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "skip_steps", r.skipSteps, "")
-	}
-	if r.disableTruncateUsageTime != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "disable_truncate_usage_time", r.disableTruncateUsageTime, "")
-	}
-	if r.wholeHetjob != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "whole_hetjob", r.wholeHetjob, "")
-	}
-	if r.disableWholeHetjob != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "disable_whole_hetjob", r.disableWholeHetjob, "")
-	}
-	if r.disableWaitForResult != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "disable_wait_for_result", r.disableWaitForResult, "")
-	}
-	if r.usageTimeAsSubmitTime != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "usage_time_as_submit_time", r.usageTimeAsSubmitTime, "")
-	}
-	if r.showBatchScript != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "show_batch_script", r.showBatchScript, "")
-	}
-	if r.showJobEnvironment != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "show_job_environment", r.showJobEnvironment, "")
-	}
-	if r.format != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "format", r.format, "")
-	}
-	if r.groups != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "groups", r.groups, "")
-	}
-	if r.jobName != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "job_name", r.jobName, "")
-	}
-	if r.nodesMax != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "nodes_max", r.nodesMax, "")
-	}
-	if r.nodesMin != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "nodes_min", r.nodesMin, "")
-	}
-	if r.partition != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "partition", r.partition, "")
-	}
-	if r.qos != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "qos", r.qos, "")
-	}
-	if r.reason != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "reason", r.reason, "")
-	}
-	if r.reservation != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "reservation", r.reservation, "")
-	}
-	if r.reservationId != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "reservation_id", r.reservationId, "")
-	}
-	if r.state != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "state", r.state, "")
-	}
-	if r.step != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "step", r.step, "")
-	}
-	if r.timelimitMax != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "timelimit_max", r.timelimitMax, "")
-	}
-	if r.timelimitMin != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "timelimit_min", r.timelimitMin, "")
-	}
-	if r.endTime != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "end_time", r.endTime, "")
-	}
-	if r.startTime != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "start_time", r.startTime, "")
-	}
-	if r.submitTime != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "submit_time", r.submitTime, "")
-	}
-	if r.node != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "node", r.node, "")
-	}
-	if r.users != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "users", r.users, "")
-	}
-	if r.wckey != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "wckey", r.wckey, "")
-	}
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v V0040OpenapiSlurmdbdJobsResp
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmdbV0040GetQosRequest struct {
-	ctx context.Context
-	ApiService *SlurmdbAPIService
-	description *string
-	id *string
-	format *string
-	name *string
-	preemptMode *string
-	withDeleted *string
-}
-
-// CSV description list
-func (r ApiSlurmdbV0040GetQosRequest) Description(description string) ApiSlurmdbV0040GetQosRequest {
-	r.description = &description
-	return r
-}
-
-// CSV QOS id list
-func (r ApiSlurmdbV0040GetQosRequest) Id(id string) ApiSlurmdbV0040GetQosRequest {
-	r.id = &id
-	return r
-}
-
-// CSV format list
-func (r ApiSlurmdbV0040GetQosRequest) Format(format string) ApiSlurmdbV0040GetQosRequest {
-	r.format = &format
-	return r
-}
-
-// CSV QOS name list
-func (r ApiSlurmdbV0040GetQosRequest) Name(name string) ApiSlurmdbV0040GetQosRequest {
-	r.name = &name
-	return r
-}
-
-func (r ApiSlurmdbV0040GetQosRequest) PreemptMode(preemptMode string) ApiSlurmdbV0040GetQosRequest {
-	r.preemptMode = &preemptMode
-	return r
-}
-
-// Include deleted QOS
-func (r ApiSlurmdbV0040GetQosRequest) WithDeleted(withDeleted string) ApiSlurmdbV0040GetQosRequest {
-	r.withDeleted = &withDeleted
-	return r
-}
-
-func (r ApiSlurmdbV0040GetQosRequest) Execute() (*V0040OpenapiSlurmdbdQosResp, *http.Response, error) {
-	return r.ApiService.SlurmdbV0040GetQosExecute(r)
-}
-
-/*
-SlurmdbV0040GetQos Get QOS list
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmdbV0040GetQosRequest
-*/
-func (a *SlurmdbAPIService) SlurmdbV0040GetQos(ctx context.Context) ApiSlurmdbV0040GetQosRequest {
-	return ApiSlurmdbV0040GetQosRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-// Execute executes the request
-//  @return V0040OpenapiSlurmdbdQosResp
-func (a *SlurmdbAPIService) SlurmdbV0040GetQosExecute(r ApiSlurmdbV0040GetQosRequest) (*V0040OpenapiSlurmdbdQosResp, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *V0040OpenapiSlurmdbdQosResp
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0040GetQos")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurmdb/v0.0.40/qos/"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	if r.description != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "description", r.description, "")
-	}
-	if r.id != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "id", r.id, "")
-	}
-	if r.format != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "format", r.format, "")
-	}
-	if r.name != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "name", r.name, "")
-	}
-	if r.preemptMode != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "preempt_mode", r.preemptMode, "")
-	}
-	if r.withDeleted != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "with_deleted", r.withDeleted, "")
-	}
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v V0040OpenapiSlurmdbdQosResp
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmdbV0040GetSingleQosRequest struct {
-	ctx context.Context
-	ApiService *SlurmdbAPIService
-	qos string
-	withDeleted *string
-}
-
-// Query includes deleted QOS
-func (r ApiSlurmdbV0040GetSingleQosRequest) WithDeleted(withDeleted string) ApiSlurmdbV0040GetSingleQosRequest {
-	r.withDeleted = &withDeleted
-	return r
-}
-
-func (r ApiSlurmdbV0040GetSingleQosRequest) Execute() (*V0040OpenapiSlurmdbdQosResp, *http.Response, error) {
-	return r.ApiService.SlurmdbV0040GetSingleQosExecute(r)
-}
-
-/*
-SlurmdbV0040GetSingleQos Get QOS info
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param qos QOS name
- @return ApiSlurmdbV0040GetSingleQosRequest
-*/
-func (a *SlurmdbAPIService) SlurmdbV0040GetSingleQos(ctx context.Context, qos string) ApiSlurmdbV0040GetSingleQosRequest {
-	return ApiSlurmdbV0040GetSingleQosRequest{
-		ApiService: a,
-		ctx: ctx,
-		qos: qos,
-	}
-}
-
-// Execute executes the request
-//  @return V0040OpenapiSlurmdbdQosResp
-func (a *SlurmdbAPIService) SlurmdbV0040GetSingleQosExecute(r ApiSlurmdbV0040GetSingleQosRequest) (*V0040OpenapiSlurmdbdQosResp, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *V0040OpenapiSlurmdbdQosResp
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0040GetSingleQos")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurmdb/v0.0.40/qos/{qos}"
-	localVarPath = strings.Replace(localVarPath, "{"+"qos"+"}", url.PathEscape(parameterValueToString(r.qos, "qos")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	if r.withDeleted != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "with_deleted", r.withDeleted, "")
-	}
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v V0040OpenapiSlurmdbdQosResp
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmdbV0040GetTresRequest struct {
-	ctx context.Context
-	ApiService *SlurmdbAPIService
-}
-
-func (r ApiSlurmdbV0040GetTresRequest) Execute() (*V0040OpenapiTresResp, *http.Response, error) {
-	return r.ApiService.SlurmdbV0040GetTresExecute(r)
-}
-
-/*
-SlurmdbV0040GetTres Get TRES info
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmdbV0040GetTresRequest
-*/
-func (a *SlurmdbAPIService) SlurmdbV0040GetTres(ctx context.Context) ApiSlurmdbV0040GetTresRequest {
-	return ApiSlurmdbV0040GetTresRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-// Execute executes the request
-//  @return V0040OpenapiTresResp
-func (a *SlurmdbAPIService) SlurmdbV0040GetTresExecute(r ApiSlurmdbV0040GetTresRequest) (*V0040OpenapiTresResp, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *V0040OpenapiTresResp
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0040GetTres")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurmdb/v0.0.40/tres/"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v V0040OpenapiTresResp
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmdbV0040GetUserRequest struct {
-	ctx context.Context
-	ApiService *SlurmdbAPIService
-	name string
-	withDeleted *string
-	withAssocs *string
-	withCoords *string
-	withWckeys *string
-}
-
-// Include deleted users
-func (r ApiSlurmdbV0040GetUserRequest) WithDeleted(withDeleted string) ApiSlurmdbV0040GetUserRequest {
-	r.withDeleted = &withDeleted
-	return r
-}
-
-// Include assocations
-func (r ApiSlurmdbV0040GetUserRequest) WithAssocs(withAssocs string) ApiSlurmdbV0040GetUserRequest {
+// Include associations
+func (r ApiSlurmdbV0044GetAccountRequest) WithAssocs(withAssocs string) ApiSlurmdbV0044GetAccountRequest {
 	r.withAssocs = &withAssocs
 	return r
 }
 
 // Include coordinators
-func (r ApiSlurmdbV0040GetUserRequest) WithCoords(withCoords string) ApiSlurmdbV0040GetUserRequest {
+func (r ApiSlurmdbV0044GetAccountRequest) WithCoords(withCoords string) ApiSlurmdbV0044GetAccountRequest {
 	r.withCoords = &withCoords
 	return r
 }
 
-// Include wckeys
-func (r ApiSlurmdbV0040GetUserRequest) WithWckeys(withWckeys string) ApiSlurmdbV0040GetUserRequest {
-	r.withWckeys = &withWckeys
-	return r
-}
-
-func (r ApiSlurmdbV0040GetUserRequest) Execute() (*V0040OpenapiUsersResp, *http.Response, error) {
-	return r.ApiService.SlurmdbV0040GetUserExecute(r)
-}
-
-/*
-SlurmdbV0040GetUser Get user info
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param name User name
- @return ApiSlurmdbV0040GetUserRequest
-*/
-func (a *SlurmdbAPIService) SlurmdbV0040GetUser(ctx context.Context, name string) ApiSlurmdbV0040GetUserRequest {
-	return ApiSlurmdbV0040GetUserRequest{
-		ApiService: a,
-		ctx: ctx,
-		name: name,
-	}
-}
-
-// Execute executes the request
-//  @return V0040OpenapiUsersResp
-func (a *SlurmdbAPIService) SlurmdbV0040GetUserExecute(r ApiSlurmdbV0040GetUserRequest) (*V0040OpenapiUsersResp, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *V0040OpenapiUsersResp
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0040GetUser")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurmdb/v0.0.40/user/{name}"
-	localVarPath = strings.Replace(localVarPath, "{"+"name"+"}", url.PathEscape(parameterValueToString(r.name, "name")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	if r.withDeleted != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "with_deleted", r.withDeleted, "")
-	}
-	if r.withAssocs != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "with_assocs", r.withAssocs, "")
-	}
-	if r.withCoords != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "with_coords", r.withCoords, "")
-	}
-	if r.withWckeys != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "with_wckeys", r.withWckeys, "")
-	}
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v V0040OpenapiUsersResp
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmdbV0040GetUsersRequest struct {
-	ctx context.Context
-	ApiService *SlurmdbAPIService
-	adminLevel *string
-	defaultAccount *string
-	defaultWckey *string
-	withAssocs *string
-	withCoords *string
-	withDeleted *string
-	withWckeys *string
-	withoutDefaults *string
-}
-
-// Administrator level
-func (r ApiSlurmdbV0040GetUsersRequest) AdminLevel(adminLevel string) ApiSlurmdbV0040GetUsersRequest {
-	r.adminLevel = &adminLevel
-	return r
-}
-
-// CSV default account list
-func (r ApiSlurmdbV0040GetUsersRequest) DefaultAccount(defaultAccount string) ApiSlurmdbV0040GetUsersRequest {
-	r.defaultAccount = &defaultAccount
-	return r
-}
-
-// CSV default wckey list
-func (r ApiSlurmdbV0040GetUsersRequest) DefaultWckey(defaultWckey string) ApiSlurmdbV0040GetUsersRequest {
-	r.defaultWckey = &defaultWckey
-	return r
-}
-
-// With associations
-func (r ApiSlurmdbV0040GetUsersRequest) WithAssocs(withAssocs string) ApiSlurmdbV0040GetUsersRequest {
-	r.withAssocs = &withAssocs
-	return r
-}
-
-// With coordinators
-func (r ApiSlurmdbV0040GetUsersRequest) WithCoords(withCoords string) ApiSlurmdbV0040GetUsersRequest {
-	r.withCoords = &withCoords
-	return r
-}
-
-// With deleted
-func (r ApiSlurmdbV0040GetUsersRequest) WithDeleted(withDeleted string) ApiSlurmdbV0040GetUsersRequest {
+// Include deleted
+func (r ApiSlurmdbV0044GetAccountRequest) WithDeleted(withDeleted string) ApiSlurmdbV0044GetAccountRequest {
 	r.withDeleted = &withDeleted
 	return r
 }
 
-// With wckeys
-func (r ApiSlurmdbV0040GetUsersRequest) WithWckeys(withWckeys string) ApiSlurmdbV0040GetUsersRequest {
-	r.withWckeys = &withWckeys
-	return r
-}
-
-// Exclude defaults
-func (r ApiSlurmdbV0040GetUsersRequest) WithoutDefaults(withoutDefaults string) ApiSlurmdbV0040GetUsersRequest {
-	r.withoutDefaults = &withoutDefaults
-	return r
-}
-
-func (r ApiSlurmdbV0040GetUsersRequest) Execute() (*V0040OpenapiUsersResp, *http.Response, error) {
-	return r.ApiService.SlurmdbV0040GetUsersExecute(r)
+func (r ApiSlurmdbV0044GetAccountRequest) Execute() (*V0044OpenapiAccountsResp, *http.Response, error) {
+	return r.ApiService.SlurmdbV0044GetAccountExecute(r)
 }
 
 /*
-SlurmdbV0040GetUsers Get user list
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmdbV0040GetUsersRequest
-*/
-func (a *SlurmdbAPIService) SlurmdbV0040GetUsers(ctx context.Context) ApiSlurmdbV0040GetUsersRequest {
-	return ApiSlurmdbV0040GetUsersRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-// Execute executes the request
-//  @return V0040OpenapiUsersResp
-func (a *SlurmdbAPIService) SlurmdbV0040GetUsersExecute(r ApiSlurmdbV0040GetUsersRequest) (*V0040OpenapiUsersResp, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *V0040OpenapiUsersResp
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0040GetUsers")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurmdb/v0.0.40/users/"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	if r.adminLevel != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "admin_level", r.adminLevel, "")
-	}
-	if r.defaultAccount != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "default_account", r.defaultAccount, "")
-	}
-	if r.defaultWckey != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "default_wckey", r.defaultWckey, "")
-	}
-	if r.withAssocs != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "with_assocs", r.withAssocs, "")
-	}
-	if r.withCoords != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "with_coords", r.withCoords, "")
-	}
-	if r.withDeleted != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "with_deleted", r.withDeleted, "")
-	}
-	if r.withWckeys != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "with_wckeys", r.withWckeys, "")
-	}
-	if r.withoutDefaults != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "without_defaults", r.withoutDefaults, "")
-	}
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v V0040OpenapiUsersResp
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmdbV0040GetWckeyRequest struct {
-	ctx context.Context
-	ApiService *SlurmdbAPIService
-	id string
-}
-
-func (r ApiSlurmdbV0040GetWckeyRequest) Execute() (*V0040OpenapiWckeyResp, *http.Response, error) {
-	return r.ApiService.SlurmdbV0040GetWckeyExecute(r)
-}
-
-/*
-SlurmdbV0040GetWckey Get wckey info
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id wckey id
- @return ApiSlurmdbV0040GetWckeyRequest
-*/
-func (a *SlurmdbAPIService) SlurmdbV0040GetWckey(ctx context.Context, id string) ApiSlurmdbV0040GetWckeyRequest {
-	return ApiSlurmdbV0040GetWckeyRequest{
-		ApiService: a,
-		ctx: ctx,
-		id: id,
-	}
-}
-
-// Execute executes the request
-//  @return V0040OpenapiWckeyResp
-func (a *SlurmdbAPIService) SlurmdbV0040GetWckeyExecute(r ApiSlurmdbV0040GetWckeyRequest) (*V0040OpenapiWckeyResp, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *V0040OpenapiWckeyResp
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0040GetWckey")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurmdb/v0.0.40/wckey/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v V0040OpenapiWckeyResp
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmdbV0040GetWckeysRequest struct {
-	ctx context.Context
-	ApiService *SlurmdbAPIService
-	cluster *string
-	format *string
-	id *string
-	name *string
-	onlyDefaults *string
-	usageEnd *string
-	usageStart *string
-	user *string
-	withUsage *string
-	withDeleted *string
-}
-
-// CSV cluster name list
-func (r ApiSlurmdbV0040GetWckeysRequest) Cluster(cluster string) ApiSlurmdbV0040GetWckeysRequest {
-	r.cluster = &cluster
-	return r
-}
-
-// CSV format name list
-func (r ApiSlurmdbV0040GetWckeysRequest) Format(format string) ApiSlurmdbV0040GetWckeysRequest {
-	r.format = &format
-	return r
-}
-
-// CSV id list
-func (r ApiSlurmdbV0040GetWckeysRequest) Id(id string) ApiSlurmdbV0040GetWckeysRequest {
-	r.id = &id
-	return r
-}
-
-// CSV name list
-func (r ApiSlurmdbV0040GetWckeysRequest) Name(name string) ApiSlurmdbV0040GetWckeysRequest {
-	r.name = &name
-	return r
-}
-
-// only query defaults
-func (r ApiSlurmdbV0040GetWckeysRequest) OnlyDefaults(onlyDefaults string) ApiSlurmdbV0040GetWckeysRequest {
-	r.onlyDefaults = &onlyDefaults
-	return r
-}
-
-// usage end UNIX timestamp (seconds)
-func (r ApiSlurmdbV0040GetWckeysRequest) UsageEnd(usageEnd string) ApiSlurmdbV0040GetWckeysRequest {
-	r.usageEnd = &usageEnd
-	return r
-}
-
-// usage start UNIX timestamp (seconds)
-func (r ApiSlurmdbV0040GetWckeysRequest) UsageStart(usageStart string) ApiSlurmdbV0040GetWckeysRequest {
-	r.usageStart = &usageStart
-	return r
-}
-
-// CSV user list
-func (r ApiSlurmdbV0040GetWckeysRequest) User(user string) ApiSlurmdbV0040GetWckeysRequest {
-	r.user = &user
-	return r
-}
-
-// include usage with query
-func (r ApiSlurmdbV0040GetWckeysRequest) WithUsage(withUsage string) ApiSlurmdbV0040GetWckeysRequest {
-	r.withUsage = &withUsage
-	return r
-}
-
-// include deleted wckeys with query
-func (r ApiSlurmdbV0040GetWckeysRequest) WithDeleted(withDeleted string) ApiSlurmdbV0040GetWckeysRequest {
-	r.withDeleted = &withDeleted
-	return r
-}
-
-func (r ApiSlurmdbV0040GetWckeysRequest) Execute() (*V0040OpenapiWckeyResp, *http.Response, error) {
-	return r.ApiService.SlurmdbV0040GetWckeysExecute(r)
-}
-
-/*
-SlurmdbV0040GetWckeys Get wckey list
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmdbV0040GetWckeysRequest
-*/
-func (a *SlurmdbAPIService) SlurmdbV0040GetWckeys(ctx context.Context) ApiSlurmdbV0040GetWckeysRequest {
-	return ApiSlurmdbV0040GetWckeysRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-// Execute executes the request
-//  @return V0040OpenapiWckeyResp
-func (a *SlurmdbAPIService) SlurmdbV0040GetWckeysExecute(r ApiSlurmdbV0040GetWckeysRequest) (*V0040OpenapiWckeyResp, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *V0040OpenapiWckeyResp
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0040GetWckeys")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurmdb/v0.0.40/wckeys/"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	if r.cluster != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cluster", r.cluster, "")
-	}
-	if r.format != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "format", r.format, "")
-	}
-	if r.id != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "id", r.id, "")
-	}
-	if r.name != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "name", r.name, "")
-	}
-	if r.onlyDefaults != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "only_defaults", r.onlyDefaults, "")
-	}
-	if r.usageEnd != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "usage_end", r.usageEnd, "")
-	}
-	if r.usageStart != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "usage_start", r.usageStart, "")
-	}
-	if r.user != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "user", r.user, "")
-	}
-	if r.withUsage != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "with_usage", r.withUsage, "")
-	}
-	if r.withDeleted != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "with_deleted", r.withDeleted, "")
-	}
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v V0040OpenapiWckeyResp
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmdbV0040PostAccountsRequest struct {
-	ctx context.Context
-	ApiService *SlurmdbAPIService
-	v0040OpenapiAccountsResp *V0040OpenapiAccountsResp
-}
-
-// Description of accounts to update/create
-func (r ApiSlurmdbV0040PostAccountsRequest) V0040OpenapiAccountsResp(v0040OpenapiAccountsResp V0040OpenapiAccountsResp) ApiSlurmdbV0040PostAccountsRequest {
-	r.v0040OpenapiAccountsResp = &v0040OpenapiAccountsResp
-	return r
-}
-
-func (r ApiSlurmdbV0040PostAccountsRequest) Execute() (*V0040OpenapiResp, *http.Response, error) {
-	return r.ApiService.SlurmdbV0040PostAccountsExecute(r)
-}
-
-/*
-SlurmdbV0040PostAccounts Add/update list of accounts
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmdbV0040PostAccountsRequest
-*/
-func (a *SlurmdbAPIService) SlurmdbV0040PostAccounts(ctx context.Context) ApiSlurmdbV0040PostAccountsRequest {
-	return ApiSlurmdbV0040PostAccountsRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-// Execute executes the request
-//  @return V0040OpenapiResp
-func (a *SlurmdbAPIService) SlurmdbV0040PostAccountsExecute(r ApiSlurmdbV0040PostAccountsRequest) (*V0040OpenapiResp, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *V0040OpenapiResp
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0040PostAccounts")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurmdb/v0.0.40/accounts/"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/x-yaml", "application/json"}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	// body params
-	localVarPostBody = r.v0040OpenapiAccountsResp
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v V0040OpenapiResp
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmdbV0040PostAccountsAssociationRequest struct {
-	ctx context.Context
-	ApiService *SlurmdbAPIService
-	v0040OpenapiAccountsAddCondResp *V0040OpenapiAccountsAddCondResp
-}
-
-// Add list of accounts with conditional association
-func (r ApiSlurmdbV0040PostAccountsAssociationRequest) V0040OpenapiAccountsAddCondResp(v0040OpenapiAccountsAddCondResp V0040OpenapiAccountsAddCondResp) ApiSlurmdbV0040PostAccountsAssociationRequest {
-	r.v0040OpenapiAccountsAddCondResp = &v0040OpenapiAccountsAddCondResp
-	return r
-}
-
-func (r ApiSlurmdbV0040PostAccountsAssociationRequest) Execute() (*V0040OpenapiAccountsAddCondRespStr, *http.Response, error) {
-	return r.ApiService.SlurmdbV0040PostAccountsAssociationExecute(r)
-}
-
-/*
-SlurmdbV0040PostAccountsAssociation Add accounts with conditional association
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmdbV0040PostAccountsAssociationRequest
-*/
-func (a *SlurmdbAPIService) SlurmdbV0040PostAccountsAssociation(ctx context.Context) ApiSlurmdbV0040PostAccountsAssociationRequest {
-	return ApiSlurmdbV0040PostAccountsAssociationRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-// Execute executes the request
-//  @return V0040OpenapiAccountsAddCondRespStr
-func (a *SlurmdbAPIService) SlurmdbV0040PostAccountsAssociationExecute(r ApiSlurmdbV0040PostAccountsAssociationRequest) (*V0040OpenapiAccountsAddCondRespStr, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *V0040OpenapiAccountsAddCondRespStr
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0040PostAccountsAssociation")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurmdb/v0.0.40/accounts_association/"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/x-yaml", "application/json"}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	// body params
-	localVarPostBody = r.v0040OpenapiAccountsAddCondResp
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v V0040OpenapiAccountsAddCondRespStr
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmdbV0040PostAssociationsRequest struct {
-	ctx context.Context
-	ApiService *SlurmdbAPIService
-	v0040OpenapiAssocsResp *V0040OpenapiAssocsResp
-}
-
-// Job description
-func (r ApiSlurmdbV0040PostAssociationsRequest) V0040OpenapiAssocsResp(v0040OpenapiAssocsResp V0040OpenapiAssocsResp) ApiSlurmdbV0040PostAssociationsRequest {
-	r.v0040OpenapiAssocsResp = &v0040OpenapiAssocsResp
-	return r
-}
-
-func (r ApiSlurmdbV0040PostAssociationsRequest) Execute() (*V0040OpenapiResp, *http.Response, error) {
-	return r.ApiService.SlurmdbV0040PostAssociationsExecute(r)
-}
-
-/*
-SlurmdbV0040PostAssociations Set associations info
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmdbV0040PostAssociationsRequest
-*/
-func (a *SlurmdbAPIService) SlurmdbV0040PostAssociations(ctx context.Context) ApiSlurmdbV0040PostAssociationsRequest {
-	return ApiSlurmdbV0040PostAssociationsRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-// Execute executes the request
-//  @return V0040OpenapiResp
-func (a *SlurmdbAPIService) SlurmdbV0040PostAssociationsExecute(r ApiSlurmdbV0040PostAssociationsRequest) (*V0040OpenapiResp, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *V0040OpenapiResp
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0040PostAssociations")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurmdb/v0.0.40/associations/"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/x-yaml", "application/json"}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	// body params
-	localVarPostBody = r.v0040OpenapiAssocsResp
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v V0040OpenapiResp
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmdbV0040PostClustersRequest struct {
-	ctx context.Context
-	ApiService *SlurmdbAPIService
-	updateTime *string
-	v0040OpenapiClustersResp *V0040OpenapiClustersResp
-}
-
-// Filter reservations since update timestamp
-func (r ApiSlurmdbV0040PostClustersRequest) UpdateTime(updateTime string) ApiSlurmdbV0040PostClustersRequest {
-	r.updateTime = &updateTime
-	return r
-}
-
-// Cluster add or update descriptions
-func (r ApiSlurmdbV0040PostClustersRequest) V0040OpenapiClustersResp(v0040OpenapiClustersResp V0040OpenapiClustersResp) ApiSlurmdbV0040PostClustersRequest {
-	r.v0040OpenapiClustersResp = &v0040OpenapiClustersResp
-	return r
-}
-
-func (r ApiSlurmdbV0040PostClustersRequest) Execute() (*V0040OpenapiResp, *http.Response, error) {
-	return r.ApiService.SlurmdbV0040PostClustersExecute(r)
-}
-
-/*
-SlurmdbV0040PostClusters Get cluster list
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmdbV0040PostClustersRequest
-*/
-func (a *SlurmdbAPIService) SlurmdbV0040PostClusters(ctx context.Context) ApiSlurmdbV0040PostClustersRequest {
-	return ApiSlurmdbV0040PostClustersRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-// Execute executes the request
-//  @return V0040OpenapiResp
-func (a *SlurmdbAPIService) SlurmdbV0040PostClustersExecute(r ApiSlurmdbV0040PostClustersRequest) (*V0040OpenapiResp, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *V0040OpenapiResp
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0040PostClusters")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurmdb/v0.0.40/clusters/"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	if r.updateTime != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "update_time", r.updateTime, "")
-	}
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/x-yaml", "application/json"}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	// body params
-	localVarPostBody = r.v0040OpenapiClustersResp
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v V0040OpenapiResp
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmdbV0040PostConfigRequest struct {
-	ctx context.Context
-	ApiService *SlurmdbAPIService
-	v0040OpenapiSlurmdbdConfigResp *V0040OpenapiSlurmdbdConfigResp
-}
-
-// Add or update config
-func (r ApiSlurmdbV0040PostConfigRequest) V0040OpenapiSlurmdbdConfigResp(v0040OpenapiSlurmdbdConfigResp V0040OpenapiSlurmdbdConfigResp) ApiSlurmdbV0040PostConfigRequest {
-	r.v0040OpenapiSlurmdbdConfigResp = &v0040OpenapiSlurmdbdConfigResp
-	return r
-}
-
-func (r ApiSlurmdbV0040PostConfigRequest) Execute() (*V0040OpenapiResp, *http.Response, error) {
-	return r.ApiService.SlurmdbV0040PostConfigExecute(r)
-}
-
-/*
-SlurmdbV0040PostConfig Load all configuration information
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmdbV0040PostConfigRequest
-*/
-func (a *SlurmdbAPIService) SlurmdbV0040PostConfig(ctx context.Context) ApiSlurmdbV0040PostConfigRequest {
-	return ApiSlurmdbV0040PostConfigRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-// Execute executes the request
-//  @return V0040OpenapiResp
-func (a *SlurmdbAPIService) SlurmdbV0040PostConfigExecute(r ApiSlurmdbV0040PostConfigRequest) (*V0040OpenapiResp, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *V0040OpenapiResp
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0040PostConfig")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurmdb/v0.0.40/config"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/x-yaml", "application/json"}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	// body params
-	localVarPostBody = r.v0040OpenapiSlurmdbdConfigResp
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v V0040OpenapiResp
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmdbV0040PostQosRequest struct {
-	ctx context.Context
-	ApiService *SlurmdbAPIService
-	description *string
-	id *string
-	format *string
-	name *string
-	preemptMode *string
-	withDeleted *string
-	v0040OpenapiSlurmdbdQosResp *V0040OpenapiSlurmdbdQosResp
-}
-
-// CSV description list
-func (r ApiSlurmdbV0040PostQosRequest) Description(description string) ApiSlurmdbV0040PostQosRequest {
-	r.description = &description
-	return r
-}
-
-// CSV QOS id list
-func (r ApiSlurmdbV0040PostQosRequest) Id(id string) ApiSlurmdbV0040PostQosRequest {
-	r.id = &id
-	return r
-}
-
-// CSV format list
-func (r ApiSlurmdbV0040PostQosRequest) Format(format string) ApiSlurmdbV0040PostQosRequest {
-	r.format = &format
-	return r
-}
-
-// CSV QOS name list
-func (r ApiSlurmdbV0040PostQosRequest) Name(name string) ApiSlurmdbV0040PostQosRequest {
-	r.name = &name
-	return r
-}
-
-func (r ApiSlurmdbV0040PostQosRequest) PreemptMode(preemptMode string) ApiSlurmdbV0040PostQosRequest {
-	r.preemptMode = &preemptMode
-	return r
-}
-
-// Include deleted QOS
-func (r ApiSlurmdbV0040PostQosRequest) WithDeleted(withDeleted string) ApiSlurmdbV0040PostQosRequest {
-	r.withDeleted = &withDeleted
-	return r
-}
-
-// Description of QOS to add or update
-func (r ApiSlurmdbV0040PostQosRequest) V0040OpenapiSlurmdbdQosResp(v0040OpenapiSlurmdbdQosResp V0040OpenapiSlurmdbdQosResp) ApiSlurmdbV0040PostQosRequest {
-	r.v0040OpenapiSlurmdbdQosResp = &v0040OpenapiSlurmdbdQosResp
-	return r
-}
-
-func (r ApiSlurmdbV0040PostQosRequest) Execute() (*V0040OpenapiResp, *http.Response, error) {
-	return r.ApiService.SlurmdbV0040PostQosExecute(r)
-}
-
-/*
-SlurmdbV0040PostQos Add or update QOSs
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmdbV0040PostQosRequest
-*/
-func (a *SlurmdbAPIService) SlurmdbV0040PostQos(ctx context.Context) ApiSlurmdbV0040PostQosRequest {
-	return ApiSlurmdbV0040PostQosRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-// Execute executes the request
-//  @return V0040OpenapiResp
-func (a *SlurmdbAPIService) SlurmdbV0040PostQosExecute(r ApiSlurmdbV0040PostQosRequest) (*V0040OpenapiResp, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *V0040OpenapiResp
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0040PostQos")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurmdb/v0.0.40/qos/"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	if r.description != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "description", r.description, "")
-	}
-	if r.id != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "id", r.id, "")
-	}
-	if r.format != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "format", r.format, "")
-	}
-	if r.name != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "name", r.name, "")
-	}
-	if r.preemptMode != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "preempt_mode", r.preemptMode, "")
-	}
-	if r.withDeleted != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "with_deleted", r.withDeleted, "")
-	}
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/x-yaml", "application/json"}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	// body params
-	localVarPostBody = r.v0040OpenapiSlurmdbdQosResp
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v V0040OpenapiResp
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmdbV0040PostTresRequest struct {
-	ctx context.Context
-	ApiService *SlurmdbAPIService
-	v0040OpenapiTresResp *V0040OpenapiTresResp
-}
-
-// TRES descriptions. Only works in developer mode.
-func (r ApiSlurmdbV0040PostTresRequest) V0040OpenapiTresResp(v0040OpenapiTresResp V0040OpenapiTresResp) ApiSlurmdbV0040PostTresRequest {
-	r.v0040OpenapiTresResp = &v0040OpenapiTresResp
-	return r
-}
-
-func (r ApiSlurmdbV0040PostTresRequest) Execute() (*V0040OpenapiResp, *http.Response, error) {
-	return r.ApiService.SlurmdbV0040PostTresExecute(r)
-}
-
-/*
-SlurmdbV0040PostTres Add TRES
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmdbV0040PostTresRequest
-*/
-func (a *SlurmdbAPIService) SlurmdbV0040PostTres(ctx context.Context) ApiSlurmdbV0040PostTresRequest {
-	return ApiSlurmdbV0040PostTresRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-// Execute executes the request
-//  @return V0040OpenapiResp
-func (a *SlurmdbAPIService) SlurmdbV0040PostTresExecute(r ApiSlurmdbV0040PostTresRequest) (*V0040OpenapiResp, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *V0040OpenapiResp
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0040PostTres")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurmdb/v0.0.40/tres/"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/x-yaml", "application/json"}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	// body params
-	localVarPostBody = r.v0040OpenapiTresResp
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v V0040OpenapiResp
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmdbV0040PostUsersRequest struct {
-	ctx context.Context
-	ApiService *SlurmdbAPIService
-	v0040OpenapiUsersResp *V0040OpenapiUsersResp
-}
-
-// add or update user
-func (r ApiSlurmdbV0040PostUsersRequest) V0040OpenapiUsersResp(v0040OpenapiUsersResp V0040OpenapiUsersResp) ApiSlurmdbV0040PostUsersRequest {
-	r.v0040OpenapiUsersResp = &v0040OpenapiUsersResp
-	return r
-}
-
-func (r ApiSlurmdbV0040PostUsersRequest) Execute() (*V0040OpenapiResp, *http.Response, error) {
-	return r.ApiService.SlurmdbV0040PostUsersExecute(r)
-}
-
-/*
-SlurmdbV0040PostUsers Update users
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmdbV0040PostUsersRequest
-*/
-func (a *SlurmdbAPIService) SlurmdbV0040PostUsers(ctx context.Context) ApiSlurmdbV0040PostUsersRequest {
-	return ApiSlurmdbV0040PostUsersRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-// Execute executes the request
-//  @return V0040OpenapiResp
-func (a *SlurmdbAPIService) SlurmdbV0040PostUsersExecute(r ApiSlurmdbV0040PostUsersRequest) (*V0040OpenapiResp, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *V0040OpenapiResp
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0040PostUsers")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurmdb/v0.0.40/users/"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/x-yaml", "application/json"}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	// body params
-	localVarPostBody = r.v0040OpenapiUsersResp
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v V0040OpenapiResp
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmdbV0040PostUsersAssociationRequest struct {
-	ctx context.Context
-	ApiService *SlurmdbAPIService
-	updateTime *string
-	flags *string
-	v0040OpenapiUsersAddCondResp *V0040OpenapiUsersAddCondResp
-}
-
-// Filter partitions since update timestamp
-func (r ApiSlurmdbV0040PostUsersAssociationRequest) UpdateTime(updateTime string) ApiSlurmdbV0040PostUsersAssociationRequest {
-	r.updateTime = &updateTime
-	return r
-}
-
-// Query flags
-func (r ApiSlurmdbV0040PostUsersAssociationRequest) Flags(flags string) ApiSlurmdbV0040PostUsersAssociationRequest {
-	r.flags = &flags
-	return r
-}
-
-// Create users with conditional association
-func (r ApiSlurmdbV0040PostUsersAssociationRequest) V0040OpenapiUsersAddCondResp(v0040OpenapiUsersAddCondResp V0040OpenapiUsersAddCondResp) ApiSlurmdbV0040PostUsersAssociationRequest {
-	r.v0040OpenapiUsersAddCondResp = &v0040OpenapiUsersAddCondResp
-	return r
-}
-
-func (r ApiSlurmdbV0040PostUsersAssociationRequest) Execute() (*V0040OpenapiUsersAddCondRespStr, *http.Response, error) {
-	return r.ApiService.SlurmdbV0040PostUsersAssociationExecute(r)
-}
-
-/*
-SlurmdbV0040PostUsersAssociation Add users with conditional association
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmdbV0040PostUsersAssociationRequest
-*/
-func (a *SlurmdbAPIService) SlurmdbV0040PostUsersAssociation(ctx context.Context) ApiSlurmdbV0040PostUsersAssociationRequest {
-	return ApiSlurmdbV0040PostUsersAssociationRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-// Execute executes the request
-//  @return V0040OpenapiUsersAddCondRespStr
-func (a *SlurmdbAPIService) SlurmdbV0040PostUsersAssociationExecute(r ApiSlurmdbV0040PostUsersAssociationRequest) (*V0040OpenapiUsersAddCondRespStr, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *V0040OpenapiUsersAddCondRespStr
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0040PostUsersAssociation")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurmdb/v0.0.40/users_association/"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	if r.updateTime != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "update_time", r.updateTime, "")
-	}
-	if r.flags != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "flags", r.flags, "")
-	}
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/x-yaml", "application/json"}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	// body params
-	localVarPostBody = r.v0040OpenapiUsersAddCondResp
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v V0040OpenapiUsersAddCondRespStr
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmdbV0040PostWckeysRequest struct {
-	ctx context.Context
-	ApiService *SlurmdbAPIService
-	cluster *string
-	format *string
-	id *string
-	name *string
-	onlyDefaults *string
-	usageEnd *string
-	usageStart *string
-	user *string
-	withUsage *string
-	withDeleted *string
-	v0040OpenapiWckeyResp *V0040OpenapiWckeyResp
-}
-
-// CSV cluster name list
-func (r ApiSlurmdbV0040PostWckeysRequest) Cluster(cluster string) ApiSlurmdbV0040PostWckeysRequest {
-	r.cluster = &cluster
-	return r
-}
-
-// CSV format name list
-func (r ApiSlurmdbV0040PostWckeysRequest) Format(format string) ApiSlurmdbV0040PostWckeysRequest {
-	r.format = &format
-	return r
-}
-
-// CSV id list
-func (r ApiSlurmdbV0040PostWckeysRequest) Id(id string) ApiSlurmdbV0040PostWckeysRequest {
-	r.id = &id
-	return r
-}
-
-// CSV name list
-func (r ApiSlurmdbV0040PostWckeysRequest) Name(name string) ApiSlurmdbV0040PostWckeysRequest {
-	r.name = &name
-	return r
-}
-
-// only query defaults
-func (r ApiSlurmdbV0040PostWckeysRequest) OnlyDefaults(onlyDefaults string) ApiSlurmdbV0040PostWckeysRequest {
-	r.onlyDefaults = &onlyDefaults
-	return r
-}
-
-// usage end UNIX timestamp (seconds)
-func (r ApiSlurmdbV0040PostWckeysRequest) UsageEnd(usageEnd string) ApiSlurmdbV0040PostWckeysRequest {
-	r.usageEnd = &usageEnd
-	return r
-}
-
-// usage start UNIX timestamp (seconds)
-func (r ApiSlurmdbV0040PostWckeysRequest) UsageStart(usageStart string) ApiSlurmdbV0040PostWckeysRequest {
-	r.usageStart = &usageStart
-	return r
-}
-
-// CSV user list
-func (r ApiSlurmdbV0040PostWckeysRequest) User(user string) ApiSlurmdbV0040PostWckeysRequest {
-	r.user = &user
-	return r
-}
-
-// include usage with query
-func (r ApiSlurmdbV0040PostWckeysRequest) WithUsage(withUsage string) ApiSlurmdbV0040PostWckeysRequest {
-	r.withUsage = &withUsage
-	return r
-}
-
-// include deleted wckeys with query
-func (r ApiSlurmdbV0040PostWckeysRequest) WithDeleted(withDeleted string) ApiSlurmdbV0040PostWckeysRequest {
-	r.withDeleted = &withDeleted
-	return r
-}
-
-// wckeys description
-func (r ApiSlurmdbV0040PostWckeysRequest) V0040OpenapiWckeyResp(v0040OpenapiWckeyResp V0040OpenapiWckeyResp) ApiSlurmdbV0040PostWckeysRequest {
-	r.v0040OpenapiWckeyResp = &v0040OpenapiWckeyResp
-	return r
-}
-
-func (r ApiSlurmdbV0040PostWckeysRequest) Execute() (*V0040OpenapiResp, *http.Response, error) {
-	return r.ApiService.SlurmdbV0040PostWckeysExecute(r)
-}
-
-/*
-SlurmdbV0040PostWckeys Add or update wckeys
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmdbV0040PostWckeysRequest
-*/
-func (a *SlurmdbAPIService) SlurmdbV0040PostWckeys(ctx context.Context) ApiSlurmdbV0040PostWckeysRequest {
-	return ApiSlurmdbV0040PostWckeysRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-// Execute executes the request
-//  @return V0040OpenapiResp
-func (a *SlurmdbAPIService) SlurmdbV0040PostWckeysExecute(r ApiSlurmdbV0040PostWckeysRequest) (*V0040OpenapiResp, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *V0040OpenapiResp
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0040PostWckeys")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurmdb/v0.0.40/wckeys/"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	if r.cluster != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cluster", r.cluster, "")
-	}
-	if r.format != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "format", r.format, "")
-	}
-	if r.id != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "id", r.id, "")
-	}
-	if r.name != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "name", r.name, "")
-	}
-	if r.onlyDefaults != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "only_defaults", r.onlyDefaults, "")
-	}
-	if r.usageEnd != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "usage_end", r.usageEnd, "")
-	}
-	if r.usageStart != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "usage_start", r.usageStart, "")
-	}
-	if r.user != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "user", r.user, "")
-	}
-	if r.withUsage != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "with_usage", r.withUsage, "")
-	}
-	if r.withDeleted != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "with_deleted", r.withDeleted, "")
-	}
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/x-yaml", "application/json"}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	// body params
-	localVarPostBody = r.v0040OpenapiWckeyResp
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v V0040OpenapiResp
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmdbV0041DeleteAccountRequest struct {
-	ctx context.Context
-	ApiService *SlurmdbAPIService
-	accountName string
-}
-
-func (r ApiSlurmdbV0041DeleteAccountRequest) Execute() (*V0041OpenapiAccountsRemovedResp, *http.Response, error) {
-	return r.ApiService.SlurmdbV0041DeleteAccountExecute(r)
-}
-
-/*
-SlurmdbV0041DeleteAccount Delete account
+SlurmdbV0044GetAccount Get account info
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param accountName Account name
- @return ApiSlurmdbV0041DeleteAccountRequest
+ @return ApiSlurmdbV0044GetAccountRequest
 */
-func (a *SlurmdbAPIService) SlurmdbV0041DeleteAccount(ctx context.Context, accountName string) ApiSlurmdbV0041DeleteAccountRequest {
-	return ApiSlurmdbV0041DeleteAccountRequest{
+func (a *SlurmdbAPIService) SlurmdbV0044GetAccount(ctx context.Context, accountName string) ApiSlurmdbV0044GetAccountRequest {
+	return ApiSlurmdbV0044GetAccountRequest{
 		ApiService: a,
 		ctx: ctx,
 		accountName: accountName,
@@ -7004,1451 +1471,21 @@ func (a *SlurmdbAPIService) SlurmdbV0041DeleteAccount(ctx context.Context, accou
 }
 
 // Execute executes the request
-//  @return V0041OpenapiAccountsRemovedResp
-func (a *SlurmdbAPIService) SlurmdbV0041DeleteAccountExecute(r ApiSlurmdbV0041DeleteAccountRequest) (*V0041OpenapiAccountsRemovedResp, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodDelete
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *V0041OpenapiAccountsRemovedResp
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0041DeleteAccount")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurmdb/v0.0.41/account/{account_name}"
-	localVarPath = strings.Replace(localVarPath, "{"+"account_name"+"}", url.PathEscape(parameterValueToString(r.accountName, "accountName")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v V0041OpenapiAccountsRemovedResp
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmdbV0041DeleteAssociationRequest struct {
-	ctx context.Context
-	ApiService *SlurmdbAPIService
-	account *string
-	cluster *string
-	defaultQos *string
-	format *string
-	id *string
-	onlyDefaults *string
-	parentAccount *string
-	partition *string
-	qos *string
-	usageEnd *string
-	usageStart *string
-	user *string
-	withUsage *string
-	withDeleted *string
-	withRawQos *string
-	withSubAccts *string
-	withoutParentInfo *string
-	withoutParentLimits *string
-}
-
-// CSV accounts list
-func (r ApiSlurmdbV0041DeleteAssociationRequest) Account(account string) ApiSlurmdbV0041DeleteAssociationRequest {
-	r.account = &account
-	return r
-}
-
-// CSV clusters list
-func (r ApiSlurmdbV0041DeleteAssociationRequest) Cluster(cluster string) ApiSlurmdbV0041DeleteAssociationRequest {
-	r.cluster = &cluster
-	return r
-}
-
-// CSV QOS list
-func (r ApiSlurmdbV0041DeleteAssociationRequest) DefaultQos(defaultQos string) ApiSlurmdbV0041DeleteAssociationRequest {
-	r.defaultQos = &defaultQos
-	return r
-}
-
-// CSV format list
-func (r ApiSlurmdbV0041DeleteAssociationRequest) Format(format string) ApiSlurmdbV0041DeleteAssociationRequest {
-	r.format = &format
-	return r
-}
-
-// CSV id list
-func (r ApiSlurmdbV0041DeleteAssociationRequest) Id(id string) ApiSlurmdbV0041DeleteAssociationRequest {
-	r.id = &id
-	return r
-}
-
-// filter to only defaults
-func (r ApiSlurmdbV0041DeleteAssociationRequest) OnlyDefaults(onlyDefaults string) ApiSlurmdbV0041DeleteAssociationRequest {
-	r.onlyDefaults = &onlyDefaults
-	return r
-}
-
-// CSV names of parent account
-func (r ApiSlurmdbV0041DeleteAssociationRequest) ParentAccount(parentAccount string) ApiSlurmdbV0041DeleteAssociationRequest {
-	r.parentAccount = &parentAccount
-	return r
-}
-
-// CSV partition name list
-func (r ApiSlurmdbV0041DeleteAssociationRequest) Partition(partition string) ApiSlurmdbV0041DeleteAssociationRequest {
-	r.partition = &partition
-	return r
-}
-
-// CSV QOS list
-func (r ApiSlurmdbV0041DeleteAssociationRequest) Qos(qos string) ApiSlurmdbV0041DeleteAssociationRequest {
-	r.qos = &qos
-	return r
-}
-
-// usage end UNIX timestamp
-func (r ApiSlurmdbV0041DeleteAssociationRequest) UsageEnd(usageEnd string) ApiSlurmdbV0041DeleteAssociationRequest {
-	r.usageEnd = &usageEnd
-	return r
-}
-
-// usage start UNIX timestamp
-func (r ApiSlurmdbV0041DeleteAssociationRequest) UsageStart(usageStart string) ApiSlurmdbV0041DeleteAssociationRequest {
-	r.usageStart = &usageStart
-	return r
-}
-
-// CSV user list
-func (r ApiSlurmdbV0041DeleteAssociationRequest) User(user string) ApiSlurmdbV0041DeleteAssociationRequest {
-	r.user = &user
-	return r
-}
-
-// fill in usage
-func (r ApiSlurmdbV0041DeleteAssociationRequest) WithUsage(withUsage string) ApiSlurmdbV0041DeleteAssociationRequest {
-	r.withUsage = &withUsage
-	return r
-}
-
-// return deleted associations
-func (r ApiSlurmdbV0041DeleteAssociationRequest) WithDeleted(withDeleted string) ApiSlurmdbV0041DeleteAssociationRequest {
-	r.withDeleted = &withDeleted
-	return r
-}
-
-// return a raw qos or delta_qos
-func (r ApiSlurmdbV0041DeleteAssociationRequest) WithRawQos(withRawQos string) ApiSlurmdbV0041DeleteAssociationRequest {
-	r.withRawQos = &withRawQos
-	return r
-}
-
-// return sub acct information also
-func (r ApiSlurmdbV0041DeleteAssociationRequest) WithSubAccts(withSubAccts string) ApiSlurmdbV0041DeleteAssociationRequest {
-	r.withSubAccts = &withSubAccts
-	return r
-}
-
-// don&#39;t give me parent id/name
-func (r ApiSlurmdbV0041DeleteAssociationRequest) WithoutParentInfo(withoutParentInfo string) ApiSlurmdbV0041DeleteAssociationRequest {
-	r.withoutParentInfo = &withoutParentInfo
-	return r
-}
-
-// don&#39;t give me limits from parents
-func (r ApiSlurmdbV0041DeleteAssociationRequest) WithoutParentLimits(withoutParentLimits string) ApiSlurmdbV0041DeleteAssociationRequest {
-	r.withoutParentLimits = &withoutParentLimits
-	return r
-}
-
-func (r ApiSlurmdbV0041DeleteAssociationRequest) Execute() (*V0041OpenapiAssocsRemovedResp, *http.Response, error) {
-	return r.ApiService.SlurmdbV0041DeleteAssociationExecute(r)
-}
-
-/*
-SlurmdbV0041DeleteAssociation Delete association
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmdbV0041DeleteAssociationRequest
-*/
-func (a *SlurmdbAPIService) SlurmdbV0041DeleteAssociation(ctx context.Context) ApiSlurmdbV0041DeleteAssociationRequest {
-	return ApiSlurmdbV0041DeleteAssociationRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-// Execute executes the request
-//  @return V0041OpenapiAssocsRemovedResp
-func (a *SlurmdbAPIService) SlurmdbV0041DeleteAssociationExecute(r ApiSlurmdbV0041DeleteAssociationRequest) (*V0041OpenapiAssocsRemovedResp, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodDelete
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *V0041OpenapiAssocsRemovedResp
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0041DeleteAssociation")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurmdb/v0.0.41/association/"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	if r.account != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "account", r.account, "")
-	}
-	if r.cluster != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cluster", r.cluster, "")
-	}
-	if r.defaultQos != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "default_qos", r.defaultQos, "")
-	}
-	if r.format != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "format", r.format, "")
-	}
-	if r.id != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "id", r.id, "")
-	}
-	if r.onlyDefaults != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "only_defaults", r.onlyDefaults, "")
-	}
-	if r.parentAccount != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "parent_account", r.parentAccount, "")
-	}
-	if r.partition != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "partition", r.partition, "")
-	}
-	if r.qos != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "qos", r.qos, "")
-	}
-	if r.usageEnd != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "usage_end", r.usageEnd, "")
-	}
-	if r.usageStart != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "usage_start", r.usageStart, "")
-	}
-	if r.user != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "user", r.user, "")
-	}
-	if r.withUsage != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "with_usage", r.withUsage, "")
-	}
-	if r.withDeleted != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "with_deleted", r.withDeleted, "")
-	}
-	if r.withRawQos != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "with_raw_qos", r.withRawQos, "")
-	}
-	if r.withSubAccts != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "with_sub_accts", r.withSubAccts, "")
-	}
-	if r.withoutParentInfo != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "without_parent_info", r.withoutParentInfo, "")
-	}
-	if r.withoutParentLimits != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "without_parent_limits", r.withoutParentLimits, "")
-	}
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v V0041OpenapiAssocsRemovedResp
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmdbV0041DeleteAssociationsRequest struct {
-	ctx context.Context
-	ApiService *SlurmdbAPIService
-	account *string
-	cluster *string
-	defaultQos *string
-	format *string
-	id *string
-	onlyDefaults *string
-	parentAccount *string
-	partition *string
-	qos *string
-	usageEnd *string
-	usageStart *string
-	user *string
-	withUsage *string
-	withDeleted *string
-	withRawQos *string
-	withSubAccts *string
-	withoutParentInfo *string
-	withoutParentLimits *string
-}
-
-// CSV accounts list
-func (r ApiSlurmdbV0041DeleteAssociationsRequest) Account(account string) ApiSlurmdbV0041DeleteAssociationsRequest {
-	r.account = &account
-	return r
-}
-
-// CSV clusters list
-func (r ApiSlurmdbV0041DeleteAssociationsRequest) Cluster(cluster string) ApiSlurmdbV0041DeleteAssociationsRequest {
-	r.cluster = &cluster
-	return r
-}
-
-// CSV QOS list
-func (r ApiSlurmdbV0041DeleteAssociationsRequest) DefaultQos(defaultQos string) ApiSlurmdbV0041DeleteAssociationsRequest {
-	r.defaultQos = &defaultQos
-	return r
-}
-
-// CSV format list
-func (r ApiSlurmdbV0041DeleteAssociationsRequest) Format(format string) ApiSlurmdbV0041DeleteAssociationsRequest {
-	r.format = &format
-	return r
-}
-
-// CSV id list
-func (r ApiSlurmdbV0041DeleteAssociationsRequest) Id(id string) ApiSlurmdbV0041DeleteAssociationsRequest {
-	r.id = &id
-	return r
-}
-
-// filter to only defaults
-func (r ApiSlurmdbV0041DeleteAssociationsRequest) OnlyDefaults(onlyDefaults string) ApiSlurmdbV0041DeleteAssociationsRequest {
-	r.onlyDefaults = &onlyDefaults
-	return r
-}
-
-// CSV names of parent account
-func (r ApiSlurmdbV0041DeleteAssociationsRequest) ParentAccount(parentAccount string) ApiSlurmdbV0041DeleteAssociationsRequest {
-	r.parentAccount = &parentAccount
-	return r
-}
-
-// CSV partition name list
-func (r ApiSlurmdbV0041DeleteAssociationsRequest) Partition(partition string) ApiSlurmdbV0041DeleteAssociationsRequest {
-	r.partition = &partition
-	return r
-}
-
-// CSV QOS list
-func (r ApiSlurmdbV0041DeleteAssociationsRequest) Qos(qos string) ApiSlurmdbV0041DeleteAssociationsRequest {
-	r.qos = &qos
-	return r
-}
-
-// usage end UNIX timestamp
-func (r ApiSlurmdbV0041DeleteAssociationsRequest) UsageEnd(usageEnd string) ApiSlurmdbV0041DeleteAssociationsRequest {
-	r.usageEnd = &usageEnd
-	return r
-}
-
-// usage start UNIX timestamp
-func (r ApiSlurmdbV0041DeleteAssociationsRequest) UsageStart(usageStart string) ApiSlurmdbV0041DeleteAssociationsRequest {
-	r.usageStart = &usageStart
-	return r
-}
-
-// CSV user list
-func (r ApiSlurmdbV0041DeleteAssociationsRequest) User(user string) ApiSlurmdbV0041DeleteAssociationsRequest {
-	r.user = &user
-	return r
-}
-
-// fill in usage
-func (r ApiSlurmdbV0041DeleteAssociationsRequest) WithUsage(withUsage string) ApiSlurmdbV0041DeleteAssociationsRequest {
-	r.withUsage = &withUsage
-	return r
-}
-
-// return deleted associations
-func (r ApiSlurmdbV0041DeleteAssociationsRequest) WithDeleted(withDeleted string) ApiSlurmdbV0041DeleteAssociationsRequest {
-	r.withDeleted = &withDeleted
-	return r
-}
-
-// return a raw qos or delta_qos
-func (r ApiSlurmdbV0041DeleteAssociationsRequest) WithRawQos(withRawQos string) ApiSlurmdbV0041DeleteAssociationsRequest {
-	r.withRawQos = &withRawQos
-	return r
-}
-
-// return sub acct information also
-func (r ApiSlurmdbV0041DeleteAssociationsRequest) WithSubAccts(withSubAccts string) ApiSlurmdbV0041DeleteAssociationsRequest {
-	r.withSubAccts = &withSubAccts
-	return r
-}
-
-// don&#39;t give me parent id/name
-func (r ApiSlurmdbV0041DeleteAssociationsRequest) WithoutParentInfo(withoutParentInfo string) ApiSlurmdbV0041DeleteAssociationsRequest {
-	r.withoutParentInfo = &withoutParentInfo
-	return r
-}
-
-// don&#39;t give me limits from parents
-func (r ApiSlurmdbV0041DeleteAssociationsRequest) WithoutParentLimits(withoutParentLimits string) ApiSlurmdbV0041DeleteAssociationsRequest {
-	r.withoutParentLimits = &withoutParentLimits
-	return r
-}
-
-func (r ApiSlurmdbV0041DeleteAssociationsRequest) Execute() (*V0041OpenapiAssocsRemovedResp, *http.Response, error) {
-	return r.ApiService.SlurmdbV0041DeleteAssociationsExecute(r)
-}
-
-/*
-SlurmdbV0041DeleteAssociations Delete associations
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmdbV0041DeleteAssociationsRequest
-*/
-func (a *SlurmdbAPIService) SlurmdbV0041DeleteAssociations(ctx context.Context) ApiSlurmdbV0041DeleteAssociationsRequest {
-	return ApiSlurmdbV0041DeleteAssociationsRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-// Execute executes the request
-//  @return V0041OpenapiAssocsRemovedResp
-func (a *SlurmdbAPIService) SlurmdbV0041DeleteAssociationsExecute(r ApiSlurmdbV0041DeleteAssociationsRequest) (*V0041OpenapiAssocsRemovedResp, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodDelete
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *V0041OpenapiAssocsRemovedResp
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0041DeleteAssociations")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurmdb/v0.0.41/associations/"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	if r.account != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "account", r.account, "")
-	}
-	if r.cluster != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cluster", r.cluster, "")
-	}
-	if r.defaultQos != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "default_qos", r.defaultQos, "")
-	}
-	if r.format != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "format", r.format, "")
-	}
-	if r.id != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "id", r.id, "")
-	}
-	if r.onlyDefaults != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "only_defaults", r.onlyDefaults, "")
-	}
-	if r.parentAccount != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "parent_account", r.parentAccount, "")
-	}
-	if r.partition != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "partition", r.partition, "")
-	}
-	if r.qos != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "qos", r.qos, "")
-	}
-	if r.usageEnd != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "usage_end", r.usageEnd, "")
-	}
-	if r.usageStart != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "usage_start", r.usageStart, "")
-	}
-	if r.user != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "user", r.user, "")
-	}
-	if r.withUsage != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "with_usage", r.withUsage, "")
-	}
-	if r.withDeleted != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "with_deleted", r.withDeleted, "")
-	}
-	if r.withRawQos != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "with_raw_qos", r.withRawQos, "")
-	}
-	if r.withSubAccts != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "with_sub_accts", r.withSubAccts, "")
-	}
-	if r.withoutParentInfo != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "without_parent_info", r.withoutParentInfo, "")
-	}
-	if r.withoutParentLimits != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "without_parent_limits", r.withoutParentLimits, "")
-	}
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v V0041OpenapiAssocsRemovedResp
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmdbV0041DeleteClusterRequest struct {
-	ctx context.Context
-	ApiService *SlurmdbAPIService
-	clusterName string
-	classification *string
-	cluster *string
-	federation *string
-	flags *string
-	format *string
-	rpcVersion *string
-	usageEnd *string
-	usageStart *string
-	withDeleted *string
-	withUsage *string
-}
-
-func (r ApiSlurmdbV0041DeleteClusterRequest) Classification(classification string) ApiSlurmdbV0041DeleteClusterRequest {
-	r.classification = &classification
-	return r
-}
-
-// CSV cluster list
-func (r ApiSlurmdbV0041DeleteClusterRequest) Cluster(cluster string) ApiSlurmdbV0041DeleteClusterRequest {
-	r.cluster = &cluster
-	return r
-}
-
-// CSV federation list
-func (r ApiSlurmdbV0041DeleteClusterRequest) Federation(federation string) ApiSlurmdbV0041DeleteClusterRequest {
-	r.federation = &federation
-	return r
-}
-
-func (r ApiSlurmdbV0041DeleteClusterRequest) Flags(flags string) ApiSlurmdbV0041DeleteClusterRequest {
-	r.flags = &flags
-	return r
-}
-
-// CSV format list
-func (r ApiSlurmdbV0041DeleteClusterRequest) Format(format string) ApiSlurmdbV0041DeleteClusterRequest {
-	r.format = &format
-	return r
-}
-
-// CSV RPC version list
-func (r ApiSlurmdbV0041DeleteClusterRequest) RpcVersion(rpcVersion string) ApiSlurmdbV0041DeleteClusterRequest {
-	r.rpcVersion = &rpcVersion
-	return r
-}
-
-// Usage end UNIX timestamp (seconds)
-func (r ApiSlurmdbV0041DeleteClusterRequest) UsageEnd(usageEnd string) ApiSlurmdbV0041DeleteClusterRequest {
-	r.usageEnd = &usageEnd
-	return r
-}
-
-// Usage start UNIX timestamp (seconds)
-func (r ApiSlurmdbV0041DeleteClusterRequest) UsageStart(usageStart string) ApiSlurmdbV0041DeleteClusterRequest {
-	r.usageStart = &usageStart
-	return r
-}
-
-// include deleted clusters
-func (r ApiSlurmdbV0041DeleteClusterRequest) WithDeleted(withDeleted string) ApiSlurmdbV0041DeleteClusterRequest {
-	r.withDeleted = &withDeleted
-	return r
-}
-
-// query usage
-func (r ApiSlurmdbV0041DeleteClusterRequest) WithUsage(withUsage string) ApiSlurmdbV0041DeleteClusterRequest {
-	r.withUsage = &withUsage
-	return r
-}
-
-func (r ApiSlurmdbV0041DeleteClusterRequest) Execute() (*V0041OpenapiClustersRemovedResp, *http.Response, error) {
-	return r.ApiService.SlurmdbV0041DeleteClusterExecute(r)
-}
-
-/*
-SlurmdbV0041DeleteCluster Delete cluster
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param clusterName Cluster name
- @return ApiSlurmdbV0041DeleteClusterRequest
-*/
-func (a *SlurmdbAPIService) SlurmdbV0041DeleteCluster(ctx context.Context, clusterName string) ApiSlurmdbV0041DeleteClusterRequest {
-	return ApiSlurmdbV0041DeleteClusterRequest{
-		ApiService: a,
-		ctx: ctx,
-		clusterName: clusterName,
-	}
-}
-
-// Execute executes the request
-//  @return V0041OpenapiClustersRemovedResp
-func (a *SlurmdbAPIService) SlurmdbV0041DeleteClusterExecute(r ApiSlurmdbV0041DeleteClusterRequest) (*V0041OpenapiClustersRemovedResp, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodDelete
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *V0041OpenapiClustersRemovedResp
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0041DeleteCluster")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurmdb/v0.0.41/cluster/{cluster_name}"
-	localVarPath = strings.Replace(localVarPath, "{"+"cluster_name"+"}", url.PathEscape(parameterValueToString(r.clusterName, "clusterName")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	if r.classification != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "classification", r.classification, "")
-	}
-	if r.cluster != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cluster", r.cluster, "")
-	}
-	if r.federation != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "federation", r.federation, "")
-	}
-	if r.flags != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "flags", r.flags, "")
-	}
-	if r.format != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "format", r.format, "")
-	}
-	if r.rpcVersion != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "rpc_version", r.rpcVersion, "")
-	}
-	if r.usageEnd != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "usage_end", r.usageEnd, "")
-	}
-	if r.usageStart != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "usage_start", r.usageStart, "")
-	}
-	if r.withDeleted != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "with_deleted", r.withDeleted, "")
-	}
-	if r.withUsage != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "with_usage", r.withUsage, "")
-	}
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v V0041OpenapiClustersRemovedResp
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmdbV0041DeleteSingleQosRequest struct {
-	ctx context.Context
-	ApiService *SlurmdbAPIService
-	qos string
-}
-
-func (r ApiSlurmdbV0041DeleteSingleQosRequest) Execute() (*V0041OpenapiSlurmdbdQosRemovedResp, *http.Response, error) {
-	return r.ApiService.SlurmdbV0041DeleteSingleQosExecute(r)
-}
-
-/*
-SlurmdbV0041DeleteSingleQos Delete QOS
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param qos QOS name
- @return ApiSlurmdbV0041DeleteSingleQosRequest
-*/
-func (a *SlurmdbAPIService) SlurmdbV0041DeleteSingleQos(ctx context.Context, qos string) ApiSlurmdbV0041DeleteSingleQosRequest {
-	return ApiSlurmdbV0041DeleteSingleQosRequest{
-		ApiService: a,
-		ctx: ctx,
-		qos: qos,
-	}
-}
-
-// Execute executes the request
-//  @return V0041OpenapiSlurmdbdQosRemovedResp
-func (a *SlurmdbAPIService) SlurmdbV0041DeleteSingleQosExecute(r ApiSlurmdbV0041DeleteSingleQosRequest) (*V0041OpenapiSlurmdbdQosRemovedResp, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodDelete
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *V0041OpenapiSlurmdbdQosRemovedResp
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0041DeleteSingleQos")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurmdb/v0.0.41/qos/{qos}"
-	localVarPath = strings.Replace(localVarPath, "{"+"qos"+"}", url.PathEscape(parameterValueToString(r.qos, "qos")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v V0041OpenapiSlurmdbdQosRemovedResp
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmdbV0041DeleteUserRequest struct {
-	ctx context.Context
-	ApiService *SlurmdbAPIService
-	name string
-}
-
-func (r ApiSlurmdbV0041DeleteUserRequest) Execute() (*V0041OpenapiResp, *http.Response, error) {
-	return r.ApiService.SlurmdbV0041DeleteUserExecute(r)
-}
-
-/*
-SlurmdbV0041DeleteUser Delete user
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param name User name
- @return ApiSlurmdbV0041DeleteUserRequest
-*/
-func (a *SlurmdbAPIService) SlurmdbV0041DeleteUser(ctx context.Context, name string) ApiSlurmdbV0041DeleteUserRequest {
-	return ApiSlurmdbV0041DeleteUserRequest{
-		ApiService: a,
-		ctx: ctx,
-		name: name,
-	}
-}
-
-// Execute executes the request
-//  @return V0041OpenapiResp
-func (a *SlurmdbAPIService) SlurmdbV0041DeleteUserExecute(r ApiSlurmdbV0041DeleteUserRequest) (*V0041OpenapiResp, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodDelete
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *V0041OpenapiResp
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0041DeleteUser")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurmdb/v0.0.41/user/{name}"
-	localVarPath = strings.Replace(localVarPath, "{"+"name"+"}", url.PathEscape(parameterValueToString(r.name, "name")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v V0041OpenapiResp
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmdbV0041DeleteWckeyRequest struct {
-	ctx context.Context
-	ApiService *SlurmdbAPIService
-	id string
-}
-
-func (r ApiSlurmdbV0041DeleteWckeyRequest) Execute() (*V0041OpenapiWckeyRemovedResp, *http.Response, error) {
-	return r.ApiService.SlurmdbV0041DeleteWckeyExecute(r)
-}
-
-/*
-SlurmdbV0041DeleteWckey Delete wckey
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id wckey id
- @return ApiSlurmdbV0041DeleteWckeyRequest
-*/
-func (a *SlurmdbAPIService) SlurmdbV0041DeleteWckey(ctx context.Context, id string) ApiSlurmdbV0041DeleteWckeyRequest {
-	return ApiSlurmdbV0041DeleteWckeyRequest{
-		ApiService: a,
-		ctx: ctx,
-		id: id,
-	}
-}
-
-// Execute executes the request
-//  @return V0041OpenapiWckeyRemovedResp
-func (a *SlurmdbAPIService) SlurmdbV0041DeleteWckeyExecute(r ApiSlurmdbV0041DeleteWckeyRequest) (*V0041OpenapiWckeyRemovedResp, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodDelete
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *V0041OpenapiWckeyRemovedResp
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0041DeleteWckey")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/slurmdb/v0.0.41/wckey/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["user"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-NAME"] = key
-			}
-		}
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["token"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-			var v V0041OpenapiWckeyRemovedResp
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiSlurmdbV0041GetAccountRequest struct {
-	ctx context.Context
-	ApiService *SlurmdbAPIService
-	accountName string
-	withAssocs *string
-	withCoords *string
-	withDeleted *string
-}
-
-// include associations
-func (r ApiSlurmdbV0041GetAccountRequest) WithAssocs(withAssocs string) ApiSlurmdbV0041GetAccountRequest {
-	r.withAssocs = &withAssocs
-	return r
-}
-
-// include coordinators
-func (r ApiSlurmdbV0041GetAccountRequest) WithCoords(withCoords string) ApiSlurmdbV0041GetAccountRequest {
-	r.withCoords = &withCoords
-	return r
-}
-
-// include deleted
-func (r ApiSlurmdbV0041GetAccountRequest) WithDeleted(withDeleted string) ApiSlurmdbV0041GetAccountRequest {
-	r.withDeleted = &withDeleted
-	return r
-}
-
-func (r ApiSlurmdbV0041GetAccountRequest) Execute() (*V0041OpenapiAccountsResp, *http.Response, error) {
-	return r.ApiService.SlurmdbV0041GetAccountExecute(r)
-}
-
-/*
-SlurmdbV0041GetAccount Get account info
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param accountName Account name
- @return ApiSlurmdbV0041GetAccountRequest
-*/
-func (a *SlurmdbAPIService) SlurmdbV0041GetAccount(ctx context.Context, accountName string) ApiSlurmdbV0041GetAccountRequest {
-	return ApiSlurmdbV0041GetAccountRequest{
-		ApiService: a,
-		ctx: ctx,
-		accountName: accountName,
-	}
-}
-
-// Execute executes the request
-//  @return V0041OpenapiAccountsResp
-func (a *SlurmdbAPIService) SlurmdbV0041GetAccountExecute(r ApiSlurmdbV0041GetAccountRequest) (*V0041OpenapiAccountsResp, *http.Response, error) {
+//  @return V0044OpenapiAccountsResp
+func (a *SlurmdbAPIService) SlurmdbV0044GetAccountExecute(r ApiSlurmdbV0044GetAccountRequest) (*V0044OpenapiAccountsResp, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *V0041OpenapiAccountsResp
+		localVarReturnValue  *V0044OpenapiAccountsResp
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0041GetAccount")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0044GetAccount")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/slurmdb/v0.0.41/account/{account_name}"
+	localVarPath := localBasePath + "/slurmdb/v0.0.44/account/{account_name}"
 	localVarPath = strings.Replace(localVarPath, "{"+"account_name"+"}", url.PathEscape(parameterValueToString(r.accountName, "accountName")), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -8474,7 +1511,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041GetAccountExecute(r ApiSlurmdbV0041GetAc
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -8531,7 +1568,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041GetAccountExecute(r ApiSlurmdbV0041GetAc
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v V0041OpenapiAccountsResp
+			var v V0044OpenapiAccountsResp
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -8554,7 +1591,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041GetAccountExecute(r ApiSlurmdbV0041GetAc
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiSlurmdbV0041GetAccountsRequest struct {
+type ApiSlurmdbV0044GetAccountsRequest struct {
 	ctx context.Context
 	ApiService *SlurmdbAPIService
 	description *string
@@ -8566,74 +1603,74 @@ type ApiSlurmdbV0041GetAccountsRequest struct {
 }
 
 // CSV description list
-func (r ApiSlurmdbV0041GetAccountsRequest) Description(description string) ApiSlurmdbV0041GetAccountsRequest {
+func (r ApiSlurmdbV0044GetAccountsRequest) Description(description string) ApiSlurmdbV0044GetAccountsRequest {
 	r.description = &description
 	return r
 }
 
-// include deleted assocations
-func (r ApiSlurmdbV0041GetAccountsRequest) DELETED(dELETED string) ApiSlurmdbV0041GetAccountsRequest {
+// include deleted associations
+func (r ApiSlurmdbV0044GetAccountsRequest) DELETED(dELETED string) ApiSlurmdbV0044GetAccountsRequest {
 	r.dELETED = &dELETED
 	return r
 }
 
 // query includes associations
-func (r ApiSlurmdbV0041GetAccountsRequest) WithAssociations(withAssociations string) ApiSlurmdbV0041GetAccountsRequest {
+func (r ApiSlurmdbV0044GetAccountsRequest) WithAssociations(withAssociations string) ApiSlurmdbV0044GetAccountsRequest {
 	r.withAssociations = &withAssociations
 	return r
 }
 
 // query includes coordinators
-func (r ApiSlurmdbV0041GetAccountsRequest) WithCoordinators(withCoordinators string) ApiSlurmdbV0041GetAccountsRequest {
+func (r ApiSlurmdbV0044GetAccountsRequest) WithCoordinators(withCoordinators string) ApiSlurmdbV0044GetAccountsRequest {
 	r.withCoordinators = &withCoordinators
 	return r
 }
 
 // remove users as coordinators
-func (r ApiSlurmdbV0041GetAccountsRequest) NoUsersAreCoords(noUsersAreCoords string) ApiSlurmdbV0041GetAccountsRequest {
+func (r ApiSlurmdbV0044GetAccountsRequest) NoUsersAreCoords(noUsersAreCoords string) ApiSlurmdbV0044GetAccountsRequest {
 	r.noUsersAreCoords = &noUsersAreCoords
 	return r
 }
 
 // users are coordinators
-func (r ApiSlurmdbV0041GetAccountsRequest) UsersAreCoords(usersAreCoords string) ApiSlurmdbV0041GetAccountsRequest {
+func (r ApiSlurmdbV0044GetAccountsRequest) UsersAreCoords(usersAreCoords string) ApiSlurmdbV0044GetAccountsRequest {
 	r.usersAreCoords = &usersAreCoords
 	return r
 }
 
-func (r ApiSlurmdbV0041GetAccountsRequest) Execute() (*V0041OpenapiAccountsResp, *http.Response, error) {
-	return r.ApiService.SlurmdbV0041GetAccountsExecute(r)
+func (r ApiSlurmdbV0044GetAccountsRequest) Execute() (*V0044OpenapiAccountsResp, *http.Response, error) {
+	return r.ApiService.SlurmdbV0044GetAccountsExecute(r)
 }
 
 /*
-SlurmdbV0041GetAccounts Get account list
+SlurmdbV0044GetAccounts Get account list
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmdbV0041GetAccountsRequest
+ @return ApiSlurmdbV0044GetAccountsRequest
 */
-func (a *SlurmdbAPIService) SlurmdbV0041GetAccounts(ctx context.Context) ApiSlurmdbV0041GetAccountsRequest {
-	return ApiSlurmdbV0041GetAccountsRequest{
+func (a *SlurmdbAPIService) SlurmdbV0044GetAccounts(ctx context.Context) ApiSlurmdbV0044GetAccountsRequest {
+	return ApiSlurmdbV0044GetAccountsRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
 }
 
 // Execute executes the request
-//  @return V0041OpenapiAccountsResp
-func (a *SlurmdbAPIService) SlurmdbV0041GetAccountsExecute(r ApiSlurmdbV0041GetAccountsRequest) (*V0041OpenapiAccountsResp, *http.Response, error) {
+//  @return V0044OpenapiAccountsResp
+func (a *SlurmdbAPIService) SlurmdbV0044GetAccountsExecute(r ApiSlurmdbV0044GetAccountsRequest) (*V0044OpenapiAccountsResp, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *V0041OpenapiAccountsResp
+		localVarReturnValue  *V0044OpenapiAccountsResp
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0041GetAccounts")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0044GetAccounts")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/slurmdb/v0.0.41/accounts/"
+	localVarPath := localBasePath + "/slurmdb/v0.0.44/accounts/"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -8667,7 +1704,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041GetAccountsExecute(r ApiSlurmdbV0041GetA
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -8724,7 +1761,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041GetAccountsExecute(r ApiSlurmdbV0041GetA
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v V0041OpenapiAccountsResp
+			var v V0044OpenapiAccountsResp
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -8747,170 +1784,164 @@ func (a *SlurmdbAPIService) SlurmdbV0041GetAccountsExecute(r ApiSlurmdbV0041GetA
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiSlurmdbV0041GetAssociationRequest struct {
+type ApiSlurmdbV0044GetAssociationRequest struct {
 	ctx context.Context
 	ApiService *SlurmdbAPIService
 	account *string
 	cluster *string
 	defaultQos *string
+	includeDeletedAssociations *string
+	includeUsage *string
+	filterToOnlyDefaults *string
+	includeTheRawQOSOrDeltaQos *string
+	includeSubAcctInformation *string
+	excludeParentIdName *string
+	excludeLimitsFromParents *string
 	format *string
 	id *string
-	onlyDefaults *string
 	parentAccount *string
 	partition *string
 	qos *string
 	usageEnd *string
 	usageStart *string
 	user *string
-	withUsage *string
-	withDeleted *string
-	withRawQos *string
-	withSubAccts *string
-	withoutParentInfo *string
-	withoutParentLimits *string
 }
 
 // CSV accounts list
-func (r ApiSlurmdbV0041GetAssociationRequest) Account(account string) ApiSlurmdbV0041GetAssociationRequest {
+func (r ApiSlurmdbV0044GetAssociationRequest) Account(account string) ApiSlurmdbV0044GetAssociationRequest {
 	r.account = &account
 	return r
 }
 
 // CSV clusters list
-func (r ApiSlurmdbV0041GetAssociationRequest) Cluster(cluster string) ApiSlurmdbV0041GetAssociationRequest {
+func (r ApiSlurmdbV0044GetAssociationRequest) Cluster(cluster string) ApiSlurmdbV0044GetAssociationRequest {
 	r.cluster = &cluster
 	return r
 }
 
 // CSV QOS list
-func (r ApiSlurmdbV0041GetAssociationRequest) DefaultQos(defaultQos string) ApiSlurmdbV0041GetAssociationRequest {
+func (r ApiSlurmdbV0044GetAssociationRequest) DefaultQos(defaultQos string) ApiSlurmdbV0044GetAssociationRequest {
 	r.defaultQos = &defaultQos
 	return r
 }
 
-// CSV format list
-func (r ApiSlurmdbV0041GetAssociationRequest) Format(format string) ApiSlurmdbV0041GetAssociationRequest {
+func (r ApiSlurmdbV0044GetAssociationRequest) IncludeDeletedAssociations(includeDeletedAssociations string) ApiSlurmdbV0044GetAssociationRequest {
+	r.includeDeletedAssociations = &includeDeletedAssociations
+	return r
+}
+
+func (r ApiSlurmdbV0044GetAssociationRequest) IncludeUsage(includeUsage string) ApiSlurmdbV0044GetAssociationRequest {
+	r.includeUsage = &includeUsage
+	return r
+}
+
+func (r ApiSlurmdbV0044GetAssociationRequest) FilterToOnlyDefaults(filterToOnlyDefaults string) ApiSlurmdbV0044GetAssociationRequest {
+	r.filterToOnlyDefaults = &filterToOnlyDefaults
+	return r
+}
+
+func (r ApiSlurmdbV0044GetAssociationRequest) IncludeTheRawQOSOrDeltaQos(includeTheRawQOSOrDeltaQos string) ApiSlurmdbV0044GetAssociationRequest {
+	r.includeTheRawQOSOrDeltaQos = &includeTheRawQOSOrDeltaQos
+	return r
+}
+
+func (r ApiSlurmdbV0044GetAssociationRequest) IncludeSubAcctInformation(includeSubAcctInformation string) ApiSlurmdbV0044GetAssociationRequest {
+	r.includeSubAcctInformation = &includeSubAcctInformation
+	return r
+}
+
+func (r ApiSlurmdbV0044GetAssociationRequest) ExcludeParentIdName(excludeParentIdName string) ApiSlurmdbV0044GetAssociationRequest {
+	r.excludeParentIdName = &excludeParentIdName
+	return r
+}
+
+func (r ApiSlurmdbV0044GetAssociationRequest) ExcludeLimitsFromParents(excludeLimitsFromParents string) ApiSlurmdbV0044GetAssociationRequest {
+	r.excludeLimitsFromParents = &excludeLimitsFromParents
+	return r
+}
+
+// Ignored; process JSON manually to control output format
+// Deprecated
+func (r ApiSlurmdbV0044GetAssociationRequest) Format(format string) ApiSlurmdbV0044GetAssociationRequest {
 	r.format = &format
 	return r
 }
 
-// CSV id list
-func (r ApiSlurmdbV0041GetAssociationRequest) Id(id string) ApiSlurmdbV0041GetAssociationRequest {
+// CSV ID list
+func (r ApiSlurmdbV0044GetAssociationRequest) Id(id string) ApiSlurmdbV0044GetAssociationRequest {
 	r.id = &id
 	return r
 }
 
-// filter to only defaults
-func (r ApiSlurmdbV0041GetAssociationRequest) OnlyDefaults(onlyDefaults string) ApiSlurmdbV0041GetAssociationRequest {
-	r.onlyDefaults = &onlyDefaults
-	return r
-}
-
 // CSV names of parent account
-func (r ApiSlurmdbV0041GetAssociationRequest) ParentAccount(parentAccount string) ApiSlurmdbV0041GetAssociationRequest {
+func (r ApiSlurmdbV0044GetAssociationRequest) ParentAccount(parentAccount string) ApiSlurmdbV0044GetAssociationRequest {
 	r.parentAccount = &parentAccount
 	return r
 }
 
 // CSV partition name list
-func (r ApiSlurmdbV0041GetAssociationRequest) Partition(partition string) ApiSlurmdbV0041GetAssociationRequest {
+func (r ApiSlurmdbV0044GetAssociationRequest) Partition(partition string) ApiSlurmdbV0044GetAssociationRequest {
 	r.partition = &partition
 	return r
 }
 
 // CSV QOS list
-func (r ApiSlurmdbV0041GetAssociationRequest) Qos(qos string) ApiSlurmdbV0041GetAssociationRequest {
+func (r ApiSlurmdbV0044GetAssociationRequest) Qos(qos string) ApiSlurmdbV0044GetAssociationRequest {
 	r.qos = &qos
 	return r
 }
 
-// usage end UNIX timestamp
-func (r ApiSlurmdbV0041GetAssociationRequest) UsageEnd(usageEnd string) ApiSlurmdbV0041GetAssociationRequest {
+// Usage end (UNIX timestamp)
+func (r ApiSlurmdbV0044GetAssociationRequest) UsageEnd(usageEnd string) ApiSlurmdbV0044GetAssociationRequest {
 	r.usageEnd = &usageEnd
 	return r
 }
 
-// usage start UNIX timestamp
-func (r ApiSlurmdbV0041GetAssociationRequest) UsageStart(usageStart string) ApiSlurmdbV0041GetAssociationRequest {
+// Usage start (UNIX timestamp)
+func (r ApiSlurmdbV0044GetAssociationRequest) UsageStart(usageStart string) ApiSlurmdbV0044GetAssociationRequest {
 	r.usageStart = &usageStart
 	return r
 }
 
 // CSV user list
-func (r ApiSlurmdbV0041GetAssociationRequest) User(user string) ApiSlurmdbV0041GetAssociationRequest {
+func (r ApiSlurmdbV0044GetAssociationRequest) User(user string) ApiSlurmdbV0044GetAssociationRequest {
 	r.user = &user
 	return r
 }
 
-// fill in usage
-func (r ApiSlurmdbV0041GetAssociationRequest) WithUsage(withUsage string) ApiSlurmdbV0041GetAssociationRequest {
-	r.withUsage = &withUsage
-	return r
-}
-
-// return deleted associations
-func (r ApiSlurmdbV0041GetAssociationRequest) WithDeleted(withDeleted string) ApiSlurmdbV0041GetAssociationRequest {
-	r.withDeleted = &withDeleted
-	return r
-}
-
-// return a raw qos or delta_qos
-func (r ApiSlurmdbV0041GetAssociationRequest) WithRawQos(withRawQos string) ApiSlurmdbV0041GetAssociationRequest {
-	r.withRawQos = &withRawQos
-	return r
-}
-
-// return sub acct information also
-func (r ApiSlurmdbV0041GetAssociationRequest) WithSubAccts(withSubAccts string) ApiSlurmdbV0041GetAssociationRequest {
-	r.withSubAccts = &withSubAccts
-	return r
-}
-
-// don&#39;t give me parent id/name
-func (r ApiSlurmdbV0041GetAssociationRequest) WithoutParentInfo(withoutParentInfo string) ApiSlurmdbV0041GetAssociationRequest {
-	r.withoutParentInfo = &withoutParentInfo
-	return r
-}
-
-// don&#39;t give me limits from parents
-func (r ApiSlurmdbV0041GetAssociationRequest) WithoutParentLimits(withoutParentLimits string) ApiSlurmdbV0041GetAssociationRequest {
-	r.withoutParentLimits = &withoutParentLimits
-	return r
-}
-
-func (r ApiSlurmdbV0041GetAssociationRequest) Execute() (*V0041OpenapiAssocsResp, *http.Response, error) {
-	return r.ApiService.SlurmdbV0041GetAssociationExecute(r)
+func (r ApiSlurmdbV0044GetAssociationRequest) Execute() (*V0044OpenapiAssocsResp, *http.Response, error) {
+	return r.ApiService.SlurmdbV0044GetAssociationExecute(r)
 }
 
 /*
-SlurmdbV0041GetAssociation Get association info
+SlurmdbV0044GetAssociation Get association info
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmdbV0041GetAssociationRequest
+ @return ApiSlurmdbV0044GetAssociationRequest
 */
-func (a *SlurmdbAPIService) SlurmdbV0041GetAssociation(ctx context.Context) ApiSlurmdbV0041GetAssociationRequest {
-	return ApiSlurmdbV0041GetAssociationRequest{
+func (a *SlurmdbAPIService) SlurmdbV0044GetAssociation(ctx context.Context) ApiSlurmdbV0044GetAssociationRequest {
+	return ApiSlurmdbV0044GetAssociationRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
 }
 
 // Execute executes the request
-//  @return V0041OpenapiAssocsResp
-func (a *SlurmdbAPIService) SlurmdbV0041GetAssociationExecute(r ApiSlurmdbV0041GetAssociationRequest) (*V0041OpenapiAssocsResp, *http.Response, error) {
+//  @return V0044OpenapiAssocsResp
+func (a *SlurmdbAPIService) SlurmdbV0044GetAssociationExecute(r ApiSlurmdbV0044GetAssociationRequest) (*V0044OpenapiAssocsResp, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *V0041OpenapiAssocsResp
+		localVarReturnValue  *V0044OpenapiAssocsResp
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0041GetAssociation")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0044GetAssociation")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/slurmdb/v0.0.41/association/"
+	localVarPath := localBasePath + "/slurmdb/v0.0.44/association/"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -8925,14 +1956,32 @@ func (a *SlurmdbAPIService) SlurmdbV0041GetAssociationExecute(r ApiSlurmdbV0041G
 	if r.defaultQos != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "default_qos", r.defaultQos, "")
 	}
+	if r.includeDeletedAssociations != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "Include deleted associations", r.includeDeletedAssociations, "")
+	}
+	if r.includeUsage != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "Include usage", r.includeUsage, "")
+	}
+	if r.filterToOnlyDefaults != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "Filter to only defaults", r.filterToOnlyDefaults, "")
+	}
+	if r.includeTheRawQOSOrDeltaQos != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "Include the raw QOS or delta_qos", r.includeTheRawQOSOrDeltaQos, "")
+	}
+	if r.includeSubAcctInformation != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "Include sub acct information", r.includeSubAcctInformation, "")
+	}
+	if r.excludeParentIdName != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "Exclude parent id/name", r.excludeParentIdName, "")
+	}
+	if r.excludeLimitsFromParents != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "Exclude limits from parents", r.excludeLimitsFromParents, "")
+	}
 	if r.format != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "format", r.format, "")
 	}
 	if r.id != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "id", r.id, "")
-	}
-	if r.onlyDefaults != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "only_defaults", r.onlyDefaults, "")
 	}
 	if r.parentAccount != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "parent_account", r.parentAccount, "")
@@ -8952,24 +2001,6 @@ func (a *SlurmdbAPIService) SlurmdbV0041GetAssociationExecute(r ApiSlurmdbV0041G
 	if r.user != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "user", r.user, "")
 	}
-	if r.withUsage != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "with_usage", r.withUsage, "")
-	}
-	if r.withDeleted != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "with_deleted", r.withDeleted, "")
-	}
-	if r.withRawQos != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "with_raw_qos", r.withRawQos, "")
-	}
-	if r.withSubAccts != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "with_sub_accts", r.withSubAccts, "")
-	}
-	if r.withoutParentInfo != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "without_parent_info", r.withoutParentInfo, "")
-	}
-	if r.withoutParentLimits != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "without_parent_limits", r.withoutParentLimits, "")
-	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -8980,7 +2011,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041GetAssociationExecute(r ApiSlurmdbV0041G
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -9037,7 +2068,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041GetAssociationExecute(r ApiSlurmdbV0041G
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v V0041OpenapiAssocsResp
+			var v V0044OpenapiAssocsResp
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -9060,170 +2091,164 @@ func (a *SlurmdbAPIService) SlurmdbV0041GetAssociationExecute(r ApiSlurmdbV0041G
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiSlurmdbV0041GetAssociationsRequest struct {
+type ApiSlurmdbV0044GetAssociationsRequest struct {
 	ctx context.Context
 	ApiService *SlurmdbAPIService
 	account *string
 	cluster *string
 	defaultQos *string
+	includeDeletedAssociations *string
+	includeUsage *string
+	filterToOnlyDefaults *string
+	includeTheRawQOSOrDeltaQos *string
+	includeSubAcctInformation *string
+	excludeParentIdName *string
+	excludeLimitsFromParents *string
 	format *string
 	id *string
-	onlyDefaults *string
 	parentAccount *string
 	partition *string
 	qos *string
 	usageEnd *string
 	usageStart *string
 	user *string
-	withUsage *string
-	withDeleted *string
-	withRawQos *string
-	withSubAccts *string
-	withoutParentInfo *string
-	withoutParentLimits *string
 }
 
 // CSV accounts list
-func (r ApiSlurmdbV0041GetAssociationsRequest) Account(account string) ApiSlurmdbV0041GetAssociationsRequest {
+func (r ApiSlurmdbV0044GetAssociationsRequest) Account(account string) ApiSlurmdbV0044GetAssociationsRequest {
 	r.account = &account
 	return r
 }
 
 // CSV clusters list
-func (r ApiSlurmdbV0041GetAssociationsRequest) Cluster(cluster string) ApiSlurmdbV0041GetAssociationsRequest {
+func (r ApiSlurmdbV0044GetAssociationsRequest) Cluster(cluster string) ApiSlurmdbV0044GetAssociationsRequest {
 	r.cluster = &cluster
 	return r
 }
 
 // CSV QOS list
-func (r ApiSlurmdbV0041GetAssociationsRequest) DefaultQos(defaultQos string) ApiSlurmdbV0041GetAssociationsRequest {
+func (r ApiSlurmdbV0044GetAssociationsRequest) DefaultQos(defaultQos string) ApiSlurmdbV0044GetAssociationsRequest {
 	r.defaultQos = &defaultQos
 	return r
 }
 
-// CSV format list
-func (r ApiSlurmdbV0041GetAssociationsRequest) Format(format string) ApiSlurmdbV0041GetAssociationsRequest {
+func (r ApiSlurmdbV0044GetAssociationsRequest) IncludeDeletedAssociations(includeDeletedAssociations string) ApiSlurmdbV0044GetAssociationsRequest {
+	r.includeDeletedAssociations = &includeDeletedAssociations
+	return r
+}
+
+func (r ApiSlurmdbV0044GetAssociationsRequest) IncludeUsage(includeUsage string) ApiSlurmdbV0044GetAssociationsRequest {
+	r.includeUsage = &includeUsage
+	return r
+}
+
+func (r ApiSlurmdbV0044GetAssociationsRequest) FilterToOnlyDefaults(filterToOnlyDefaults string) ApiSlurmdbV0044GetAssociationsRequest {
+	r.filterToOnlyDefaults = &filterToOnlyDefaults
+	return r
+}
+
+func (r ApiSlurmdbV0044GetAssociationsRequest) IncludeTheRawQOSOrDeltaQos(includeTheRawQOSOrDeltaQos string) ApiSlurmdbV0044GetAssociationsRequest {
+	r.includeTheRawQOSOrDeltaQos = &includeTheRawQOSOrDeltaQos
+	return r
+}
+
+func (r ApiSlurmdbV0044GetAssociationsRequest) IncludeSubAcctInformation(includeSubAcctInformation string) ApiSlurmdbV0044GetAssociationsRequest {
+	r.includeSubAcctInformation = &includeSubAcctInformation
+	return r
+}
+
+func (r ApiSlurmdbV0044GetAssociationsRequest) ExcludeParentIdName(excludeParentIdName string) ApiSlurmdbV0044GetAssociationsRequest {
+	r.excludeParentIdName = &excludeParentIdName
+	return r
+}
+
+func (r ApiSlurmdbV0044GetAssociationsRequest) ExcludeLimitsFromParents(excludeLimitsFromParents string) ApiSlurmdbV0044GetAssociationsRequest {
+	r.excludeLimitsFromParents = &excludeLimitsFromParents
+	return r
+}
+
+// Ignored; process JSON manually to control output format
+// Deprecated
+func (r ApiSlurmdbV0044GetAssociationsRequest) Format(format string) ApiSlurmdbV0044GetAssociationsRequest {
 	r.format = &format
 	return r
 }
 
-// CSV id list
-func (r ApiSlurmdbV0041GetAssociationsRequest) Id(id string) ApiSlurmdbV0041GetAssociationsRequest {
+// CSV ID list
+func (r ApiSlurmdbV0044GetAssociationsRequest) Id(id string) ApiSlurmdbV0044GetAssociationsRequest {
 	r.id = &id
 	return r
 }
 
-// filter to only defaults
-func (r ApiSlurmdbV0041GetAssociationsRequest) OnlyDefaults(onlyDefaults string) ApiSlurmdbV0041GetAssociationsRequest {
-	r.onlyDefaults = &onlyDefaults
-	return r
-}
-
 // CSV names of parent account
-func (r ApiSlurmdbV0041GetAssociationsRequest) ParentAccount(parentAccount string) ApiSlurmdbV0041GetAssociationsRequest {
+func (r ApiSlurmdbV0044GetAssociationsRequest) ParentAccount(parentAccount string) ApiSlurmdbV0044GetAssociationsRequest {
 	r.parentAccount = &parentAccount
 	return r
 }
 
 // CSV partition name list
-func (r ApiSlurmdbV0041GetAssociationsRequest) Partition(partition string) ApiSlurmdbV0041GetAssociationsRequest {
+func (r ApiSlurmdbV0044GetAssociationsRequest) Partition(partition string) ApiSlurmdbV0044GetAssociationsRequest {
 	r.partition = &partition
 	return r
 }
 
 // CSV QOS list
-func (r ApiSlurmdbV0041GetAssociationsRequest) Qos(qos string) ApiSlurmdbV0041GetAssociationsRequest {
+func (r ApiSlurmdbV0044GetAssociationsRequest) Qos(qos string) ApiSlurmdbV0044GetAssociationsRequest {
 	r.qos = &qos
 	return r
 }
 
-// usage end UNIX timestamp
-func (r ApiSlurmdbV0041GetAssociationsRequest) UsageEnd(usageEnd string) ApiSlurmdbV0041GetAssociationsRequest {
+// Usage end (UNIX timestamp)
+func (r ApiSlurmdbV0044GetAssociationsRequest) UsageEnd(usageEnd string) ApiSlurmdbV0044GetAssociationsRequest {
 	r.usageEnd = &usageEnd
 	return r
 }
 
-// usage start UNIX timestamp
-func (r ApiSlurmdbV0041GetAssociationsRequest) UsageStart(usageStart string) ApiSlurmdbV0041GetAssociationsRequest {
+// Usage start (UNIX timestamp)
+func (r ApiSlurmdbV0044GetAssociationsRequest) UsageStart(usageStart string) ApiSlurmdbV0044GetAssociationsRequest {
 	r.usageStart = &usageStart
 	return r
 }
 
 // CSV user list
-func (r ApiSlurmdbV0041GetAssociationsRequest) User(user string) ApiSlurmdbV0041GetAssociationsRequest {
+func (r ApiSlurmdbV0044GetAssociationsRequest) User(user string) ApiSlurmdbV0044GetAssociationsRequest {
 	r.user = &user
 	return r
 }
 
-// fill in usage
-func (r ApiSlurmdbV0041GetAssociationsRequest) WithUsage(withUsage string) ApiSlurmdbV0041GetAssociationsRequest {
-	r.withUsage = &withUsage
-	return r
-}
-
-// return deleted associations
-func (r ApiSlurmdbV0041GetAssociationsRequest) WithDeleted(withDeleted string) ApiSlurmdbV0041GetAssociationsRequest {
-	r.withDeleted = &withDeleted
-	return r
-}
-
-// return a raw qos or delta_qos
-func (r ApiSlurmdbV0041GetAssociationsRequest) WithRawQos(withRawQos string) ApiSlurmdbV0041GetAssociationsRequest {
-	r.withRawQos = &withRawQos
-	return r
-}
-
-// return sub acct information also
-func (r ApiSlurmdbV0041GetAssociationsRequest) WithSubAccts(withSubAccts string) ApiSlurmdbV0041GetAssociationsRequest {
-	r.withSubAccts = &withSubAccts
-	return r
-}
-
-// don&#39;t give me parent id/name
-func (r ApiSlurmdbV0041GetAssociationsRequest) WithoutParentInfo(withoutParentInfo string) ApiSlurmdbV0041GetAssociationsRequest {
-	r.withoutParentInfo = &withoutParentInfo
-	return r
-}
-
-// don&#39;t give me limits from parents
-func (r ApiSlurmdbV0041GetAssociationsRequest) WithoutParentLimits(withoutParentLimits string) ApiSlurmdbV0041GetAssociationsRequest {
-	r.withoutParentLimits = &withoutParentLimits
-	return r
-}
-
-func (r ApiSlurmdbV0041GetAssociationsRequest) Execute() (*V0041OpenapiAssocsResp, *http.Response, error) {
-	return r.ApiService.SlurmdbV0041GetAssociationsExecute(r)
+func (r ApiSlurmdbV0044GetAssociationsRequest) Execute() (*V0044OpenapiAssocsResp, *http.Response, error) {
+	return r.ApiService.SlurmdbV0044GetAssociationsExecute(r)
 }
 
 /*
-SlurmdbV0041GetAssociations Get association list
+SlurmdbV0044GetAssociations Get association list
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmdbV0041GetAssociationsRequest
+ @return ApiSlurmdbV0044GetAssociationsRequest
 */
-func (a *SlurmdbAPIService) SlurmdbV0041GetAssociations(ctx context.Context) ApiSlurmdbV0041GetAssociationsRequest {
-	return ApiSlurmdbV0041GetAssociationsRequest{
+func (a *SlurmdbAPIService) SlurmdbV0044GetAssociations(ctx context.Context) ApiSlurmdbV0044GetAssociationsRequest {
+	return ApiSlurmdbV0044GetAssociationsRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
 }
 
 // Execute executes the request
-//  @return V0041OpenapiAssocsResp
-func (a *SlurmdbAPIService) SlurmdbV0041GetAssociationsExecute(r ApiSlurmdbV0041GetAssociationsRequest) (*V0041OpenapiAssocsResp, *http.Response, error) {
+//  @return V0044OpenapiAssocsResp
+func (a *SlurmdbAPIService) SlurmdbV0044GetAssociationsExecute(r ApiSlurmdbV0044GetAssociationsRequest) (*V0044OpenapiAssocsResp, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *V0041OpenapiAssocsResp
+		localVarReturnValue  *V0044OpenapiAssocsResp
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0041GetAssociations")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0044GetAssociations")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/slurmdb/v0.0.41/associations/"
+	localVarPath := localBasePath + "/slurmdb/v0.0.44/associations/"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -9238,14 +2263,32 @@ func (a *SlurmdbAPIService) SlurmdbV0041GetAssociationsExecute(r ApiSlurmdbV0041
 	if r.defaultQos != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "default_qos", r.defaultQos, "")
 	}
+	if r.includeDeletedAssociations != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "Include deleted associations", r.includeDeletedAssociations, "")
+	}
+	if r.includeUsage != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "Include usage", r.includeUsage, "")
+	}
+	if r.filterToOnlyDefaults != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "Filter to only defaults", r.filterToOnlyDefaults, "")
+	}
+	if r.includeTheRawQOSOrDeltaQos != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "Include the raw QOS or delta_qos", r.includeTheRawQOSOrDeltaQos, "")
+	}
+	if r.includeSubAcctInformation != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "Include sub acct information", r.includeSubAcctInformation, "")
+	}
+	if r.excludeParentIdName != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "Exclude parent id/name", r.excludeParentIdName, "")
+	}
+	if r.excludeLimitsFromParents != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "Exclude limits from parents", r.excludeLimitsFromParents, "")
+	}
 	if r.format != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "format", r.format, "")
 	}
 	if r.id != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "id", r.id, "")
-	}
-	if r.onlyDefaults != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "only_defaults", r.onlyDefaults, "")
 	}
 	if r.parentAccount != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "parent_account", r.parentAccount, "")
@@ -9265,24 +2308,6 @@ func (a *SlurmdbAPIService) SlurmdbV0041GetAssociationsExecute(r ApiSlurmdbV0041
 	if r.user != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "user", r.user, "")
 	}
-	if r.withUsage != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "with_usage", r.withUsage, "")
-	}
-	if r.withDeleted != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "with_deleted", r.withDeleted, "")
-	}
-	if r.withRawQos != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "with_raw_qos", r.withRawQos, "")
-	}
-	if r.withSubAccts != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "with_sub_accts", r.withSubAccts, "")
-	}
-	if r.withoutParentInfo != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "without_parent_info", r.withoutParentInfo, "")
-	}
-	if r.withoutParentLimits != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "without_parent_limits", r.withoutParentLimits, "")
-	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -9293,7 +2318,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041GetAssociationsExecute(r ApiSlurmdbV0041
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -9350,7 +2375,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041GetAssociationsExecute(r ApiSlurmdbV0041
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v V0041OpenapiAssocsResp
+			var v V0044OpenapiAssocsResp
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -9373,7 +2398,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041GetAssociationsExecute(r ApiSlurmdbV0041
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiSlurmdbV0041GetClusterRequest struct {
+type ApiSlurmdbV0044GetClusterRequest struct {
 	ctx context.Context
 	ApiService *SlurmdbAPIService
 	clusterName string
@@ -9389,77 +2414,80 @@ type ApiSlurmdbV0041GetClusterRequest struct {
 	withUsage *string
 }
 
-func (r ApiSlurmdbV0041GetClusterRequest) Classification(classification string) ApiSlurmdbV0041GetClusterRequest {
+// Type of machine
+func (r ApiSlurmdbV0044GetClusterRequest) Classification(classification string) ApiSlurmdbV0044GetClusterRequest {
 	r.classification = &classification
 	return r
 }
 
 // CSV cluster list
-func (r ApiSlurmdbV0041GetClusterRequest) Cluster(cluster string) ApiSlurmdbV0041GetClusterRequest {
+func (r ApiSlurmdbV0044GetClusterRequest) Cluster(cluster string) ApiSlurmdbV0044GetClusterRequest {
 	r.cluster = &cluster
 	return r
 }
 
 // CSV federation list
-func (r ApiSlurmdbV0041GetClusterRequest) Federation(federation string) ApiSlurmdbV0041GetClusterRequest {
+func (r ApiSlurmdbV0044GetClusterRequest) Federation(federation string) ApiSlurmdbV0044GetClusterRequest {
 	r.federation = &federation
 	return r
 }
 
-func (r ApiSlurmdbV0041GetClusterRequest) Flags(flags string) ApiSlurmdbV0041GetClusterRequest {
+// Query flags
+func (r ApiSlurmdbV0044GetClusterRequest) Flags(flags string) ApiSlurmdbV0044GetClusterRequest {
 	r.flags = &flags
 	return r
 }
 
-// CSV format list
-func (r ApiSlurmdbV0041GetClusterRequest) Format(format string) ApiSlurmdbV0041GetClusterRequest {
+// Ignored; process JSON manually to control output format
+// Deprecated
+func (r ApiSlurmdbV0044GetClusterRequest) Format(format string) ApiSlurmdbV0044GetClusterRequest {
 	r.format = &format
 	return r
 }
 
 // CSV RPC version list
-func (r ApiSlurmdbV0041GetClusterRequest) RpcVersion(rpcVersion string) ApiSlurmdbV0041GetClusterRequest {
+func (r ApiSlurmdbV0044GetClusterRequest) RpcVersion(rpcVersion string) ApiSlurmdbV0044GetClusterRequest {
 	r.rpcVersion = &rpcVersion
 	return r
 }
 
-// Usage end UNIX timestamp (seconds)
-func (r ApiSlurmdbV0041GetClusterRequest) UsageEnd(usageEnd string) ApiSlurmdbV0041GetClusterRequest {
+// Usage end (UNIX timestamp)
+func (r ApiSlurmdbV0044GetClusterRequest) UsageEnd(usageEnd string) ApiSlurmdbV0044GetClusterRequest {
 	r.usageEnd = &usageEnd
 	return r
 }
 
-// Usage start UNIX timestamp (seconds)
-func (r ApiSlurmdbV0041GetClusterRequest) UsageStart(usageStart string) ApiSlurmdbV0041GetClusterRequest {
+// Usage start (UNIX timestamp)
+func (r ApiSlurmdbV0044GetClusterRequest) UsageStart(usageStart string) ApiSlurmdbV0044GetClusterRequest {
 	r.usageStart = &usageStart
 	return r
 }
 
-// include deleted clusters
-func (r ApiSlurmdbV0041GetClusterRequest) WithDeleted(withDeleted string) ApiSlurmdbV0041GetClusterRequest {
+// Include deleted clusters
+func (r ApiSlurmdbV0044GetClusterRequest) WithDeleted(withDeleted string) ApiSlurmdbV0044GetClusterRequest {
 	r.withDeleted = &withDeleted
 	return r
 }
 
-// query usage
-func (r ApiSlurmdbV0041GetClusterRequest) WithUsage(withUsage string) ApiSlurmdbV0041GetClusterRequest {
+// Include usage
+func (r ApiSlurmdbV0044GetClusterRequest) WithUsage(withUsage string) ApiSlurmdbV0044GetClusterRequest {
 	r.withUsage = &withUsage
 	return r
 }
 
-func (r ApiSlurmdbV0041GetClusterRequest) Execute() (*V0041OpenapiClustersResp, *http.Response, error) {
-	return r.ApiService.SlurmdbV0041GetClusterExecute(r)
+func (r ApiSlurmdbV0044GetClusterRequest) Execute() (*V0044OpenapiClustersResp, *http.Response, error) {
+	return r.ApiService.SlurmdbV0044GetClusterExecute(r)
 }
 
 /*
-SlurmdbV0041GetCluster Get cluster info
+SlurmdbV0044GetCluster Get cluster info
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param clusterName Cluster name
- @return ApiSlurmdbV0041GetClusterRequest
+ @return ApiSlurmdbV0044GetClusterRequest
 */
-func (a *SlurmdbAPIService) SlurmdbV0041GetCluster(ctx context.Context, clusterName string) ApiSlurmdbV0041GetClusterRequest {
-	return ApiSlurmdbV0041GetClusterRequest{
+func (a *SlurmdbAPIService) SlurmdbV0044GetCluster(ctx context.Context, clusterName string) ApiSlurmdbV0044GetClusterRequest {
+	return ApiSlurmdbV0044GetClusterRequest{
 		ApiService: a,
 		ctx: ctx,
 		clusterName: clusterName,
@@ -9467,21 +2495,21 @@ func (a *SlurmdbAPIService) SlurmdbV0041GetCluster(ctx context.Context, clusterN
 }
 
 // Execute executes the request
-//  @return V0041OpenapiClustersResp
-func (a *SlurmdbAPIService) SlurmdbV0041GetClusterExecute(r ApiSlurmdbV0041GetClusterRequest) (*V0041OpenapiClustersResp, *http.Response, error) {
+//  @return V0044OpenapiClustersResp
+func (a *SlurmdbAPIService) SlurmdbV0044GetClusterExecute(r ApiSlurmdbV0044GetClusterRequest) (*V0044OpenapiClustersResp, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *V0041OpenapiClustersResp
+		localVarReturnValue  *V0044OpenapiClustersResp
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0041GetCluster")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0044GetCluster")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/slurmdb/v0.0.41/cluster/{cluster_name}"
+	localVarPath := localBasePath + "/slurmdb/v0.0.44/cluster/{cluster_name}"
 	localVarPath = strings.Replace(localVarPath, "{"+"cluster_name"+"}", url.PathEscape(parameterValueToString(r.clusterName, "clusterName")), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -9528,7 +2556,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041GetClusterExecute(r ApiSlurmdbV0041GetCl
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -9585,7 +2613,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041GetClusterExecute(r ApiSlurmdbV0041GetCl
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v V0041OpenapiClustersResp
+			var v V0044OpenapiClustersResp
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -9608,51 +2636,51 @@ func (a *SlurmdbAPIService) SlurmdbV0041GetClusterExecute(r ApiSlurmdbV0041GetCl
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiSlurmdbV0041GetClustersRequest struct {
+type ApiSlurmdbV0044GetClustersRequest struct {
 	ctx context.Context
 	ApiService *SlurmdbAPIService
 	updateTime *string
 }
 
-// Filter reservations since update timestamp
-func (r ApiSlurmdbV0041GetClustersRequest) UpdateTime(updateTime string) ApiSlurmdbV0041GetClustersRequest {
+// Query reservations updated more recently than this time (UNIX timestamp)
+func (r ApiSlurmdbV0044GetClustersRequest) UpdateTime(updateTime string) ApiSlurmdbV0044GetClustersRequest {
 	r.updateTime = &updateTime
 	return r
 }
 
-func (r ApiSlurmdbV0041GetClustersRequest) Execute() (*V0041OpenapiClustersResp, *http.Response, error) {
-	return r.ApiService.SlurmdbV0041GetClustersExecute(r)
+func (r ApiSlurmdbV0044GetClustersRequest) Execute() (*V0044OpenapiClustersResp, *http.Response, error) {
+	return r.ApiService.SlurmdbV0044GetClustersExecute(r)
 }
 
 /*
-SlurmdbV0041GetClusters Get cluster list
+SlurmdbV0044GetClusters Get cluster list
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmdbV0041GetClustersRequest
+ @return ApiSlurmdbV0044GetClustersRequest
 */
-func (a *SlurmdbAPIService) SlurmdbV0041GetClusters(ctx context.Context) ApiSlurmdbV0041GetClustersRequest {
-	return ApiSlurmdbV0041GetClustersRequest{
+func (a *SlurmdbAPIService) SlurmdbV0044GetClusters(ctx context.Context) ApiSlurmdbV0044GetClustersRequest {
+	return ApiSlurmdbV0044GetClustersRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
 }
 
 // Execute executes the request
-//  @return V0041OpenapiClustersResp
-func (a *SlurmdbAPIService) SlurmdbV0041GetClustersExecute(r ApiSlurmdbV0041GetClustersRequest) (*V0041OpenapiClustersResp, *http.Response, error) {
+//  @return V0044OpenapiClustersResp
+func (a *SlurmdbAPIService) SlurmdbV0044GetClustersExecute(r ApiSlurmdbV0044GetClustersRequest) (*V0044OpenapiClustersResp, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *V0041OpenapiClustersResp
+		localVarReturnValue  *V0044OpenapiClustersResp
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0041GetClusters")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0044GetClusters")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/slurmdb/v0.0.41/clusters/"
+	localVarPath := localBasePath + "/slurmdb/v0.0.44/clusters/"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -9671,7 +2699,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041GetClustersExecute(r ApiSlurmdbV0041GetC
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -9728,7 +2756,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041GetClustersExecute(r ApiSlurmdbV0041GetC
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v V0041OpenapiClustersResp
+			var v V0044OpenapiClustersResp
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -9751,44 +2779,44 @@ func (a *SlurmdbAPIService) SlurmdbV0041GetClustersExecute(r ApiSlurmdbV0041GetC
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiSlurmdbV0041GetConfigRequest struct {
+type ApiSlurmdbV0044GetConfigRequest struct {
 	ctx context.Context
 	ApiService *SlurmdbAPIService
 }
 
-func (r ApiSlurmdbV0041GetConfigRequest) Execute() (*V0041OpenapiSlurmdbdConfigResp, *http.Response, error) {
-	return r.ApiService.SlurmdbV0041GetConfigExecute(r)
+func (r ApiSlurmdbV0044GetConfigRequest) Execute() (*V0044OpenapiSlurmdbdConfigResp, *http.Response, error) {
+	return r.ApiService.SlurmdbV0044GetConfigExecute(r)
 }
 
 /*
-SlurmdbV0041GetConfig Dump all configuration information
+SlurmdbV0044GetConfig Dump all configuration information
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmdbV0041GetConfigRequest
+ @return ApiSlurmdbV0044GetConfigRequest
 */
-func (a *SlurmdbAPIService) SlurmdbV0041GetConfig(ctx context.Context) ApiSlurmdbV0041GetConfigRequest {
-	return ApiSlurmdbV0041GetConfigRequest{
+func (a *SlurmdbAPIService) SlurmdbV0044GetConfig(ctx context.Context) ApiSlurmdbV0044GetConfigRequest {
+	return ApiSlurmdbV0044GetConfigRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
 }
 
 // Execute executes the request
-//  @return V0041OpenapiSlurmdbdConfigResp
-func (a *SlurmdbAPIService) SlurmdbV0041GetConfigExecute(r ApiSlurmdbV0041GetConfigRequest) (*V0041OpenapiSlurmdbdConfigResp, *http.Response, error) {
+//  @return V0044OpenapiSlurmdbdConfigResp
+func (a *SlurmdbAPIService) SlurmdbV0044GetConfigExecute(r ApiSlurmdbV0044GetConfigRequest) (*V0044OpenapiSlurmdbdConfigResp, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *V0041OpenapiSlurmdbdConfigResp
+		localVarReturnValue  *V0044OpenapiSlurmdbdConfigResp
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0041GetConfig")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0044GetConfig")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/slurmdb/v0.0.41/config"
+	localVarPath := localBasePath + "/slurmdb/v0.0.44/config"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -9804,7 +2832,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041GetConfigExecute(r ApiSlurmdbV0041GetCon
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -9861,7 +2889,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041GetConfigExecute(r ApiSlurmdbV0041GetCon
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v V0041OpenapiSlurmdbdConfigResp
+			var v V0044OpenapiSlurmdbdConfigResp
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -9884,44 +2912,44 @@ func (a *SlurmdbAPIService) SlurmdbV0041GetConfigExecute(r ApiSlurmdbV0041GetCon
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiSlurmdbV0041GetDiagRequest struct {
+type ApiSlurmdbV0044GetDiagRequest struct {
 	ctx context.Context
 	ApiService *SlurmdbAPIService
 }
 
-func (r ApiSlurmdbV0041GetDiagRequest) Execute() (*V0041OpenapiSlurmdbdStatsResp, *http.Response, error) {
-	return r.ApiService.SlurmdbV0041GetDiagExecute(r)
+func (r ApiSlurmdbV0044GetDiagRequest) Execute() (*V0044OpenapiSlurmdbdStatsResp, *http.Response, error) {
+	return r.ApiService.SlurmdbV0044GetDiagExecute(r)
 }
 
 /*
-SlurmdbV0041GetDiag Get slurmdb diagnostics
+SlurmdbV0044GetDiag Get slurmdb diagnostics
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmdbV0041GetDiagRequest
+ @return ApiSlurmdbV0044GetDiagRequest
 */
-func (a *SlurmdbAPIService) SlurmdbV0041GetDiag(ctx context.Context) ApiSlurmdbV0041GetDiagRequest {
-	return ApiSlurmdbV0041GetDiagRequest{
+func (a *SlurmdbAPIService) SlurmdbV0044GetDiag(ctx context.Context) ApiSlurmdbV0044GetDiagRequest {
+	return ApiSlurmdbV0044GetDiagRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
 }
 
 // Execute executes the request
-//  @return V0041OpenapiSlurmdbdStatsResp
-func (a *SlurmdbAPIService) SlurmdbV0041GetDiagExecute(r ApiSlurmdbV0041GetDiagRequest) (*V0041OpenapiSlurmdbdStatsResp, *http.Response, error) {
+//  @return V0044OpenapiSlurmdbdStatsResp
+func (a *SlurmdbAPIService) SlurmdbV0044GetDiagExecute(r ApiSlurmdbV0044GetDiagRequest) (*V0044OpenapiSlurmdbdStatsResp, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *V0041OpenapiSlurmdbdStatsResp
+		localVarReturnValue  *V0044OpenapiSlurmdbdStatsResp
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0041GetDiag")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0044GetDiag")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/slurmdb/v0.0.41/diag/"
+	localVarPath := localBasePath + "/slurmdb/v0.0.44/diag/"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -9937,7 +2965,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041GetDiagExecute(r ApiSlurmdbV0041GetDiagR
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -9994,7 +3022,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041GetDiagExecute(r ApiSlurmdbV0041GetDiagR
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v V0041OpenapiSlurmdbdStatsResp
+			var v V0044OpenapiSlurmdbdStatsResp
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -10017,7 +3045,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041GetDiagExecute(r ApiSlurmdbV0041GetDiagR
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiSlurmdbV0041GetInstanceRequest struct {
+type ApiSlurmdbV0044GetInstanceRequest struct {
 	ctx context.Context
 	ApiService *SlurmdbAPIService
 	cluster *string
@@ -10031,86 +3059,87 @@ type ApiSlurmdbV0041GetInstanceRequest struct {
 }
 
 // CSV clusters list
-func (r ApiSlurmdbV0041GetInstanceRequest) Cluster(cluster string) ApiSlurmdbV0041GetInstanceRequest {
+func (r ApiSlurmdbV0044GetInstanceRequest) Cluster(cluster string) ApiSlurmdbV0044GetInstanceRequest {
 	r.cluster = &cluster
 	return r
 }
 
 // CSV extra list
-func (r ApiSlurmdbV0041GetInstanceRequest) Extra(extra string) ApiSlurmdbV0041GetInstanceRequest {
+func (r ApiSlurmdbV0044GetInstanceRequest) Extra(extra string) ApiSlurmdbV0044GetInstanceRequest {
 	r.extra = &extra
 	return r
 }
 
-// CSV format list
-func (r ApiSlurmdbV0041GetInstanceRequest) Format(format string) ApiSlurmdbV0041GetInstanceRequest {
+// Ignored; process JSON manually to control output format
+// Deprecated
+func (r ApiSlurmdbV0044GetInstanceRequest) Format(format string) ApiSlurmdbV0044GetInstanceRequest {
 	r.format = &format
 	return r
 }
 
 // CSV instance_id list
-func (r ApiSlurmdbV0041GetInstanceRequest) InstanceId(instanceId string) ApiSlurmdbV0041GetInstanceRequest {
+func (r ApiSlurmdbV0044GetInstanceRequest) InstanceId(instanceId string) ApiSlurmdbV0044GetInstanceRequest {
 	r.instanceId = &instanceId
 	return r
 }
 
 // CSV instance_type list
-func (r ApiSlurmdbV0041GetInstanceRequest) InstanceType(instanceType string) ApiSlurmdbV0041GetInstanceRequest {
+func (r ApiSlurmdbV0044GetInstanceRequest) InstanceType(instanceType string) ApiSlurmdbV0044GetInstanceRequest {
 	r.instanceType = &instanceType
 	return r
 }
 
-// ranged node string
-func (r ApiSlurmdbV0041GetInstanceRequest) NodeList(nodeList string) ApiSlurmdbV0041GetInstanceRequest {
+// Ranged node string
+func (r ApiSlurmdbV0044GetInstanceRequest) NodeList(nodeList string) ApiSlurmdbV0044GetInstanceRequest {
 	r.nodeList = &nodeList
 	return r
 }
 
-// time end UNIX timestamp
-func (r ApiSlurmdbV0041GetInstanceRequest) TimeEnd(timeEnd string) ApiSlurmdbV0041GetInstanceRequest {
+// Time end (UNIX timestamp)
+func (r ApiSlurmdbV0044GetInstanceRequest) TimeEnd(timeEnd string) ApiSlurmdbV0044GetInstanceRequest {
 	r.timeEnd = &timeEnd
 	return r
 }
 
-// time start UNIX timestamp
-func (r ApiSlurmdbV0041GetInstanceRequest) TimeStart(timeStart string) ApiSlurmdbV0041GetInstanceRequest {
+// Time start (UNIX timestamp)
+func (r ApiSlurmdbV0044GetInstanceRequest) TimeStart(timeStart string) ApiSlurmdbV0044GetInstanceRequest {
 	r.timeStart = &timeStart
 	return r
 }
 
-func (r ApiSlurmdbV0041GetInstanceRequest) Execute() (*V0041OpenapiInstancesResp, *http.Response, error) {
-	return r.ApiService.SlurmdbV0041GetInstanceExecute(r)
+func (r ApiSlurmdbV0044GetInstanceRequest) Execute() (*V0044OpenapiInstancesResp, *http.Response, error) {
+	return r.ApiService.SlurmdbV0044GetInstanceExecute(r)
 }
 
 /*
-SlurmdbV0041GetInstance Get instance info
+SlurmdbV0044GetInstance Get instance info
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmdbV0041GetInstanceRequest
+ @return ApiSlurmdbV0044GetInstanceRequest
 */
-func (a *SlurmdbAPIService) SlurmdbV0041GetInstance(ctx context.Context) ApiSlurmdbV0041GetInstanceRequest {
-	return ApiSlurmdbV0041GetInstanceRequest{
+func (a *SlurmdbAPIService) SlurmdbV0044GetInstance(ctx context.Context) ApiSlurmdbV0044GetInstanceRequest {
+	return ApiSlurmdbV0044GetInstanceRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
 }
 
 // Execute executes the request
-//  @return V0041OpenapiInstancesResp
-func (a *SlurmdbAPIService) SlurmdbV0041GetInstanceExecute(r ApiSlurmdbV0041GetInstanceRequest) (*V0041OpenapiInstancesResp, *http.Response, error) {
+//  @return V0044OpenapiInstancesResp
+func (a *SlurmdbAPIService) SlurmdbV0044GetInstanceExecute(r ApiSlurmdbV0044GetInstanceRequest) (*V0044OpenapiInstancesResp, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *V0041OpenapiInstancesResp
+		localVarReturnValue  *V0044OpenapiInstancesResp
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0041GetInstance")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0044GetInstance")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/slurmdb/v0.0.41/instance/"
+	localVarPath := localBasePath + "/slurmdb/v0.0.44/instance/"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -10150,7 +3179,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041GetInstanceExecute(r ApiSlurmdbV0041GetI
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -10207,7 +3236,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041GetInstanceExecute(r ApiSlurmdbV0041GetI
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v V0041OpenapiInstancesResp
+			var v V0044OpenapiInstancesResp
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -10230,7 +3259,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041GetInstanceExecute(r ApiSlurmdbV0041GetI
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiSlurmdbV0041GetInstancesRequest struct {
+type ApiSlurmdbV0044GetInstancesRequest struct {
 	ctx context.Context
 	ApiService *SlurmdbAPIService
 	cluster *string
@@ -10244,86 +3273,87 @@ type ApiSlurmdbV0041GetInstancesRequest struct {
 }
 
 // CSV clusters list
-func (r ApiSlurmdbV0041GetInstancesRequest) Cluster(cluster string) ApiSlurmdbV0041GetInstancesRequest {
+func (r ApiSlurmdbV0044GetInstancesRequest) Cluster(cluster string) ApiSlurmdbV0044GetInstancesRequest {
 	r.cluster = &cluster
 	return r
 }
 
 // CSV extra list
-func (r ApiSlurmdbV0041GetInstancesRequest) Extra(extra string) ApiSlurmdbV0041GetInstancesRequest {
+func (r ApiSlurmdbV0044GetInstancesRequest) Extra(extra string) ApiSlurmdbV0044GetInstancesRequest {
 	r.extra = &extra
 	return r
 }
 
-// CSV format list
-func (r ApiSlurmdbV0041GetInstancesRequest) Format(format string) ApiSlurmdbV0041GetInstancesRequest {
+// Ignored; process JSON manually to control output format
+// Deprecated
+func (r ApiSlurmdbV0044GetInstancesRequest) Format(format string) ApiSlurmdbV0044GetInstancesRequest {
 	r.format = &format
 	return r
 }
 
 // CSV instance_id list
-func (r ApiSlurmdbV0041GetInstancesRequest) InstanceId(instanceId string) ApiSlurmdbV0041GetInstancesRequest {
+func (r ApiSlurmdbV0044GetInstancesRequest) InstanceId(instanceId string) ApiSlurmdbV0044GetInstancesRequest {
 	r.instanceId = &instanceId
 	return r
 }
 
 // CSV instance_type list
-func (r ApiSlurmdbV0041GetInstancesRequest) InstanceType(instanceType string) ApiSlurmdbV0041GetInstancesRequest {
+func (r ApiSlurmdbV0044GetInstancesRequest) InstanceType(instanceType string) ApiSlurmdbV0044GetInstancesRequest {
 	r.instanceType = &instanceType
 	return r
 }
 
-// ranged node string
-func (r ApiSlurmdbV0041GetInstancesRequest) NodeList(nodeList string) ApiSlurmdbV0041GetInstancesRequest {
+// Ranged node string
+func (r ApiSlurmdbV0044GetInstancesRequest) NodeList(nodeList string) ApiSlurmdbV0044GetInstancesRequest {
 	r.nodeList = &nodeList
 	return r
 }
 
-// time end UNIX timestamp
-func (r ApiSlurmdbV0041GetInstancesRequest) TimeEnd(timeEnd string) ApiSlurmdbV0041GetInstancesRequest {
+// Time end (UNIX timestamp)
+func (r ApiSlurmdbV0044GetInstancesRequest) TimeEnd(timeEnd string) ApiSlurmdbV0044GetInstancesRequest {
 	r.timeEnd = &timeEnd
 	return r
 }
 
-// time start UNIX timestamp
-func (r ApiSlurmdbV0041GetInstancesRequest) TimeStart(timeStart string) ApiSlurmdbV0041GetInstancesRequest {
+// Time start (UNIX timestamp)
+func (r ApiSlurmdbV0044GetInstancesRequest) TimeStart(timeStart string) ApiSlurmdbV0044GetInstancesRequest {
 	r.timeStart = &timeStart
 	return r
 }
 
-func (r ApiSlurmdbV0041GetInstancesRequest) Execute() (*V0041OpenapiInstancesResp, *http.Response, error) {
-	return r.ApiService.SlurmdbV0041GetInstancesExecute(r)
+func (r ApiSlurmdbV0044GetInstancesRequest) Execute() (*V0044OpenapiInstancesResp, *http.Response, error) {
+	return r.ApiService.SlurmdbV0044GetInstancesExecute(r)
 }
 
 /*
-SlurmdbV0041GetInstances Get instance list
+SlurmdbV0044GetInstances Get instance list
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmdbV0041GetInstancesRequest
+ @return ApiSlurmdbV0044GetInstancesRequest
 */
-func (a *SlurmdbAPIService) SlurmdbV0041GetInstances(ctx context.Context) ApiSlurmdbV0041GetInstancesRequest {
-	return ApiSlurmdbV0041GetInstancesRequest{
+func (a *SlurmdbAPIService) SlurmdbV0044GetInstances(ctx context.Context) ApiSlurmdbV0044GetInstancesRequest {
+	return ApiSlurmdbV0044GetInstancesRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
 }
 
 // Execute executes the request
-//  @return V0041OpenapiInstancesResp
-func (a *SlurmdbAPIService) SlurmdbV0041GetInstancesExecute(r ApiSlurmdbV0041GetInstancesRequest) (*V0041OpenapiInstancesResp, *http.Response, error) {
+//  @return V0044OpenapiInstancesResp
+func (a *SlurmdbAPIService) SlurmdbV0044GetInstancesExecute(r ApiSlurmdbV0044GetInstancesRequest) (*V0044OpenapiInstancesResp, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *V0041OpenapiInstancesResp
+		localVarReturnValue  *V0044OpenapiInstancesResp
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0041GetInstances")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0044GetInstances")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/slurmdb/v0.0.41/instances/"
+	localVarPath := localBasePath + "/slurmdb/v0.0.44/instances/"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -10363,7 +3393,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041GetInstancesExecute(r ApiSlurmdbV0041Get
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -10420,7 +3450,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041GetInstancesExecute(r ApiSlurmdbV0041Get
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v V0041OpenapiInstancesResp
+			var v V0044OpenapiInstancesResp
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -10443,27 +3473,27 @@ func (a *SlurmdbAPIService) SlurmdbV0041GetInstancesExecute(r ApiSlurmdbV0041Get
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiSlurmdbV0041GetJobRequest struct {
+type ApiSlurmdbV0044GetJobRequest struct {
 	ctx context.Context
 	ApiService *SlurmdbAPIService
 	jobId string
 }
 
-func (r ApiSlurmdbV0041GetJobRequest) Execute() (*V0041OpenapiSlurmdbdJobsResp, *http.Response, error) {
-	return r.ApiService.SlurmdbV0041GetJobExecute(r)
+func (r ApiSlurmdbV0044GetJobRequest) Execute() (*V0044OpenapiSlurmdbdJobsResp, *http.Response, error) {
+	return r.ApiService.SlurmdbV0044GetJobExecute(r)
 }
 
 /*
-SlurmdbV0041GetJob Get job info
+SlurmdbV0044GetJob Get job info
 
 This endpoint may return multiple job entries since job_id is not a unique key - only the tuple (cluster, job_id, start_time) is unique. If the requested job_id is a component of a heterogeneous job all components are returned.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param jobId Job id
- @return ApiSlurmdbV0041GetJobRequest
+ @param jobId Job ID
+ @return ApiSlurmdbV0044GetJobRequest
 */
-func (a *SlurmdbAPIService) SlurmdbV0041GetJob(ctx context.Context, jobId string) ApiSlurmdbV0041GetJobRequest {
-	return ApiSlurmdbV0041GetJobRequest{
+func (a *SlurmdbAPIService) SlurmdbV0044GetJob(ctx context.Context, jobId string) ApiSlurmdbV0044GetJobRequest {
+	return ApiSlurmdbV0044GetJobRequest{
 		ApiService: a,
 		ctx: ctx,
 		jobId: jobId,
@@ -10471,21 +3501,21 @@ func (a *SlurmdbAPIService) SlurmdbV0041GetJob(ctx context.Context, jobId string
 }
 
 // Execute executes the request
-//  @return V0041OpenapiSlurmdbdJobsResp
-func (a *SlurmdbAPIService) SlurmdbV0041GetJobExecute(r ApiSlurmdbV0041GetJobRequest) (*V0041OpenapiSlurmdbdJobsResp, *http.Response, error) {
+//  @return V0044OpenapiSlurmdbdJobsResp
+func (a *SlurmdbAPIService) SlurmdbV0044GetJobExecute(r ApiSlurmdbV0044GetJobRequest) (*V0044OpenapiSlurmdbdJobsResp, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *V0041OpenapiSlurmdbdJobsResp
+		localVarReturnValue  *V0044OpenapiSlurmdbdJobsResp
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0041GetJob")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0044GetJob")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/slurmdb/v0.0.41/job/{job_id}"
+	localVarPath := localBasePath + "/slurmdb/v0.0.44/job/{job_id}"
 	localVarPath = strings.Replace(localVarPath, "{"+"job_id"+"}", url.PathEscape(parameterValueToString(r.jobId, "jobId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -10502,7 +3532,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041GetJobExecute(r ApiSlurmdbV0041GetJobReq
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -10559,7 +3589,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041GetJobExecute(r ApiSlurmdbV0041GetJobReq
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v V0041OpenapiSlurmdbdJobsResp
+			var v V0044OpenapiSlurmdbdJobsResp
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -10582,7 +3612,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041GetJobExecute(r ApiSlurmdbV0041GetJobReq
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiSlurmdbV0041GetJobsRequest struct {
+type ApiSlurmdbV0044GetJobsRequest struct {
 	ctx context.Context
 	ApiService *SlurmdbAPIService
 	account *string
@@ -10594,6 +3624,7 @@ type ApiSlurmdbV0041GetJobsRequest struct {
 	scheduledByMain *string
 	scheduledByBackfill *string
 	jobStarted *string
+	jobAltered *string
 	exitCode *string
 	showDuplicates *string
 	skipSteps *string
@@ -10622,228 +3653,249 @@ type ApiSlurmdbV0041GetJobsRequest struct {
 }
 
 // CSV account list
-func (r ApiSlurmdbV0041GetJobsRequest) Account(account string) ApiSlurmdbV0041GetJobsRequest {
+func (r ApiSlurmdbV0044GetJobsRequest) Account(account string) ApiSlurmdbV0044GetJobsRequest {
 	r.account = &account
 	return r
 }
 
 // CSV association list
-func (r ApiSlurmdbV0041GetJobsRequest) Association(association string) ApiSlurmdbV0041GetJobsRequest {
+func (r ApiSlurmdbV0044GetJobsRequest) Association(association string) ApiSlurmdbV0044GetJobsRequest {
 	r.association = &association
 	return r
 }
 
 // CSV cluster list
-func (r ApiSlurmdbV0041GetJobsRequest) Cluster(cluster string) ApiSlurmdbV0041GetJobsRequest {
+func (r ApiSlurmdbV0044GetJobsRequest) Cluster(cluster string) ApiSlurmdbV0044GetJobsRequest {
 	r.cluster = &cluster
 	return r
 }
 
 // CSV constraint list
-func (r ApiSlurmdbV0041GetJobsRequest) Constraints(constraints string) ApiSlurmdbV0041GetJobsRequest {
+func (r ApiSlurmdbV0044GetJobsRequest) Constraints(constraints string) ApiSlurmdbV0044GetJobsRequest {
 	r.constraints = &constraints
 	return r
 }
 
-func (r ApiSlurmdbV0041GetJobsRequest) SchedulerUnset(schedulerUnset string) ApiSlurmdbV0041GetJobsRequest {
+// Schedule bits not set
+func (r ApiSlurmdbV0044GetJobsRequest) SchedulerUnset(schedulerUnset string) ApiSlurmdbV0044GetJobsRequest {
 	r.schedulerUnset = &schedulerUnset
 	return r
 }
 
-func (r ApiSlurmdbV0041GetJobsRequest) ScheduledOnSubmit(scheduledOnSubmit string) ApiSlurmdbV0041GetJobsRequest {
+// Job was started on submit
+func (r ApiSlurmdbV0044GetJobsRequest) ScheduledOnSubmit(scheduledOnSubmit string) ApiSlurmdbV0044GetJobsRequest {
 	r.scheduledOnSubmit = &scheduledOnSubmit
 	return r
 }
 
-func (r ApiSlurmdbV0041GetJobsRequest) ScheduledByMain(scheduledByMain string) ApiSlurmdbV0041GetJobsRequest {
+// Job was started from main scheduler
+func (r ApiSlurmdbV0044GetJobsRequest) ScheduledByMain(scheduledByMain string) ApiSlurmdbV0044GetJobsRequest {
 	r.scheduledByMain = &scheduledByMain
 	return r
 }
 
-func (r ApiSlurmdbV0041GetJobsRequest) ScheduledByBackfill(scheduledByBackfill string) ApiSlurmdbV0041GetJobsRequest {
+// Job was started from backfill
+func (r ApiSlurmdbV0044GetJobsRequest) ScheduledByBackfill(scheduledByBackfill string) ApiSlurmdbV0044GetJobsRequest {
 	r.scheduledByBackfill = &scheduledByBackfill
 	return r
 }
 
-func (r ApiSlurmdbV0041GetJobsRequest) JobStarted(jobStarted string) ApiSlurmdbV0041GetJobsRequest {
+// Job start RPC was received
+func (r ApiSlurmdbV0044GetJobsRequest) JobStarted(jobStarted string) ApiSlurmdbV0044GetJobsRequest {
 	r.jobStarted = &jobStarted
 	return r
 }
 
-// job exit code (numeric)
-func (r ApiSlurmdbV0041GetJobsRequest) ExitCode(exitCode string) ApiSlurmdbV0041GetJobsRequest {
+// Job record has been altered
+func (r ApiSlurmdbV0044GetJobsRequest) JobAltered(jobAltered string) ApiSlurmdbV0044GetJobsRequest {
+	r.jobAltered = &jobAltered
+	return r
+}
+
+// Job exit code (numeric)
+func (r ApiSlurmdbV0044GetJobsRequest) ExitCode(exitCode string) ApiSlurmdbV0044GetJobsRequest {
 	r.exitCode = &exitCode
 	return r
 }
 
-func (r ApiSlurmdbV0041GetJobsRequest) ShowDuplicates(showDuplicates string) ApiSlurmdbV0041GetJobsRequest {
+// Include duplicate job entries
+func (r ApiSlurmdbV0044GetJobsRequest) ShowDuplicates(showDuplicates string) ApiSlurmdbV0044GetJobsRequest {
 	r.showDuplicates = &showDuplicates
 	return r
 }
 
-func (r ApiSlurmdbV0041GetJobsRequest) SkipSteps(skipSteps string) ApiSlurmdbV0041GetJobsRequest {
+// Exclude job step details
+func (r ApiSlurmdbV0044GetJobsRequest) SkipSteps(skipSteps string) ApiSlurmdbV0044GetJobsRequest {
 	r.skipSteps = &skipSteps
 	return r
 }
 
-func (r ApiSlurmdbV0041GetJobsRequest) DisableTruncateUsageTime(disableTruncateUsageTime string) ApiSlurmdbV0041GetJobsRequest {
+// Do not truncate the time to usage_start and usage_end
+func (r ApiSlurmdbV0044GetJobsRequest) DisableTruncateUsageTime(disableTruncateUsageTime string) ApiSlurmdbV0044GetJobsRequest {
 	r.disableTruncateUsageTime = &disableTruncateUsageTime
 	return r
 }
 
-func (r ApiSlurmdbV0041GetJobsRequest) WholeHetjob(wholeHetjob string) ApiSlurmdbV0041GetJobsRequest {
+// Include details on all hetjob components
+func (r ApiSlurmdbV0044GetJobsRequest) WholeHetjob(wholeHetjob string) ApiSlurmdbV0044GetJobsRequest {
 	r.wholeHetjob = &wholeHetjob
 	return r
 }
 
-func (r ApiSlurmdbV0041GetJobsRequest) DisableWholeHetjob(disableWholeHetjob string) ApiSlurmdbV0041GetJobsRequest {
+// Only show details on specified hetjob components
+func (r ApiSlurmdbV0044GetJobsRequest) DisableWholeHetjob(disableWholeHetjob string) ApiSlurmdbV0044GetJobsRequest {
 	r.disableWholeHetjob = &disableWholeHetjob
 	return r
 }
 
-func (r ApiSlurmdbV0041GetJobsRequest) DisableWaitForResult(disableWaitForResult string) ApiSlurmdbV0041GetJobsRequest {
+// Tell dbd not to wait for the result
+func (r ApiSlurmdbV0044GetJobsRequest) DisableWaitForResult(disableWaitForResult string) ApiSlurmdbV0044GetJobsRequest {
 	r.disableWaitForResult = &disableWaitForResult
 	return r
 }
 
-func (r ApiSlurmdbV0041GetJobsRequest) UsageTimeAsSubmitTime(usageTimeAsSubmitTime string) ApiSlurmdbV0041GetJobsRequest {
+// Use usage_time as the submit_time of the job
+func (r ApiSlurmdbV0044GetJobsRequest) UsageTimeAsSubmitTime(usageTimeAsSubmitTime string) ApiSlurmdbV0044GetJobsRequest {
 	r.usageTimeAsSubmitTime = &usageTimeAsSubmitTime
 	return r
 }
 
-func (r ApiSlurmdbV0041GetJobsRequest) ShowBatchScript(showBatchScript string) ApiSlurmdbV0041GetJobsRequest {
+// Include job script
+func (r ApiSlurmdbV0044GetJobsRequest) ShowBatchScript(showBatchScript string) ApiSlurmdbV0044GetJobsRequest {
 	r.showBatchScript = &showBatchScript
 	return r
 }
 
-func (r ApiSlurmdbV0041GetJobsRequest) ShowJobEnvironment(showJobEnvironment string) ApiSlurmdbV0041GetJobsRequest {
+// Include job environment
+func (r ApiSlurmdbV0044GetJobsRequest) ShowJobEnvironment(showJobEnvironment string) ApiSlurmdbV0044GetJobsRequest {
 	r.showJobEnvironment = &showJobEnvironment
 	return r
 }
 
-// CSV format list
-func (r ApiSlurmdbV0041GetJobsRequest) Format(format string) ApiSlurmdbV0041GetJobsRequest {
+// Ignored; process JSON manually to control output format
+// Deprecated
+func (r ApiSlurmdbV0044GetJobsRequest) Format(format string) ApiSlurmdbV0044GetJobsRequest {
 	r.format = &format
 	return r
 }
 
 // CSV group list
-func (r ApiSlurmdbV0041GetJobsRequest) Groups(groups string) ApiSlurmdbV0041GetJobsRequest {
+func (r ApiSlurmdbV0044GetJobsRequest) Groups(groups string) ApiSlurmdbV0044GetJobsRequest {
 	r.groups = &groups
 	return r
 }
 
 // CSV job name list
-func (r ApiSlurmdbV0041GetJobsRequest) JobName(jobName string) ApiSlurmdbV0041GetJobsRequest {
+func (r ApiSlurmdbV0044GetJobsRequest) JobName(jobName string) ApiSlurmdbV0044GetJobsRequest {
 	r.jobName = &jobName
 	return r
 }
 
 // CSV partition name list
-func (r ApiSlurmdbV0041GetJobsRequest) Partition(partition string) ApiSlurmdbV0041GetJobsRequest {
+func (r ApiSlurmdbV0044GetJobsRequest) Partition(partition string) ApiSlurmdbV0044GetJobsRequest {
 	r.partition = &partition
 	return r
 }
 
 // CSV QOS name list
-func (r ApiSlurmdbV0041GetJobsRequest) Qos(qos string) ApiSlurmdbV0041GetJobsRequest {
+func (r ApiSlurmdbV0044GetJobsRequest) Qos(qos string) ApiSlurmdbV0044GetJobsRequest {
 	r.qos = &qos
 	return r
 }
 
 // CSV reason list
-func (r ApiSlurmdbV0041GetJobsRequest) Reason(reason string) ApiSlurmdbV0041GetJobsRequest {
+func (r ApiSlurmdbV0044GetJobsRequest) Reason(reason string) ApiSlurmdbV0044GetJobsRequest {
 	r.reason = &reason
 	return r
 }
 
 // CSV reservation name list
-func (r ApiSlurmdbV0041GetJobsRequest) Reservation(reservation string) ApiSlurmdbV0041GetJobsRequest {
+func (r ApiSlurmdbV0044GetJobsRequest) Reservation(reservation string) ApiSlurmdbV0044GetJobsRequest {
 	r.reservation = &reservation
 	return r
 }
 
 // CSV reservation ID list
-func (r ApiSlurmdbV0041GetJobsRequest) ReservationId(reservationId string) ApiSlurmdbV0041GetJobsRequest {
+func (r ApiSlurmdbV0044GetJobsRequest) ReservationId(reservationId string) ApiSlurmdbV0044GetJobsRequest {
 	r.reservationId = &reservationId
 	return r
 }
 
 // CSV state list
-func (r ApiSlurmdbV0041GetJobsRequest) State(state string) ApiSlurmdbV0041GetJobsRequest {
+func (r ApiSlurmdbV0044GetJobsRequest) State(state string) ApiSlurmdbV0044GetJobsRequest {
 	r.state = &state
 	return r
 }
 
 // CSV step id list
-func (r ApiSlurmdbV0041GetJobsRequest) Step(step string) ApiSlurmdbV0041GetJobsRequest {
+func (r ApiSlurmdbV0044GetJobsRequest) Step(step string) ApiSlurmdbV0044GetJobsRequest {
 	r.step = &step
 	return r
 }
 
-// usage end timestamp
-func (r ApiSlurmdbV0041GetJobsRequest) EndTime(endTime string) ApiSlurmdbV0041GetJobsRequest {
+// Usage end (UNIX timestamp)
+func (r ApiSlurmdbV0044GetJobsRequest) EndTime(endTime string) ApiSlurmdbV0044GetJobsRequest {
 	r.endTime = &endTime
 	return r
 }
 
-// usage start timestamp
-func (r ApiSlurmdbV0041GetJobsRequest) StartTime(startTime string) ApiSlurmdbV0041GetJobsRequest {
+// Usage start (UNIX timestamp)
+func (r ApiSlurmdbV0044GetJobsRequest) StartTime(startTime string) ApiSlurmdbV0044GetJobsRequest {
 	r.startTime = &startTime
 	return r
 }
 
-// ranged node string where jobs ran
-func (r ApiSlurmdbV0041GetJobsRequest) Node(node string) ApiSlurmdbV0041GetJobsRequest {
+// Ranged node string where jobs ran
+func (r ApiSlurmdbV0044GetJobsRequest) Node(node string) ApiSlurmdbV0044GetJobsRequest {
 	r.node = &node
 	return r
 }
 
 // CSV user name list
-func (r ApiSlurmdbV0041GetJobsRequest) Users(users string) ApiSlurmdbV0041GetJobsRequest {
+func (r ApiSlurmdbV0044GetJobsRequest) Users(users string) ApiSlurmdbV0044GetJobsRequest {
 	r.users = &users
 	return r
 }
 
-// CSV wckey list
-func (r ApiSlurmdbV0041GetJobsRequest) Wckey(wckey string) ApiSlurmdbV0041GetJobsRequest {
+// CSV WCKey list
+func (r ApiSlurmdbV0044GetJobsRequest) Wckey(wckey string) ApiSlurmdbV0044GetJobsRequest {
 	r.wckey = &wckey
 	return r
 }
 
-func (r ApiSlurmdbV0041GetJobsRequest) Execute() (*V0041OpenapiSlurmdbdJobsResp, *http.Response, error) {
-	return r.ApiService.SlurmdbV0041GetJobsExecute(r)
+func (r ApiSlurmdbV0044GetJobsRequest) Execute() (*V0044OpenapiSlurmdbdJobsResp, *http.Response, error) {
+	return r.ApiService.SlurmdbV0044GetJobsExecute(r)
 }
 
 /*
-SlurmdbV0041GetJobs Get job list
+SlurmdbV0044GetJobs Get job list
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmdbV0041GetJobsRequest
+ @return ApiSlurmdbV0044GetJobsRequest
 */
-func (a *SlurmdbAPIService) SlurmdbV0041GetJobs(ctx context.Context) ApiSlurmdbV0041GetJobsRequest {
-	return ApiSlurmdbV0041GetJobsRequest{
+func (a *SlurmdbAPIService) SlurmdbV0044GetJobs(ctx context.Context) ApiSlurmdbV0044GetJobsRequest {
+	return ApiSlurmdbV0044GetJobsRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
 }
 
 // Execute executes the request
-//  @return V0041OpenapiSlurmdbdJobsResp
-func (a *SlurmdbAPIService) SlurmdbV0041GetJobsExecute(r ApiSlurmdbV0041GetJobsRequest) (*V0041OpenapiSlurmdbdJobsResp, *http.Response, error) {
+//  @return V0044OpenapiSlurmdbdJobsResp
+func (a *SlurmdbAPIService) SlurmdbV0044GetJobsExecute(r ApiSlurmdbV0044GetJobsRequest) (*V0044OpenapiSlurmdbdJobsResp, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *V0041OpenapiSlurmdbdJobsResp
+		localVarReturnValue  *V0044OpenapiSlurmdbdJobsResp
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0041GetJobs")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0044GetJobs")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/slurmdb/v0.0.41/jobs/"
+	localVarPath := localBasePath + "/slurmdb/v0.0.44/jobs/"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -10875,6 +3927,9 @@ func (a *SlurmdbAPIService) SlurmdbV0041GetJobsExecute(r ApiSlurmdbV0041GetJobsR
 	}
 	if r.jobStarted != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "job_started", r.jobStarted, "")
+	}
+	if r.jobAltered != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "job_altered", r.jobAltered, "")
 	}
 	if r.exitCode != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "exit_code", r.exitCode, "")
@@ -10961,7 +4016,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041GetJobsExecute(r ApiSlurmdbV0041GetJobsR
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -11018,7 +4073,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041GetJobsExecute(r ApiSlurmdbV0041GetJobsR
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v V0041OpenapiSlurmdbdJobsResp
+			var v V0044OpenapiSlurmdbdJobsResp
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -11041,85 +4096,219 @@ func (a *SlurmdbAPIService) SlurmdbV0041GetJobsExecute(r ApiSlurmdbV0041GetJobsR
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiSlurmdbV0041GetQosRequest struct {
+type ApiSlurmdbV0044GetPingRequest struct {
 	ctx context.Context
 	ApiService *SlurmdbAPIService
-	description *string
-	id *string
-	format *string
-	name *string
-	preemptMode *string
-	withDeleted *string
 }
 
-// CSV description list
-func (r ApiSlurmdbV0041GetQosRequest) Description(description string) ApiSlurmdbV0041GetQosRequest {
-	r.description = &description
-	return r
-}
-
-// CSV QOS id list
-func (r ApiSlurmdbV0041GetQosRequest) Id(id string) ApiSlurmdbV0041GetQosRequest {
-	r.id = &id
-	return r
-}
-
-// CSV format list
-func (r ApiSlurmdbV0041GetQosRequest) Format(format string) ApiSlurmdbV0041GetQosRequest {
-	r.format = &format
-	return r
-}
-
-// CSV QOS name list
-func (r ApiSlurmdbV0041GetQosRequest) Name(name string) ApiSlurmdbV0041GetQosRequest {
-	r.name = &name
-	return r
-}
-
-func (r ApiSlurmdbV0041GetQosRequest) PreemptMode(preemptMode string) ApiSlurmdbV0041GetQosRequest {
-	r.preemptMode = &preemptMode
-	return r
-}
-
-// Include deleted QOS
-func (r ApiSlurmdbV0041GetQosRequest) WithDeleted(withDeleted string) ApiSlurmdbV0041GetQosRequest {
-	r.withDeleted = &withDeleted
-	return r
-}
-
-func (r ApiSlurmdbV0041GetQosRequest) Execute() (*V0041OpenapiSlurmdbdQosResp, *http.Response, error) {
-	return r.ApiService.SlurmdbV0041GetQosExecute(r)
+func (r ApiSlurmdbV0044GetPingRequest) Execute() (*V0044OpenapiSlurmdbdPingResp, *http.Response, error) {
+	return r.ApiService.SlurmdbV0044GetPingExecute(r)
 }
 
 /*
-SlurmdbV0041GetQos Get QOS list
+SlurmdbV0044GetPing ping test
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmdbV0041GetQosRequest
+ @return ApiSlurmdbV0044GetPingRequest
 */
-func (a *SlurmdbAPIService) SlurmdbV0041GetQos(ctx context.Context) ApiSlurmdbV0041GetQosRequest {
-	return ApiSlurmdbV0041GetQosRequest{
+func (a *SlurmdbAPIService) SlurmdbV0044GetPing(ctx context.Context) ApiSlurmdbV0044GetPingRequest {
+	return ApiSlurmdbV0044GetPingRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
 }
 
 // Execute executes the request
-//  @return V0041OpenapiSlurmdbdQosResp
-func (a *SlurmdbAPIService) SlurmdbV0041GetQosExecute(r ApiSlurmdbV0041GetQosRequest) (*V0041OpenapiSlurmdbdQosResp, *http.Response, error) {
+//  @return V0044OpenapiSlurmdbdPingResp
+func (a *SlurmdbAPIService) SlurmdbV0044GetPingExecute(r ApiSlurmdbV0044GetPingRequest) (*V0044OpenapiSlurmdbdPingResp, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *V0041OpenapiSlurmdbdQosResp
+		localVarReturnValue  *V0044OpenapiSlurmdbdPingResp
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0041GetQos")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0044GetPing")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/slurmdb/v0.0.41/qos/"
+	localVarPath := localBasePath + "/slurmdb/v0.0.44/ping/"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["user"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-SLURM-USER-NAME"] = key
+			}
+		}
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["token"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+			var v V0044OpenapiSlurmdbdPingResp
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiSlurmdbV0044GetQosRequest struct {
+	ctx context.Context
+	ApiService *SlurmdbAPIService
+	description *string
+	includeDeletedQOS *string
+	id *string
+	format *string
+	name *string
+	preemptMode *string
+}
+
+// CSV description list
+func (r ApiSlurmdbV0044GetQosRequest) Description(description string) ApiSlurmdbV0044GetQosRequest {
+	r.description = &description
+	return r
+}
+
+func (r ApiSlurmdbV0044GetQosRequest) IncludeDeletedQOS(includeDeletedQOS string) ApiSlurmdbV0044GetQosRequest {
+	r.includeDeletedQOS = &includeDeletedQOS
+	return r
+}
+
+// CSV QOS id list
+func (r ApiSlurmdbV0044GetQosRequest) Id(id string) ApiSlurmdbV0044GetQosRequest {
+	r.id = &id
+	return r
+}
+
+// Ignored; process JSON manually to control output format
+// Deprecated
+func (r ApiSlurmdbV0044GetQosRequest) Format(format string) ApiSlurmdbV0044GetQosRequest {
+	r.format = &format
+	return r
+}
+
+// CSV QOS name list
+func (r ApiSlurmdbV0044GetQosRequest) Name(name string) ApiSlurmdbV0044GetQosRequest {
+	r.name = &name
+	return r
+}
+
+// PreemptMode used when jobs in this QOS are preempted
+func (r ApiSlurmdbV0044GetQosRequest) PreemptMode(preemptMode string) ApiSlurmdbV0044GetQosRequest {
+	r.preemptMode = &preemptMode
+	return r
+}
+
+func (r ApiSlurmdbV0044GetQosRequest) Execute() (*V0044OpenapiSlurmdbdQosResp, *http.Response, error) {
+	return r.ApiService.SlurmdbV0044GetQosExecute(r)
+}
+
+/*
+SlurmdbV0044GetQos Get QOS list
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiSlurmdbV0044GetQosRequest
+*/
+func (a *SlurmdbAPIService) SlurmdbV0044GetQos(ctx context.Context) ApiSlurmdbV0044GetQosRequest {
+	return ApiSlurmdbV0044GetQosRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return V0044OpenapiSlurmdbdQosResp
+func (a *SlurmdbAPIService) SlurmdbV0044GetQosExecute(r ApiSlurmdbV0044GetQosRequest) (*V0044OpenapiSlurmdbdQosResp, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *V0044OpenapiSlurmdbdQosResp
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0044GetQos")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/slurmdb/v0.0.44/qos/"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -11127,6 +4316,9 @@ func (a *SlurmdbAPIService) SlurmdbV0041GetQosExecute(r ApiSlurmdbV0041GetQosReq
 
 	if r.description != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "description", r.description, "")
+	}
+	if r.includeDeletedQOS != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "Include deleted QOS", r.includeDeletedQOS, "")
 	}
 	if r.id != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "id", r.id, "")
@@ -11140,9 +4332,6 @@ func (a *SlurmdbAPIService) SlurmdbV0041GetQosExecute(r ApiSlurmdbV0041GetQosReq
 	if r.preemptMode != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "preempt_mode", r.preemptMode, "")
 	}
-	if r.withDeleted != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "with_deleted", r.withDeleted, "")
-	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -11153,7 +4342,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041GetQosExecute(r ApiSlurmdbV0041GetQosReq
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -11210,7 +4399,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041GetQosExecute(r ApiSlurmdbV0041GetQosReq
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v V0041OpenapiSlurmdbdQosResp
+			var v V0044OpenapiSlurmdbdQosResp
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -11233,7 +4422,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041GetQosExecute(r ApiSlurmdbV0041GetQosReq
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiSlurmdbV0041GetSingleQosRequest struct {
+type ApiSlurmdbV0044GetSingleQosRequest struct {
 	ctx context.Context
 	ApiService *SlurmdbAPIService
 	qos string
@@ -11241,24 +4430,24 @@ type ApiSlurmdbV0041GetSingleQosRequest struct {
 }
 
 // Query includes deleted QOS
-func (r ApiSlurmdbV0041GetSingleQosRequest) WithDeleted(withDeleted string) ApiSlurmdbV0041GetSingleQosRequest {
+func (r ApiSlurmdbV0044GetSingleQosRequest) WithDeleted(withDeleted string) ApiSlurmdbV0044GetSingleQosRequest {
 	r.withDeleted = &withDeleted
 	return r
 }
 
-func (r ApiSlurmdbV0041GetSingleQosRequest) Execute() (*V0041OpenapiSlurmdbdQosResp, *http.Response, error) {
-	return r.ApiService.SlurmdbV0041GetSingleQosExecute(r)
+func (r ApiSlurmdbV0044GetSingleQosRequest) Execute() (*V0044OpenapiSlurmdbdQosResp, *http.Response, error) {
+	return r.ApiService.SlurmdbV0044GetSingleQosExecute(r)
 }
 
 /*
-SlurmdbV0041GetSingleQos Get QOS info
+SlurmdbV0044GetSingleQos Get QOS info
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param qos QOS name
- @return ApiSlurmdbV0041GetSingleQosRequest
+ @return ApiSlurmdbV0044GetSingleQosRequest
 */
-func (a *SlurmdbAPIService) SlurmdbV0041GetSingleQos(ctx context.Context, qos string) ApiSlurmdbV0041GetSingleQosRequest {
-	return ApiSlurmdbV0041GetSingleQosRequest{
+func (a *SlurmdbAPIService) SlurmdbV0044GetSingleQos(ctx context.Context, qos string) ApiSlurmdbV0044GetSingleQosRequest {
+	return ApiSlurmdbV0044GetSingleQosRequest{
 		ApiService: a,
 		ctx: ctx,
 		qos: qos,
@@ -11266,21 +4455,21 @@ func (a *SlurmdbAPIService) SlurmdbV0041GetSingleQos(ctx context.Context, qos st
 }
 
 // Execute executes the request
-//  @return V0041OpenapiSlurmdbdQosResp
-func (a *SlurmdbAPIService) SlurmdbV0041GetSingleQosExecute(r ApiSlurmdbV0041GetSingleQosRequest) (*V0041OpenapiSlurmdbdQosResp, *http.Response, error) {
+//  @return V0044OpenapiSlurmdbdQosResp
+func (a *SlurmdbAPIService) SlurmdbV0044GetSingleQosExecute(r ApiSlurmdbV0044GetSingleQosRequest) (*V0044OpenapiSlurmdbdQosResp, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *V0041OpenapiSlurmdbdQosResp
+		localVarReturnValue  *V0044OpenapiSlurmdbdQosResp
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0041GetSingleQos")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0044GetSingleQos")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/slurmdb/v0.0.41/qos/{qos}"
+	localVarPath := localBasePath + "/slurmdb/v0.0.44/qos/{qos}"
 	localVarPath = strings.Replace(localVarPath, "{"+"qos"+"}", url.PathEscape(parameterValueToString(r.qos, "qos")), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -11300,7 +4489,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041GetSingleQosExecute(r ApiSlurmdbV0041Get
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -11357,7 +4546,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041GetSingleQosExecute(r ApiSlurmdbV0041Get
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v V0041OpenapiSlurmdbdQosResp
+			var v V0044OpenapiSlurmdbdQosResp
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -11380,44 +4569,44 @@ func (a *SlurmdbAPIService) SlurmdbV0041GetSingleQosExecute(r ApiSlurmdbV0041Get
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiSlurmdbV0041GetTresRequest struct {
+type ApiSlurmdbV0044GetTresRequest struct {
 	ctx context.Context
 	ApiService *SlurmdbAPIService
 }
 
-func (r ApiSlurmdbV0041GetTresRequest) Execute() (*V0041OpenapiTresResp, *http.Response, error) {
-	return r.ApiService.SlurmdbV0041GetTresExecute(r)
+func (r ApiSlurmdbV0044GetTresRequest) Execute() (*V0044OpenapiTresResp, *http.Response, error) {
+	return r.ApiService.SlurmdbV0044GetTresExecute(r)
 }
 
 /*
-SlurmdbV0041GetTres Get TRES info
+SlurmdbV0044GetTres Get TRES info
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmdbV0041GetTresRequest
+ @return ApiSlurmdbV0044GetTresRequest
 */
-func (a *SlurmdbAPIService) SlurmdbV0041GetTres(ctx context.Context) ApiSlurmdbV0041GetTresRequest {
-	return ApiSlurmdbV0041GetTresRequest{
+func (a *SlurmdbAPIService) SlurmdbV0044GetTres(ctx context.Context) ApiSlurmdbV0044GetTresRequest {
+	return ApiSlurmdbV0044GetTresRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
 }
 
 // Execute executes the request
-//  @return V0041OpenapiTresResp
-func (a *SlurmdbAPIService) SlurmdbV0041GetTresExecute(r ApiSlurmdbV0041GetTresRequest) (*V0041OpenapiTresResp, *http.Response, error) {
+//  @return V0044OpenapiTresResp
+func (a *SlurmdbAPIService) SlurmdbV0044GetTresExecute(r ApiSlurmdbV0044GetTresRequest) (*V0044OpenapiTresResp, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *V0041OpenapiTresResp
+		localVarReturnValue  *V0044OpenapiTresResp
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0041GetTres")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0044GetTres")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/slurmdb/v0.0.41/tres/"
+	localVarPath := localBasePath + "/slurmdb/v0.0.44/tres/"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -11433,7 +4622,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041GetTresExecute(r ApiSlurmdbV0041GetTresR
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -11490,7 +4679,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041GetTresExecute(r ApiSlurmdbV0041GetTresR
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v V0041OpenapiTresResp
+			var v V0044OpenapiTresResp
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -11513,7 +4702,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041GetTresExecute(r ApiSlurmdbV0041GetTresR
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiSlurmdbV0041GetUserRequest struct {
+type ApiSlurmdbV0044GetUserRequest struct {
 	ctx context.Context
 	ApiService *SlurmdbAPIService
 	name string
@@ -11524,42 +4713,42 @@ type ApiSlurmdbV0041GetUserRequest struct {
 }
 
 // Include deleted users
-func (r ApiSlurmdbV0041GetUserRequest) WithDeleted(withDeleted string) ApiSlurmdbV0041GetUserRequest {
+func (r ApiSlurmdbV0044GetUserRequest) WithDeleted(withDeleted string) ApiSlurmdbV0044GetUserRequest {
 	r.withDeleted = &withDeleted
 	return r
 }
 
-// Include assocations
-func (r ApiSlurmdbV0041GetUserRequest) WithAssocs(withAssocs string) ApiSlurmdbV0041GetUserRequest {
+// Include associations
+func (r ApiSlurmdbV0044GetUserRequest) WithAssocs(withAssocs string) ApiSlurmdbV0044GetUserRequest {
 	r.withAssocs = &withAssocs
 	return r
 }
 
 // Include coordinators
-func (r ApiSlurmdbV0041GetUserRequest) WithCoords(withCoords string) ApiSlurmdbV0041GetUserRequest {
+func (r ApiSlurmdbV0044GetUserRequest) WithCoords(withCoords string) ApiSlurmdbV0044GetUserRequest {
 	r.withCoords = &withCoords
 	return r
 }
 
-// Include wckeys
-func (r ApiSlurmdbV0041GetUserRequest) WithWckeys(withWckeys string) ApiSlurmdbV0041GetUserRequest {
+// Include WCKeys
+func (r ApiSlurmdbV0044GetUserRequest) WithWckeys(withWckeys string) ApiSlurmdbV0044GetUserRequest {
 	r.withWckeys = &withWckeys
 	return r
 }
 
-func (r ApiSlurmdbV0041GetUserRequest) Execute() (*V0041OpenapiUsersResp, *http.Response, error) {
-	return r.ApiService.SlurmdbV0041GetUserExecute(r)
+func (r ApiSlurmdbV0044GetUserRequest) Execute() (*V0044OpenapiUsersResp, *http.Response, error) {
+	return r.ApiService.SlurmdbV0044GetUserExecute(r)
 }
 
 /*
-SlurmdbV0041GetUser Get user info
+SlurmdbV0044GetUser Get user info
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param name User name
- @return ApiSlurmdbV0041GetUserRequest
+ @return ApiSlurmdbV0044GetUserRequest
 */
-func (a *SlurmdbAPIService) SlurmdbV0041GetUser(ctx context.Context, name string) ApiSlurmdbV0041GetUserRequest {
-	return ApiSlurmdbV0041GetUserRequest{
+func (a *SlurmdbAPIService) SlurmdbV0044GetUser(ctx context.Context, name string) ApiSlurmdbV0044GetUserRequest {
+	return ApiSlurmdbV0044GetUserRequest{
 		ApiService: a,
 		ctx: ctx,
 		name: name,
@@ -11567,21 +4756,21 @@ func (a *SlurmdbAPIService) SlurmdbV0041GetUser(ctx context.Context, name string
 }
 
 // Execute executes the request
-//  @return V0041OpenapiUsersResp
-func (a *SlurmdbAPIService) SlurmdbV0041GetUserExecute(r ApiSlurmdbV0041GetUserRequest) (*V0041OpenapiUsersResp, *http.Response, error) {
+//  @return V0044OpenapiUsersResp
+func (a *SlurmdbAPIService) SlurmdbV0044GetUserExecute(r ApiSlurmdbV0044GetUserRequest) (*V0044OpenapiUsersResp, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *V0041OpenapiUsersResp
+		localVarReturnValue  *V0044OpenapiUsersResp
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0041GetUser")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0044GetUser")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/slurmdb/v0.0.41/user/{name}"
+	localVarPath := localBasePath + "/slurmdb/v0.0.44/user/{name}"
 	localVarPath = strings.Replace(localVarPath, "{"+"name"+"}", url.PathEscape(parameterValueToString(r.name, "name")), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -11610,7 +4799,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041GetUserExecute(r ApiSlurmdbV0041GetUserR
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -11667,7 +4856,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041GetUserExecute(r ApiSlurmdbV0041GetUserR
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v V0041OpenapiUsersResp
+			var v V0044OpenapiUsersResp
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -11690,7 +4879,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041GetUserExecute(r ApiSlurmdbV0041GetUserR
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiSlurmdbV0041GetUsersRequest struct {
+type ApiSlurmdbV0044GetUsersRequest struct {
 	ctx context.Context
 	ApiService *SlurmdbAPIService
 	adminLevel *string
@@ -11704,86 +4893,86 @@ type ApiSlurmdbV0041GetUsersRequest struct {
 }
 
 // Administrator level
-func (r ApiSlurmdbV0041GetUsersRequest) AdminLevel(adminLevel string) ApiSlurmdbV0041GetUsersRequest {
+func (r ApiSlurmdbV0044GetUsersRequest) AdminLevel(adminLevel string) ApiSlurmdbV0044GetUsersRequest {
 	r.adminLevel = &adminLevel
 	return r
 }
 
 // CSV default account list
-func (r ApiSlurmdbV0041GetUsersRequest) DefaultAccount(defaultAccount string) ApiSlurmdbV0041GetUsersRequest {
+func (r ApiSlurmdbV0044GetUsersRequest) DefaultAccount(defaultAccount string) ApiSlurmdbV0044GetUsersRequest {
 	r.defaultAccount = &defaultAccount
 	return r
 }
 
-// CSV default wckey list
-func (r ApiSlurmdbV0041GetUsersRequest) DefaultWckey(defaultWckey string) ApiSlurmdbV0041GetUsersRequest {
+// CSV default WCKey list
+func (r ApiSlurmdbV0044GetUsersRequest) DefaultWckey(defaultWckey string) ApiSlurmdbV0044GetUsersRequest {
 	r.defaultWckey = &defaultWckey
 	return r
 }
 
 // With associations
-func (r ApiSlurmdbV0041GetUsersRequest) WithAssocs(withAssocs string) ApiSlurmdbV0041GetUsersRequest {
+func (r ApiSlurmdbV0044GetUsersRequest) WithAssocs(withAssocs string) ApiSlurmdbV0044GetUsersRequest {
 	r.withAssocs = &withAssocs
 	return r
 }
 
 // With coordinators
-func (r ApiSlurmdbV0041GetUsersRequest) WithCoords(withCoords string) ApiSlurmdbV0041GetUsersRequest {
+func (r ApiSlurmdbV0044GetUsersRequest) WithCoords(withCoords string) ApiSlurmdbV0044GetUsersRequest {
 	r.withCoords = &withCoords
 	return r
 }
 
 // With deleted
-func (r ApiSlurmdbV0041GetUsersRequest) WithDeleted(withDeleted string) ApiSlurmdbV0041GetUsersRequest {
+func (r ApiSlurmdbV0044GetUsersRequest) WithDeleted(withDeleted string) ApiSlurmdbV0044GetUsersRequest {
 	r.withDeleted = &withDeleted
 	return r
 }
 
-// With wckeys
-func (r ApiSlurmdbV0041GetUsersRequest) WithWckeys(withWckeys string) ApiSlurmdbV0041GetUsersRequest {
+// With WCKeys
+func (r ApiSlurmdbV0044GetUsersRequest) WithWckeys(withWckeys string) ApiSlurmdbV0044GetUsersRequest {
 	r.withWckeys = &withWckeys
 	return r
 }
 
 // Exclude defaults
-func (r ApiSlurmdbV0041GetUsersRequest) WithoutDefaults(withoutDefaults string) ApiSlurmdbV0041GetUsersRequest {
+func (r ApiSlurmdbV0044GetUsersRequest) WithoutDefaults(withoutDefaults string) ApiSlurmdbV0044GetUsersRequest {
 	r.withoutDefaults = &withoutDefaults
 	return r
 }
 
-func (r ApiSlurmdbV0041GetUsersRequest) Execute() (*V0041OpenapiUsersResp, *http.Response, error) {
-	return r.ApiService.SlurmdbV0041GetUsersExecute(r)
+func (r ApiSlurmdbV0044GetUsersRequest) Execute() (*V0044OpenapiUsersResp, *http.Response, error) {
+	return r.ApiService.SlurmdbV0044GetUsersExecute(r)
 }
 
 /*
-SlurmdbV0041GetUsers Get user list
+SlurmdbV0044GetUsers Get user list
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmdbV0041GetUsersRequest
+ @return ApiSlurmdbV0044GetUsersRequest
 */
-func (a *SlurmdbAPIService) SlurmdbV0041GetUsers(ctx context.Context) ApiSlurmdbV0041GetUsersRequest {
-	return ApiSlurmdbV0041GetUsersRequest{
+func (a *SlurmdbAPIService) SlurmdbV0044GetUsers(ctx context.Context) ApiSlurmdbV0044GetUsersRequest {
+	return ApiSlurmdbV0044GetUsersRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
 }
 
 // Execute executes the request
-//  @return V0041OpenapiUsersResp
-func (a *SlurmdbAPIService) SlurmdbV0041GetUsersExecute(r ApiSlurmdbV0041GetUsersRequest) (*V0041OpenapiUsersResp, *http.Response, error) {
+//  @return V0044OpenapiUsersResp
+func (a *SlurmdbAPIService) SlurmdbV0044GetUsersExecute(r ApiSlurmdbV0044GetUsersRequest) (*V0044OpenapiUsersResp, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *V0041OpenapiUsersResp
+		localVarReturnValue  *V0044OpenapiUsersResp
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0041GetUsers")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0044GetUsers")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/slurmdb/v0.0.41/users/"
+	localVarPath := localBasePath + "/slurmdb/v0.0.44/users/"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -11823,7 +5012,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041GetUsersExecute(r ApiSlurmdbV0041GetUser
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -11880,7 +5069,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041GetUsersExecute(r ApiSlurmdbV0041GetUser
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v V0041OpenapiUsersResp
+			var v V0044OpenapiUsersResp
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -11903,25 +5092,25 @@ func (a *SlurmdbAPIService) SlurmdbV0041GetUsersExecute(r ApiSlurmdbV0041GetUser
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiSlurmdbV0041GetWckeyRequest struct {
+type ApiSlurmdbV0044GetWckeyRequest struct {
 	ctx context.Context
 	ApiService *SlurmdbAPIService
 	id string
 }
 
-func (r ApiSlurmdbV0041GetWckeyRequest) Execute() (*V0041OpenapiWckeyResp, *http.Response, error) {
-	return r.ApiService.SlurmdbV0041GetWckeyExecute(r)
+func (r ApiSlurmdbV0044GetWckeyRequest) Execute() (*V0044OpenapiWckeyResp, *http.Response, error) {
+	return r.ApiService.SlurmdbV0044GetWckeyExecute(r)
 }
 
 /*
-SlurmdbV0041GetWckey Get wckey info
+SlurmdbV0044GetWckey Get wckey info
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id wckey id
- @return ApiSlurmdbV0041GetWckeyRequest
+ @param id WCKey ID
+ @return ApiSlurmdbV0044GetWckeyRequest
 */
-func (a *SlurmdbAPIService) SlurmdbV0041GetWckey(ctx context.Context, id string) ApiSlurmdbV0041GetWckeyRequest {
-	return ApiSlurmdbV0041GetWckeyRequest{
+func (a *SlurmdbAPIService) SlurmdbV0044GetWckey(ctx context.Context, id string) ApiSlurmdbV0044GetWckeyRequest {
+	return ApiSlurmdbV0044GetWckeyRequest{
 		ApiService: a,
 		ctx: ctx,
 		id: id,
@@ -11929,21 +5118,21 @@ func (a *SlurmdbAPIService) SlurmdbV0041GetWckey(ctx context.Context, id string)
 }
 
 // Execute executes the request
-//  @return V0041OpenapiWckeyResp
-func (a *SlurmdbAPIService) SlurmdbV0041GetWckeyExecute(r ApiSlurmdbV0041GetWckeyRequest) (*V0041OpenapiWckeyResp, *http.Response, error) {
+//  @return V0044OpenapiWckeyResp
+func (a *SlurmdbAPIService) SlurmdbV0044GetWckeyExecute(r ApiSlurmdbV0044GetWckeyRequest) (*V0044OpenapiWckeyResp, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *V0041OpenapiWckeyResp
+		localVarReturnValue  *V0044OpenapiWckeyResp
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0041GetWckey")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0044GetWckey")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/slurmdb/v0.0.41/wckey/{id}"
+	localVarPath := localBasePath + "/slurmdb/v0.0.44/wckey/{id}"
 	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -11960,7 +5149,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041GetWckeyExecute(r ApiSlurmdbV0041GetWcke
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -12017,7 +5206,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041GetWckeyExecute(r ApiSlurmdbV0041GetWcke
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v V0041OpenapiWckeyResp
+			var v V0044OpenapiWckeyResp
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -12040,7 +5229,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041GetWckeyExecute(r ApiSlurmdbV0041GetWcke
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiSlurmdbV0041GetWckeysRequest struct {
+type ApiSlurmdbV0044GetWckeysRequest struct {
 	ctx context.Context
 	ApiService *SlurmdbAPIService
 	cluster *string
@@ -12056,98 +5245,99 @@ type ApiSlurmdbV0041GetWckeysRequest struct {
 }
 
 // CSV cluster name list
-func (r ApiSlurmdbV0041GetWckeysRequest) Cluster(cluster string) ApiSlurmdbV0041GetWckeysRequest {
+func (r ApiSlurmdbV0044GetWckeysRequest) Cluster(cluster string) ApiSlurmdbV0044GetWckeysRequest {
 	r.cluster = &cluster
 	return r
 }
 
-// CSV format name list
-func (r ApiSlurmdbV0041GetWckeysRequest) Format(format string) ApiSlurmdbV0041GetWckeysRequest {
+// Ignored; process JSON manually to control output format
+// Deprecated
+func (r ApiSlurmdbV0044GetWckeysRequest) Format(format string) ApiSlurmdbV0044GetWckeysRequest {
 	r.format = &format
 	return r
 }
 
-// CSV id list
-func (r ApiSlurmdbV0041GetWckeysRequest) Id(id string) ApiSlurmdbV0041GetWckeysRequest {
+// CSV ID list
+func (r ApiSlurmdbV0044GetWckeysRequest) Id(id string) ApiSlurmdbV0044GetWckeysRequest {
 	r.id = &id
 	return r
 }
 
 // CSV name list
-func (r ApiSlurmdbV0041GetWckeysRequest) Name(name string) ApiSlurmdbV0041GetWckeysRequest {
+func (r ApiSlurmdbV0044GetWckeysRequest) Name(name string) ApiSlurmdbV0044GetWckeysRequest {
 	r.name = &name
 	return r
 }
 
-// only query defaults
-func (r ApiSlurmdbV0041GetWckeysRequest) OnlyDefaults(onlyDefaults string) ApiSlurmdbV0041GetWckeysRequest {
+// Only query defaults
+func (r ApiSlurmdbV0044GetWckeysRequest) OnlyDefaults(onlyDefaults string) ApiSlurmdbV0044GetWckeysRequest {
 	r.onlyDefaults = &onlyDefaults
 	return r
 }
 
-// usage end UNIX timestamp (seconds)
-func (r ApiSlurmdbV0041GetWckeysRequest) UsageEnd(usageEnd string) ApiSlurmdbV0041GetWckeysRequest {
+// Usage end (UNIX timestamp)
+func (r ApiSlurmdbV0044GetWckeysRequest) UsageEnd(usageEnd string) ApiSlurmdbV0044GetWckeysRequest {
 	r.usageEnd = &usageEnd
 	return r
 }
 
-// usage start UNIX timestamp (seconds)
-func (r ApiSlurmdbV0041GetWckeysRequest) UsageStart(usageStart string) ApiSlurmdbV0041GetWckeysRequest {
+// Usage start (UNIX timestamp)
+func (r ApiSlurmdbV0044GetWckeysRequest) UsageStart(usageStart string) ApiSlurmdbV0044GetWckeysRequest {
 	r.usageStart = &usageStart
 	return r
 }
 
 // CSV user list
-func (r ApiSlurmdbV0041GetWckeysRequest) User(user string) ApiSlurmdbV0041GetWckeysRequest {
+func (r ApiSlurmdbV0044GetWckeysRequest) User(user string) ApiSlurmdbV0044GetWckeysRequest {
 	r.user = &user
 	return r
 }
 
-// include usage with query
-func (r ApiSlurmdbV0041GetWckeysRequest) WithUsage(withUsage string) ApiSlurmdbV0041GetWckeysRequest {
+// Include usage
+func (r ApiSlurmdbV0044GetWckeysRequest) WithUsage(withUsage string) ApiSlurmdbV0044GetWckeysRequest {
 	r.withUsage = &withUsage
 	return r
 }
 
-// include deleted wckeys with query
-func (r ApiSlurmdbV0041GetWckeysRequest) WithDeleted(withDeleted string) ApiSlurmdbV0041GetWckeysRequest {
+// Include deleted WCKeys
+func (r ApiSlurmdbV0044GetWckeysRequest) WithDeleted(withDeleted string) ApiSlurmdbV0044GetWckeysRequest {
 	r.withDeleted = &withDeleted
 	return r
 }
 
-func (r ApiSlurmdbV0041GetWckeysRequest) Execute() (*V0041OpenapiWckeyResp, *http.Response, error) {
-	return r.ApiService.SlurmdbV0041GetWckeysExecute(r)
+func (r ApiSlurmdbV0044GetWckeysRequest) Execute() (*V0044OpenapiWckeyResp, *http.Response, error) {
+	return r.ApiService.SlurmdbV0044GetWckeysExecute(r)
 }
 
 /*
-SlurmdbV0041GetWckeys Get wckey list
+SlurmdbV0044GetWckeys Get wckey list
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmdbV0041GetWckeysRequest
+ @return ApiSlurmdbV0044GetWckeysRequest
 */
-func (a *SlurmdbAPIService) SlurmdbV0041GetWckeys(ctx context.Context) ApiSlurmdbV0041GetWckeysRequest {
-	return ApiSlurmdbV0041GetWckeysRequest{
+func (a *SlurmdbAPIService) SlurmdbV0044GetWckeys(ctx context.Context) ApiSlurmdbV0044GetWckeysRequest {
+	return ApiSlurmdbV0044GetWckeysRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
 }
 
 // Execute executes the request
-//  @return V0041OpenapiWckeyResp
-func (a *SlurmdbAPIService) SlurmdbV0041GetWckeysExecute(r ApiSlurmdbV0041GetWckeysRequest) (*V0041OpenapiWckeyResp, *http.Response, error) {
+//  @return V0044OpenapiWckeyResp
+func (a *SlurmdbAPIService) SlurmdbV0044GetWckeysExecute(r ApiSlurmdbV0044GetWckeysRequest) (*V0044OpenapiWckeyResp, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *V0041OpenapiWckeyResp
+		localVarReturnValue  *V0044OpenapiWckeyResp
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0041GetWckeys")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0044GetWckeys")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/slurmdb/v0.0.41/wckeys/"
+	localVarPath := localBasePath + "/slurmdb/v0.0.44/wckeys/"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -12193,7 +5383,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041GetWckeysExecute(r ApiSlurmdbV0041GetWck
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -12250,7 +5440,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041GetWckeysExecute(r ApiSlurmdbV0041GetWck
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v V0041OpenapiWckeyResp
+			var v V0044OpenapiWckeyResp
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -12273,58 +5463,58 @@ func (a *SlurmdbAPIService) SlurmdbV0041GetWckeysExecute(r ApiSlurmdbV0041GetWck
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiSlurmdbV0041PostAccountsRequest struct {
+type ApiSlurmdbV0044PostAccountsRequest struct {
 	ctx context.Context
 	ApiService *SlurmdbAPIService
-	v0041OpenapiAccountsResp *V0041OpenapiAccountsResp
+	v0044OpenapiAccountsResp *V0044OpenapiAccountsResp
 }
 
 // Description of accounts to update/create
-func (r ApiSlurmdbV0041PostAccountsRequest) V0041OpenapiAccountsResp(v0041OpenapiAccountsResp V0041OpenapiAccountsResp) ApiSlurmdbV0041PostAccountsRequest {
-	r.v0041OpenapiAccountsResp = &v0041OpenapiAccountsResp
+func (r ApiSlurmdbV0044PostAccountsRequest) V0044OpenapiAccountsResp(v0044OpenapiAccountsResp V0044OpenapiAccountsResp) ApiSlurmdbV0044PostAccountsRequest {
+	r.v0044OpenapiAccountsResp = &v0044OpenapiAccountsResp
 	return r
 }
 
-func (r ApiSlurmdbV0041PostAccountsRequest) Execute() (*V0041OpenapiResp, *http.Response, error) {
-	return r.ApiService.SlurmdbV0041PostAccountsExecute(r)
+func (r ApiSlurmdbV0044PostAccountsRequest) Execute() (*V0044OpenapiResp, *http.Response, error) {
+	return r.ApiService.SlurmdbV0044PostAccountsExecute(r)
 }
 
 /*
-SlurmdbV0041PostAccounts Add/update list of accounts
+SlurmdbV0044PostAccounts Add/update list of accounts
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmdbV0041PostAccountsRequest
+ @return ApiSlurmdbV0044PostAccountsRequest
 */
-func (a *SlurmdbAPIService) SlurmdbV0041PostAccounts(ctx context.Context) ApiSlurmdbV0041PostAccountsRequest {
-	return ApiSlurmdbV0041PostAccountsRequest{
+func (a *SlurmdbAPIService) SlurmdbV0044PostAccounts(ctx context.Context) ApiSlurmdbV0044PostAccountsRequest {
+	return ApiSlurmdbV0044PostAccountsRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
 }
 
 // Execute executes the request
-//  @return V0041OpenapiResp
-func (a *SlurmdbAPIService) SlurmdbV0041PostAccountsExecute(r ApiSlurmdbV0041PostAccountsRequest) (*V0041OpenapiResp, *http.Response, error) {
+//  @return V0044OpenapiResp
+func (a *SlurmdbAPIService) SlurmdbV0044PostAccountsExecute(r ApiSlurmdbV0044PostAccountsRequest) (*V0044OpenapiResp, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *V0041OpenapiResp
+		localVarReturnValue  *V0044OpenapiResp
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0041PostAccounts")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0044PostAccounts")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/slurmdb/v0.0.41/accounts/"
+	localVarPath := localBasePath + "/slurmdb/v0.0.44/accounts/"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/x-yaml", "application/json"}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -12333,7 +5523,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041PostAccountsExecute(r ApiSlurmdbV0041Pos
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -12341,7 +5531,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041PostAccountsExecute(r ApiSlurmdbV0041Pos
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.v0041OpenapiAccountsResp
+	localVarPostBody = r.v0044OpenapiAccountsResp
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -12392,7 +5582,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041PostAccountsExecute(r ApiSlurmdbV0041Pos
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v V0041OpenapiResp
+			var v V0044OpenapiResp
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -12415,58 +5605,58 @@ func (a *SlurmdbAPIService) SlurmdbV0041PostAccountsExecute(r ApiSlurmdbV0041Pos
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiSlurmdbV0041PostAccountsAssociationRequest struct {
+type ApiSlurmdbV0044PostAccountsAssociationRequest struct {
 	ctx context.Context
 	ApiService *SlurmdbAPIService
-	v0041OpenapiAccountsAddCondResp *V0041OpenapiAccountsAddCondResp
+	v0044OpenapiAccountsAddCondResp *V0044OpenapiAccountsAddCondResp
 }
 
 // Add list of accounts with conditional association
-func (r ApiSlurmdbV0041PostAccountsAssociationRequest) V0041OpenapiAccountsAddCondResp(v0041OpenapiAccountsAddCondResp V0041OpenapiAccountsAddCondResp) ApiSlurmdbV0041PostAccountsAssociationRequest {
-	r.v0041OpenapiAccountsAddCondResp = &v0041OpenapiAccountsAddCondResp
+func (r ApiSlurmdbV0044PostAccountsAssociationRequest) V0044OpenapiAccountsAddCondResp(v0044OpenapiAccountsAddCondResp V0044OpenapiAccountsAddCondResp) ApiSlurmdbV0044PostAccountsAssociationRequest {
+	r.v0044OpenapiAccountsAddCondResp = &v0044OpenapiAccountsAddCondResp
 	return r
 }
 
-func (r ApiSlurmdbV0041PostAccountsAssociationRequest) Execute() (*V0041OpenapiAccountsAddCondRespStr, *http.Response, error) {
-	return r.ApiService.SlurmdbV0041PostAccountsAssociationExecute(r)
+func (r ApiSlurmdbV0044PostAccountsAssociationRequest) Execute() (*V0044OpenapiAccountsAddCondRespStr, *http.Response, error) {
+	return r.ApiService.SlurmdbV0044PostAccountsAssociationExecute(r)
 }
 
 /*
-SlurmdbV0041PostAccountsAssociation Add accounts with conditional association
+SlurmdbV0044PostAccountsAssociation Add accounts with conditional association
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmdbV0041PostAccountsAssociationRequest
+ @return ApiSlurmdbV0044PostAccountsAssociationRequest
 */
-func (a *SlurmdbAPIService) SlurmdbV0041PostAccountsAssociation(ctx context.Context) ApiSlurmdbV0041PostAccountsAssociationRequest {
-	return ApiSlurmdbV0041PostAccountsAssociationRequest{
+func (a *SlurmdbAPIService) SlurmdbV0044PostAccountsAssociation(ctx context.Context) ApiSlurmdbV0044PostAccountsAssociationRequest {
+	return ApiSlurmdbV0044PostAccountsAssociationRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
 }
 
 // Execute executes the request
-//  @return V0041OpenapiAccountsAddCondRespStr
-func (a *SlurmdbAPIService) SlurmdbV0041PostAccountsAssociationExecute(r ApiSlurmdbV0041PostAccountsAssociationRequest) (*V0041OpenapiAccountsAddCondRespStr, *http.Response, error) {
+//  @return V0044OpenapiAccountsAddCondRespStr
+func (a *SlurmdbAPIService) SlurmdbV0044PostAccountsAssociationExecute(r ApiSlurmdbV0044PostAccountsAssociationRequest) (*V0044OpenapiAccountsAddCondRespStr, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *V0041OpenapiAccountsAddCondRespStr
+		localVarReturnValue  *V0044OpenapiAccountsAddCondRespStr
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0041PostAccountsAssociation")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0044PostAccountsAssociation")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/slurmdb/v0.0.41/accounts_association/"
+	localVarPath := localBasePath + "/slurmdb/v0.0.44/accounts_association/"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/x-yaml", "application/json"}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -12475,7 +5665,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041PostAccountsAssociationExecute(r ApiSlur
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -12483,7 +5673,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041PostAccountsAssociationExecute(r ApiSlur
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.v0041OpenapiAccountsAddCondResp
+	localVarPostBody = r.v0044OpenapiAccountsAddCondResp
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -12534,7 +5724,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041PostAccountsAssociationExecute(r ApiSlur
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v V0041OpenapiAccountsAddCondRespStr
+			var v V0044OpenapiAccountsAddCondRespStr
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -12557,58 +5747,58 @@ func (a *SlurmdbAPIService) SlurmdbV0041PostAccountsAssociationExecute(r ApiSlur
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiSlurmdbV0041PostAssociationsRequest struct {
+type ApiSlurmdbV0044PostAssociationsRequest struct {
 	ctx context.Context
 	ApiService *SlurmdbAPIService
-	v0041OpenapiAssocsResp *V0041OpenapiAssocsResp
+	v0044OpenapiAssocsResp *V0044OpenapiAssocsResp
 }
 
 // Job description
-func (r ApiSlurmdbV0041PostAssociationsRequest) V0041OpenapiAssocsResp(v0041OpenapiAssocsResp V0041OpenapiAssocsResp) ApiSlurmdbV0041PostAssociationsRequest {
-	r.v0041OpenapiAssocsResp = &v0041OpenapiAssocsResp
+func (r ApiSlurmdbV0044PostAssociationsRequest) V0044OpenapiAssocsResp(v0044OpenapiAssocsResp V0044OpenapiAssocsResp) ApiSlurmdbV0044PostAssociationsRequest {
+	r.v0044OpenapiAssocsResp = &v0044OpenapiAssocsResp
 	return r
 }
 
-func (r ApiSlurmdbV0041PostAssociationsRequest) Execute() (*V0041OpenapiResp, *http.Response, error) {
-	return r.ApiService.SlurmdbV0041PostAssociationsExecute(r)
+func (r ApiSlurmdbV0044PostAssociationsRequest) Execute() (*V0044OpenapiResp, *http.Response, error) {
+	return r.ApiService.SlurmdbV0044PostAssociationsExecute(r)
 }
 
 /*
-SlurmdbV0041PostAssociations Set associations info
+SlurmdbV0044PostAssociations Set associations info
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmdbV0041PostAssociationsRequest
+ @return ApiSlurmdbV0044PostAssociationsRequest
 */
-func (a *SlurmdbAPIService) SlurmdbV0041PostAssociations(ctx context.Context) ApiSlurmdbV0041PostAssociationsRequest {
-	return ApiSlurmdbV0041PostAssociationsRequest{
+func (a *SlurmdbAPIService) SlurmdbV0044PostAssociations(ctx context.Context) ApiSlurmdbV0044PostAssociationsRequest {
+	return ApiSlurmdbV0044PostAssociationsRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
 }
 
 // Execute executes the request
-//  @return V0041OpenapiResp
-func (a *SlurmdbAPIService) SlurmdbV0041PostAssociationsExecute(r ApiSlurmdbV0041PostAssociationsRequest) (*V0041OpenapiResp, *http.Response, error) {
+//  @return V0044OpenapiResp
+func (a *SlurmdbAPIService) SlurmdbV0044PostAssociationsExecute(r ApiSlurmdbV0044PostAssociationsRequest) (*V0044OpenapiResp, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *V0041OpenapiResp
+		localVarReturnValue  *V0044OpenapiResp
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0041PostAssociations")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0044PostAssociations")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/slurmdb/v0.0.41/associations/"
+	localVarPath := localBasePath + "/slurmdb/v0.0.44/associations/"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/x-yaml", "application/json"}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -12617,7 +5807,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041PostAssociationsExecute(r ApiSlurmdbV004
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -12625,7 +5815,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041PostAssociationsExecute(r ApiSlurmdbV004
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.v0041OpenapiAssocsResp
+	localVarPostBody = r.v0044OpenapiAssocsResp
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -12676,7 +5866,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041PostAssociationsExecute(r ApiSlurmdbV004
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v V0041OpenapiResp
+			var v V0044OpenapiResp
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -12699,58 +5889,58 @@ func (a *SlurmdbAPIService) SlurmdbV0041PostAssociationsExecute(r ApiSlurmdbV004
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiSlurmdbV0041PostClustersRequest struct {
+type ApiSlurmdbV0044PostClustersRequest struct {
 	ctx context.Context
 	ApiService *SlurmdbAPIService
 	updateTime *string
-	v0041OpenapiClustersResp *V0041OpenapiClustersResp
+	v0044OpenapiClustersResp *V0044OpenapiClustersResp
 }
 
-// Filter reservations since update timestamp
-func (r ApiSlurmdbV0041PostClustersRequest) UpdateTime(updateTime string) ApiSlurmdbV0041PostClustersRequest {
+// Query reservations updated more recently than this time (UNIX timestamp)
+func (r ApiSlurmdbV0044PostClustersRequest) UpdateTime(updateTime string) ApiSlurmdbV0044PostClustersRequest {
 	r.updateTime = &updateTime
 	return r
 }
 
 // Cluster add or update descriptions
-func (r ApiSlurmdbV0041PostClustersRequest) V0041OpenapiClustersResp(v0041OpenapiClustersResp V0041OpenapiClustersResp) ApiSlurmdbV0041PostClustersRequest {
-	r.v0041OpenapiClustersResp = &v0041OpenapiClustersResp
+func (r ApiSlurmdbV0044PostClustersRequest) V0044OpenapiClustersResp(v0044OpenapiClustersResp V0044OpenapiClustersResp) ApiSlurmdbV0044PostClustersRequest {
+	r.v0044OpenapiClustersResp = &v0044OpenapiClustersResp
 	return r
 }
 
-func (r ApiSlurmdbV0041PostClustersRequest) Execute() (*V0041OpenapiResp, *http.Response, error) {
-	return r.ApiService.SlurmdbV0041PostClustersExecute(r)
+func (r ApiSlurmdbV0044PostClustersRequest) Execute() (*V0044OpenapiResp, *http.Response, error) {
+	return r.ApiService.SlurmdbV0044PostClustersExecute(r)
 }
 
 /*
-SlurmdbV0041PostClusters Get cluster list
+SlurmdbV0044PostClusters Get cluster list
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmdbV0041PostClustersRequest
+ @return ApiSlurmdbV0044PostClustersRequest
 */
-func (a *SlurmdbAPIService) SlurmdbV0041PostClusters(ctx context.Context) ApiSlurmdbV0041PostClustersRequest {
-	return ApiSlurmdbV0041PostClustersRequest{
+func (a *SlurmdbAPIService) SlurmdbV0044PostClusters(ctx context.Context) ApiSlurmdbV0044PostClustersRequest {
+	return ApiSlurmdbV0044PostClustersRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
 }
 
 // Execute executes the request
-//  @return V0041OpenapiResp
-func (a *SlurmdbAPIService) SlurmdbV0041PostClustersExecute(r ApiSlurmdbV0041PostClustersRequest) (*V0041OpenapiResp, *http.Response, error) {
+//  @return V0044OpenapiResp
+func (a *SlurmdbAPIService) SlurmdbV0044PostClustersExecute(r ApiSlurmdbV0044PostClustersRequest) (*V0044OpenapiResp, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *V0041OpenapiResp
+		localVarReturnValue  *V0044OpenapiResp
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0041PostClusters")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0044PostClusters")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/slurmdb/v0.0.41/clusters/"
+	localVarPath := localBasePath + "/slurmdb/v0.0.44/clusters/"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -12760,7 +5950,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041PostClustersExecute(r ApiSlurmdbV0041Pos
 		parameterAddToHeaderOrQuery(localVarQueryParams, "update_time", r.updateTime, "")
 	}
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/x-yaml", "application/json"}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -12769,7 +5959,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041PostClustersExecute(r ApiSlurmdbV0041Pos
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -12777,7 +5967,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041PostClustersExecute(r ApiSlurmdbV0041Pos
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.v0041OpenapiClustersResp
+	localVarPostBody = r.v0044OpenapiClustersResp
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -12828,7 +6018,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041PostClustersExecute(r ApiSlurmdbV0041Pos
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v V0041OpenapiResp
+			var v V0044OpenapiResp
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -12851,58 +6041,58 @@ func (a *SlurmdbAPIService) SlurmdbV0041PostClustersExecute(r ApiSlurmdbV0041Pos
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiSlurmdbV0041PostConfigRequest struct {
+type ApiSlurmdbV0044PostConfigRequest struct {
 	ctx context.Context
 	ApiService *SlurmdbAPIService
-	v0041OpenapiSlurmdbdConfigResp *V0041OpenapiSlurmdbdConfigResp
+	v0044OpenapiSlurmdbdConfigResp *V0044OpenapiSlurmdbdConfigResp
 }
 
 // Add or update config
-func (r ApiSlurmdbV0041PostConfigRequest) V0041OpenapiSlurmdbdConfigResp(v0041OpenapiSlurmdbdConfigResp V0041OpenapiSlurmdbdConfigResp) ApiSlurmdbV0041PostConfigRequest {
-	r.v0041OpenapiSlurmdbdConfigResp = &v0041OpenapiSlurmdbdConfigResp
+func (r ApiSlurmdbV0044PostConfigRequest) V0044OpenapiSlurmdbdConfigResp(v0044OpenapiSlurmdbdConfigResp V0044OpenapiSlurmdbdConfigResp) ApiSlurmdbV0044PostConfigRequest {
+	r.v0044OpenapiSlurmdbdConfigResp = &v0044OpenapiSlurmdbdConfigResp
 	return r
 }
 
-func (r ApiSlurmdbV0041PostConfigRequest) Execute() (*V0041OpenapiResp, *http.Response, error) {
-	return r.ApiService.SlurmdbV0041PostConfigExecute(r)
+func (r ApiSlurmdbV0044PostConfigRequest) Execute() (*V0044OpenapiResp, *http.Response, error) {
+	return r.ApiService.SlurmdbV0044PostConfigExecute(r)
 }
 
 /*
-SlurmdbV0041PostConfig Load all configuration information
+SlurmdbV0044PostConfig Load all configuration information
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmdbV0041PostConfigRequest
+ @return ApiSlurmdbV0044PostConfigRequest
 */
-func (a *SlurmdbAPIService) SlurmdbV0041PostConfig(ctx context.Context) ApiSlurmdbV0041PostConfigRequest {
-	return ApiSlurmdbV0041PostConfigRequest{
+func (a *SlurmdbAPIService) SlurmdbV0044PostConfig(ctx context.Context) ApiSlurmdbV0044PostConfigRequest {
+	return ApiSlurmdbV0044PostConfigRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
 }
 
 // Execute executes the request
-//  @return V0041OpenapiResp
-func (a *SlurmdbAPIService) SlurmdbV0041PostConfigExecute(r ApiSlurmdbV0041PostConfigRequest) (*V0041OpenapiResp, *http.Response, error) {
+//  @return V0044OpenapiResp
+func (a *SlurmdbAPIService) SlurmdbV0044PostConfigExecute(r ApiSlurmdbV0044PostConfigRequest) (*V0044OpenapiResp, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *V0041OpenapiResp
+		localVarReturnValue  *V0044OpenapiResp
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0041PostConfig")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0044PostConfig")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/slurmdb/v0.0.41/config"
+	localVarPath := localBasePath + "/slurmdb/v0.0.44/config"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/x-yaml", "application/json"}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -12911,7 +6101,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041PostConfigExecute(r ApiSlurmdbV0041PostC
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -12919,7 +6109,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041PostConfigExecute(r ApiSlurmdbV0041PostC
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.v0041OpenapiSlurmdbdConfigResp
+	localVarPostBody = r.v0044OpenapiSlurmdbdConfigResp
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -12970,7 +6160,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041PostConfigExecute(r ApiSlurmdbV0041PostC
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v V0041OpenapiResp
+			var v V0044OpenapiResp
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -12993,92 +6183,381 @@ func (a *SlurmdbAPIService) SlurmdbV0041PostConfigExecute(r ApiSlurmdbV0041PostC
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiSlurmdbV0041PostQosRequest struct {
+type ApiSlurmdbV0044PostJobRequest struct {
 	ctx context.Context
 	ApiService *SlurmdbAPIService
-	description *string
-	id *string
-	format *string
-	name *string
-	preemptMode *string
-	withDeleted *string
-	v0041OpenapiSlurmdbdQosResp *V0041OpenapiSlurmdbdQosResp
+	jobId string
+	v0044JobModify *V0044JobModify
 }
 
-// CSV description list
-func (r ApiSlurmdbV0041PostQosRequest) Description(description string) ApiSlurmdbV0041PostQosRequest {
-	r.description = &description
+// Job update description
+func (r ApiSlurmdbV0044PostJobRequest) V0044JobModify(v0044JobModify V0044JobModify) ApiSlurmdbV0044PostJobRequest {
+	r.v0044JobModify = &v0044JobModify
 	return r
 }
 
-// CSV QOS id list
-func (r ApiSlurmdbV0041PostQosRequest) Id(id string) ApiSlurmdbV0041PostQosRequest {
-	r.id = &id
-	return r
-}
-
-// CSV format list
-func (r ApiSlurmdbV0041PostQosRequest) Format(format string) ApiSlurmdbV0041PostQosRequest {
-	r.format = &format
-	return r
-}
-
-// CSV QOS name list
-func (r ApiSlurmdbV0041PostQosRequest) Name(name string) ApiSlurmdbV0041PostQosRequest {
-	r.name = &name
-	return r
-}
-
-func (r ApiSlurmdbV0041PostQosRequest) PreemptMode(preemptMode string) ApiSlurmdbV0041PostQosRequest {
-	r.preemptMode = &preemptMode
-	return r
-}
-
-// Include deleted QOS
-func (r ApiSlurmdbV0041PostQosRequest) WithDeleted(withDeleted string) ApiSlurmdbV0041PostQosRequest {
-	r.withDeleted = &withDeleted
-	return r
-}
-
-// Description of QOS to add or update
-func (r ApiSlurmdbV0041PostQosRequest) V0041OpenapiSlurmdbdQosResp(v0041OpenapiSlurmdbdQosResp V0041OpenapiSlurmdbdQosResp) ApiSlurmdbV0041PostQosRequest {
-	r.v0041OpenapiSlurmdbdQosResp = &v0041OpenapiSlurmdbdQosResp
-	return r
-}
-
-func (r ApiSlurmdbV0041PostQosRequest) Execute() (*V0041OpenapiResp, *http.Response, error) {
-	return r.ApiService.SlurmdbV0041PostQosExecute(r)
+func (r ApiSlurmdbV0044PostJobRequest) Execute() (*V0044OpenapiJobModifyResp, *http.Response, error) {
+	return r.ApiService.SlurmdbV0044PostJobExecute(r)
 }
 
 /*
-SlurmdbV0041PostQos Add or update QOSs
+SlurmdbV0044PostJob Update job
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmdbV0041PostQosRequest
+ @param jobId Job ID
+ @return ApiSlurmdbV0044PostJobRequest
 */
-func (a *SlurmdbAPIService) SlurmdbV0041PostQos(ctx context.Context) ApiSlurmdbV0041PostQosRequest {
-	return ApiSlurmdbV0041PostQosRequest{
+func (a *SlurmdbAPIService) SlurmdbV0044PostJob(ctx context.Context, jobId string) ApiSlurmdbV0044PostJobRequest {
+	return ApiSlurmdbV0044PostJobRequest{
+		ApiService: a,
+		ctx: ctx,
+		jobId: jobId,
+	}
+}
+
+// Execute executes the request
+//  @return V0044OpenapiJobModifyResp
+func (a *SlurmdbAPIService) SlurmdbV0044PostJobExecute(r ApiSlurmdbV0044PostJobRequest) (*V0044OpenapiJobModifyResp, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *V0044OpenapiJobModifyResp
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0044PostJob")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/slurmdb/v0.0.44/job/{job_id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"job_id"+"}", url.PathEscape(parameterValueToString(r.jobId, "jobId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.v0044JobModify
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["user"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-SLURM-USER-NAME"] = key
+			}
+		}
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["token"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+			var v V0044OpenapiJobModifyResp
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiSlurmdbV0044PostJobsRequest struct {
+	ctx context.Context
+	ApiService *SlurmdbAPIService
+	v0044OpenapiJobModifyReq *V0044OpenapiJobModifyReq
+}
+
+// Job update description
+func (r ApiSlurmdbV0044PostJobsRequest) V0044OpenapiJobModifyReq(v0044OpenapiJobModifyReq V0044OpenapiJobModifyReq) ApiSlurmdbV0044PostJobsRequest {
+	r.v0044OpenapiJobModifyReq = &v0044OpenapiJobModifyReq
+	return r
+}
+
+func (r ApiSlurmdbV0044PostJobsRequest) Execute() (*V0044OpenapiJobModifyResp, *http.Response, error) {
+	return r.ApiService.SlurmdbV0044PostJobsExecute(r)
+}
+
+/*
+SlurmdbV0044PostJobs Update jobs
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiSlurmdbV0044PostJobsRequest
+*/
+func (a *SlurmdbAPIService) SlurmdbV0044PostJobs(ctx context.Context) ApiSlurmdbV0044PostJobsRequest {
+	return ApiSlurmdbV0044PostJobsRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
 }
 
 // Execute executes the request
-//  @return V0041OpenapiResp
-func (a *SlurmdbAPIService) SlurmdbV0041PostQosExecute(r ApiSlurmdbV0041PostQosRequest) (*V0041OpenapiResp, *http.Response, error) {
+//  @return V0044OpenapiJobModifyResp
+func (a *SlurmdbAPIService) SlurmdbV0044PostJobsExecute(r ApiSlurmdbV0044PostJobsRequest) (*V0044OpenapiJobModifyResp, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *V0041OpenapiResp
+		localVarReturnValue  *V0044OpenapiJobModifyResp
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0041PostQos")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0044PostJobs")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/slurmdb/v0.0.41/qos/"
+	localVarPath := localBasePath + "/slurmdb/v0.0.44/jobs/"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.v0044OpenapiJobModifyReq
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["user"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-SLURM-USER-NAME"] = key
+			}
+		}
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["token"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-SLURM-USER-TOKEN"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+			var v V0044OpenapiJobModifyResp
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiSlurmdbV0044PostQosRequest struct {
+	ctx context.Context
+	ApiService *SlurmdbAPIService
+	description *string
+	includeDeletedQOS *string
+	id *string
+	format *string
+	name *string
+	preemptMode *string
+	v0044OpenapiSlurmdbdQosResp *V0044OpenapiSlurmdbdQosResp
+}
+
+// CSV description list
+func (r ApiSlurmdbV0044PostQosRequest) Description(description string) ApiSlurmdbV0044PostQosRequest {
+	r.description = &description
+	return r
+}
+
+func (r ApiSlurmdbV0044PostQosRequest) IncludeDeletedQOS(includeDeletedQOS string) ApiSlurmdbV0044PostQosRequest {
+	r.includeDeletedQOS = &includeDeletedQOS
+	return r
+}
+
+// CSV QOS id list
+func (r ApiSlurmdbV0044PostQosRequest) Id(id string) ApiSlurmdbV0044PostQosRequest {
+	r.id = &id
+	return r
+}
+
+// Ignored; process JSON manually to control output format
+// Deprecated
+func (r ApiSlurmdbV0044PostQosRequest) Format(format string) ApiSlurmdbV0044PostQosRequest {
+	r.format = &format
+	return r
+}
+
+// CSV QOS name list
+func (r ApiSlurmdbV0044PostQosRequest) Name(name string) ApiSlurmdbV0044PostQosRequest {
+	r.name = &name
+	return r
+}
+
+// PreemptMode used when jobs in this QOS are preempted
+func (r ApiSlurmdbV0044PostQosRequest) PreemptMode(preemptMode string) ApiSlurmdbV0044PostQosRequest {
+	r.preemptMode = &preemptMode
+	return r
+}
+
+// Description of QOS to add or update
+func (r ApiSlurmdbV0044PostQosRequest) V0044OpenapiSlurmdbdQosResp(v0044OpenapiSlurmdbdQosResp V0044OpenapiSlurmdbdQosResp) ApiSlurmdbV0044PostQosRequest {
+	r.v0044OpenapiSlurmdbdQosResp = &v0044OpenapiSlurmdbdQosResp
+	return r
+}
+
+func (r ApiSlurmdbV0044PostQosRequest) Execute() (*V0044OpenapiResp, *http.Response, error) {
+	return r.ApiService.SlurmdbV0044PostQosExecute(r)
+}
+
+/*
+SlurmdbV0044PostQos Add or update QOSs
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiSlurmdbV0044PostQosRequest
+*/
+func (a *SlurmdbAPIService) SlurmdbV0044PostQos(ctx context.Context) ApiSlurmdbV0044PostQosRequest {
+	return ApiSlurmdbV0044PostQosRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return V0044OpenapiResp
+func (a *SlurmdbAPIService) SlurmdbV0044PostQosExecute(r ApiSlurmdbV0044PostQosRequest) (*V0044OpenapiResp, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *V0044OpenapiResp
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0044PostQos")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/slurmdb/v0.0.44/qos/"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -13086,6 +6565,9 @@ func (a *SlurmdbAPIService) SlurmdbV0041PostQosExecute(r ApiSlurmdbV0041PostQosR
 
 	if r.description != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "description", r.description, "")
+	}
+	if r.includeDeletedQOS != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "Include deleted QOS", r.includeDeletedQOS, "")
 	}
 	if r.id != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "id", r.id, "")
@@ -13099,11 +6581,8 @@ func (a *SlurmdbAPIService) SlurmdbV0041PostQosExecute(r ApiSlurmdbV0041PostQosR
 	if r.preemptMode != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "preempt_mode", r.preemptMode, "")
 	}
-	if r.withDeleted != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "with_deleted", r.withDeleted, "")
-	}
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/x-yaml", "application/json"}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -13112,7 +6591,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041PostQosExecute(r ApiSlurmdbV0041PostQosR
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -13120,7 +6599,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041PostQosExecute(r ApiSlurmdbV0041PostQosR
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.v0041OpenapiSlurmdbdQosResp
+	localVarPostBody = r.v0044OpenapiSlurmdbdQosResp
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -13171,7 +6650,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041PostQosExecute(r ApiSlurmdbV0041PostQosR
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v V0041OpenapiResp
+			var v V0044OpenapiResp
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -13194,58 +6673,58 @@ func (a *SlurmdbAPIService) SlurmdbV0041PostQosExecute(r ApiSlurmdbV0041PostQosR
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiSlurmdbV0041PostTresRequest struct {
+type ApiSlurmdbV0044PostTresRequest struct {
 	ctx context.Context
 	ApiService *SlurmdbAPIService
-	v0041OpenapiTresResp *V0041OpenapiTresResp
+	v0044OpenapiTresResp *V0044OpenapiTresResp
 }
 
 // TRES descriptions. Only works in developer mode.
-func (r ApiSlurmdbV0041PostTresRequest) V0041OpenapiTresResp(v0041OpenapiTresResp V0041OpenapiTresResp) ApiSlurmdbV0041PostTresRequest {
-	r.v0041OpenapiTresResp = &v0041OpenapiTresResp
+func (r ApiSlurmdbV0044PostTresRequest) V0044OpenapiTresResp(v0044OpenapiTresResp V0044OpenapiTresResp) ApiSlurmdbV0044PostTresRequest {
+	r.v0044OpenapiTresResp = &v0044OpenapiTresResp
 	return r
 }
 
-func (r ApiSlurmdbV0041PostTresRequest) Execute() (*V0041OpenapiResp, *http.Response, error) {
-	return r.ApiService.SlurmdbV0041PostTresExecute(r)
+func (r ApiSlurmdbV0044PostTresRequest) Execute() (*V0044OpenapiResp, *http.Response, error) {
+	return r.ApiService.SlurmdbV0044PostTresExecute(r)
 }
 
 /*
-SlurmdbV0041PostTres Add TRES
+SlurmdbV0044PostTres Add TRES
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmdbV0041PostTresRequest
+ @return ApiSlurmdbV0044PostTresRequest
 */
-func (a *SlurmdbAPIService) SlurmdbV0041PostTres(ctx context.Context) ApiSlurmdbV0041PostTresRequest {
-	return ApiSlurmdbV0041PostTresRequest{
+func (a *SlurmdbAPIService) SlurmdbV0044PostTres(ctx context.Context) ApiSlurmdbV0044PostTresRequest {
+	return ApiSlurmdbV0044PostTresRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
 }
 
 // Execute executes the request
-//  @return V0041OpenapiResp
-func (a *SlurmdbAPIService) SlurmdbV0041PostTresExecute(r ApiSlurmdbV0041PostTresRequest) (*V0041OpenapiResp, *http.Response, error) {
+//  @return V0044OpenapiResp
+func (a *SlurmdbAPIService) SlurmdbV0044PostTresExecute(r ApiSlurmdbV0044PostTresRequest) (*V0044OpenapiResp, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *V0041OpenapiResp
+		localVarReturnValue  *V0044OpenapiResp
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0041PostTres")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0044PostTres")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/slurmdb/v0.0.41/tres/"
+	localVarPath := localBasePath + "/slurmdb/v0.0.44/tres/"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/x-yaml", "application/json"}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -13254,7 +6733,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041PostTresExecute(r ApiSlurmdbV0041PostTre
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -13262,7 +6741,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041PostTresExecute(r ApiSlurmdbV0041PostTre
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.v0041OpenapiTresResp
+	localVarPostBody = r.v0044OpenapiTresResp
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -13313,7 +6792,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041PostTresExecute(r ApiSlurmdbV0041PostTre
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v V0041OpenapiResp
+			var v V0044OpenapiResp
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -13336,58 +6815,58 @@ func (a *SlurmdbAPIService) SlurmdbV0041PostTresExecute(r ApiSlurmdbV0041PostTre
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiSlurmdbV0041PostUsersRequest struct {
+type ApiSlurmdbV0044PostUsersRequest struct {
 	ctx context.Context
 	ApiService *SlurmdbAPIService
-	v0041OpenapiUsersResp *V0041OpenapiUsersResp
+	v0044OpenapiUsersResp *V0044OpenapiUsersResp
 }
 
 // add or update user
-func (r ApiSlurmdbV0041PostUsersRequest) V0041OpenapiUsersResp(v0041OpenapiUsersResp V0041OpenapiUsersResp) ApiSlurmdbV0041PostUsersRequest {
-	r.v0041OpenapiUsersResp = &v0041OpenapiUsersResp
+func (r ApiSlurmdbV0044PostUsersRequest) V0044OpenapiUsersResp(v0044OpenapiUsersResp V0044OpenapiUsersResp) ApiSlurmdbV0044PostUsersRequest {
+	r.v0044OpenapiUsersResp = &v0044OpenapiUsersResp
 	return r
 }
 
-func (r ApiSlurmdbV0041PostUsersRequest) Execute() (*V0041OpenapiResp, *http.Response, error) {
-	return r.ApiService.SlurmdbV0041PostUsersExecute(r)
+func (r ApiSlurmdbV0044PostUsersRequest) Execute() (*V0044OpenapiResp, *http.Response, error) {
+	return r.ApiService.SlurmdbV0044PostUsersExecute(r)
 }
 
 /*
-SlurmdbV0041PostUsers Update users
+SlurmdbV0044PostUsers Update users
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmdbV0041PostUsersRequest
+ @return ApiSlurmdbV0044PostUsersRequest
 */
-func (a *SlurmdbAPIService) SlurmdbV0041PostUsers(ctx context.Context) ApiSlurmdbV0041PostUsersRequest {
-	return ApiSlurmdbV0041PostUsersRequest{
+func (a *SlurmdbAPIService) SlurmdbV0044PostUsers(ctx context.Context) ApiSlurmdbV0044PostUsersRequest {
+	return ApiSlurmdbV0044PostUsersRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
 }
 
 // Execute executes the request
-//  @return V0041OpenapiResp
-func (a *SlurmdbAPIService) SlurmdbV0041PostUsersExecute(r ApiSlurmdbV0041PostUsersRequest) (*V0041OpenapiResp, *http.Response, error) {
+//  @return V0044OpenapiResp
+func (a *SlurmdbAPIService) SlurmdbV0044PostUsersExecute(r ApiSlurmdbV0044PostUsersRequest) (*V0044OpenapiResp, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *V0041OpenapiResp
+		localVarReturnValue  *V0044OpenapiResp
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0041PostUsers")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0044PostUsers")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/slurmdb/v0.0.41/users/"
+	localVarPath := localBasePath + "/slurmdb/v0.0.44/users/"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/x-yaml", "application/json"}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -13396,7 +6875,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041PostUsersExecute(r ApiSlurmdbV0041PostUs
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -13404,7 +6883,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041PostUsersExecute(r ApiSlurmdbV0041PostUs
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.v0041OpenapiUsersResp
+	localVarPostBody = r.v0044OpenapiUsersResp
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -13455,7 +6934,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041PostUsersExecute(r ApiSlurmdbV0041PostUs
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v V0041OpenapiResp
+			var v V0044OpenapiResp
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -13478,65 +6957,65 @@ func (a *SlurmdbAPIService) SlurmdbV0041PostUsersExecute(r ApiSlurmdbV0041PostUs
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiSlurmdbV0041PostUsersAssociationRequest struct {
+type ApiSlurmdbV0044PostUsersAssociationRequest struct {
 	ctx context.Context
 	ApiService *SlurmdbAPIService
 	updateTime *string
 	flags *string
-	v0041OpenapiUsersAddCondResp *V0041OpenapiUsersAddCondResp
+	v0044OpenapiUsersAddCondResp *V0044OpenapiUsersAddCondResp
 }
 
-// Filter partitions since update timestamp
-func (r ApiSlurmdbV0041PostUsersAssociationRequest) UpdateTime(updateTime string) ApiSlurmdbV0041PostUsersAssociationRequest {
+// Query partitions updated more recently than this time (UNIX timestamp)
+func (r ApiSlurmdbV0044PostUsersAssociationRequest) UpdateTime(updateTime string) ApiSlurmdbV0044PostUsersAssociationRequest {
 	r.updateTime = &updateTime
 	return r
 }
 
 // Query flags
-func (r ApiSlurmdbV0041PostUsersAssociationRequest) Flags(flags string) ApiSlurmdbV0041PostUsersAssociationRequest {
+func (r ApiSlurmdbV0044PostUsersAssociationRequest) Flags(flags string) ApiSlurmdbV0044PostUsersAssociationRequest {
 	r.flags = &flags
 	return r
 }
 
 // Create users with conditional association
-func (r ApiSlurmdbV0041PostUsersAssociationRequest) V0041OpenapiUsersAddCondResp(v0041OpenapiUsersAddCondResp V0041OpenapiUsersAddCondResp) ApiSlurmdbV0041PostUsersAssociationRequest {
-	r.v0041OpenapiUsersAddCondResp = &v0041OpenapiUsersAddCondResp
+func (r ApiSlurmdbV0044PostUsersAssociationRequest) V0044OpenapiUsersAddCondResp(v0044OpenapiUsersAddCondResp V0044OpenapiUsersAddCondResp) ApiSlurmdbV0044PostUsersAssociationRequest {
+	r.v0044OpenapiUsersAddCondResp = &v0044OpenapiUsersAddCondResp
 	return r
 }
 
-func (r ApiSlurmdbV0041PostUsersAssociationRequest) Execute() (*V0041OpenapiUsersAddCondRespStr, *http.Response, error) {
-	return r.ApiService.SlurmdbV0041PostUsersAssociationExecute(r)
+func (r ApiSlurmdbV0044PostUsersAssociationRequest) Execute() (*V0044OpenapiUsersAddCondRespStr, *http.Response, error) {
+	return r.ApiService.SlurmdbV0044PostUsersAssociationExecute(r)
 }
 
 /*
-SlurmdbV0041PostUsersAssociation Add users with conditional association
+SlurmdbV0044PostUsersAssociation Add users with conditional association
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmdbV0041PostUsersAssociationRequest
+ @return ApiSlurmdbV0044PostUsersAssociationRequest
 */
-func (a *SlurmdbAPIService) SlurmdbV0041PostUsersAssociation(ctx context.Context) ApiSlurmdbV0041PostUsersAssociationRequest {
-	return ApiSlurmdbV0041PostUsersAssociationRequest{
+func (a *SlurmdbAPIService) SlurmdbV0044PostUsersAssociation(ctx context.Context) ApiSlurmdbV0044PostUsersAssociationRequest {
+	return ApiSlurmdbV0044PostUsersAssociationRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
 }
 
 // Execute executes the request
-//  @return V0041OpenapiUsersAddCondRespStr
-func (a *SlurmdbAPIService) SlurmdbV0041PostUsersAssociationExecute(r ApiSlurmdbV0041PostUsersAssociationRequest) (*V0041OpenapiUsersAddCondRespStr, *http.Response, error) {
+//  @return V0044OpenapiUsersAddCondRespStr
+func (a *SlurmdbAPIService) SlurmdbV0044PostUsersAssociationExecute(r ApiSlurmdbV0044PostUsersAssociationRequest) (*V0044OpenapiUsersAddCondRespStr, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *V0041OpenapiUsersAddCondRespStr
+		localVarReturnValue  *V0044OpenapiUsersAddCondRespStr
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0041PostUsersAssociation")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0044PostUsersAssociation")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/slurmdb/v0.0.41/users_association/"
+	localVarPath := localBasePath + "/slurmdb/v0.0.44/users_association/"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -13549,7 +7028,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041PostUsersAssociationExecute(r ApiSlurmdb
 		parameterAddToHeaderOrQuery(localVarQueryParams, "flags", r.flags, "")
 	}
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/x-yaml", "application/json"}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -13558,7 +7037,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041PostUsersAssociationExecute(r ApiSlurmdb
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -13566,7 +7045,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041PostUsersAssociationExecute(r ApiSlurmdb
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.v0041OpenapiUsersAddCondResp
+	localVarPostBody = r.v0044OpenapiUsersAddCondResp
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -13617,7 +7096,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041PostUsersAssociationExecute(r ApiSlurmdb
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v V0041OpenapiUsersAddCondRespStr
+			var v V0044OpenapiUsersAddCondRespStr
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -13640,7 +7119,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041PostUsersAssociationExecute(r ApiSlurmdb
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiSlurmdbV0041PostWckeysRequest struct {
+type ApiSlurmdbV0044PostWckeysRequest struct {
 	ctx context.Context
 	ApiService *SlurmdbAPIService
 	cluster *string
@@ -13653,108 +7132,109 @@ type ApiSlurmdbV0041PostWckeysRequest struct {
 	user *string
 	withUsage *string
 	withDeleted *string
-	v0041OpenapiWckeyResp *V0041OpenapiWckeyResp
+	v0044OpenapiWckeyResp *V0044OpenapiWckeyResp
 }
 
 // CSV cluster name list
-func (r ApiSlurmdbV0041PostWckeysRequest) Cluster(cluster string) ApiSlurmdbV0041PostWckeysRequest {
+func (r ApiSlurmdbV0044PostWckeysRequest) Cluster(cluster string) ApiSlurmdbV0044PostWckeysRequest {
 	r.cluster = &cluster
 	return r
 }
 
-// CSV format name list
-func (r ApiSlurmdbV0041PostWckeysRequest) Format(format string) ApiSlurmdbV0041PostWckeysRequest {
+// Ignored; process JSON manually to control output format
+// Deprecated
+func (r ApiSlurmdbV0044PostWckeysRequest) Format(format string) ApiSlurmdbV0044PostWckeysRequest {
 	r.format = &format
 	return r
 }
 
-// CSV id list
-func (r ApiSlurmdbV0041PostWckeysRequest) Id(id string) ApiSlurmdbV0041PostWckeysRequest {
+// CSV ID list
+func (r ApiSlurmdbV0044PostWckeysRequest) Id(id string) ApiSlurmdbV0044PostWckeysRequest {
 	r.id = &id
 	return r
 }
 
 // CSV name list
-func (r ApiSlurmdbV0041PostWckeysRequest) Name(name string) ApiSlurmdbV0041PostWckeysRequest {
+func (r ApiSlurmdbV0044PostWckeysRequest) Name(name string) ApiSlurmdbV0044PostWckeysRequest {
 	r.name = &name
 	return r
 }
 
-// only query defaults
-func (r ApiSlurmdbV0041PostWckeysRequest) OnlyDefaults(onlyDefaults string) ApiSlurmdbV0041PostWckeysRequest {
+// Only query defaults
+func (r ApiSlurmdbV0044PostWckeysRequest) OnlyDefaults(onlyDefaults string) ApiSlurmdbV0044PostWckeysRequest {
 	r.onlyDefaults = &onlyDefaults
 	return r
 }
 
-// usage end UNIX timestamp (seconds)
-func (r ApiSlurmdbV0041PostWckeysRequest) UsageEnd(usageEnd string) ApiSlurmdbV0041PostWckeysRequest {
+// Usage end (UNIX timestamp)
+func (r ApiSlurmdbV0044PostWckeysRequest) UsageEnd(usageEnd string) ApiSlurmdbV0044PostWckeysRequest {
 	r.usageEnd = &usageEnd
 	return r
 }
 
-// usage start UNIX timestamp (seconds)
-func (r ApiSlurmdbV0041PostWckeysRequest) UsageStart(usageStart string) ApiSlurmdbV0041PostWckeysRequest {
+// Usage start (UNIX timestamp)
+func (r ApiSlurmdbV0044PostWckeysRequest) UsageStart(usageStart string) ApiSlurmdbV0044PostWckeysRequest {
 	r.usageStart = &usageStart
 	return r
 }
 
 // CSV user list
-func (r ApiSlurmdbV0041PostWckeysRequest) User(user string) ApiSlurmdbV0041PostWckeysRequest {
+func (r ApiSlurmdbV0044PostWckeysRequest) User(user string) ApiSlurmdbV0044PostWckeysRequest {
 	r.user = &user
 	return r
 }
 
-// include usage with query
-func (r ApiSlurmdbV0041PostWckeysRequest) WithUsage(withUsage string) ApiSlurmdbV0041PostWckeysRequest {
+// Include usage
+func (r ApiSlurmdbV0044PostWckeysRequest) WithUsage(withUsage string) ApiSlurmdbV0044PostWckeysRequest {
 	r.withUsage = &withUsage
 	return r
 }
 
-// include deleted wckeys with query
-func (r ApiSlurmdbV0041PostWckeysRequest) WithDeleted(withDeleted string) ApiSlurmdbV0041PostWckeysRequest {
+// Include deleted WCKeys
+func (r ApiSlurmdbV0044PostWckeysRequest) WithDeleted(withDeleted string) ApiSlurmdbV0044PostWckeysRequest {
 	r.withDeleted = &withDeleted
 	return r
 }
 
 // wckeys description
-func (r ApiSlurmdbV0041PostWckeysRequest) V0041OpenapiWckeyResp(v0041OpenapiWckeyResp V0041OpenapiWckeyResp) ApiSlurmdbV0041PostWckeysRequest {
-	r.v0041OpenapiWckeyResp = &v0041OpenapiWckeyResp
+func (r ApiSlurmdbV0044PostWckeysRequest) V0044OpenapiWckeyResp(v0044OpenapiWckeyResp V0044OpenapiWckeyResp) ApiSlurmdbV0044PostWckeysRequest {
+	r.v0044OpenapiWckeyResp = &v0044OpenapiWckeyResp
 	return r
 }
 
-func (r ApiSlurmdbV0041PostWckeysRequest) Execute() (*V0041OpenapiResp, *http.Response, error) {
-	return r.ApiService.SlurmdbV0041PostWckeysExecute(r)
+func (r ApiSlurmdbV0044PostWckeysRequest) Execute() (*V0044OpenapiResp, *http.Response, error) {
+	return r.ApiService.SlurmdbV0044PostWckeysExecute(r)
 }
 
 /*
-SlurmdbV0041PostWckeys Add or update wckeys
+SlurmdbV0044PostWckeys Add or update wckeys
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSlurmdbV0041PostWckeysRequest
+ @return ApiSlurmdbV0044PostWckeysRequest
 */
-func (a *SlurmdbAPIService) SlurmdbV0041PostWckeys(ctx context.Context) ApiSlurmdbV0041PostWckeysRequest {
-	return ApiSlurmdbV0041PostWckeysRequest{
+func (a *SlurmdbAPIService) SlurmdbV0044PostWckeys(ctx context.Context) ApiSlurmdbV0044PostWckeysRequest {
+	return ApiSlurmdbV0044PostWckeysRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
 }
 
 // Execute executes the request
-//  @return V0041OpenapiResp
-func (a *SlurmdbAPIService) SlurmdbV0041PostWckeysExecute(r ApiSlurmdbV0041PostWckeysRequest) (*V0041OpenapiResp, *http.Response, error) {
+//  @return V0044OpenapiResp
+func (a *SlurmdbAPIService) SlurmdbV0044PostWckeysExecute(r ApiSlurmdbV0044PostWckeysRequest) (*V0044OpenapiResp, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *V0041OpenapiResp
+		localVarReturnValue  *V0044OpenapiResp
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0041PostWckeys")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SlurmdbAPIService.SlurmdbV0044PostWckeys")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/slurmdb/v0.0.41/wckeys/"
+	localVarPath := localBasePath + "/slurmdb/v0.0.44/wckeys/"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -13791,7 +7271,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041PostWckeysExecute(r ApiSlurmdbV0041PostW
 		parameterAddToHeaderOrQuery(localVarQueryParams, "with_deleted", r.withDeleted, "")
 	}
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/x-yaml", "application/json"}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -13800,7 +7280,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041PostWckeysExecute(r ApiSlurmdbV0041PostW
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/x-yaml", "application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -13808,7 +7288,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041PostWckeysExecute(r ApiSlurmdbV0041PostW
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.v0041OpenapiWckeyResp
+	localVarPostBody = r.v0044OpenapiWckeyResp
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -13859,7 +7339,7 @@ func (a *SlurmdbAPIService) SlurmdbV0041PostWckeysExecute(r ApiSlurmdbV0041PostW
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v V0041OpenapiResp
+			var v V0044OpenapiResp
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
